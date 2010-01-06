@@ -79,8 +79,8 @@ void __stdcall G6_(PDISASM pMyDisasm)
         OpSize = 2;
         MOD_RM(&(*pMyDisasm).Argument1);
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "verr ");
-        (*pMyDisasm).Argument1.ArgType = REGISTER_TYPE + SPECIAL_REG + REG0;
-        (*pMyDisasm).Argument1.ArgSize = 16;
+        (*pMyDisasm).Argument2.ArgType = REGISTER_TYPE + SPECIAL_REG + REG0;
+        (*pMyDisasm).Argument2.ArgSize = 16;
         OperandSize = OperandSizeOld;
         EIP_+= DECALAGE_EIP + 2;
     }
@@ -88,8 +88,8 @@ void __stdcall G6_(PDISASM pMyDisasm)
         OpSize = 2;
         MOD_RM(&(*pMyDisasm).Argument1);
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "verw ");
-        (*pMyDisasm).Argument1.ArgType = REGISTER_TYPE + SPECIAL_REG + REG0;
-        (*pMyDisasm).Argument1.ArgSize = 16;
+        (*pMyDisasm).Argument2.ArgType = REGISTER_TYPE + SPECIAL_REG + REG0;
+        (*pMyDisasm).Argument2.ArgSize = 16;
         OperandSize = OperandSizeOld;
         EIP_+= DECALAGE_EIP + 2;
     }

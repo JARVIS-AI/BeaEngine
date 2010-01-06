@@ -408,7 +408,7 @@ void __stdcall D9_(PDISASM pMyDisasm)
             }
             else if ((MyMODRM & 0xf) ==7) {
                 (*pMyDisasm).Instruction.Category = FPU_INSTRUCTION + FPUCONTROL;
-                (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "fincftp ");
+                (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "fincstp ");
             }
             else if ((MyMODRM & 0xf) ==8) {
                 (*pMyDisasm).Instruction.Category = FPU_INSTRUCTION + ARITHMETIC_INSTRUCTION;
@@ -715,23 +715,23 @@ void __stdcall DB_(PDISASM pMyDisasm)
 
             if ((MyMODRM & 0xf) ==0) {
                 (*pMyDisasm).Instruction.Category = FPU_INSTRUCTION + UNSUPPORTED_INSTRUCTION;
-                (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "feni ");
+                (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "fneni ");
             }
             else if ((MyMODRM & 0xf) ==1) {
                 (*pMyDisasm).Instruction.Category = FPU_INSTRUCTION + UNSUPPORTED_INSTRUCTION;
-                (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "fdisi ");
+                (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "fndisi ");
             }
             else if ((MyMODRM & 0xf) ==2) {
                 (*pMyDisasm).Instruction.Category = FPU_INSTRUCTION + FPUCONTROL;
-                (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "fclex ");
+                (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "fnclex ");
             }
             else if ((MyMODRM & 0xf) ==3) {
                 (*pMyDisasm).Instruction.Category = FPU_INSTRUCTION + FPUCONTROL;
-                (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "fpinit ");
+                (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "fninit ");
             }
             else if ((MyMODRM & 0xf) ==4) {
                 (*pMyDisasm).Instruction.Category = FPU_INSTRUCTION + UNSUPPORTED_INSTRUCTION;
-                (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "fsetpm ");
+                (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "fnsetpm ");
             }
             else if ((MyMODRM & 0xf) ==5) {
                 (*pMyDisasm).Instruction.Category = FPU_INSTRUCTION + ARITHMETIC_INSTRUCTION;
@@ -1203,7 +1203,7 @@ void __stdcall DE_(PDISASM pMyDisasm)
                 (*pMyDisasm).Argument2.ArgType = REGISTER_TYPE + FPU_REG + REGS[(MyMODRM & 0xf)%8];
                 (*pMyDisasm).Argument2.ArgSize = 80;
             }
-            else if (MyMODRM == 0xd1){
+            else if (MyMODRM == 0xd9){
                 (*pMyDisasm).Instruction.Category = FPU_INSTRUCTION + COMPARISON_INSTRUCTION;
                 (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "fcompp ");
                 (*pMyDisasm).Argument2.AccessMode = WRITE;
@@ -1325,8 +1325,8 @@ void __stdcall DF_(PDISASM pMyDisasm)
             MOD_RM(&(*pMyDisasm).Argument1);
             (*pMyDisasm).Instruction.Category = FPU_INSTRUCTION + DATA_TRANSFER;
             (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "fbstp ");
-            (*pMyDisasm).Argument1.ArgType = REGISTER_TYPE + FPU_REG + REG0;
-            (*pMyDisasm).Argument1.ArgSize = 80;
+            (*pMyDisasm).Argument2.ArgType = REGISTER_TYPE + FPU_REG + REG0;
+            (*pMyDisasm).Argument2.ArgSize = 80;
         }
         else if (REGOPCODE == 7) {
             OpSize = 4;

@@ -912,16 +912,18 @@ void __stdcall insertps_(PDISASM pMyDisasm)
 {
     // ========== 0x66
     if (OperandSize == 16) {
+
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         (*pMyDisasm).Instruction.Category = SSE41_INSTRUCTION + INSERTION_EXTRACTION;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "insertps ");
+        OpSize = 104;
         MOD_RM(&(*pMyDisasm).Argument2);
-        if (MOD_ == 0x3) {
-            OpSize = 104;
-        }
-        else {
-            OpSize = 103;
-        }
+        //if (MOD_ == 0x3) {
+        //    OpSize = 104;
+        //}
+        //else {
+        //    OpSize = 103;
+        //}
         SSE_ = 1;
         Reg_Opcode(&(*pMyDisasm).Argument1);
         SSE_ = 0;
