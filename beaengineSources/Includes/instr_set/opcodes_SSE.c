@@ -912,19 +912,18 @@ void __stdcall insertps_(PDISASM pMyDisasm)
 {
     // ========== 0x66
     if (OperandSize == 16) {
-
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         (*pMyDisasm).Instruction.Category = SSE41_INSTRUCTION + INSERTION_EXTRACTION;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "insertps ");
-        OpSize = 104;
-        MOD_RM(&(*pMyDisasm).Argument2);
-        //if (MOD_ == 0x3) {
-        //    OpSize = 104;
-        //}
-        //else {
-        //    OpSize = 103;
-        //}
         SSE_ = 1;
+        MOD_RM(&(*pMyDisasm).Argument2);
+        if (MOD_ == 0x3) {
+            OpSize = 104;
+        }
+        else {
+            OpSize = 103;
+        }
+
         Reg_Opcode(&(*pMyDisasm).Argument1);
         SSE_ = 0;
         EIP_+= DECALAGE_EIP + 2;
@@ -1461,9 +1460,9 @@ void __stdcall movups_VW(PDISASM pMyDisasm)
         OpSize = 108;
         (*pMyDisasm).Instruction.Category = SSE_INSTRUCTION + ARITHMETIC_INSTRUCTION;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "movups ");
-        MMX_ = 1;
+        SSE_ = 1;
         GxEx(pMyDisasm);
-        MMX_ = 0;
+        SSE_ = 0;
     }
 }
 
@@ -1508,9 +1507,9 @@ void __stdcall movups_WV(PDISASM pMyDisasm)
         OpSize = 8;
         (*pMyDisasm).Instruction.Category = SSE_INSTRUCTION + ARITHMETIC_INSTRUCTION;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "movups ");
-        MMX_ = 1;
+        SSE_ = 1;
         ExGx(pMyDisasm);
-        MMX_ = 0;
+        SSE_ = 0;
     }
 }
 
