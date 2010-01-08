@@ -152,7 +152,7 @@ class My_Frame(wx.Frame):
         # Crée une instance de la classe My_CustomStatusBar        
         self.sb = My_CustomStatusBar(self)
         self.SetStatusBar(self.sb)
-        self.SetStatusText(u"Bienvenue à PyLookInside !", 0)
+        self.SetStatusText(u"Welcome in pylookInside !", 0)
 
         #-------------------------------------------------------------------
         #-------------------------------------------------------------------
@@ -181,7 +181,7 @@ class My_Frame(wx.Frame):
         #-------------------------------------------------------------------
         #-------------------------------------------------------------------
         
-        # Ajoute un menu "Fichier"
+        # Ajoute un menu "File"
         menuFile = wx.Menu(style=wx.MENU_TEAROFF)
 
         #-------------------------------------------------------------------
@@ -192,8 +192,8 @@ class My_Frame(wx.Frame):
         bmp = wx.Bitmap("Bitmaps/item_Open.png", wx.BITMAP_TYPE_PNG)
         
         item = wx.MenuItem(menuFile, -1,
-                           text=u"&Ouvrir\tCtrl+O",
-                           help=u"Ouvre un fichier.")
+                           text=u"&open\tCtrl+O",
+                           help=u"Open a file.")
         item.SetBitmap(bmp)
         menuFile.AppendItem(item)
 
@@ -207,8 +207,8 @@ class My_Frame(wx.Frame):
         bmp = wx.Bitmap("Bitmaps/item_Exit.png", wx.BITMAP_TYPE_PNG)
         
         item = wx.MenuItem(menuFile, -1,
-                           text=u"&Quitter\tCtrl+Q",
-                           help=u"Quitte l'application.")
+                           text=u"&Quit\tCtrl+Q",
+                           help=u"Quit the application.")
         item.SetBitmap(bmp)
         menuFile.AppendItem(item)
 
@@ -218,7 +218,7 @@ class My_Frame(wx.Frame):
         #-------------------------------------------------------------------
         #-------------------------------------------------------------------
         
-        # Ajoute un menu "Affichage"
+        # Ajoute un menu "Display"
         menuView = wx.Menu(style=wx.MENU_TEAROFF)
 
         #-------------------------------------------------------------------
@@ -229,8 +229,8 @@ class My_Frame(wx.Frame):
         bmp = wx.Bitmap("Bitmaps/item_RollUp.png", wx.BITMAP_TYPE_PNG)
                         
         item = wx.MenuItem(menuView, -1,
-                           text=u"En&rouler\tF3",
-                           help=u"Réduit l'application à sa barre de titre.")
+                           text=u"&role\tF3",
+                           help=u"Reduce the window to its title bar.")
         item.SetBitmap(bmp)
         menuView.AppendItem(item)
 
@@ -244,8 +244,8 @@ class My_Frame(wx.Frame):
         bmp = wx.Bitmap("Bitmaps/item_Unroll.png", wx.BITMAP_TYPE_PNG)
                         
         item = wx.MenuItem(menuView, -1,
-                           text=u"&Dérouler\tF4",
-                           help=u"Restaure l'application à sa taille initiale.")
+                           text=u"&unrole\tF4",
+                           help=u"Restore the original size of the window.")
         item.SetBitmap(bmp)
         menuView.AppendItem(item)
 
@@ -255,7 +255,7 @@ class My_Frame(wx.Frame):
         #-------------------------------------------------------------------
         #-------------------------------------------------------------------
         
-        # Ajoute un menu "Aide"
+        # Ajoute un menu "Help"
         menuHelp = wx.Menu(style=wx.MENU_TEAROFF)
 
         #-------------------------------------------------------------------
@@ -266,8 +266,8 @@ class My_Frame(wx.Frame):
         bmp = wx.Bitmap("Bitmaps/item_About.png", wx.BITMAP_TYPE_PNG)
         
         item = wx.MenuItem(menuHelp, -1,
-                           text=u"À p&ropos...\tCtrl+A",
-                           help=u"Au sujet de cette application.")
+                           text=u"About...\tCtrl+A",
+                           help=u"about this application.")
         item.SetBitmap(bmp)
         menuHelp.AppendItem(item)
 
@@ -282,7 +282,7 @@ class My_Frame(wx.Frame):
         
         item = wx.MenuItem(menuHelp, -1,
                            text=u"Me&mento\tCtrl+M",
-                           help=u"Pense-bête.")
+                           help=u"memento.")
         item.SetBitmap(bmp)
         menuHelp.AppendItem(item)
 
@@ -296,8 +296,8 @@ class My_Frame(wx.Frame):
         bmp = wx.Bitmap("Bitmaps/item_Help.png", wx.BITMAP_TYPE_PNG)
         
         item = wx.MenuItem(menuHelp, -1,
-                           text=u"Aide\tCtrl+H",
-                           help=u"Aide en ligne.")
+                           text=u"Help\tCtrl+H",
+                           help=u"help on the web.")
         item.SetBitmap(bmp)
         menuHelp.AppendItem(item)
 
@@ -308,8 +308,8 @@ class My_Frame(wx.Frame):
         #-------------------------------------------------------------------
         
         # Place les menus dans la barre de menus
-        menuBar.Append(menuFile, title=u"&Fichier")
-        menuBar.Append(menuView, title=u"&Affichage")
+        menuBar.Append(menuFile, title=u"&File")
+        menuBar.Append(menuView, title=u"&Display")
         menuBar.Append(menuHelp, title=u"&?")
         
         #-------------------------------------------------------------------
@@ -335,40 +335,40 @@ class My_Frame(wx.Frame):
 
         # Ajoute un bouton
                                   #images.Tb_Open.GetBitmap(),
-        self.toolbar.AddLabelTool(20, u"Ouvrir",
+        self.toolbar.AddLabelTool(20, u"Open",
                                   wx.Bitmap("Bitmaps/tb_Open.png", wx.BITMAP_TYPE_PNG),
                                   shortHelp=u"",
-                                  longHelp=u"Ouvre un fichier.")
+                                  longHelp=u"Open a file.")
         self.toolbar.AddSeparator()
                                   #images.Tb_Disassemble.GetBitmap(),
-        self.toolbar.AddLabelTool(21, u"Désassembler",
+        self.toolbar.AddLabelTool(21, u"Disassemble",
                                   wx.Bitmap("Bitmaps/tb_Disassemble.png", wx.BITMAP_TYPE_PNG),
                                   shortHelp=u"",
-                                  longHelp=u"Lance le désassemblage.")
+                                  longHelp=u"Start disassembler.")
         self.toolbar.AddSeparator()
                                   #images.Tb_help.GetBitmap(),
-        self.toolbar.AddLabelTool(22, u"A propos",
+        self.toolbar.AddLabelTool(22, u"About",
                                   wx.Bitmap("Bitmaps/tb_About.png", wx.BITMAP_TYPE_PNG),
                                   shortHelp=u"",
-                                  longHelp=u"Au sujet de cette application.")
+                                  longHelp=u"about this application.")
         self.toolbar.AddSeparator()
                                   #images.Tb_quit.GetBitmap(),
         self.toolbar.AddLabelTool(23, u"Memento",
                                   wx.Bitmap("Bitmaps/tb_Note.png", wx.BITMAP_TYPE_PNG),
-                                  shortHelp=u"Coucou !",
-                                  longHelp=u"Pense-bête.")
+                                  shortHelp=u"Hi !",
+                                  longHelp=u"memento.")
         self.toolbar.AddSeparator()
                                   #images.Tb_quit.GetBitmap(),
-        self.toolbar.AddLabelTool(24, u"Aide",
+        self.toolbar.AddLabelTool(24, u"Help",
                                   wx.Bitmap("Bitmaps/tb_Help.png", wx.BITMAP_TYPE_PNG),
                                   shortHelp=u"",
-                                  longHelp=u"Aide en ligne.")
+                                  longHelp=u"Help on the web.")
         self.toolbar.AddSeparator()
                                   #images.Tb_quit.GetBitmap(),
-        self.toolbar.AddLabelTool(25, u"Quitter",
+        self.toolbar.AddLabelTool(25, u"Quit",
                                   wx.Bitmap("Bitmaps/tb_Quit.png", wx.BITMAP_TYPE_PNG),
                                   shortHelp=u"meuh",
-                                  longHelp=u"Quitte l'application.")
+                                  longHelp=u"Quit application.")
         self.toolbar.AddSeparator()
         self.toolbar.AddSeparator()
                                   # Crée le  searchCtrl
@@ -512,7 +512,7 @@ class My_Frame(wx.Frame):
         """Affiche la fenêtre de recherche de fichier"""
 
         dlg = wx.FileDialog(self,
-                            message=u"Sélectionner un fichier :",
+                            message=u"Select a file :",
                             defaultDir=os.getcwd(),
                             defaultFile=u"",
                             wildcard=wildcard,
@@ -729,7 +729,7 @@ if __name__ == '__main__':
 ######################################################################
         
         # Affiche le texte du 1er field (le 1er field vaut 0)
-        #self.SetStatusText("Bienvenue !", 0)
+        #self.SetStatusText("Wellcome !", 0)
 
         #-------------------------------------------------------------------
         
