@@ -43,6 +43,7 @@ void __stdcall addps_VW(PDISASM pMyDisasm)
     }
     // ========== 0x66
     else if (OperandSize == 16) {
+        OperandSize = OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         OpSize = 108;
         (*pMyDisasm).Instruction.Category = SSE2_INSTRUCTION + ARITHMETIC_INSTRUCTION;
@@ -79,6 +80,7 @@ void __stdcall addsubpd_(PDISASM pMyDisasm)
 
     // ========== 0x66
     else if (OperandSize == 16) {
+        OperandSize = OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         OpSize = 108;
         (*pMyDisasm).Instruction.Category = SSE3_INSTRUCTION + SIMD_FP_PACKED;
@@ -100,6 +102,7 @@ void __stdcall andnps_VW(PDISASM pMyDisasm)
 {
     // ========== 0x66
     if (OperandSize == 16) {
+        OperandSize = OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         OpSize = 108;
         (*pMyDisasm).Instruction.Category = SSE_INSTRUCTION + LOGICAL_INSTRUCTION;
@@ -125,7 +128,8 @@ void __stdcall andnps_VW(PDISASM pMyDisasm)
 void __stdcall andps_VW(PDISASM pMyDisasm)
 {
     // ========== 0x66
-    if (OperandSize == 16) {
+    if (OperandSize == 16){
+        OperandSize = OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         OpSize = 108;
         (*pMyDisasm).Instruction.Category = SSE_INSTRUCTION + LOGICAL_INSTRUCTION;
@@ -152,6 +156,7 @@ void __stdcall blendpd_(PDISASM pMyDisasm)
 {
     // ========== 0x66
     if (OperandSize == 16) {
+        OperandSize = OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         OpSize = 108;
         (*pMyDisasm).Instruction.Category = SSE41_INSTRUCTION + PACKED_BLENDING_INSTRUCTION;
@@ -183,6 +188,7 @@ void __stdcall blendps_(PDISASM pMyDisasm)
 {
     // ========== 0x66
     if (OperandSize == 16) {
+        OperandSize = OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         OpSize = 108;
         (*pMyDisasm).Instruction.Category = SSE41_INSTRUCTION + PACKED_BLENDING_INSTRUCTION;
@@ -212,6 +218,7 @@ void __stdcall blendvpd_(PDISASM pMyDisasm)
 {
     // ========== 0x66
     if (OperandSize == 16) {
+        OperandSize = OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         OpSize = 108;
         (*pMyDisasm).Instruction.Category = SSE41_INSTRUCTION + PACKED_BLENDING_INSTRUCTION;
@@ -234,6 +241,7 @@ void __stdcall blendvps_(PDISASM pMyDisasm)
 {
     // ========== 0x66
     if (OperandSize == 16) {
+        OperandSize = OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         OpSize = 108;
         (*pMyDisasm).Instruction.Category = SSE41_INSTRUCTION + PACKED_BLENDING_INSTRUCTION;
@@ -276,6 +284,7 @@ void __stdcall cmpps_VW(PDISASM pMyDisasm)
     }
     // ========== 0x66
     else if (OperandSize == 16) {
+        OperandSize = OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         OpSize = 108;
         (*pMyDisasm).Instruction.Category = SSE2_INSTRUCTION + COMPARISON_INSTRUCTION;
@@ -346,6 +355,7 @@ void __stdcall comiss_VW(PDISASM pMyDisasm)
 {
     // ========== 0x66
     if (OperandSize == 16) {
+        OperandSize = OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         OpSize = 104;
         (*pMyDisasm).Instruction.Category = SSE2_INSTRUCTION + COMPARISON_INSTRUCTION;
@@ -391,6 +401,7 @@ void __stdcall cvtps2pd_(PDISASM pMyDisasm)
     }
     // ========== 0x66
     else if (OperandSize == 16) {
+        OperandSize = OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         OpSize = 108;
         (*pMyDisasm).Instruction.Category = SSE2_INSTRUCTION + CONVERSION_INSTRUCTION;
@@ -427,6 +438,7 @@ void __stdcall cvtdq2ps_(PDISASM pMyDisasm)
     }
     // ========== 0x66
     else if (OperandSize == 16) {
+        OperandSize = OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         OpSize = 108;
         (*pMyDisasm).Instruction.Category = SSE2_INSTRUCTION + CONVERSION_INSTRUCTION;
@@ -497,6 +509,7 @@ void __stdcall cvtpi2ps_(PDISASM pMyDisasm)
     }
     // ========== 0x66
     else if (OperandSize == 16) {
+        OperandSize = OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         (*pMyDisasm).Instruction.Category = SSE2_INSTRUCTION + CONVERSION_INSTRUCTION;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "cvtpi2pd ");
@@ -575,6 +588,7 @@ void __stdcall cvtps2pi_(PDISASM pMyDisasm)
     }
     // ========== 0x66
     else if (OperandSize == 16) {
+        OperandSize = OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         (*pMyDisasm).Instruction.Category = SSE2_INSTRUCTION + CONVERSION_INSTRUCTION;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "cvtpd2pi ");
@@ -643,6 +657,7 @@ void __stdcall cvttps2pi_(PDISASM pMyDisasm)
     }
     // ========== 0x66
     else if (OperandSize == 16) {
+        OperandSize = OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         (*pMyDisasm).Instruction.Category = SSE2_INSTRUCTION + CONVERSION_INSTRUCTION;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "cvttpd2pi ");
@@ -697,6 +712,7 @@ void __stdcall cvtpd2dq_(PDISASM pMyDisasm)
     }
     // ========== 0x66
     else if (OperandSize == 16) {
+        OperandSize = OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         OpSize = 108;
         (*pMyDisasm).Instruction.Category = SSE2_INSTRUCTION + CONVERSION_INSTRUCTION;
@@ -718,6 +734,7 @@ void __stdcall dppd_(PDISASM pMyDisasm)
 {
     // ========== 0x66
     if (OperandSize == 16) {
+        OperandSize = OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         OpSize = 108;
         (*pMyDisasm).Instruction.Category = SSE41_INSTRUCTION + DOT_PRODUCT;
@@ -748,6 +765,7 @@ void __stdcall dpps_(PDISASM pMyDisasm)
 {
     // ========== 0x66
     if (OperandSize == 16) {
+        OperandSize = OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         OpSize = 108;
         (*pMyDisasm).Instruction.Category = SSE41_INSTRUCTION + DOT_PRODUCT;
@@ -799,6 +817,7 @@ void __stdcall divps_VW(PDISASM pMyDisasm)
     }
     // ========== 0x66
     else if (OperandSize == 16) {
+        OperandSize = OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         OpSize = 108;
         (*pMyDisasm).Instruction.Category = SSE2_INSTRUCTION + ARITHMETIC_INSTRUCTION;
@@ -825,6 +844,7 @@ void __stdcall extractps_(PDISASM pMyDisasm)
 {
     // ========== 0x66
     if (OperandSize == 16) {
+        OperandSize = OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         OpSize = 3;
         (*pMyDisasm).Instruction.Category = SSE41_INSTRUCTION + INSERTION_EXTRACTION;
@@ -859,6 +879,7 @@ void __stdcall haddpd_VW(PDISASM pMyDisasm)
 
     // ========== 0x66
     if (OperandSize == 16) {
+        OperandSize = OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         OpSize = 108;
         (*pMyDisasm).Instruction.Category = SSE3_INSTRUCTION + SIMD_FP_HORIZONTAL;
@@ -886,6 +907,7 @@ void __stdcall hsubpd_VW(PDISASM pMyDisasm)
 
     // ========== 0x66
     if (OperandSize == 16) {
+        OperandSize = OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         OpSize = 108;
         (*pMyDisasm).Instruction.Category = SSE3_INSTRUCTION + SIMD_FP_HORIZONTAL;
@@ -912,6 +934,7 @@ void __stdcall insertps_(PDISASM pMyDisasm)
 {
     // ========== 0x66
     if (OperandSize == 16) {
+        OperandSize = OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         (*pMyDisasm).Instruction.Category = SSE41_INSTRUCTION + INSERTION_EXTRACTION;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "insertps ");
@@ -978,6 +1001,7 @@ void __stdcall maskmovq_(PDISASM pMyDisasm)
 {
     // ========== 0x66
     if (OperandSize == 16) {
+        OperandSize = OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         OpSize = 108;
         (*pMyDisasm).Instruction.Category = SSE2_INSTRUCTION + CACHEABILITY_CONTROL;
@@ -1024,6 +1048,7 @@ void __stdcall maxps_VW(PDISASM pMyDisasm)
     }
     // ========== 0x66
     else if (OperandSize == 16) {
+        OperandSize = OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         OpSize = 108;
         (*pMyDisasm).Instruction.Category = SSE2_INSTRUCTION + ARITHMETIC_INSTRUCTION;
@@ -1070,6 +1095,7 @@ void __stdcall minps_VW(PDISASM pMyDisasm)
     }
     // ========== 0x66
     else if (OperandSize == 16) {
+        OperandSize = OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         OpSize = 108;
         (*pMyDisasm).Instruction.Category = SSE2_INSTRUCTION + ARITHMETIC_INSTRUCTION;
@@ -1095,6 +1121,7 @@ void __stdcall movaps_VW(PDISASM pMyDisasm)
 {
     // ========== 0x66
     if (OperandSize == 16) {
+        OperandSize = OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         OpSize = 108;
         (*pMyDisasm).Instruction.Category = SSE2_INSTRUCTION + DATA_TRANSFER;
@@ -1120,8 +1147,9 @@ void __stdcall movaps_WV(PDISASM pMyDisasm)
 {
     // ========== 0x66
     if (OperandSize == 16) {
+        OperandSize = OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
-        OpSize = 108;
+        OpSize = 8;
         (*pMyDisasm).Instruction.Category = SSE2_INSTRUCTION + DATA_TRANSFER;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "movapd ");
         SSE_ = 1;
@@ -1157,6 +1185,7 @@ void __stdcall movhps_VM(PDISASM pMyDisasm)
     }
     // ========== 0x66
     else if (OperandSize == 16) {
+        OperandSize = OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         OpSize = 104;
         (*pMyDisasm).Instruction.Category = SSE2_INSTRUCTION + DATA_TRANSFER;
@@ -1190,6 +1219,7 @@ void __stdcall movhps_MV(PDISASM pMyDisasm)
 
     // ========== 0x66
     if (OperandSize == 16) {
+        OperandSize = OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         OpSize = 4;
         (*pMyDisasm).Instruction.Category = SSE2_INSTRUCTION + DATA_TRANSFER;
@@ -1236,6 +1266,7 @@ void __stdcall movlps_VM(PDISASM pMyDisasm)
     }
     // ========== 0x66
     else if (OperandSize == 16) {
+        OperandSize = OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         OpSize = 104;
         (*pMyDisasm).Instruction.Category = SSE2_INSTRUCTION + DATA_TRANSFER;
@@ -1268,6 +1299,7 @@ void __stdcall movlps_MV(PDISASM pMyDisasm)
 
     // ========== 0x66
     if (OperandSize == 16) {
+        OperandSize = OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         OpSize = 4;
         (*pMyDisasm).Instruction.Category = SSE2_INSTRUCTION + DATA_TRANSFER;
@@ -1298,6 +1330,7 @@ void __stdcall movmskps_(PDISASM pMyDisasm)
     }
     // ========== 0x66
     else if (OperandSize == 16) {
+        OperandSize = OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         OpSize = 108;
         (*pMyDisasm).Instruction.Category = SSE2_INSTRUCTION + DATA_TRANSFER;
@@ -1331,6 +1364,7 @@ void __stdcall movntdqa_(PDISASM pMyDisasm)
 
     // ========== 0x66
     if (OperandSize == 16) {
+        OperandSize = OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         OpSize = 108;
         (*pMyDisasm).Instruction.Category = SSE41_INSTRUCTION + STREAMING_LOAD;
@@ -1368,6 +1402,7 @@ void __stdcall movntps_(PDISASM pMyDisasm)
     }
     // ========== 0x66
     else if (OperandSize == 16) {
+        OperandSize = OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         OpSize = 8;
         (*pMyDisasm).Instruction.Category = SSE2_INSTRUCTION + CACHEABILITY_CONTROL;
@@ -1404,6 +1439,7 @@ void __stdcall movntq_(PDISASM pMyDisasm)
     }
     // ========== 0x66
     else if (OperandSize == 16) {
+        OperandSize = OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         OpSize = 8;
         (*pMyDisasm).Instruction.Category = SSE2_INSTRUCTION + CACHEABILITY_CONTROL;
@@ -1450,6 +1486,7 @@ void __stdcall movups_VW(PDISASM pMyDisasm)
     }
     // ========== 0x66
     else if (OperandSize == 16) {
+        OperandSize = OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         OpSize = 108;
         (*pMyDisasm).Instruction.Category = SSE2_INSTRUCTION + ARITHMETIC_INSTRUCTION;
@@ -1497,6 +1534,7 @@ void __stdcall movups_WV(PDISASM pMyDisasm)
     }
     // ========== 0x66
     else if (OperandSize == 16) {
+        OperandSize = OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         OpSize = 8;
         (*pMyDisasm).Instruction.Category = SSE2_INSTRUCTION + ARITHMETIC_INSTRUCTION;
@@ -1523,6 +1561,7 @@ void __stdcall mpsadbw_(PDISASM pMyDisasm)
 {
     // ========== 0x66
     if (OperandSize == 16) {
+        OperandSize = OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         OpSize = 108;
         (*pMyDisasm).Instruction.Category = SSE41_INSTRUCTION + SAD_INSTRUCTION;
@@ -1574,6 +1613,7 @@ void __stdcall mulps_VW(PDISASM pMyDisasm)
     }
     // ========== 0x66
     else if (OperandSize == 16) {
+        OperandSize = OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         OpSize = 108;
         (*pMyDisasm).Instruction.Category = SSE2_INSTRUCTION + ARITHMETIC_INSTRUCTION;
@@ -1600,6 +1640,7 @@ void __stdcall orps_VW(PDISASM pMyDisasm)
 {
     // ========== 0x66
     if (OperandSize == 16) {
+        OperandSize = OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         OpSize = 108;
         (*pMyDisasm).Instruction.Category = SSE2_INSTRUCTION + LOGICAL_INSTRUCTION;
@@ -1626,6 +1667,7 @@ void __stdcall packusdw_(PDISASM pMyDisasm)
 {
     // ========== 0x66
     if (OperandSize == 16) {
+        OperandSize = OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         OpSize = 108;
         (*pMyDisasm).Instruction.Category = SSE41_INSTRUCTION + CONVERSION_INSTRUCTION;
@@ -1650,6 +1692,7 @@ void __stdcall paddq_(PDISASM pMyDisasm)
     (*pMyDisasm).Instruction.Category = SSE2_INSTRUCTION + SIMD128bits;
     // ========== 0x66
     if (OperandSize == 16) {
+        OperandSize = OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         OpSize = 108;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "paddq ");
@@ -1675,6 +1718,7 @@ void __stdcall pavgb_(PDISASM pMyDisasm)
     (*pMyDisasm).Instruction.Category = SSE_INSTRUCTION + SIMD64bits;
     // ========== 0x66
     if (OperandSize == 16) {
+        OperandSize = OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         OpSize = 108;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "pavgb ");
@@ -1700,6 +1744,7 @@ void __stdcall pavgw_(PDISASM pMyDisasm)
     (*pMyDisasm).Instruction.Category = SSE_INSTRUCTION + SIMD64bits;
     // ========== 0x66
     if (OperandSize == 16) {
+        OperandSize = OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         OpSize = 108;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "pavgw ");
@@ -1725,6 +1770,7 @@ void __stdcall palignr_(PDISASM pMyDisasm)
     (*pMyDisasm).Instruction.Category = SSE_INSTRUCTION + SIMD64bits;
     // ========== 0x66
     if (OperandSize == 16) {
+        OperandSize = OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         OpSize = 108;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "palignr ");
@@ -1766,6 +1812,7 @@ void __stdcall pblendvb_(PDISASM pMyDisasm)
     (*pMyDisasm).Instruction.Category = SSE41_INSTRUCTION + PACKED_BLENDING_INSTRUCTION;
     // ========== 0x66
     if (OperandSize == 16) {
+        OperandSize = OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         OpSize = 108;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "pblendvb ");
@@ -1790,6 +1837,7 @@ void __stdcall pblendw_(PDISASM pMyDisasm)
 {
     // ========== 0x66
     if (OperandSize == 16) {
+        OperandSize = OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         OpSize = 108;
         (*pMyDisasm).Instruction.Category = SSE41_INSTRUCTION + SAD_INSTRUCTION;
@@ -1821,6 +1869,7 @@ void __stdcall pcmpeqq_(PDISASM pMyDisasm)
 {
     // ========== 0x66
     if (OperandSize == 16) {
+        OperandSize = OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         OpSize = 108;
         (*pMyDisasm).Instruction.Category = SSE41_INSTRUCTION + PACKED_EQUALITY;
@@ -1844,6 +1893,7 @@ void __stdcall pcmpestri_(PDISASM pMyDisasm)
 {
     // ========== 0x66
     if (OperandSize == 16) {
+        OperandSize = OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         OpSize = 108;
         (*pMyDisasm).Instruction.Category = SSE42_INSTRUCTION + COMPARISON_INSTRUCTION;
@@ -1875,6 +1925,7 @@ void __stdcall pcmpestrm_(PDISASM pMyDisasm)
 {
     // ========== 0x66
     if (OperandSize == 16) {
+        OperandSize = OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         OpSize = 108;
         (*pMyDisasm).Instruction.Category = SSE42_INSTRUCTION + COMPARISON_INSTRUCTION;
@@ -1906,6 +1957,7 @@ void __stdcall pcmpistri_(PDISASM pMyDisasm)
 {
     // ========== 0x66
     if (OperandSize == 16) {
+        OperandSize = OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         OpSize = 108;
         (*pMyDisasm).Instruction.Category = SSE42_INSTRUCTION + COMPARISON_INSTRUCTION;
@@ -1937,6 +1989,7 @@ void __stdcall pcmpistrm_(PDISASM pMyDisasm)
 {
     // ========== 0x66
     if (OperandSize == 16) {
+        OperandSize = OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         OpSize = 108;
         (*pMyDisasm).Instruction.Category = SSE42_INSTRUCTION + COMPARISON_INSTRUCTION;
@@ -1968,6 +2021,7 @@ void __stdcall pcmpgtq_(PDISASM pMyDisasm)
 {
     // ========== 0x66
     if (OperandSize == 16) {
+        OperandSize = OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         OpSize = 108;
         (*pMyDisasm).Instruction.Category = SSE42_INSTRUCTION + COMPARISON_INSTRUCTION;
@@ -1991,6 +2045,7 @@ void __stdcall pextrb_(PDISASM pMyDisasm)
 {
     // ========== 0x66
     if (OperandSize == 16) {
+        OperandSize = OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         (*pMyDisasm).Instruction.Category = SSE41_INSTRUCTION + INSERTION_EXTRACTION;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "pextrb ");
@@ -2029,6 +2084,7 @@ void __stdcall pextrd_(PDISASM pMyDisasm)
 {
     // ========== 0x66
     if (OperandSize == 16) {
+        OperandSize = OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         OpSize = 108;
         (*pMyDisasm).Instruction.Category = SSE41_INSTRUCTION + INSERTION_EXTRACTION;
@@ -2067,6 +2123,7 @@ void __stdcall pextrw_(PDISASM pMyDisasm)
 {
     // ========== 0x66
     if (OperandSize == 16) {
+        OperandSize = OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         (*pMyDisasm).Instruction.Category = SSE_INSTRUCTION + SIMD64bits;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "pextrw ");
@@ -2112,6 +2169,7 @@ void __stdcall pextrw2_(PDISASM pMyDisasm)
 {
     // ========== 0x66
     if (OperandSize == 16) {
+        OperandSize = OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         (*pMyDisasm).Instruction.Category = SSE41_INSTRUCTION + INSERTION_EXTRACTION;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "pextrw ");
@@ -2150,6 +2208,7 @@ void __stdcall phaddd_(PDISASM pMyDisasm)
 {
     // ========== 0x66
     if (OperandSize == 16) {
+        OperandSize = OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         OpSize = 108;
         (*pMyDisasm).Instruction.Category = SSSE3_INSTRUCTION + ARITHMETIC_INSTRUCTION;
@@ -2176,6 +2235,7 @@ void __stdcall phaddsw_(PDISASM pMyDisasm)
 {
     // ========== 0x66
     if (OperandSize == 16) {
+        OperandSize = OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         OpSize = 108;
         (*pMyDisasm).Instruction.Category = SSSE3_INSTRUCTION + ARITHMETIC_INSTRUCTION;
@@ -2202,6 +2262,7 @@ void __stdcall phaddw_(PDISASM pMyDisasm)
 {
     // ========== 0x66
     if (OperandSize == 16) {
+        OperandSize = OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         OpSize = 108;
         (*pMyDisasm).Instruction.Category = SSSE3_INSTRUCTION + ARITHMETIC_INSTRUCTION;
@@ -2228,6 +2289,7 @@ void __stdcall phminposuw_(PDISASM pMyDisasm)
 {
     // ========== 0x66
     if (OperandSize == 16) {
+        OperandSize = OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         OpSize = 108;
         (*pMyDisasm).Instruction.Category = SSE41_INSTRUCTION + HORIZONTAL_SEARCH;
@@ -2249,6 +2311,7 @@ void __stdcall phsubw_(PDISASM pMyDisasm)
 {
     // ========== 0x66
     if (OperandSize == 16) {
+        OperandSize = OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         OpSize = 108;
         (*pMyDisasm).Instruction.Category = SSSE3_INSTRUCTION + ARITHMETIC_INSTRUCTION;
@@ -2275,6 +2338,7 @@ void __stdcall phsubd_(PDISASM pMyDisasm)
 {
     // ========== 0x66
     if (OperandSize == 16) {
+        OperandSize = OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         OpSize = 108;
         (*pMyDisasm).Instruction.Category = SSSE3_INSTRUCTION + ARITHMETIC_INSTRUCTION;
@@ -2301,6 +2365,7 @@ void __stdcall phsubsw_(PDISASM pMyDisasm)
 {
     // ========== 0x66
     if (OperandSize == 16) {
+        OperandSize = OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         OpSize = 108;
         (*pMyDisasm).Instruction.Category = SSSE3_INSTRUCTION + ARITHMETIC_INSTRUCTION;
@@ -2327,6 +2392,7 @@ void __stdcall pinsrb_(PDISASM pMyDisasm)
 {
     // ========== 0x66
     if (OperandSize == 16) {
+        OperandSize = OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         OpSize = 108;
         (*pMyDisasm).Instruction.Category = SSE41_INSTRUCTION + INSERTION_EXTRACTION;
@@ -2358,6 +2424,7 @@ void __stdcall pinsrd_(PDISASM pMyDisasm)
 {
     // ========== 0x66
     if (OperandSize == 16) {
+        OperandSize = OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         OpSize = 108;
         (*pMyDisasm).Instruction.Category = SSE41_INSTRUCTION + INSERTION_EXTRACTION;
@@ -2397,6 +2464,7 @@ void __stdcall pinsrw_(PDISASM pMyDisasm)
 {
     // ========== 0x66
     if (OperandSize == 16) {
+        OperandSize = OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         (*pMyDisasm).Instruction.Category = SSE_INSTRUCTION + SIMD64bits;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "pinsrw ");
@@ -2443,6 +2511,7 @@ void __stdcall pmaxsb_(PDISASM pMyDisasm)
 {
     // ========== 0x66
     if (OperandSize == 16) {
+        OperandSize = OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         OpSize = 108;
         (*pMyDisasm).Instruction.Category = SSE41_INSTRUCTION + PACKED_MINMAX;
@@ -2463,6 +2532,7 @@ void __stdcall pmaxsd_(PDISASM pMyDisasm)
 {
     // ========== 0x66
     if (OperandSize == 16) {
+        OperandSize = OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         OpSize = 108;
         (*pMyDisasm).Instruction.Category = SSE41_INSTRUCTION + PACKED_MINMAX;
@@ -2483,6 +2553,7 @@ void __stdcall pmaxuw_(PDISASM pMyDisasm)
 {
     // ========== 0x66
     if (OperandSize == 16) {
+        OperandSize = OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         OpSize = 108;
         (*pMyDisasm).Instruction.Category = SSE41_INSTRUCTION + PACKED_MINMAX;
@@ -2503,6 +2574,7 @@ void __stdcall pmaxud_(PDISASM pMyDisasm)
 {
     // ========== 0x66
     if (OperandSize == 16) {
+        OperandSize = OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         OpSize = 108;
         (*pMyDisasm).Instruction.Category = SSE41_INSTRUCTION + PACKED_MINMAX;
@@ -2523,6 +2595,7 @@ void __stdcall pminsb_(PDISASM pMyDisasm)
 {
     // ========== 0x66
     if (OperandSize == 16) {
+        OperandSize = OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         OpSize = 108;
         (*pMyDisasm).Instruction.Category = SSE41_INSTRUCTION + PACKED_MINMAX;
@@ -2543,6 +2616,7 @@ void __stdcall pminsd_(PDISASM pMyDisasm)
 {
     // ========== 0x66
     if (OperandSize == 16) {
+        OperandSize = OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         OpSize = 108;
         (*pMyDisasm).Instruction.Category = SSE41_INSTRUCTION + PACKED_MINMAX;
@@ -2563,6 +2637,7 @@ void __stdcall pminuw_(PDISASM pMyDisasm)
 {
     // ========== 0x66
     if (OperandSize == 16) {
+        OperandSize = OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         OpSize = 108;
         (*pMyDisasm).Instruction.Category = SSE41_INSTRUCTION + PACKED_MINMAX;
@@ -2583,6 +2658,7 @@ void __stdcall pminud_(PDISASM pMyDisasm)
 {
     // ========== 0x66
     if (OperandSize == 16) {
+        OperandSize = OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         OpSize = 108;
         (*pMyDisasm).Instruction.Category = SSE41_INSTRUCTION + PACKED_MINMAX;
@@ -2604,6 +2680,7 @@ void __stdcall pminub_(PDISASM pMyDisasm)
 {
     // ========== 0x66
     if (OperandSize == 16) {
+        OperandSize = OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         OpSize = 108;
         (*pMyDisasm).Instruction.Category = SSE_INSTRUCTION + SIMD64bits;
@@ -2630,6 +2707,7 @@ void __stdcall pmaxub_(PDISASM pMyDisasm)
 {
     // ========== 0x66
     if (OperandSize == 16) {
+        OperandSize = OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         OpSize = 108;
         (*pMyDisasm).Instruction.Category = SSE_INSTRUCTION + SIMD64bits;
@@ -2656,6 +2734,7 @@ void __stdcall pminsw_(PDISASM pMyDisasm)
 {
     // ========== 0x66
     if (OperandSize == 16) {
+        OperandSize = OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         OpSize = 108;
         (*pMyDisasm).Instruction.Category = SSE_INSTRUCTION + SIMD64bits;
@@ -2682,6 +2761,7 @@ void __stdcall pmaxsw_(PDISASM pMyDisasm)
 {
     // ========== 0x66
     if (OperandSize == 16) {
+        OperandSize = OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         OpSize = 108;
         (*pMyDisasm).Instruction.Category = SSE_INSTRUCTION + SIMD64bits;
@@ -2708,6 +2788,7 @@ void __stdcall pmaddubsw_(PDISASM pMyDisasm)
 {
     // ========== 0x66
     if (OperandSize == 16) {
+        OperandSize = OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         OpSize = 108;
         (*pMyDisasm).Instruction.Category = SSSE3_INSTRUCTION + ARITHMETIC_INSTRUCTION;
@@ -2734,6 +2815,8 @@ void __stdcall pmovmskb_(PDISASM pMyDisasm)
 {
     // ========== 0x66
     if (OperandSize == 16) {
+
+        OperandSize = OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         (*pMyDisasm).Instruction.Category = SSE_INSTRUCTION + SIMD64bits;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "pmovmskb ");
@@ -2765,6 +2848,7 @@ void __stdcall pmovsxbd_(PDISASM pMyDisasm)
 {
     // ========== 0x66
     if (OperandSize == 16) {
+        OperandSize = OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         OpSize = 108;
         (*pMyDisasm).Instruction.Category = SSE41_INSTRUCTION + CONVERSION_INSTRUCTION;
@@ -2786,6 +2870,7 @@ void __stdcall pmovsxbq_(PDISASM pMyDisasm)
 {
     // ========== 0x66
     if (OperandSize == 16) {
+        OperandSize = OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         OpSize = 108;
         (*pMyDisasm).Instruction.Category = SSE41_INSTRUCTION + CONVERSION_INSTRUCTION;
@@ -2807,6 +2892,7 @@ void __stdcall pmovsxbw_(PDISASM pMyDisasm)
 {
     // ========== 0x66
     if (OperandSize == 16) {
+        OperandSize = OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         OpSize = 108;
         (*pMyDisasm).Instruction.Category = SSE41_INSTRUCTION + CONVERSION_INSTRUCTION;
@@ -2828,6 +2914,7 @@ void __stdcall pmovsxdq_(PDISASM pMyDisasm)
 {
     // ========== 0x66
     if (OperandSize == 16) {
+        OperandSize = OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         OpSize = 108;
         (*pMyDisasm).Instruction.Category = SSE41_INSTRUCTION + CONVERSION_INSTRUCTION;
@@ -2849,6 +2936,7 @@ void __stdcall pmovsxwd_(PDISASM pMyDisasm)
 {
     // ========== 0x66
     if (OperandSize == 16) {
+        OperandSize = OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         OpSize = 108;
         (*pMyDisasm).Instruction.Category = SSE41_INSTRUCTION + CONVERSION_INSTRUCTION;
@@ -2870,6 +2958,7 @@ void __stdcall pmovsxwq_(PDISASM pMyDisasm)
 {
     // ========== 0x66
     if (OperandSize == 16) {
+        OperandSize = OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         OpSize = 108;
         (*pMyDisasm).Instruction.Category = SSE41_INSTRUCTION + CONVERSION_INSTRUCTION;
@@ -2891,6 +2980,7 @@ void __stdcall pmovzxbd_(PDISASM pMyDisasm)
 {
     // ========== 0x66
     if (OperandSize == 16) {
+        OperandSize = OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         OpSize = 108;
         (*pMyDisasm).Instruction.Category = SSE41_INSTRUCTION + CONVERSION_INSTRUCTION;
@@ -2912,6 +3002,7 @@ void __stdcall pmovzxbq_(PDISASM pMyDisasm)
 {
     // ========== 0x66
     if (OperandSize == 16) {
+        OperandSize = OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         OpSize = 108;
         (*pMyDisasm).Instruction.Category = SSE41_INSTRUCTION + CONVERSION_INSTRUCTION;
@@ -2933,6 +3024,7 @@ void __stdcall pmovzxbw_(PDISASM pMyDisasm)
 {
     // ========== 0x66
     if (OperandSize == 16) {
+        OperandSize = OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         OpSize = 108;
         (*pMyDisasm).Instruction.Category = SSE41_INSTRUCTION + CONVERSION_INSTRUCTION;
@@ -2954,6 +3046,7 @@ void __stdcall pmovzxdq_(PDISASM pMyDisasm)
 {
     // ========== 0x66
     if (OperandSize == 16) {
+        OperandSize = OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         OpSize = 108;
         (*pMyDisasm).Instruction.Category = SSE41_INSTRUCTION + CONVERSION_INSTRUCTION;
@@ -2975,6 +3068,7 @@ void __stdcall pmovzxwd_(PDISASM pMyDisasm)
 {
     // ========== 0x66
     if (OperandSize == 16) {
+        OperandSize = OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         OpSize = 108;
         (*pMyDisasm).Instruction.Category = SSE41_INSTRUCTION + CONVERSION_INSTRUCTION;
@@ -2996,6 +3090,7 @@ void __stdcall pmovzxwq_(PDISASM pMyDisasm)
 {
     // ========== 0x66
     if (OperandSize == 16) {
+        OperandSize = OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         OpSize = 108;
         (*pMyDisasm).Instruction.Category = SSE41_INSTRUCTION + CONVERSION_INSTRUCTION;
@@ -3017,6 +3112,7 @@ void __stdcall pmuldq_(PDISASM pMyDisasm)
 {
     // ========== 0x66
     if (OperandSize == 16) {
+        OperandSize = OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         OpSize = 108;
         (*pMyDisasm).Instruction.Category = SSE41_INSTRUCTION + ARITHMETIC_INSTRUCTION;
@@ -3038,6 +3134,7 @@ void __stdcall pmulld_(PDISASM pMyDisasm)
 {
     // ========== 0x66
     if (OperandSize == 16) {
+        OperandSize = OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         OpSize = 108;
         (*pMyDisasm).Instruction.Category = SSE41_INSTRUCTION + ARITHMETIC_INSTRUCTION;
@@ -3059,6 +3156,7 @@ void __stdcall pmulhrsw_(PDISASM pMyDisasm)
 {
     // ========== 0x66
     if (OperandSize == 16) {
+        OperandSize = OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         OpSize = 108;
         (*pMyDisasm).Instruction.Category = SSSE3_INSTRUCTION + ARITHMETIC_INSTRUCTION;
@@ -3086,6 +3184,7 @@ void __stdcall pmulhuw_(PDISASM pMyDisasm)
     (*pMyDisasm).Instruction.Category = SSE_INSTRUCTION + SIMD64bits;
     // ========== 0x66
     if (OperandSize == 16) {
+        OperandSize = OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         OpSize = 108;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "pmulhuw ");
@@ -3111,6 +3210,7 @@ void __stdcall pmuludq_(PDISASM pMyDisasm)
     (*pMyDisasm).Instruction.Category = SSE_INSTRUCTION + SIMD64bits;
     // ========== 0x66
     if (OperandSize == 16) {
+        OperandSize = OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         OpSize = 108;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "pmuludq ");
@@ -3148,6 +3248,7 @@ void __stdcall psadbw_(PDISASM pMyDisasm)
     (*pMyDisasm).Instruction.Category = SSE_INSTRUCTION + SIMD64bits;
     // ========== 0x66
     if (OperandSize == 16) {
+        OperandSize = OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         OpSize = 108;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "psadbw ");
@@ -3172,6 +3273,7 @@ void __stdcall pshufb_(PDISASM pMyDisasm)
 {
     // ========== 0x66
     if (OperandSize == 16) {
+        OperandSize = OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         OpSize = 108;
         (*pMyDisasm).Instruction.Category = SSSE3_INSTRUCTION + SHUFFLE_UNPACK;
@@ -3234,6 +3336,7 @@ void __stdcall pshufw_(PDISASM pMyDisasm)
 
     // ========== 0x66
     else if (OperandSize == 16) {
+        OperandSize = OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         OpSize = 108;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "pshufd ");
@@ -3273,6 +3376,7 @@ void __stdcall psignb_(PDISASM pMyDisasm)
 {
     // ========== 0x66
     if (OperandSize == 16) {
+        OperandSize = OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         OpSize = 108;
         (*pMyDisasm).Instruction.Category = SSSE3_INSTRUCTION + PACKED_SIGN;
@@ -3299,6 +3403,7 @@ void __stdcall psignd_(PDISASM pMyDisasm)
 {
     // ========== 0x66
     if (OperandSize == 16) {
+        OperandSize = OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         OpSize = 108;
         (*pMyDisasm).Instruction.Category = SSSE3_INSTRUCTION + PACKED_SIGN;
@@ -3325,6 +3430,7 @@ void __stdcall psignw_(PDISASM pMyDisasm)
 {
     // ========== 0x66
     if (OperandSize == 16) {
+        OperandSize = OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         OpSize = 108;
         (*pMyDisasm).Instruction.Category = SSSE3_INSTRUCTION + PACKED_SIGN;
@@ -3351,6 +3457,7 @@ void __stdcall psubq_(PDISASM pMyDisasm)
 {
     // ========== 0x66
     if (OperandSize == 16) {
+        OperandSize = OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         OpSize = 108;
         (*pMyDisasm).Instruction.Category = SSE2_INSTRUCTION + SIMD128bits;
@@ -3377,6 +3484,7 @@ void __stdcall ptest_(PDISASM pMyDisasm)
 {
     // ========== 0x66
     if (OperandSize == 16) {
+        OperandSize = OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         OpSize = 108;
         (*pMyDisasm).Instruction.Category = SSE41_INSTRUCTION + PACKED_TEST;
@@ -3398,6 +3506,7 @@ void __stdcall punpcklqdq_(PDISASM pMyDisasm)
 {
     // ========== 0x66
     if (OperandSize == 16) {
+        OperandSize = OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         OpSize = 108;
         (*pMyDisasm).Instruction.Category = SSE2_INSTRUCTION + SIMD128bits;
@@ -3419,6 +3528,7 @@ void __stdcall punpckhqdq_(PDISASM pMyDisasm)
 {
     // ========== 0x66
     if (OperandSize == 16) {
+        OperandSize = OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         OpSize = 108;
         (*pMyDisasm).Instruction.Category = SSE2_INSTRUCTION + SIMD128bits;
@@ -3467,6 +3577,7 @@ void __stdcall roundpd_(PDISASM pMyDisasm)
 {
     // ========== 0x66
     if (OperandSize == 16) {
+        OperandSize = OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         OpSize = 108;
         (*pMyDisasm).Instruction.Category = SSE41_INSTRUCTION + ROUND_INSTRUCTION;
@@ -3496,6 +3607,7 @@ void __stdcall roundps_(PDISASM pMyDisasm)
 {
     // ========== 0x66
     if (OperandSize == 16) {
+        OperandSize = OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         OpSize = 108;
         (*pMyDisasm).Instruction.Category = SSE41_INSTRUCTION + ROUND_INSTRUCTION;
@@ -3525,6 +3637,7 @@ void __stdcall roundsd_(PDISASM pMyDisasm)
 {
     // ========== 0x66
     if (OperandSize == 16) {
+        OperandSize = OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         OpSize = 108;
         (*pMyDisasm).Instruction.Category = SSE41_INSTRUCTION + ROUND_INSTRUCTION;
@@ -3554,6 +3667,7 @@ void __stdcall roundss_(PDISASM pMyDisasm)
 {
     // ========== 0x66
     if (OperandSize == 16) {
+        OperandSize = OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         OpSize = 108;
         (*pMyDisasm).Instruction.Category = SSE41_INSTRUCTION + ROUND_INSTRUCTION;
@@ -3610,6 +3724,7 @@ void __stdcall shufps_(PDISASM pMyDisasm)
 
     // ========== 0x66
     if (OperandSize == 16) {
+        OperandSize = OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         OpSize = 108;
         (*pMyDisasm).Instruction.Category = SSE2_INSTRUCTION + SHUFFLE_UNPACK;
@@ -3665,6 +3780,7 @@ void __stdcall sqrtps_VW(PDISASM pMyDisasm)
     }
     // ========== 0x66
     else if (OperandSize == 16) {
+        OperandSize = OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         OpSize = 108;
         (*pMyDisasm).Instruction.Category = SSE2_INSTRUCTION + ARITHMETIC_INSTRUCTION;
@@ -3711,6 +3827,7 @@ void __stdcall subps_VW(PDISASM pMyDisasm)
     }
     // ========== 0x66
     else if (OperandSize == 16) {
+        OperandSize = OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         OpSize = 108;
         (*pMyDisasm).Instruction.Category = SSE2_INSTRUCTION + ARITHMETIC_INSTRUCTION;
@@ -3737,6 +3854,7 @@ void __stdcall ucomiss_VW(PDISASM pMyDisasm)
 {
     // ========== 0x66
     if (OperandSize == 16) {
+        OperandSize = OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         OpSize = 103;
         (*pMyDisasm).Instruction.Category = SSE2_INSTRUCTION + COMPARISON_INSTRUCTION;
@@ -3763,6 +3881,7 @@ void __stdcall unpckhps_(PDISASM pMyDisasm)
 {
     // ========== 0x66
     if (OperandSize == 16) {
+        OperandSize = OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         OpSize = 108;
         (*pMyDisasm).Instruction.Category = SSE2_INSTRUCTION + SHUFFLE_UNPACK;
@@ -3788,6 +3907,7 @@ void __stdcall unpcklps_(PDISASM pMyDisasm)
 {
     // ========== 0x66
     if (OperandSize == 16) {
+        OperandSize = OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         OpSize = 108;
         (*pMyDisasm).Instruction.Category = SSE2_INSTRUCTION + SHUFFLE_UNPACK;
@@ -3814,6 +3934,7 @@ void __stdcall xorps_VW(PDISASM pMyDisasm)
 {
     // ========== 0x66
     if (OperandSize == 16) {
+        OperandSize = OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         OpSize = 108;
         (*pMyDisasm).Instruction.Category = SSE2_INSTRUCTION + LOGICAL_INSTRUCTION;

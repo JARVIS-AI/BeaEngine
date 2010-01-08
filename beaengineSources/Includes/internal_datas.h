@@ -21,6 +21,7 @@
 #define SDWORD signed long
 
 static long long EIP_, EIP_VA, EIP_REAL;
+static long OriginalOperandSize;        // keep original OperandSize value if it is used as a mandatory prefix
 static long OperandSize;
 static long OpSize;
 static long AddressSize;

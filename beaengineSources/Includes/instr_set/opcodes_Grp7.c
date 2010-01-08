@@ -62,12 +62,12 @@ void __stdcall G7_(PDISASM pMyDisasm)
     }
     else if (REGOPCODE == 1) {
         if (MOD_ == 0x3) {
-            if (RM_ == 0x01) {
+            if (RM_ == 0x00) {
                 (*pMyDisasm).Instruction.Category = SSE3_INSTRUCTION + AGENT_SYNCHRONISATION;
                 (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "monitor ");
                 EIP_+= DECALAGE_EIP + 2;
             }
-            else if (RM_ == 0x2) {
+            else if (RM_ == 0x01) {
                 (*pMyDisasm).Instruction.Category = SSE3_INSTRUCTION + AGENT_SYNCHRONISATION;
                 (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "mwait ");
                 EIP_+= DECALAGE_EIP + 2;
@@ -170,33 +170,23 @@ void __stdcall G7_(PDISASM pMyDisasm)
     }
 
     else if (REGOPCODE == 4) {
-        if (MOD_ == 0x3) {
-            FailDecode(pMyDisasm);
-        }
-        else {
-            OpSize = 102;
-            MOD_RM(&(*pMyDisasm).Argument2);
-            (*pMyDisasm).Instruction.Category = SYSTEM_INSTRUCTION;
-            (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "smsw ");
-            (*pMyDisasm).Argument1.ArgType = REGISTER_TYPE + CR_REG + REG0;
-            (*pMyDisasm).Argument1.ArgSize = 16;
-            EIP_+= DECALAGE_EIP + 2;
-        }
+        OpSize = 102;
+        MOD_RM(&(*pMyDisasm).Argument2);
+        (*pMyDisasm).Instruction.Category = SYSTEM_INSTRUCTION;
+        (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "smsw ");
+        (*pMyDisasm).Argument1.ArgType = REGISTER_TYPE + CR_REG + REG0;
+        (*pMyDisasm).Argument1.ArgSize = 16;
+        EIP_+= DECALAGE_EIP + 2;
     }
 
     else if (REGOPCODE == 6) {
-        if (MOD_ == 0x3) {
-            FailDecode(pMyDisasm);
-        }
-        else {
-            OpSize = 2;
-            MOD_RM(&(*pMyDisasm).Argument1);
-            (*pMyDisasm).Instruction.Category = SYSTEM_INSTRUCTION;
-            (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "lmsw ");
-            (*pMyDisasm).Argument2.ArgType = REGISTER_TYPE + CR_REG + REG0;
-            (*pMyDisasm).Argument2.ArgSize = 16;
-            EIP_+= DECALAGE_EIP + 2;
-        }
+        OpSize = 2;
+        MOD_RM(&(*pMyDisasm).Argument1);
+        (*pMyDisasm).Instruction.Category = SYSTEM_INSTRUCTION;
+        (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "lmsw ");
+        (*pMyDisasm).Argument2.ArgType = REGISTER_TYPE + CR_REG + REG0;
+        (*pMyDisasm).Argument2.ArgSize = 16;
+        EIP_+= DECALAGE_EIP + 2;
     }
     else if (REGOPCODE == 7) {
         if (MOD_ == 0x3) {
@@ -206,7 +196,12 @@ void __stdcall G7_(PDISASM pMyDisasm)
                     (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "swapgs ");
                     EIP_+= DECALAGE_EIP + 2;
                 }
-                else if (RM_ == 0x1) {
+                else {
+                    FailDecode(pMyDisasm);
+                }
+            }
+            else {
+                if (RM_ == 0x1) {
                     (*pMyDisasm).Instruction.Category = SYSTEM_INSTRUCTION;
                     (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "rdtscp ");
                     EIP_+= DECALAGE_EIP + 2;
@@ -214,9 +209,6 @@ void __stdcall G7_(PDISASM pMyDisasm)
                 else {
                     FailDecode(pMyDisasm);
                 }
-            }
-            else {
-                FailDecode(pMyDisasm);
             }
         }
         else {

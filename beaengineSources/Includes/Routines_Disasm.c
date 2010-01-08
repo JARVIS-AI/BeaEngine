@@ -51,6 +51,7 @@ void __stdcall InitVariables (PDISASM pMyDisasm) {
     EndOfBlock = 0;
     if ((*pMyDisasm).SecurityBlock != 0) EndOfBlock = EIP_ + (*pMyDisasm).SecurityBlock;
     OperandSize = 32;
+    OriginalOperandSize = 32;
     OpSize = 0;
     AddressSize = 32;
     SEGMENTFS = 0;

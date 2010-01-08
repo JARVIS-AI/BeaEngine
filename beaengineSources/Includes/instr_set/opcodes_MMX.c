@@ -42,6 +42,7 @@ void __stdcall movd_EP(PDISASM pMyDisasm)
     }
     // ========== 0x66
     else if (OperandSize == 16) {
+        OperandSize = OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         if (REX.W_ == 1) {
             OpSize = 4;
@@ -154,6 +155,7 @@ void __stdcall movq_PQ(PDISASM pMyDisasm)
     }
     // ========== 0x66
     else if (OperandSize == 16) {
+        OperandSize = OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         OpSize = 108;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "movdqa ");
@@ -188,6 +190,7 @@ void __stdcall movq_QP(PDISASM pMyDisasm)
     }
     // ========== 0x66
     else if (OperandSize == 16) {
+        OperandSize = OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         OpSize = 8;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "movdqa ");
@@ -239,6 +242,7 @@ void __stdcall movq_WV(PDISASM pMyDisasm)
     }
     // ========== 0x66
     else if (OperandSize == 16) {
+        OperandSize = OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         OpSize = 4;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "movq ");

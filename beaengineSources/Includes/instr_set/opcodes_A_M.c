@@ -3862,7 +3862,15 @@ void __stdcall jecxz_(PDISASM pMyDisasm)
     (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION + CONTROL_TRANSFER;
     (*pMyDisasm).Instruction.BranchType = JECXZ;
     (*pMyDisasm).Argument1.ArgSize = OperandSize;
-    (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "jecxz ");
+    if (AddressSize == 64) {
+        (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "jrcxz ");
+    }
+    else if (AddressSize == 32) {
+        (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "jecxz ");
+    }
+    else {
+        (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "jcxz ");
+    }
     if (OperandSize >= 32) {
         if (!Security(5)) return;
         MyNumber = *((SBYTE*) (EIP_+1));
@@ -4209,7 +4217,7 @@ void __stdcall lodsw_(PDISASM pMyDisasm)
 }
 
 // =======================================
-//      0adh
+//      0e2h
 // =======================================
 void __stdcall loop_(PDISASM pMyDisasm)
 {
@@ -4219,24 +4227,39 @@ void __stdcall loop_(PDISASM pMyDisasm)
     (*pMyDisasm).Instruction.BranchType = JE;
     (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "loop ");
     if (!Security(1)) return;
-    MyNumber = *((SBYTE*) (EIP_+1));
-    CalculateRelativeAddress(&MyAddress, NB_PREFIX + 2 + MyNumber);
-    if (MyAddress >= 0x100000000) {
-        (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%I64X", MyAddress);
+    if (OperandSize >= 32) {
+        MyNumber = *((SBYTE*) (EIP_+1));
+        CalculateRelativeAddress(&MyAddress, NB_PREFIX + 2 + MyNumber);
+        if (MyAddress >= 0x100000000) {
+            (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%I64X", MyAddress);
+        }
+        else {
+            (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%.8X", MyAddress);
+        }
+        (*pMyDisasm).Argument1.AccessMode = READ;
+        (*pMyDisasm).Argument1.ArgSize = OperandSize;
+        (*pMyDisasm).Instruction.ImplicitModifiedRegs = GENERAL_REG + REG1;
+        (*pMyDisasm).Instruction.AddrValue = MyAddress;
+        EIP_+=2;
+        FillFlags(pMyDisasm, 60);
     }
     else {
-        (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%.8X", MyAddress);
+        MyNumber = *((SBYTE*) (EIP_+1));
+        CalculateRelativeAddress(&MyAddress, NB_PREFIX + 2 + MyNumber);
+        MyAddress = MyAddress & 0xffff;
+        (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%.4X", MyAddress);
+        (*pMyDisasm).Argument1.AccessMode = READ;
+        (*pMyDisasm).Argument1.ArgSize = OperandSize;
+        (*pMyDisasm).Instruction.ImplicitModifiedRegs = GENERAL_REG + REG1;
+        (*pMyDisasm).Instruction.AddrValue = MyAddress;
+        EIP_+=2;
+        FillFlags(pMyDisasm, 60);
+
     }
-    (*pMyDisasm).Argument1.AccessMode = READ;
-    (*pMyDisasm).Argument1.ArgSize = OperandSize;
-    (*pMyDisasm).Instruction.ImplicitModifiedRegs = GENERAL_REG + REG1;
-    (*pMyDisasm).Instruction.AddrValue = MyAddress;
-    EIP_+=2;
-    FillFlags(pMyDisasm, 60);
 }
 
 // =======================================
-//
+//      0xe0
 // =======================================
 void __stdcall loopne_(PDISASM pMyDisasm)
 {
@@ -4246,24 +4269,39 @@ void __stdcall loopne_(PDISASM pMyDisasm)
     (*pMyDisasm).Instruction.BranchType = JNE;
     (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "loopne ");
     if (!Security(1)) return;
-    MyNumber = *((SBYTE*) (EIP_+1));
-    CalculateRelativeAddress(&MyAddress, NB_PREFIX + 2 + MyNumber);
-    if (MyAddress >= 0x100000000) {
-        (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%I64X", MyAddress);
+    if (OperandSize >= 32) {
+        MyNumber = *((SBYTE*) (EIP_+1));
+        CalculateRelativeAddress(&MyAddress, NB_PREFIX + 2 + MyNumber);
+        if (MyAddress >= 0x100000000) {
+            (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%I64X", MyAddress);
+        }
+        else {
+            (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%.8X", MyAddress);
+        }
+        (*pMyDisasm).Argument1.AccessMode = READ;
+        (*pMyDisasm).Argument1.ArgSize = OperandSize;
+        (*pMyDisasm).Instruction.ImplicitModifiedRegs = GENERAL_REG + REG1;
+        (*pMyDisasm).Instruction.AddrValue = MyAddress;
+        EIP_+=2;
+        FillFlags(pMyDisasm, 61);
     }
     else {
-        (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%.8X", MyAddress);
+        MyNumber = *((SBYTE*) (EIP_+1));
+        CalculateRelativeAddress(&MyAddress, NB_PREFIX + 2 + MyNumber);
+        MyAddress = MyAddress & 0xffff;
+        (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%.4X", MyAddress);
+        (*pMyDisasm).Argument1.AccessMode = READ;
+        (*pMyDisasm).Argument1.ArgSize = OperandSize;
+        (*pMyDisasm).Instruction.ImplicitModifiedRegs = GENERAL_REG + REG1;
+        (*pMyDisasm).Instruction.AddrValue = MyAddress;
+        EIP_+=2;
+        FillFlags(pMyDisasm, 61);
+
     }
-    (*pMyDisasm).Argument1.AccessMode = READ;
-    (*pMyDisasm).Argument1.ArgSize = OperandSize;
-    (*pMyDisasm).Instruction.ImplicitModifiedRegs = GENERAL_REG + REG1;
-    (*pMyDisasm).Instruction.AddrValue = MyAddress;
-    EIP_+=2;
-    FillFlags(pMyDisasm, 61);
 }
 
 // =======================================
-//
+//      0xe1
 // =======================================
 void __stdcall loope_(PDISASM pMyDisasm)
 {
@@ -4273,20 +4311,35 @@ void __stdcall loope_(PDISASM pMyDisasm)
     (*pMyDisasm).Instruction.BranchType = JE;
     (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "loope ");
     if (!Security(1)) return;
-    MyNumber = *((SBYTE*) (EIP_+1));
-    CalculateRelativeAddress(&MyAddress, NB_PREFIX + 2 + MyNumber);
-    if (MyAddress >= 0x100000000) {
-        (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%I64X", MyAddress);
+    if (OperandSize >= 32) {
+        MyNumber = *((SBYTE*) (EIP_+1));
+        CalculateRelativeAddress(&MyAddress, NB_PREFIX + 2 + MyNumber);
+        if (MyAddress >= 0x100000000) {
+            (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%I64X", MyAddress);
+        }
+        else {
+            (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%.8X", MyAddress);
+        }
+        (*pMyDisasm).Argument1.AccessMode = READ;
+        (*pMyDisasm).Argument1.ArgSize = OperandSize;
+        (*pMyDisasm).Instruction.ImplicitModifiedRegs = GENERAL_REG + REG1;
+        (*pMyDisasm).Instruction.AddrValue = MyAddress;
+        EIP_+=2;
+        FillFlags(pMyDisasm, 61);
     }
     else {
-        (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%.8X", MyAddress);
+        MyNumber = *((SBYTE*) (EIP_+1));
+        CalculateRelativeAddress(&MyAddress, NB_PREFIX + 2 + MyNumber);
+        MyAddress = MyAddress & 0xffff;
+        (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%.4X", MyAddress);
+        (*pMyDisasm).Argument1.AccessMode = READ;
+        (*pMyDisasm).Argument1.ArgSize = OperandSize;
+        (*pMyDisasm).Instruction.ImplicitModifiedRegs = GENERAL_REG + REG1;
+        (*pMyDisasm).Instruction.AddrValue = MyAddress;
+        EIP_+=2;
+        FillFlags(pMyDisasm, 61);
+
     }
-    (*pMyDisasm).Argument1.AccessMode = READ;
-    (*pMyDisasm).Argument1.ArgSize = OperandSize;
-    (*pMyDisasm).Instruction.ImplicitModifiedRegs = GENERAL_REG + REG1;
-    (*pMyDisasm).Instruction.AddrValue = MyAddress;
-    EIP_+=2;
-    FillFlags(pMyDisasm, 61);
 }
 
 // =======================================

@@ -23,6 +23,7 @@ void __stdcall aesimc(PDISASM pMyDisasm)
 {
     // ========== 0x66
     if (OperandSize == 16) {
+        OperandSize = OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         OpSize = 108;
         (*pMyDisasm).Instruction.Category = AES_INSTRUCTION;
@@ -43,6 +44,7 @@ void __stdcall aesenc(PDISASM pMyDisasm)
 {
     // ========== 0x66
     if (OperandSize == 16) {
+        OperandSize = OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         OpSize = 108;
         (*pMyDisasm).Instruction.Category = AES_INSTRUCTION;
@@ -63,6 +65,7 @@ void __stdcall aesenclast(PDISASM pMyDisasm)
 {
     // ========== 0x66
     if (OperandSize == 16) {
+        OperandSize = OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         OpSize = 108;
         (*pMyDisasm).Instruction.Category = AES_INSTRUCTION;
@@ -83,6 +86,7 @@ void __stdcall aesdec(PDISASM pMyDisasm)
 {
     // ========== 0x66
     if (OperandSize == 16) {
+        OperandSize = OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         OpSize = 108;
         (*pMyDisasm).Instruction.Category = AES_INSTRUCTION;
@@ -103,6 +107,7 @@ void __stdcall aesdeclast(PDISASM pMyDisasm)
 {
     // ========== 0x66
     if (OperandSize == 16) {
+        OperandSize = OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         OpSize = 108;
         (*pMyDisasm).Instruction.Category = AES_INSTRUCTION;
@@ -123,6 +128,7 @@ void __stdcall aeskeygen(PDISASM pMyDisasm)
 {
     // ========== 0x66
     if (OperandSize == 16) {
+        OperandSize = OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         OpSize = 108;
         (*pMyDisasm).Instruction.Category = AES_INSTRUCTION;

@@ -159,6 +159,7 @@ void __stdcall PrefOpSize(PDISASM pMyDisasm)
     EIP_++;
     (*pMyDisasm).Prefix.Number++;
     NB_PREFIX++;
+    OriginalOperandSize = OperandSize;  // if OperandSize is used as a mandatory prefix, keep the real operandsize value
     OperandSize = 16;
     (*pMyDisasm).Instruction.Opcode = *((BYTE*) EIP_);
     (void) opcode_map1[*((BYTE*) EIP_)](pMyDisasm);
