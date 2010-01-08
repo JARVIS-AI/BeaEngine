@@ -1,0 +1,4 @@
+﻿Ceci est un essai de texte unicode codé en utf-8.
+&à éèç öîà&@@ççèèààé1
+
+
