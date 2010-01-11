@@ -1,27 +1,27 @@
-// Copyright 2006-2009, BeatriX
-// File coded by BeatriX
-//
-// This file is part of BeaEngine.
-//
-//    BeaEngine is free software: you can redistribute it and/or modify
-//    it under the terms of the GNU Lesser General Public License as published by
-//    the Free Software Foundation, either version 3 of the License, or
-//    (at your option) any later version.
-//
-//    BeaEngine is distributed in the hope that it will be useful,
-//    but WITHOUT ANY WARRANTY; without even the implied warranty of
-//    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//    GNU Lesser General Public License for more details.
-//
-//    You should have received a copy of the GNU Lesser General Public License
-//    along with BeaEngine.  If not, see <http://www.gnu.org/licenses/>.
+/* Copyright 2006-2009, BeatriX
+ * File coded by BeatriX
+ *
+ * This file is part of BeaEngine.
+ *
+ *    BeaEngine is free software: you can redistribute it and/or modify
+ *    it under the terms of the GNU Lesser General Public License as published by
+ *    the Free Software Foundation, either version 3 of the License, or
+ *    (at your option) any later version.
+ *
+ *    BeaEngine is distributed in the hope that it will be useful,
+ *    but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *    GNU Lesser General Public License for more details.
+ *
+ *    You should have received a copy of the GNU Lesser General Public License
+ *    along with BeaEngine.  If not, see <http://www.gnu.org/licenses/>. */
 
-// ====================================================================
-//      0c0h
-// ====================================================================
-void __stdcall G2_EbIb(PDISASM pMyDisasm)
+/* ====================================================================
+ *      0c0h
+ * ==================================================================== */
+void __bea_callspec__ G2_EbIb(PDISASM pMyDisasm)
 {
-    REGOPCODE = ((*((BYTE*) (EIP_ + 1))) >> 3) & 0x7;
+    REGOPCODE = ((*((UInt8*) (EIP_ + 1))) >> 3) & 0x7;
     EbIb(pMyDisasm);
     if (REGOPCODE == 0) {
         (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION + SHIFT_ROTATE;
@@ -66,12 +66,12 @@ void __stdcall G2_EbIb(PDISASM pMyDisasm)
 }
 
 
-// ====================================================================
-//      0c1h
-// ====================================================================
-void __stdcall G2_EvIb(PDISASM pMyDisasm)
+/* ====================================================================
+ *      0c1h
+ * ==================================================================== */
+void __bea_callspec__ G2_EvIb(PDISASM pMyDisasm)
 {
-    REGOPCODE = ((*((BYTE*) (EIP_ + 1))) >> 3) & 0x7;
+    REGOPCODE = ((*((UInt8*) (EIP_ + 1))) >> 3) & 0x7;
     EvIb(pMyDisasm);
     if (REGOPCODE == 0) {
         (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION + SHIFT_ROTATE;
@@ -115,12 +115,12 @@ void __stdcall G2_EvIb(PDISASM pMyDisasm)
     }
 }
 
-// ====================================================================
-//      0d0h
-// ====================================================================
-void __stdcall G2_Eb1(PDISASM pMyDisasm)
+/* ====================================================================
+ *      0d0h
+ * ==================================================================== */
+void __bea_callspec__ G2_Eb1(PDISASM pMyDisasm)
 {
-    REGOPCODE = ((*((BYTE*) (EIP_ + 1))) >> 3) & 0x7;
+    REGOPCODE = ((*((UInt8*) (EIP_ + 1))) >> 3) & 0x7;
     OpSize = 1;
     OperandSize = 8;
     MOD_RM(&(*pMyDisasm).Argument1);
@@ -173,12 +173,12 @@ void __stdcall G2_Eb1(PDISASM pMyDisasm)
 }
 
 
-// ====================================================================
-//      0d1h
-// ====================================================================
-void __stdcall G2_Ev1(PDISASM pMyDisasm)
+/* ====================================================================
+ *      0d1h
+ * ==================================================================== */
+void __bea_callspec__ G2_Ev1(PDISASM pMyDisasm)
 {
-    REGOPCODE = ((*((BYTE*) (EIP_ + 1))) >> 3) & 0x7;
+    REGOPCODE = ((*((UInt8*) (EIP_ + 1))) >> 3) & 0x7;
     if (OperandSize == 64) {
         OpSize = 4;
     }
@@ -237,12 +237,12 @@ void __stdcall G2_Ev1(PDISASM pMyDisasm)
 }
 
 
-// ====================================================================
-//      0d2h
-// ====================================================================
-void __stdcall G2_EbCL(PDISASM pMyDisasm)
+/* ====================================================================
+ *      0d2h
+ * ==================================================================== */
+void __bea_callspec__ G2_EbCL(PDISASM pMyDisasm)
 {
-    REGOPCODE = ((*((BYTE*) (EIP_ + 1))) >> 3) & 0x7;
+    REGOPCODE = ((*((UInt8*) (EIP_ + 1))) >> 3) & 0x7;
     OpSize = 1;
     OperandSize = 8;
     MOD_RM(&(*pMyDisasm).Argument1);
@@ -294,12 +294,12 @@ void __stdcall G2_EbCL(PDISASM pMyDisasm)
 }
 
 
-// ====================================================================
-//      0d3h
-// ====================================================================
-void __stdcall G2_EvCL(PDISASM pMyDisasm)
+/* ====================================================================
+ *      0d3h
+ * ==================================================================== */
+void __bea_callspec__ G2_EvCL(PDISASM pMyDisasm)
 {
-    REGOPCODE = ((*((BYTE*) (EIP_ + 1))) >> 3) & 0x7;
+    REGOPCODE = ((*((UInt8*) (EIP_ + 1))) >> 3) & 0x7;
     if (OperandSize == 64) {
         OpSize = 4;
     }

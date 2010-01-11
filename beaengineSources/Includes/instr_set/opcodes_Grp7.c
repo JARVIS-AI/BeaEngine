@@ -1,30 +1,30 @@
-// Copyright 2006-2009, BeatriX
-// File coded by BeatriX
-//
-// This file is part of BeaEngine.
-//
-//    BeaEngine is free software: you can redistribute it and/or modify
-//    it under the terms of the GNU Lesser General Public License as published by
-//    the Free Software Foundation, either version 3 of the License, or
-//    (at your option) any later version.
-//
-//    BeaEngine is distributed in the hope that it will be useful,
-//    but WITHOUT ANY WARRANTY; without even the implied warranty of
-//    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//    GNU Lesser General Public License for more details.
-//
-//    You should have received a copy of the GNU Lesser General Public License
-//    along with BeaEngine.  If not, see <http://www.gnu.org/licenses/>.
+/* Copyright 2006-2009, BeatriX
+ * File coded by BeatriX
+ *
+ * This file is part of BeaEngine.
+ *
+ *    BeaEngine is free software: you can redistribute it and/or modify
+ *    it under the terms of the GNU Lesser General Public License as published by
+ *    the Free Software Foundation, either version 3 of the License, or
+ *    (at your option) any later version.
+ *
+ *    BeaEngine is distributed in the hope that it will be useful,
+ *    but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *    GNU Lesser General Public License for more details.
+ *
+ *    You should have received a copy of the GNU Lesser General Public License
+ *    along with BeaEngine.  If not, see <http://www.gnu.org/licenses/>. */
 
-// ====================================================================
-//      0f01h
-// ====================================================================
-void __stdcall G7_(PDISASM pMyDisasm)
+/* ====================================================================
+ *      0f01h
+ * ==================================================================== */
+void __bea_callspec__ G7_(PDISASM pMyDisasm)
 {
     (*pMyDisasm).Instruction.Category = SYSTEM_INSTRUCTION;
-    REGOPCODE = ((*((BYTE*) (EIP_ + 1))) >> 3) & 0x7;
-    MOD_ = ((*((BYTE*) (EIP_ + 1))) >> 6) & 0x3;
-    RM_  = (*((BYTE*) (EIP_ + 1))) & 0x7;
+    REGOPCODE = ((*((UInt8*) (EIP_ + 1))) >> 3) & 0x7;
+    MOD_ = ((*((UInt8*) (EIP_ + 1))) >> 6) & 0x3;
+    RM_  = (*((UInt8*) (EIP_ + 1))) & 0x7;
     if (REGOPCODE == 0) {
         if (MOD_ == 0x3) {
             if (RM_ == 0x1) {

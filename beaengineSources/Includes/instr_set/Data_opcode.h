@@ -1,30 +1,30 @@
-// Copyright 2006-2009, BeatriX
-// File coded by BeatriX
-//
-// This file is part of BeaEngine.
-//
-//    BeaEngine is free software: you can redistribute it and/or modify
-//    it under the terms of the GNU Lesser General Public License as published by
-//    the Free Software Foundation, either version 3 of the License, or
-//    (at your option) any later version.
-//
-//    BeaEngine is distributed in the hope that it will be useful,
-//    but WITHOUT ANY WARRANTY; without even the implied warranty of
-//    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//    GNU Lesser General Public License for more details.
-//
-//    You should have received a copy of the GNU Lesser General Public License
-//    along with BeaEngine.  If not, see <http://www.gnu.org/licenses/>.
+/* Copyright 2006-2009, BeatriX
+ * File coded by BeatriX
+ *
+ * This file is part of BeaEngine.
+ *
+ *    BeaEngine is free software: you can redistribute it and/or modify
+ *    it under the terms of the GNU Lesser General Public License as published by
+ *    the Free Software Foundation, either version 3 of the License, or
+ *    (at your option) any later version.
+ *
+ *    BeaEngine is distributed in the hope that it will be useful,
+ *    but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *    GNU Lesser General Public License for more details.
+ *
+ *    You should have received a copy of the GNU Lesser General Public License
+ *    along with BeaEngine.  If not, see <http://www.gnu.org/licenses/>. */
 
 /* ===============================================================================  */
 /*														                            */
 /*														                            */
-/*					            1 BYTE_OPCODE MAP							        */
+/*					            1 UInt8_OPCODE MAP							        */
 /*														                            */
 /*														                            */
 /* ===============================================================================  */
 
-void (__stdcall * opcode_map1[])(PDISASM) = {
+void (__bea_callspec__ * opcode_map1[])(PDISASM) = {
     add_EbGb  , add_EvGv  , add_GbEb  , add_GvEv  , add_ALIb  , add_eAX_Iv, push_es   , pop_es    , or_EbGb   , or_EvGv   , or_GbEb   , or_GvEv   , or_ALIb   , or_eAX_Iv , push_cs   , Esc_2byte ,
     adc_EbGb  , adc_EvGv  , adc_GbEb  , adc_GvEv  , adc_ALIb  , adc_eAX_Iv, push_ss   , pop_ss    , sbb_EbGb  , sbb_EvGv  , sbb_GbEb  , sbb_GvEv  , sbb_ALIb  , sbb_eAX_Iv, push_ds   , pop_ds    ,
     and_EbGb  , and_EvGv  , and_GbEb  , and_GvEv  , and_ALIb  , and_eAX_Iv, PrefSEGES , daa_      , sub_EbGb  , sub_EvGv  , sub_GbEb  , sub_GvEv  , sub_ALIb  , sub_eAX_Iv, PrefSEGCS , das_      ,
@@ -46,11 +46,11 @@ void (__stdcall * opcode_map1[])(PDISASM) = {
 /* ===============================================================================  */
 /*														                            */
 /*														                            */
-/*					            2 BYTE_OPCODE MAP --> 0F xx					        */
+/*					            2 UInt8_OPCODE MAP --> 0F xx					        */
 /*														                            */
 /*														                            */
 /* ===============================================================================  */
-void (__stdcall *opcode_map2[])(PDISASM) = {
+void (__bea_callspec__ *opcode_map2[])(PDISASM) = {
     G6_       , G7_       , lar_GvEw  , lsl_GvEw  , FailDecode, syscall_  , clts_     , sysret_   , invd_     , wbinvd_   , FailDecode, ud2_      , FailDecode, nop_Ev    , femms_    , FailDecode,
     movups_VW , movups_WV , movlps_VM , movlps_MV , unpcklps_ , unpckhps_ , movhps_VM , movhps_MV , G16_      , hint_nop  , hint_nop  , hint_nop  , hint_nop  , hint_nop  , hint_nop  , nop_Ev    ,
     mov_RdCd  , mov_RdDd  , mov_CdRd  , mov_DdRd  , FailDecode, FailDecode, FailDecode, FailDecode, movaps_VW , movaps_WV , cvtpi2ps_ , movntps_  , cvttps2pi_, cvtps2pi_ , ucomiss_VW, comiss_VW ,
@@ -72,11 +72,11 @@ void (__stdcall *opcode_map2[])(PDISASM) = {
 /* ===============================================================================  */
 /*														                            */
 /*														                            */
-/*					            3 BYTE_OPCODE MAP --> 0F 38 xx				        */
+/*					            3 UInt8_OPCODE MAP --> 0F 38 xx				        */
 /*														                            */
 /*														                            */
 /* ===============================================================================  */
- void (__stdcall *opcode_map3[])(PDISASM) = {
+ void (__bea_callspec__ *opcode_map3[])(PDISASM) = {
     pshufb_   , phaddw_   , phaddd_   , phaddsw_  , pmaddubsw_, phsubw_   , phsubd_   , phsubsw_  , psignb_   , psignw_   , psignd_   , pmulhrsw_ , FailDecode, FailDecode, FailDecode, FailDecode,
     pblendvb_ , FailDecode, FailDecode, FailDecode, blendvps_ , blendvpd_ , FailDecode, ptest_    , FailDecode, FailDecode, FailDecode, FailDecode, pabsb_    , pabsw_    , pabsd_    , FailDecode,
     pmovsxbw_ , pmovsxbd_ , pmovsxbq_ , pmovsxwd_ , pmovsxwq_ , pmovsxdq_ , FailDecode, FailDecode, pmuldq_   , pcmpeqq_  , movntdqa_ , packusdw_ , FailDecode, FailDecode, FailDecode, FailDecode,
@@ -98,11 +98,11 @@ void (__stdcall *opcode_map2[])(PDISASM) = {
 /* ===============================================================================  */
 /*														                            */
 /*														                            */
-/*					            3 BYTE_OPCODE MAP --> 0F 3A xx				        */
+/*					            3 UInt8_OPCODE MAP --> 0F 3A xx				        */
 /*														                            */
 /*														                            */
 /* ===============================================================================  */
- void (__stdcall *opcode_map4[])(PDISASM) = {
+ void (__bea_callspec__ *opcode_map4[])(PDISASM) = {
     FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, roundps_  , roundpd_  , roundss_  , roundsd_  , blendps_  , blendpd_  , pblendw_  , palignr_  ,
     FailDecode, FailDecode, FailDecode, FailDecode, pextrb_   , pextrw2_  , pextrd_   , extractps_, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode,
     pinsrb_   , insertps_ , pinsrd_   , FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode,
@@ -122,7 +122,7 @@ void (__stdcall *opcode_map2[])(PDISASM) = {
  };
 
 
-void (__stdcall *ModRM_0[])(ARGTYPE*) = {
+void (__bea_callspec__ *ModRM_0[])(ARGTYPE*) = {
      Addr_EAX,
      Addr_ECX,
      Addr_EDX,
@@ -133,7 +133,7 @@ void (__stdcall *ModRM_0[])(ARGTYPE*) = {
      Addr_EDI,
  };
 
- void (__stdcall *ModRM_1[])(ARGTYPE*) = {
+ void (__bea_callspec__ *ModRM_1[])(ARGTYPE*) = {
      Addr_EAX_disp8,
      Addr_ECX_disp8,
      Addr_EDX_disp8,
@@ -144,7 +144,7 @@ void (__stdcall *ModRM_0[])(ARGTYPE*) = {
      Addr_EDI_disp8,
  };
 
- void (__stdcall *ModRM_2[])(ARGTYPE*) = {
+ void (__bea_callspec__ *ModRM_2[])(ARGTYPE*) = {
      Addr_EAX_disp32,
      Addr_ECX_disp32,
      Addr_EDX_disp32,
@@ -155,7 +155,7 @@ void (__stdcall *ModRM_0[])(ARGTYPE*) = {
      Addr_EDI_disp32,
  };
 
- void (__stdcall *ModRM_3[])(ARGTYPE*) = {
+ void (__bea_callspec__ *ModRM_3[])(ARGTYPE*) = {
      _rEAX,
      _rECX,
      _rEDX,
@@ -166,7 +166,7 @@ void (__stdcall *ModRM_0[])(ARGTYPE*) = {
      _rEDI,
  };
 
-int (__stdcall *SIB[])(ARGTYPE*, int) = {
+int (__bea_callspec__ *SIB[])(ARGTYPE*, int) = {
      SIB_0,
      SIB_1,
      SIB_2,

@@ -1,36 +1,36 @@
-// Copyright 2006-2009, BeatriX
-// File coded by BeatriX
-//
-// This file is part of BeaEngine.
-//
-//    BeaEngine is free software: you can redistribute it and/or modify
-//    it under the terms of the GNU Lesser General Public License as published by
-//    the Free Software Foundation, either version 3 of the License, or
-//    (at your option) any later version.
-//
-//    BeaEngine is distributed in the hope that it will be useful,
-//    but WITHOUT ANY WARRANTY; without even the implied warranty of
-//    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//    GNU Lesser General Public License for more details.
-//
-//    You should have received a copy of the GNU Lesser General Public License
-//    along with BeaEngine.  If not, see <http://www.gnu.org/licenses/>.
+/* Copyright 2006-2009, BeatriX
+ * File coded by BeatriX
+ *
+ * This file is part of BeaEngine.
+ *
+ *    BeaEngine is free software: you can redistribute it and/or modify
+ *    it under the terms of the GNU Lesser General Public License as published by
+ *    the Free Software Foundation, either version 3 of the License, or
+ *    (at your option) any later version.
+ *
+ *    BeaEngine is distributed in the hope that it will be useful,
+ *    but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *    GNU Lesser General Public License for more details.
+ *
+ *    You should have received a copy of the GNU Lesser General Public License
+ *    along with BeaEngine.  If not, see <http://www.gnu.org/licenses/>. */
 
-// ====================================================================
-//      0f6h
-// ====================================================================
-void __stdcall G3_Eb(PDISASM pMyDisasm)
+/* ====================================================================
+ *      0f6h
+ * ==================================================================== */
+void __bea_callspec__ G3_Eb(PDISASM pMyDisasm)
 {
-    REGOPCODE = ((*((BYTE*) (EIP_ + 1))) >> 3) & 0x7;
+    REGOPCODE = ((*((UInt8*) (EIP_ + 1))) >> 3) & 0x7;
     if (REGOPCODE == 0) {
-        (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION + BIT_BYTE;
+        (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION + BIT_UInt8;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "test ");
         EbIb(pMyDisasm);
         (*pMyDisasm).Argument1.AccessMode = READ;
         FillFlags(pMyDisasm, 104);
     }
     else if (REGOPCODE == 1) {
-        (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION + BIT_BYTE;
+        (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION + BIT_UInt8;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "test ");
         EbIb(pMyDisasm);
         (*pMyDisasm).Argument1.AccessMode = READ;
@@ -101,21 +101,21 @@ void __stdcall G3_Eb(PDISASM pMyDisasm)
     }
 }
 
-// ====================================================================
-//      0f7h
-// ====================================================================
-void __stdcall G3_Ev(PDISASM pMyDisasm)
+/* ====================================================================
+ *      0f7h
+ * ==================================================================== */
+void __bea_callspec__ G3_Ev(PDISASM pMyDisasm)
 {
-    REGOPCODE = ((*((BYTE*) (EIP_ + 1))) >> 3) & 0x7;
+    REGOPCODE = ((*((UInt8*) (EIP_ + 1))) >> 3) & 0x7;
     if (REGOPCODE == 0) {
-        (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION + BIT_BYTE;
+        (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION + BIT_UInt8;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "test ");
         EvIv(pMyDisasm);
         (*pMyDisasm).Argument1.AccessMode = READ;
         FillFlags(pMyDisasm, 104);
     }
     else if (REGOPCODE == 1) {
-        (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION + BIT_BYTE;
+        (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION + BIT_UInt8;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "test ");
         EvIv(pMyDisasm);
         (*pMyDisasm).Argument1.AccessMode = READ;

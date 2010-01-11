@@ -1,29 +1,29 @@
-// Copyright 2006-2009, BeatriX
-// File coded by BeatriX
-//
-// This file is part of BeaEngine.
-//
-//    BeaEngine is free software: you can redistribute it and/or modify
-//    it under the terms of the GNU Lesser General Public License as published by
-//    the Free Software Foundation, either version 3 of the License, or
-//    (at your option) any later version.
-//
-//    BeaEngine is distributed in the hope that it will be useful,
-//    but WITHOUT ANY WARRANTY; without even the implied warranty of
-//    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//    GNU Lesser General Public License for more details.
-//
-//    You should have received a copy of the GNU Lesser General Public License
-//    along with BeaEngine.  If not, see <http://www.gnu.org/licenses/>.
-// =======================================
-//
-// =======================================
-void __stdcall MOD_RM(ARGTYPE* pMyArgument)
+/* Copyright 2006-2009, BeatriX
+ * File coded by BeatriX
+ *
+ * This file is part of BeaEngine.
+ *
+ *    BeaEngine is free software: you can redistribute it and/or modify
+ *    it under the terms of the GNU Lesser General Public License as published by
+ *    the Free Software Foundation, either version 3 of the License, or
+ *    (at your option) any later version.
+ *
+ *    BeaEngine is distributed in the hope that it will be useful,
+ *    but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *    GNU Lesser General Public License for more details.
+ *
+ *    You should have received a copy of the GNU Lesser General Public License
+ *    along with BeaEngine.  If not, see <http://www.gnu.org/licenses/>.
+ * =======================================
+ *
+ * ======================================= */
+void __bea_callspec__ MOD_RM(ARGTYPE* pMyArgument)
 {
     DECALAGE_EIP = 0;
     if (!Security(1)) return;
-    MOD_ = ((*((BYTE*) (EIP_ + 1))) >> 6) & 0x3;
-    RM_  = (*((BYTE*) (EIP_ + 1))) & 0x7;
+    MOD_ = ((*((UInt8*) (EIP_ + 1))) >> 6) & 0x3;
+    RM_  = (*((UInt8*) (EIP_ + 1))) & 0x7;
     if (MOD_ == 0) {
         ModRM_0[RM_](pMyArgument);
     }
@@ -45,14 +45,14 @@ void __stdcall MOD_RM(ARGTYPE* pMyArgument)
     }
 
 }
-// =======================================
-//
-// =======================================
-void __stdcall Reg_Opcode(ARGTYPE* pMyArgument)
+/* =======================================
+ *
+ * ======================================= */
+void __bea_callspec__ Reg_Opcode(ARGTYPE* pMyArgument)
 {
     int i = 0;
     if (!Security(1)) return;
-    REGOPCODE = ((*((BYTE*) (EIP_ + 1))) >> 3) & 0x7;
+    REGOPCODE = ((*((UInt8*) (EIP_ + 1))) >> 3) & 0x7;
     if (REX.R_ == 1) {
         REGOPCODE += 0x8;
     }
@@ -114,10 +114,10 @@ void __stdcall Reg_Opcode(ARGTYPE* pMyArgument)
         (*pMyArgument).ArgSize = 64;
     }
 }
-// =======================================
-//          ModRM_0
-// =======================================
-void __stdcall Addr_EAX(ARGTYPE* pMyArgument)
+/* =======================================
+ *          ModRM_0
+ * ======================================= */
+void __bea_callspec__ Addr_EAX(ARGTYPE* pMyArgument)
 {
     int i = 0;
     if (SYNTAX_ == ATSyntax) {
@@ -157,10 +157,10 @@ void __stdcall Addr_EAX(ARGTYPE* pMyArgument)
     }
 
 }
-// =======================================
-//
-// =======================================
-void __stdcall Addr_ECX(ARGTYPE* pMyArgument)
+/* =======================================
+ *
+ * ======================================= */
+void __bea_callspec__ Addr_ECX(ARGTYPE* pMyArgument)
 {
     int i = 0;
     if (SYNTAX_ == ATSyntax) {
@@ -201,10 +201,10 @@ void __stdcall Addr_ECX(ARGTYPE* pMyArgument)
 
 }
 
-// =======================================
-//
-// =======================================
-void __stdcall Addr_EDX(ARGTYPE* pMyArgument)
+/* =======================================
+ *
+ * ======================================= */
+void __bea_callspec__ Addr_EDX(ARGTYPE* pMyArgument)
 {
     int i = 0;
     if (SYNTAX_ == ATSyntax) {
@@ -245,10 +245,10 @@ void __stdcall Addr_EDX(ARGTYPE* pMyArgument)
 }
 
 
-// =======================================
-//
-// =======================================
-void __stdcall Addr_EBX(ARGTYPE* pMyArgument)
+/* =======================================
+ *
+ * ======================================= */
+void __bea_callspec__ Addr_EBX(ARGTYPE* pMyArgument)
 {
     int i = 0;
     if (SYNTAX_ == ATSyntax) {
@@ -288,18 +288,18 @@ void __stdcall Addr_EBX(ARGTYPE* pMyArgument)
 
 }
 
-// =======================================
-//
-// =======================================
-void __stdcall Addr_SIB(ARGTYPE* pMyArgument)
+/* =======================================
+ *
+ * ======================================= */
+void __bea_callspec__ Addr_SIB(ARGTYPE* pMyArgument)
 {
     if (!Security(2)) return;
     (*pMyArgument).ArgType = MEMORY_TYPE;
     if (AddressSize >= 32) {
         DECALAGE_EIP++;
-        BASE_ = ((BYTE) *((BYTE*) EIP_ + 2)) & 0x7;
-        SCALE_ = (((BYTE) *((BYTE*) EIP_ + 2)) & 0xc0) >> 6;
-        INDEX_ = (((BYTE) *((BYTE*) EIP_ + 2)) & 0x38) >> 3;
+        BASE_ = ((UInt8) *((UInt8*) EIP_ + 2)) & 0x7;
+        SCALE_ = (((UInt8) *((UInt8*) EIP_ + 2)) & 0xc0) >> 6;
+        INDEX_ = (((UInt8) *((UInt8*) EIP_ + 2)) & 0x38) >> 3;
         (void) SIB[SCALE_](pMyArgument, 0);
     }
     else {
@@ -308,19 +308,19 @@ void __stdcall Addr_SIB(ARGTYPE* pMyArgument)
     }
 }
 
-// =======================================
-//
-// =======================================
-void __stdcall Addr_disp32(ARGTYPE* pMyArgument)
+/* =======================================
+ *
+ * ======================================= */
+void __bea_callspec__ Addr_disp32(ARGTYPE* pMyArgument)
 {
     long MyNumber;
-    long long MyAddress;
+    Int64 MyAddress;
     int i = 0;
     (*pMyArgument).ArgType = MEMORY_TYPE;
     if (AddressSize >= 32) {
         if (!Security(6)) return;
         DECALAGE_EIP+=4;
-        MyNumber = *((SDWORD*) (EIP_ + 2));
+        MyNumber = *((SUInt32*) (EIP_ + 2));
         (*pMyArgument).Memory.Displacement = MyNumber;
         if (Architecture == 64) {
             MyNumber += 6;
@@ -338,10 +338,10 @@ void __stdcall Addr_disp32(ARGTYPE* pMyArgument)
     }
 }
 
-// =======================================
-//
-// =======================================
-void __stdcall Addr_ESI(ARGTYPE* pMyArgument)
+/* =======================================
+ *
+ * ======================================= */
+void __bea_callspec__ Addr_ESI(ARGTYPE* pMyArgument)
 {
     long MyNumber;
     int i = 0;
@@ -373,7 +373,7 @@ void __stdcall Addr_ESI(ARGTYPE* pMyArgument)
     }
     else {
         DECALAGE_EIP+=2;
-        MyNumber = *((WORD*) (EIP_ + 2));
+        MyNumber = *((UInt16*) (EIP_ + 2));
         (*pMyArgument).Memory.Displacement = MyNumber;
         if (!Security(2)) return;
         (void) CopyFormattedNumber((char*) (*pMyArgument).ArgMnemonic+i,"%.4X", MyNumber);
@@ -385,10 +385,10 @@ void __stdcall Addr_ESI(ARGTYPE* pMyArgument)
     }
 }
 
-// =======================================
-//
-// =======================================
-void __stdcall Addr_EDI(ARGTYPE* pMyArgument)
+/* =======================================
+ *
+ * ======================================= */
+void __bea_callspec__ Addr_EDI(ARGTYPE* pMyArgument)
 {
     int i = 0;
     if (SYNTAX_ == ATSyntax) {
@@ -428,14 +428,14 @@ void __stdcall Addr_EDI(ARGTYPE* pMyArgument)
     }
 }
 
-// =======================================
-//          ModRM_1
-// =======================================
-void __stdcall Addr_EAX_disp8(ARGTYPE* pMyArgument)
+/* =======================================
+ *          ModRM_1
+ * ======================================= */
+void __bea_callspec__ Addr_EAX_disp8(ARGTYPE* pMyArgument)
 {
     int i = 0, j;
     long MyNumber;
-    MyNumber = *((SBYTE*) (EIP_ + 2));
+    MyNumber = *((SUInt8*) (EIP_ + 2));
     (*pMyArgument).Memory.Displacement = MyNumber;
     if (SYNTAX_ == ATSyntax) {
         if (MyNumber < 0) {
@@ -496,14 +496,14 @@ void __stdcall Addr_EAX_disp8(ARGTYPE* pMyArgument)
     }
 }
 
-// =======================================
-//          ModRM_1
-// =======================================
-void __stdcall Addr_ECX_disp8(ARGTYPE* pMyArgument)
+/* =======================================
+ *          ModRM_1
+ * ======================================= */
+void __bea_callspec__ Addr_ECX_disp8(ARGTYPE* pMyArgument)
 {
     int i = 0, j;
     long MyNumber;
-    MyNumber = (SBYTE) *((BYTE*) EIP_ + 2);
+    MyNumber = (SUInt8) *((UInt8*) EIP_ + 2);
     (*pMyArgument).Memory.Displacement = MyNumber;
     if (SYNTAX_ == ATSyntax) {
         if (MyNumber < 0) {
@@ -564,14 +564,14 @@ void __stdcall Addr_ECX_disp8(ARGTYPE* pMyArgument)
     }
 }
 
-// =======================================
-//          ModRM_1
-// =======================================
-void __stdcall Addr_EDX_disp8(ARGTYPE* pMyArgument)
+/* =======================================
+ *          ModRM_1
+ * ======================================= */
+void __bea_callspec__ Addr_EDX_disp8(ARGTYPE* pMyArgument)
 {
     int i = 0, j;
     long MyNumber;
-    MyNumber = *((SBYTE*) (EIP_ + 2));
+    MyNumber = *((SUInt8*) (EIP_ + 2));
     (*pMyArgument).Memory.Displacement = MyNumber;
     if (SYNTAX_ == ATSyntax) {
         if (MyNumber < 0) {
@@ -631,14 +631,14 @@ void __stdcall Addr_EDX_disp8(ARGTYPE* pMyArgument)
     }
 }
 
-// =======================================
-//          ModRM_1
-// =======================================
-void __stdcall Addr_EBX_disp8(ARGTYPE* pMyArgument)
+/* =======================================
+ *          ModRM_1
+ * ======================================= */
+void __bea_callspec__ Addr_EBX_disp8(ARGTYPE* pMyArgument)
 {
     int i = 0, j;
     long MyNumber;
-    MyNumber = *((SBYTE*) (EIP_ + 2));
+    MyNumber = *((SUInt8*) (EIP_ + 2));
     (*pMyArgument).Memory.Displacement = MyNumber;
     if (SYNTAX_ == ATSyntax) {
         if (MyNumber < 0) {
@@ -698,15 +698,15 @@ void __stdcall Addr_EBX_disp8(ARGTYPE* pMyArgument)
     }
 }
 
-// =======================================
-//
-// =======================================
-void __stdcall Addr_SIB_disp8(ARGTYPE* pMyArgument)
+/* =======================================
+ *
+ * ======================================= */
+void __bea_callspec__ Addr_SIB_disp8(ARGTYPE* pMyArgument)
 {
     int i = 0, j;
     long MyNumber;
     if (!Security(2)) return;
-    MyNumber = *((SBYTE*) (EIP_ + 3));
+    MyNumber = *((SUInt8*) (EIP_ + 3));
     (*pMyArgument).Memory.Displacement = MyNumber;
     if (SYNTAX_ == ATSyntax) {
         if (MyNumber < 0) {
@@ -719,15 +719,15 @@ void __stdcall Addr_SIB_disp8(ARGTYPE* pMyArgument)
             j=i;
             i+= CopyFormattedNumber((char*) (*pMyArgument).ArgMnemonic+j,"%.2X", MyNumber);
         }
-        //(void) strcpy((char*) (*pMyArgument).ArgMnemonic+i, "(%");
-        //i+=2;
+        /*(void) strcpy((char*) (*pMyArgument).ArgMnemonic+i, "(%");
+         *i+=2; */
     }
     (*pMyArgument).ArgType = MEMORY_TYPE;
     if (AddressSize >= 32) {
         DECALAGE_EIP++;
-        BASE_ = (*((BYTE*) (EIP_ + 2))) & 0x7;
-        SCALE_ = ((*((BYTE*) (EIP_ + 2))) & 0xc0) >> 6;
-        INDEX_ = ((*((BYTE*) (EIP_ + 2))) & 0x38) >> 3;
+        BASE_ = (*((UInt8*) (EIP_ + 2))) & 0x7;
+        SCALE_ = ((*((UInt8*) (EIP_ + 2))) & 0xc0) >> 6;
+        INDEX_ = ((*((UInt8*) (EIP_ + 2))) & 0x38) >> 3;
         j = i;
         i += SIB[SCALE_](pMyArgument, j);
     }
@@ -755,14 +755,14 @@ void __stdcall Addr_SIB_disp8(ARGTYPE* pMyArgument)
 
 }
 
-// =======================================
-//          ModRM_1
-// =======================================
-void __stdcall Addr_EBP_disp8(ARGTYPE* pMyArgument)
+/* =======================================
+ *          ModRM_1
+ * ======================================= */
+void __bea_callspec__ Addr_EBP_disp8(ARGTYPE* pMyArgument)
 {
     int i = 0, j;
     long MyNumber;
-    MyNumber = *((SBYTE*) (EIP_ + 2));
+    MyNumber = *((SUInt8*) (EIP_ + 2));
     (*pMyArgument).Memory.Displacement = MyNumber;
     if (SYNTAX_ == ATSyntax) {
         if (MyNumber < 0) {
@@ -823,14 +823,14 @@ void __stdcall Addr_EBP_disp8(ARGTYPE* pMyArgument)
     }
 }
 
-// =======================================
-//          ModRM_1
-// =======================================
-void __stdcall Addr_ESI_disp8(ARGTYPE* pMyArgument)
+/* =======================================
+ *          ModRM_1
+ * ======================================= */
+void __bea_callspec__ Addr_ESI_disp8(ARGTYPE* pMyArgument)
 {
     int i = 0, j;
     long MyNumber;
-    MyNumber = *((SBYTE*) (EIP_ + 2));
+    MyNumber = *((SUInt8*) (EIP_ + 2));
     (*pMyArgument).Memory.Displacement = MyNumber;
     if (SYNTAX_ == ATSyntax) {
         if (MyNumber < 0) {
@@ -891,14 +891,14 @@ void __stdcall Addr_ESI_disp8(ARGTYPE* pMyArgument)
     }
 }
 
-// =======================================
-//          ModRM_1
-// =======================================
-void __stdcall Addr_EDI_disp8(ARGTYPE* pMyArgument)
+/* =======================================
+ *          ModRM_1
+ * ======================================= */
+void __bea_callspec__ Addr_EDI_disp8(ARGTYPE* pMyArgument)
 {
     int i = 0, j;
     long MyNumber;
-    MyNumber = *((SBYTE*) (EIP_ + 2));
+    MyNumber = *((SUInt8*) (EIP_ + 2));
     (*pMyArgument).Memory.Displacement = MyNumber;
     if (SYNTAX_ == ATSyntax) {
         if (MyNumber < 0) {
@@ -959,14 +959,14 @@ void __stdcall Addr_EDI_disp8(ARGTYPE* pMyArgument)
     }
 }
 
-// =======================================
-//          ModRM_2
-// =======================================
-void __stdcall Addr_EAX_disp32(ARGTYPE* pMyArgument)
+/* =======================================
+ *          ModRM_2
+ * ======================================= */
+void __bea_callspec__ Addr_EAX_disp32(ARGTYPE* pMyArgument)
 {
     int i = 0, j;
     long MyNumber;
-    MyNumber = *((SDWORD*) (EIP_ + 2));
+    MyNumber = *((SUInt32*) (EIP_ + 2));
     (*pMyArgument).Memory.Displacement = MyNumber;
     if (SYNTAX_ == ATSyntax) {
         if (MyNumber < 0) {
@@ -1026,14 +1026,14 @@ void __stdcall Addr_EAX_disp32(ARGTYPE* pMyArgument)
 }
 
 
-// =======================================
-//          ModRM_2
-// =======================================
-void __stdcall Addr_ECX_disp32(ARGTYPE* pMyArgument)
+/* =======================================
+ *          ModRM_2
+ * ======================================= */
+void __bea_callspec__ Addr_ECX_disp32(ARGTYPE* pMyArgument)
 {
     int i = 0, j;
     long MyNumber;
-    MyNumber = *((SDWORD*) (EIP_ + 2));
+    MyNumber = *((SUInt32*) (EIP_ + 2));
     (*pMyArgument).Memory.Displacement = MyNumber;
     if (SYNTAX_ == ATSyntax) {
         if (MyNumber < 0) {
@@ -1093,14 +1093,14 @@ void __stdcall Addr_ECX_disp32(ARGTYPE* pMyArgument)
     }
 }
 
-// =======================================
-//          ModRM_2
-// =======================================
-void __stdcall Addr_EDX_disp32(ARGTYPE* pMyArgument)
+/* =======================================
+ *          ModRM_2
+ * ======================================= */
+void __bea_callspec__ Addr_EDX_disp32(ARGTYPE* pMyArgument)
 {
     int i = 0, j;
     long MyNumber;
-    MyNumber = *((SDWORD*) (EIP_ + 2));
+    MyNumber = *((SUInt32*) (EIP_ + 2));
     (*pMyArgument).Memory.Displacement = MyNumber;
     if (SYNTAX_ == ATSyntax) {
         if (MyNumber < 0) {
@@ -1160,14 +1160,14 @@ void __stdcall Addr_EDX_disp32(ARGTYPE* pMyArgument)
     }
 }
 
-// =======================================
-//          ModRM_2
-// =======================================
-void __stdcall Addr_EBX_disp32(ARGTYPE* pMyArgument)
+/* =======================================
+ *          ModRM_2
+ * ======================================= */
+void __bea_callspec__ Addr_EBX_disp32(ARGTYPE* pMyArgument)
 {
     int i = 0, j;
     long MyNumber;
-    MyNumber = *((SDWORD*) (EIP_ + 2));
+    MyNumber = *((SUInt32*) (EIP_ + 2));
     (*pMyArgument).Memory.Displacement = MyNumber;
     if (SYNTAX_ == ATSyntax) {
         if (MyNumber < 0) {
@@ -1227,15 +1227,15 @@ void __stdcall Addr_EBX_disp32(ARGTYPE* pMyArgument)
     }
 }
 
-// =======================================
-//
-// =======================================
-void __stdcall Addr_SIB_disp32(ARGTYPE* pMyArgument)
+/* =======================================
+ *
+ * ======================================= */
+void __bea_callspec__ Addr_SIB_disp32(ARGTYPE* pMyArgument)
 {
     int i = 0, j;
     long MyNumber;
     if (!Security(2)) return;
-    MyNumber = *((SDWORD*) (EIP_ + 3));
+    MyNumber = *((SUInt32*) (EIP_ + 3));
     (*pMyArgument).Memory.Displacement = MyNumber;
     if (SYNTAX_ == ATSyntax) {
         if (MyNumber < 0) {
@@ -1248,15 +1248,15 @@ void __stdcall Addr_SIB_disp32(ARGTYPE* pMyArgument)
             j = i;
             i+= CopyFormattedNumber((char*) (*pMyArgument).ArgMnemonic+j,"%.8X", MyNumber);
         }
-        //(void) strcpy((char*) (*pMyArgument).ArgMnemonic+i, "(%");
-        //i+=2;
+        /*(void) strcpy((char*) (*pMyArgument).ArgMnemonic+i, "(%");
+         *i+=2; */
     }
     (*pMyArgument).ArgType = MEMORY_TYPE;
     if (AddressSize >= 32) {
         DECALAGE_EIP++;
-        BASE_ = ((BYTE) *((BYTE*) EIP_ + 2)) & 0x7;
-        SCALE_ = (((BYTE) *((BYTE*) EIP_ + 2)) & 0xc0) >> 6;
-        INDEX_ = (((BYTE) *((BYTE*) EIP_ + 2)) & 0x38) >> 3;
+        BASE_ = ((UInt8) *((UInt8*) EIP_ + 2)) & 0x7;
+        SCALE_ = (((UInt8) *((UInt8*) EIP_ + 2)) & 0xc0) >> 6;
+        INDEX_ = (((UInt8) *((UInt8*) EIP_ + 2)) & 0x38) >> 3;
         j = i;
         i += SIB[SCALE_](pMyArgument, j);
     }
@@ -1285,14 +1285,14 @@ void __stdcall Addr_SIB_disp32(ARGTYPE* pMyArgument)
 
 }
 
-// =======================================
-//          ModRM_2
-// =======================================
-void __stdcall Addr_EBP_disp32(ARGTYPE* pMyArgument)
+/* =======================================
+ *          ModRM_2
+ * ======================================= */
+void __bea_callspec__ Addr_EBP_disp32(ARGTYPE* pMyArgument)
 {
     int i = 0, j;
     long MyNumber;
-    MyNumber = *((SDWORD*) (EIP_ + 2));
+    MyNumber = *((SUInt32*) (EIP_ + 2));
     (*pMyArgument).Memory.Displacement = MyNumber;
     if (SYNTAX_ == ATSyntax) {
         if (MyNumber < 0) {
@@ -1353,14 +1353,14 @@ void __stdcall Addr_EBP_disp32(ARGTYPE* pMyArgument)
     }
 }
 
-// =======================================
-//          ModRM_2
-// =======================================
-void __stdcall Addr_ESI_disp32(ARGTYPE* pMyArgument)
+/* =======================================
+ *          ModRM_2
+ * ======================================= */
+void __bea_callspec__ Addr_ESI_disp32(ARGTYPE* pMyArgument)
 {
     int i = 0, j;
     long MyNumber;
-    MyNumber = *((SDWORD*) (EIP_ + 2));
+    MyNumber = *((SUInt32*) (EIP_ + 2));
     (*pMyArgument).Memory.Displacement = MyNumber;
     if (SYNTAX_ == ATSyntax) {
         if (MyNumber < 0) {
@@ -1421,14 +1421,14 @@ void __stdcall Addr_ESI_disp32(ARGTYPE* pMyArgument)
     }
 }
 
-// =======================================
-//          ModRM_2
-// =======================================
-void __stdcall Addr_EDI_disp32(ARGTYPE* pMyArgument)
+/* =======================================
+ *          ModRM_2
+ * ======================================= */
+void __bea_callspec__ Addr_EDI_disp32(ARGTYPE* pMyArgument)
 {
     int i = 0, j;
     long MyNumber;
-    MyNumber = *((SDWORD*) (EIP_ + 2));
+    MyNumber = *((SUInt32*) (EIP_ + 2));
     (*pMyArgument).Memory.Displacement = MyNumber;
     if (SYNTAX_ == ATSyntax) {
         if (MyNumber < 0) {
@@ -1489,10 +1489,10 @@ void __stdcall Addr_EDI_disp32(ARGTYPE* pMyArgument)
     }
 }
 
-// =======================================
-//          ModRM_3
-// =======================================
-void __stdcall _rEAX(ARGTYPE* pMyArgument)
+/* =======================================
+ *          ModRM_3
+ * ======================================= */
+void __bea_callspec__ _rEAX(ARGTYPE* pMyArgument)
 {
     int i = 0;
     OpSize = 0;
@@ -1574,10 +1574,10 @@ void __stdcall _rEAX(ARGTYPE* pMyArgument)
 }
 
 
-// =======================================
-//          ModRM_3
-// =======================================
-void __stdcall _rECX(ARGTYPE* pMyArgument)
+/* =======================================
+ *          ModRM_3
+ * ======================================= */
+void __bea_callspec__ _rECX(ARGTYPE* pMyArgument)
 {
     int i = 0;
     OpSize = 0;
@@ -1660,10 +1660,10 @@ void __stdcall _rECX(ARGTYPE* pMyArgument)
 
 
 
-// =======================================
-//          ModRM_3
-// =======================================
-void __stdcall _rEDX(ARGTYPE* pMyArgument)
+/* =======================================
+ *          ModRM_3
+ * ======================================= */
+void __bea_callspec__ _rEDX(ARGTYPE* pMyArgument)
 {
     int i = 0;
     OpSize = 0;
@@ -1746,10 +1746,10 @@ void __stdcall _rEDX(ARGTYPE* pMyArgument)
 
 
 
-// =======================================
-//          ModRM_3
-// =======================================
-void __stdcall _rEBX(ARGTYPE* pMyArgument)
+/* =======================================
+ *          ModRM_3
+ * ======================================= */
+void __bea_callspec__ _rEBX(ARGTYPE* pMyArgument)
 {
     int i = 0;
     OpSize = 0;
@@ -1832,10 +1832,10 @@ void __stdcall _rEBX(ARGTYPE* pMyArgument)
 
 
 
-// =======================================
-//          ModRM_3
-// =======================================
-void __stdcall _rESP(ARGTYPE* pMyArgument)
+/* =======================================
+ *          ModRM_3
+ * ======================================= */
+void __bea_callspec__ _rESP(ARGTYPE* pMyArgument)
 {
     int i = 0;
     OpSize = 0;
@@ -1918,10 +1918,10 @@ void __stdcall _rESP(ARGTYPE* pMyArgument)
 
 
 
-// =======================================
-//          ModRM_3
-// =======================================
-void __stdcall _rEBP(ARGTYPE* pMyArgument)
+/* =======================================
+ *          ModRM_3
+ * ======================================= */
+void __bea_callspec__ _rEBP(ARGTYPE* pMyArgument)
 {
     int i = 0;
     OpSize = 0;
@@ -2004,10 +2004,10 @@ void __stdcall _rEBP(ARGTYPE* pMyArgument)
 
 
 
-// =======================================
-//          ModRM_3
-// =======================================
-void __stdcall _rESI(ARGTYPE* pMyArgument)
+/* =======================================
+ *          ModRM_3
+ * ======================================= */
+void __bea_callspec__ _rESI(ARGTYPE* pMyArgument)
 {
     int i = 0;
     OpSize = 0;
@@ -2090,10 +2090,10 @@ void __stdcall _rESI(ARGTYPE* pMyArgument)
 
 
 
-// =======================================
-//          ModRM_3
-// =======================================
-void __stdcall _rEDI(ARGTYPE* pMyArgument)
+/* =======================================
+ *          ModRM_3
+ * ======================================= */
+void __bea_callspec__ _rEDI(ARGTYPE* pMyArgument)
 {
     int i = 0;
     OpSize = 0;
@@ -2175,19 +2175,19 @@ void __stdcall _rEDI(ARGTYPE* pMyArgument)
 }
 
 
-// =======================================
-//
-// =======================================
-int __stdcall SIB_0(ARGTYPE* pMyArgument, int i)
+/* =======================================
+ *
+ * ======================================= */
+int __bea_callspec__ SIB_0(ARGTYPE* pMyArgument, int i)
 {
 
-    // ========================= Interpret Base
+    /* ========================= Interpret Base */
 
     if ((BASE_ == 5) && (MOD_ == 0)) {
         DECALAGE_EIP += 4;
         if (!Security(7)) return i;
-        (void) sprintf((char*) (*pMyArgument).ArgMnemonic + i, "%.8X",*((DWORD*) (EIP_ + 3)));
-        (*pMyArgument).Memory.Displacement = *((DWORD*) (EIP_ + 3));
+        (void) sprintf((char*) (*pMyArgument).ArgMnemonic + i, "%.8X",*((UInt32*) (EIP_ + 3)));
+        (*pMyArgument).Memory.Displacement = *((UInt32*) (EIP_ + 3));
         i += 4;
     }
     else {
@@ -2221,7 +2221,7 @@ int __stdcall SIB_0(ARGTYPE* pMyArgument, int i)
             }
         }
     }
-    // ======================== Interpret Index
+    /* ======================== Interpret Index */
 
 
     if (INDEX_ != 4) {
@@ -2273,20 +2273,20 @@ int __stdcall SIB_0(ARGTYPE* pMyArgument, int i)
     return i;
 }
 
-// =======================================
-//
-// =======================================
-int __stdcall SIB_1(ARGTYPE* pMyArgument, int i)
+/* =======================================
+ *
+ * ======================================= */
+int __bea_callspec__ SIB_1(ARGTYPE* pMyArgument, int i)
 {
     int j;
-    // ========================= Interpret Base
+    /* ========================= Interpret Base */
 
     if ((BASE_ == 5) && (MOD_ == 0)) {
         DECALAGE_EIP += 4;
         if (!Security(7)) return i;
         j = i;
-        i+= CopyFormattedNumber((char*) (*pMyArgument).ArgMnemonic + j,"%.8X", *((DWORD*) (EIP_ + 3)));
-        (*pMyArgument).Memory.Displacement = *((DWORD*) (EIP_ + 3));
+        i+= CopyFormattedNumber((char*) (*pMyArgument).ArgMnemonic + j,"%.8X", *((UInt32*) (EIP_ + 3)));
+        (*pMyArgument).Memory.Displacement = *((UInt32*) (EIP_ + 3));
     }
     else {
 
@@ -2319,7 +2319,7 @@ int __stdcall SIB_1(ARGTYPE* pMyArgument, int i)
             }
         }
     }
-    // ======================== Interpret Index
+    /* ======================== Interpret Index */
 
     if (INDEX_ != 4) {
         if (SYNTAX_ == ATSyntax) {
@@ -2381,20 +2381,20 @@ int __stdcall SIB_1(ARGTYPE* pMyArgument, int i)
     return i;
 }
 
-// =======================================
-//
-// =======================================
-int __stdcall SIB_2(ARGTYPE* pMyArgument, int i)
+/* =======================================
+ *
+ * ======================================= */
+int __bea_callspec__ SIB_2(ARGTYPE* pMyArgument, int i)
 {
     int j;
-    // ========================= Interpret Base
+    /* ========================= Interpret Base */
 
     if ((BASE_ == 5) && (MOD_ == 0)) {
         DECALAGE_EIP += 4;
         if (!Security(7)) return i;
         j = i;
-        i+= CopyFormattedNumber((char*) (*pMyArgument).ArgMnemonic + j,"%.8X", *((DWORD*) (EIP_ + 3)));
-        (*pMyArgument).Memory.Displacement = *((DWORD*) (EIP_ + 3));
+        i+= CopyFormattedNumber((char*) (*pMyArgument).ArgMnemonic + j,"%.8X", *((UInt32*) (EIP_ + 3)));
+        (*pMyArgument).Memory.Displacement = *((UInt32*) (EIP_ + 3));
     }
     else {
 
@@ -2427,7 +2427,7 @@ int __stdcall SIB_2(ARGTYPE* pMyArgument, int i)
             }
         }
     }
-    // ======================== Interpret Index
+    /* ======================== Interpret Index */
 
     if (INDEX_ != 4) {
         if (SYNTAX_ == ATSyntax) {
@@ -2488,20 +2488,20 @@ int __stdcall SIB_2(ARGTYPE* pMyArgument, int i)
     return i;
 }
 
-// =======================================
-//
-// =======================================
-int __stdcall SIB_3(ARGTYPE* pMyArgument, int i)
+/* =======================================
+ *
+ * ======================================= */
+int __bea_callspec__ SIB_3(ARGTYPE* pMyArgument, int i)
 {
     int j;
-    // ========================= Interpret Base
+    /* ========================= Interpret Base */
 
     if ((BASE_ == 5) && (MOD_ == 0)) {
         DECALAGE_EIP += 4;
         if (!Security(7)) return i;
         j = i;
-        i+= CopyFormattedNumber((char*) (*pMyArgument).ArgMnemonic + j,"%.8X", *((DWORD*) (EIP_ + 3)));
-        (*pMyArgument).Memory.Displacement = *((DWORD*) (EIP_ + 3));
+        i+= CopyFormattedNumber((char*) (*pMyArgument).ArgMnemonic + j,"%.8X", *((UInt32*) (EIP_ + 3)));
+        (*pMyArgument).Memory.Displacement = *((UInt32*) (EIP_ + 3));
     }
     else {
 
@@ -2534,7 +2534,7 @@ int __stdcall SIB_3(ARGTYPE* pMyArgument, int i)
             }
         }
     }
-    // ======================== Interpret Index
+    /* ======================== Interpret Index */
 
     if (INDEX_ != 4) {
         if (SYNTAX_ == ATSyntax) {

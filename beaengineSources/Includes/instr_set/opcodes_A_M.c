@@ -1,30 +1,30 @@
-// Copyright 2006-2009, BeatriX
-// File coded by BeatriX
-//
-// This file is part of BeaEngine.
-//
-//    BeaEngine is free software: you can redistribute it and/or modify
-//    it under the terms of the GNU Lesser General Public License as published by
-//    the Free Software Foundation, either version 3 of the License, or
-//    (at your option) any later version.
-//
-//    BeaEngine is distributed in the hope that it will be useful,
-//    but WITHOUT ANY WARRANTY; without even the implied warranty of
-//    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//    GNU Lesser General Public License for more details.
-//
-//    You should have received a copy of the GNU Lesser General Public License
-//    along with BeaEngine.  If not, see <http://www.gnu.org/licenses/>.
+/* Copyright 2006-2009, BeatriX
+ * File coded by BeatriX
+ *
+ * This file is part of BeaEngine.
+ *
+ *    BeaEngine is free software: you can redistribute it and/or modify
+ *    it under the terms of the GNU Lesser General Public License as published by
+ *    the Free Software Foundation, either version 3 of the License, or
+ *    (at your option) any later version.
+ *
+ *    BeaEngine is distributed in the hope that it will be useful,
+ *    but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *    GNU Lesser General Public License for more details.
+ *
+ *    You should have received a copy of the GNU Lesser General Public License
+ *    along with BeaEngine.  If not, see <http://www.gnu.org/licenses/>. */
 
-void __stdcall FailDecode(PDISASM pMyDisasm)
+void __bea_callspec__ FailDecode(PDISASM pMyDisasm)
 {
 	(void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "??? ");
 	ERROR_OPCODE = 1;
 }
-// ====================================================================
-//
-// ====================================================================
-void __stdcall aaa_(PDISASM pMyDisasm)
+/* ====================================================================
+ *
+ * ==================================================================== */
+void __bea_callspec__ aaa_(PDISASM pMyDisasm)
 {
     if ((*pMyDisasm).Archi == 64) {
         FailDecode(pMyDisasm);
@@ -38,10 +38,10 @@ void __stdcall aaa_(PDISASM pMyDisasm)
     };
 }
 
-// ====================================================================
-//
-// ====================================================================
-void __stdcall aad_(PDISASM pMyDisasm)
+/* ====================================================================
+ *
+ * ==================================================================== */
+void __bea_callspec__ aad_(PDISASM pMyDisasm)
 {
     if ((*pMyDisasm).Archi == 64) {
         FailDecode(pMyDisasm);
@@ -53,9 +53,9 @@ void __stdcall aad_(PDISASM pMyDisasm)
         (*pMyDisasm).Argument1.ArgSize = 16;
         if (!Security(1)) return;
         ImmediatSize = 8;
-        if (*((BYTE*) (EIP_+1)) != 0x0A) {
-            (*pMyDisasm).Instruction.Immediat = *((BYTE*) (EIP_+1));
-            (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument2.ArgMnemonic, "%.2X", *((BYTE*) (EIP_+1)));
+        if (*((UInt8*) (EIP_+1)) != 0x0A) {
+            (*pMyDisasm).Instruction.Immediat = *((UInt8*) (EIP_+1));
+            (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument2.ArgMnemonic, "%.2X", *((UInt8*) (EIP_+1)));
             (*pMyDisasm).Argument2.ArgType = CONSTANT_TYPE + ABSOLUTE_;
             (*pMyDisasm).Argument2.ArgSize = 8;
         }
@@ -63,10 +63,10 @@ void __stdcall aad_(PDISASM pMyDisasm)
     };
 }
 
-// ====================================================================
-//
-// ====================================================================
-void __stdcall aam_(PDISASM pMyDisasm)
+/* ====================================================================
+ *
+ * ==================================================================== */
+void __bea_callspec__ aam_(PDISASM pMyDisasm)
 {
     if ((*pMyDisasm).Archi == 64) {
         FailDecode(pMyDisasm);
@@ -78,9 +78,9 @@ void __stdcall aam_(PDISASM pMyDisasm)
         (*pMyDisasm).Argument1.ArgSize = 16;
         if (!Security(1)) return;
         ImmediatSize = 8;
-        if (*((BYTE*) (EIP_+1)) != 0x0A) {
-            (*pMyDisasm).Instruction.Immediat = *((BYTE*) (EIP_+1));
-            (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument2.ArgMnemonic, "%.2X", *((BYTE*) (EIP_+1)));
+        if (*((UInt8*) (EIP_+1)) != 0x0A) {
+            (*pMyDisasm).Instruction.Immediat = *((UInt8*) (EIP_+1));
+            (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument2.ArgMnemonic, "%.2X", *((UInt8*) (EIP_+1)));
             (*pMyDisasm).Argument2.ArgType = CONSTANT_TYPE + ABSOLUTE_;
             (*pMyDisasm).Argument2.ArgSize = 8;
         }
@@ -88,10 +88,10 @@ void __stdcall aam_(PDISASM pMyDisasm)
     };
 }
 
-// =======================================
-//
-// =======================================
-void __stdcall aas_(PDISASM pMyDisasm)
+/* =======================================
+ *
+ * ======================================= */
+void __bea_callspec__ aas_(PDISASM pMyDisasm)
 {
     if ((*pMyDisasm).Archi == 64) {
         FailDecode(pMyDisasm);
@@ -105,10 +105,10 @@ void __stdcall aas_(PDISASM pMyDisasm)
     };
 }
 
-// =======================================
-//      00h
-// =======================================
-void __stdcall add_EbGb(PDISASM pMyDisasm)
+/* =======================================
+ *      00h
+ * ======================================= */
+void __bea_callspec__ add_EbGb(PDISASM pMyDisasm)
 {
     if ((*pMyDisasm).Prefix.LockPrefix == InvalidPrefix) {
         (*pMyDisasm).Prefix.LockPrefix = InUsePrefix;
@@ -119,10 +119,10 @@ void __stdcall add_EbGb(PDISASM pMyDisasm)
     FillFlags(pMyDisasm,5);
 }
 
-// =======================================
-//      01h
-// =======================================
-void __stdcall add_EvGv(PDISASM pMyDisasm)
+/* =======================================
+ *      01h
+ * ======================================= */
+void __bea_callspec__ add_EvGv(PDISASM pMyDisasm)
 {
     if ((*pMyDisasm).Prefix.LockPrefix == InvalidPrefix) {
         (*pMyDisasm).Prefix.LockPrefix = InUsePrefix;
@@ -133,10 +133,10 @@ void __stdcall add_EvGv(PDISASM pMyDisasm)
     FillFlags(pMyDisasm,5);
 }
 
-// =======================================
-//      02h
-// =======================================
-void __stdcall add_GbEb(PDISASM pMyDisasm)
+/* =======================================
+ *      02h
+ * ======================================= */
+void __bea_callspec__ add_GbEb(PDISASM pMyDisasm)
 {
     if ((*pMyDisasm).Prefix.LockPrefix == InvalidPrefix) {
         (*pMyDisasm).Prefix.LockPrefix = InUsePrefix;
@@ -147,10 +147,10 @@ void __stdcall add_GbEb(PDISASM pMyDisasm)
     FillFlags(pMyDisasm,5);
 }
 
-// =======================================
-//      03h
-// =======================================
-void __stdcall add_GvEv(PDISASM pMyDisasm)
+/* =======================================
+ *      03h
+ * ======================================= */
+void __bea_callspec__ add_GvEv(PDISASM pMyDisasm)
 {
     if ((*pMyDisasm).Prefix.LockPrefix == InvalidPrefix) {
         (*pMyDisasm).Prefix.LockPrefix = InUsePrefix;
@@ -161,10 +161,10 @@ void __stdcall add_GvEv(PDISASM pMyDisasm)
     FillFlags(pMyDisasm,5);
 }
 
-// =======================================
-//      04h
-// =======================================
-void __stdcall add_ALIb(PDISASM pMyDisasm)
+/* =======================================
+ *      04h
+ * ======================================= */
+void __bea_callspec__ add_ALIb(PDISASM pMyDisasm)
 {
     if ((*pMyDisasm).Prefix.LockPrefix == InvalidPrefix) {
         (*pMyDisasm).Prefix.LockPrefix = InUsePrefix;
@@ -175,10 +175,10 @@ void __stdcall add_ALIb(PDISASM pMyDisasm)
     FillFlags(pMyDisasm,5);
 }
 
-// =======================================
-//      05h
-// =======================================
-void __stdcall add_eAX_Iv(PDISASM pMyDisasm)
+/* =======================================
+ *      05h
+ * ======================================= */
+void __bea_callspec__ add_eAX_Iv(PDISASM pMyDisasm)
 {
     if ((*pMyDisasm).Prefix.LockPrefix == InvalidPrefix) {
         (*pMyDisasm).Prefix.LockPrefix = InUsePrefix;
@@ -189,10 +189,10 @@ void __stdcall add_eAX_Iv(PDISASM pMyDisasm)
     FillFlags(pMyDisasm,5);
 }
 
-// =======================================
-//      10h
-// =======================================
-void __stdcall adc_EbGb(PDISASM pMyDisasm)
+/* =======================================
+ *      10h
+ * ======================================= */
+void __bea_callspec__ adc_EbGb(PDISASM pMyDisasm)
 {
     if ((*pMyDisasm).Prefix.LockPrefix == InvalidPrefix) {
         (*pMyDisasm).Prefix.LockPrefix = InUsePrefix;
@@ -203,10 +203,10 @@ void __stdcall adc_EbGb(PDISASM pMyDisasm)
     FillFlags(pMyDisasm,4);
 }
 
-// =======================================
-//      11h
-// =======================================
-void __stdcall adc_EvGv(PDISASM pMyDisasm)
+/* =======================================
+ *      11h
+ * ======================================= */
+void __bea_callspec__ adc_EvGv(PDISASM pMyDisasm)
 {
     if ((*pMyDisasm).Prefix.LockPrefix == InvalidPrefix) {
         (*pMyDisasm).Prefix.LockPrefix = InUsePrefix;
@@ -217,10 +217,10 @@ void __stdcall adc_EvGv(PDISASM pMyDisasm)
     FillFlags(pMyDisasm,4);
 }
 
-// =======================================
-//      12h
-// =======================================
-void __stdcall adc_GbEb(PDISASM pMyDisasm)
+/* =======================================
+ *      12h
+ * ======================================= */
+void __bea_callspec__ adc_GbEb(PDISASM pMyDisasm)
 {
     if ((*pMyDisasm).Prefix.LockPrefix == InvalidPrefix) {
         (*pMyDisasm).Prefix.LockPrefix = InUsePrefix;
@@ -231,10 +231,10 @@ void __stdcall adc_GbEb(PDISASM pMyDisasm)
     FillFlags(pMyDisasm,4);
 }
 
-// =======================================
-//      13h
-// =======================================
-void __stdcall adc_GvEv(PDISASM pMyDisasm)
+/* =======================================
+ *      13h
+ * ======================================= */
+void __bea_callspec__ adc_GvEv(PDISASM pMyDisasm)
 {
     if ((*pMyDisasm).Prefix.LockPrefix == InvalidPrefix) {
         (*pMyDisasm).Prefix.LockPrefix = InUsePrefix;
@@ -245,10 +245,10 @@ void __stdcall adc_GvEv(PDISASM pMyDisasm)
     FillFlags(pMyDisasm,4);
 }
 
-// =======================================
-//      14h
-// =======================================
-void __stdcall adc_ALIb(PDISASM pMyDisasm)
+/* =======================================
+ *      14h
+ * ======================================= */
+void __bea_callspec__ adc_ALIb(PDISASM pMyDisasm)
 {
     if ((*pMyDisasm).Prefix.LockPrefix == InvalidPrefix) {
         (*pMyDisasm).Prefix.LockPrefix = InUsePrefix;
@@ -259,10 +259,10 @@ void __stdcall adc_ALIb(PDISASM pMyDisasm)
     FillFlags(pMyDisasm,4);
 }
 
-// =======================================
-//      15h
-// =======================================
-void __stdcall adc_eAX_Iv(PDISASM pMyDisasm)
+/* =======================================
+ *      15h
+ * ======================================= */
+void __bea_callspec__ adc_eAX_Iv(PDISASM pMyDisasm)
 {
     if ((*pMyDisasm).Prefix.LockPrefix == InvalidPrefix) {
         (*pMyDisasm).Prefix.LockPrefix = InUsePrefix;
@@ -273,10 +273,10 @@ void __stdcall adc_eAX_Iv(PDISASM pMyDisasm)
     FillFlags(pMyDisasm,4);
 }
 
-// =======================================
-//      20h
-// =======================================
-void __stdcall and_EbGb(PDISASM pMyDisasm)
+/* =======================================
+ *      20h
+ * ======================================= */
+void __bea_callspec__ and_EbGb(PDISASM pMyDisasm)
 {
     if ((*pMyDisasm).Prefix.LockPrefix == InvalidPrefix) {
         (*pMyDisasm).Prefix.LockPrefix = InUsePrefix;
@@ -287,10 +287,10 @@ void __stdcall and_EbGb(PDISASM pMyDisasm)
     FillFlags(pMyDisasm,6);
 }
 
-// =======================================
-//      21h
-// =======================================
-void __stdcall and_EvGv(PDISASM pMyDisasm)
+/* =======================================
+ *      21h
+ * ======================================= */
+void __bea_callspec__ and_EvGv(PDISASM pMyDisasm)
 {
     if ((*pMyDisasm).Prefix.LockPrefix == InvalidPrefix) {
         (*pMyDisasm).Prefix.LockPrefix = InUsePrefix;
@@ -301,10 +301,10 @@ void __stdcall and_EvGv(PDISASM pMyDisasm)
     FillFlags(pMyDisasm,6);
 }
 
-// =======================================
-//      22h
-// =======================================
-void __stdcall and_GbEb(PDISASM pMyDisasm)
+/* =======================================
+ *      22h
+ * ======================================= */
+void __bea_callspec__ and_GbEb(PDISASM pMyDisasm)
 {
     if ((*pMyDisasm).Prefix.LockPrefix == InvalidPrefix) {
         (*pMyDisasm).Prefix.LockPrefix = InUsePrefix;
@@ -315,10 +315,10 @@ void __stdcall and_GbEb(PDISASM pMyDisasm)
     FillFlags(pMyDisasm,6);
 }
 
-// =======================================
-//      23h
-// =======================================
-void __stdcall and_GvEv(PDISASM pMyDisasm)
+/* =======================================
+ *      23h
+ * ======================================= */
+void __bea_callspec__ and_GvEv(PDISASM pMyDisasm)
 {
     if ((*pMyDisasm).Prefix.LockPrefix == InvalidPrefix) {
         (*pMyDisasm).Prefix.LockPrefix = InUsePrefix;
@@ -329,10 +329,10 @@ void __stdcall and_GvEv(PDISASM pMyDisasm)
     FillFlags(pMyDisasm,6);
 }
 
-// =======================================
-//      24h
-// =======================================
-void __stdcall and_ALIb(PDISASM pMyDisasm)
+/* =======================================
+ *      24h
+ * ======================================= */
+void __bea_callspec__ and_ALIb(PDISASM pMyDisasm)
 {
     if ((*pMyDisasm).Prefix.LockPrefix == InvalidPrefix) {
         (*pMyDisasm).Prefix.LockPrefix = InUsePrefix;
@@ -343,10 +343,10 @@ void __stdcall and_ALIb(PDISASM pMyDisasm)
     FillFlags(pMyDisasm,6);
 }
 
-// =======================================
-//      25h
-// =======================================
-void __stdcall and_eAX_Iv(PDISASM pMyDisasm)
+/* =======================================
+ *      25h
+ * ======================================= */
+void __bea_callspec__ and_eAX_Iv(PDISASM pMyDisasm)
 {
     if ((*pMyDisasm).Prefix.LockPrefix == InvalidPrefix) {
         (*pMyDisasm).Prefix.LockPrefix = InUsePrefix;
@@ -357,10 +357,10 @@ void __stdcall and_eAX_Iv(PDISASM pMyDisasm)
     FillFlags(pMyDisasm,6);
 }
 
-// =======================================
-//
-// =======================================
-void __stdcall arpl_(PDISASM pMyDisasm)
+/* =======================================
+ *
+ * ======================================= */
+void __bea_callspec__ arpl_(PDISASM pMyDisasm)
 {
 
     if (Architecture == 64) {
@@ -380,10 +380,10 @@ void __stdcall arpl_(PDISASM pMyDisasm)
 
 }
 
-// =======================================
-//      62h
-// =======================================
-void __stdcall bound_(PDISASM pMyDisasm)
+/* =======================================
+ *      62h
+ * ======================================= */
+void __bea_callspec__ bound_(PDISASM pMyDisasm)
 {
 
     if (Architecture == 64) {
@@ -400,10 +400,10 @@ void __stdcall bound_(PDISASM pMyDisasm)
 
 }
 
-// =======================================
-//      0fc8h
-// =======================================
-void __stdcall bswap_eax(PDISASM pMyDisasm)
+/* =======================================
+ *      0fc8h
+ * ======================================= */
+void __bea_callspec__ bswap_eax(PDISASM pMyDisasm)
 {
 
     (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION + DATA_TRANSFER;
@@ -447,10 +447,10 @@ void __stdcall bswap_eax(PDISASM pMyDisasm)
 }
 
 
-// =======================================
-//      0fc8h
-// =======================================
-void __stdcall bswap_ecx(PDISASM pMyDisasm)
+/* =======================================
+ *      0fc8h
+ * ======================================= */
+void __bea_callspec__ bswap_ecx(PDISASM pMyDisasm)
 {
 
     (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION + DATA_TRANSFER;
@@ -494,10 +494,10 @@ void __stdcall bswap_ecx(PDISASM pMyDisasm)
 }
 
 
-// =======================================
-//      0fc8h
-// =======================================
-void __stdcall bswap_edx(PDISASM pMyDisasm)
+/* =======================================
+ *      0fc8h
+ * ======================================= */
+void __bea_callspec__ bswap_edx(PDISASM pMyDisasm)
 {
 
     (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION + DATA_TRANSFER;
@@ -541,10 +541,10 @@ void __stdcall bswap_edx(PDISASM pMyDisasm)
 }
 
 
-// =======================================
-//      0fc8h
-// =======================================
-void __stdcall bswap_ebx(PDISASM pMyDisasm)
+/* =======================================
+ *      0fc8h
+ * ======================================= */
+void __bea_callspec__ bswap_ebx(PDISASM pMyDisasm)
 {
 
     (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION + DATA_TRANSFER;
@@ -588,10 +588,10 @@ void __stdcall bswap_ebx(PDISASM pMyDisasm)
 }
 
 
-// =======================================
-//      0fc8h
-// =======================================
-void __stdcall bswap_esp(PDISASM pMyDisasm)
+/* =======================================
+ *      0fc8h
+ * ======================================= */
+void __bea_callspec__ bswap_esp(PDISASM pMyDisasm)
 {
 
     (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION + DATA_TRANSFER;
@@ -635,10 +635,10 @@ void __stdcall bswap_esp(PDISASM pMyDisasm)
 }
 
 
-// =======================================
-//      0fc8h
-// =======================================
-void __stdcall bswap_ebp(PDISASM pMyDisasm)
+/* =======================================
+ *      0fc8h
+ * ======================================= */
+void __bea_callspec__ bswap_ebp(PDISASM pMyDisasm)
 {
 
     (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION + DATA_TRANSFER;
@@ -682,10 +682,10 @@ void __stdcall bswap_ebp(PDISASM pMyDisasm)
 }
 
 
-// =======================================
-//      0fc8h
-// =======================================
-void __stdcall bswap_esi(PDISASM pMyDisasm)
+/* =======================================
+ *      0fc8h
+ * ======================================= */
+void __bea_callspec__ bswap_esi(PDISASM pMyDisasm)
 {
 
     (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION + DATA_TRANSFER;
@@ -729,10 +729,10 @@ void __stdcall bswap_esi(PDISASM pMyDisasm)
 }
 
 
-// =======================================
-//      0fc8h
-// =======================================
-void __stdcall bswap_edi(PDISASM pMyDisasm)
+/* =======================================
+ *      0fc8h
+ * ======================================= */
+void __bea_callspec__ bswap_edi(PDISASM pMyDisasm)
 {
 
     (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION + DATA_TRANSFER;
@@ -775,95 +775,95 @@ void __stdcall bswap_edi(PDISASM pMyDisasm)
 
 }
 
-// =======================================
-//      0fbch
-// =======================================
-void __stdcall bsf_GvEv(PDISASM pMyDisasm)
+/* =======================================
+ *      0fbch
+ * ======================================= */
+void __bea_callspec__ bsf_GvEv(PDISASM pMyDisasm)
 {
-    (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION + BIT_BYTE;
+    (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION + BIT_UInt8;
     (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "bsf ");
     GvEv(pMyDisasm);
     FillFlags(pMyDisasm,9);
 }
 
-// =======================================
-//      0fbdh
-// =======================================
-void __stdcall bsr_GvEv(PDISASM pMyDisasm)
+/* =======================================
+ *      0fbdh
+ * ======================================= */
+void __bea_callspec__ bsr_GvEv(PDISASM pMyDisasm)
 {
-    (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION + BIT_BYTE;
+    (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION + BIT_UInt8;
     (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "bsr ");
     GvEv(pMyDisasm);
     FillFlags(pMyDisasm,9);
 }
 
-// =======================================
-//      0fbbh
-// =======================================
-void __stdcall btc_EvGv(PDISASM pMyDisasm)
+/* =======================================
+ *      0fbbh
+ * ======================================= */
+void __bea_callspec__ btc_EvGv(PDISASM pMyDisasm)
 {
     if ((*pMyDisasm).Prefix.LockPrefix == InvalidPrefix) {
         (*pMyDisasm).Prefix.LockPrefix = InUsePrefix;
 
     }
-    (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION + BIT_BYTE;
+    (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION + BIT_UInt8;
     (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "btc ");
     EvGv(pMyDisasm);
     (*pMyDisasm).Argument1.AccessMode = READ;
     FillFlags(pMyDisasm,11);
 }
 
-// =======================================
-//      0fa3h
-// =======================================
-void __stdcall bt_EvGv(PDISASM pMyDisasm)
+/* =======================================
+ *      0fa3h
+ * ======================================= */
+void __bea_callspec__ bt_EvGv(PDISASM pMyDisasm)
 {
     if ((*pMyDisasm).Prefix.LockPrefix == InvalidPrefix) {
         (*pMyDisasm).Prefix.LockPrefix = InUsePrefix;
     }
-    (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION + BIT_BYTE;
+    (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION + BIT_UInt8;
     (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "bt ");
     EvGv(pMyDisasm);
     (*pMyDisasm).Argument1.AccessMode = READ;
     FillFlags(pMyDisasm,11);
 }
 
-// =======================================
-//      0fb3h
-// =======================================
-void __stdcall btr_EvGv(PDISASM pMyDisasm)
+/* =======================================
+ *      0fb3h
+ * ======================================= */
+void __bea_callspec__ btr_EvGv(PDISASM pMyDisasm)
 {
     if ((*pMyDisasm).Prefix.LockPrefix == InvalidPrefix) {
         (*pMyDisasm).Prefix.LockPrefix = InUsePrefix;
     }
-    (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION + BIT_BYTE;
+    (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION + BIT_UInt8;
     (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "btr ");
     EvGv(pMyDisasm);
     (*pMyDisasm).Argument1.AccessMode = READ;
     FillFlags(pMyDisasm,11);
 }
 
-// =======================================
-//      0fabh
-// =======================================
-void __stdcall bts_EvGv(PDISASM pMyDisasm)
+/* =======================================
+ *      0fabh
+ * ======================================= */
+void __bea_callspec__ bts_EvGv(PDISASM pMyDisasm)
 {
     if ((*pMyDisasm).Prefix.LockPrefix == InvalidPrefix) {
         (*pMyDisasm).Prefix.LockPrefix = InUsePrefix;
     }
-    (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION + BIT_BYTE;
+    (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION + BIT_UInt8;
     (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "bts ");
     EvGv(pMyDisasm);
     (*pMyDisasm).Argument1.AccessMode = READ;
     FillFlags(pMyDisasm,11);
 }
 
-// =======================================
-//      e8h
-// =======================================
-void __stdcall call_(PDISASM pMyDisasm)
+/* =======================================
+ *      e8h
+ * ======================================= */
+void __bea_callspec__ call_(PDISASM pMyDisasm)
 {
-    long long MyAddress;
+    Int64 MyAddress;
     long MyNumber;
     (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION + CONTROL_TRANSFER;
     (*pMyDisasm).Instruction.BranchType = CallType;
@@ -872,7 +872,7 @@ void __stdcall call_(PDISASM pMyDisasm)
     (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "call ");
     if (OperandSize >= 32) {
         if (!Security(5)) return;
-        MyNumber = *((SDWORD*) (EIP_+1)) + 5 + NB_PREFIX;
+        MyNumber = *((SUInt32*) (EIP_+1)) + 5 + NB_PREFIX;
         CalculateRelativeAddress(&MyAddress, MyNumber);
         (*pMyDisasm).Instruction.AddrValue = MyAddress;
         (*pMyDisasm).Instruction.ImplicitModifiedRegs = GENERAL_REG + REG4;
@@ -888,7 +888,7 @@ void __stdcall call_(PDISASM pMyDisasm)
     }
     else {
         if (!Security(3)) return;
-        MyNumber = *((SDWORD*) (EIP_+1)) + 3 + NB_PREFIX;
+        MyNumber = *((SUInt32*) (EIP_+1)) + 3 + NB_PREFIX;
         CalculateRelativeAddress(&MyAddress, MyNumber);
         MyAddress = MyAddress & 0xffff;
         (*pMyDisasm).Instruction.AddrValue = MyAddress;
@@ -900,10 +900,10 @@ void __stdcall call_(PDISASM pMyDisasm)
     }
 }
 
-// =======================================
-//
-// =======================================
-void __stdcall callf_(PDISASM pMyDisasm)
+/* =======================================
+ *
+ * ======================================= */
+void __bea_callspec__ callf_(PDISASM pMyDisasm)
 {
     long MyNumber;
     int i = 0;
@@ -923,12 +923,12 @@ void __stdcall callf_(PDISASM pMyDisasm)
         }
         if (OperandSize ==32) {
             if (!Security(7)) return;
-            MyNumber = *((WORD*) (EIP_+5));
+            MyNumber = *((UInt16*) (EIP_+5));
             i += CopyFormattedNumber((char*) &(*pMyDisasm).Argument1.ArgMnemonic+i, "%.4X", MyNumber);
         }
         else {
             if (!Security(5)) return;
-            MyNumber = *((WORD*) (EIP_+3));
+            MyNumber = *((UInt16*) (EIP_+3));
             i += CopyFormattedNumber((char*) &(*pMyDisasm).Argument1.ArgMnemonic+i, "%.4X", MyNumber);
         }
         if (SYNTAX_ == ATSyntax) {
@@ -939,7 +939,7 @@ void __stdcall callf_(PDISASM pMyDisasm)
             (void) strcpy ((*pMyDisasm).Argument1.ArgMnemonic+i, " : ");
             i+=3;
         }
-        MyNumber = *((DWORD*) (EIP_+1));
+        MyNumber = *((UInt32*) (EIP_+1));
         if (OperandSize == 16) {
             MyNumber = MyNumber & 0xffff;
         }
@@ -957,10 +957,10 @@ void __stdcall callf_(PDISASM pMyDisasm)
     }
 }
 
-// =======================================
-//      99h
-// =======================================
-void __stdcall cdq_(PDISASM pMyDisasm)
+/* =======================================
+ *      99h
+ * ======================================= */
+void __bea_callspec__ cdq_(PDISASM pMyDisasm)
 {
     (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION + DATA_TRANSFER;
     (*pMyDisasm).Argument1.ArgType = REGISTER_TYPE + GENERAL_REG + REG0;
@@ -994,10 +994,10 @@ void __stdcall cdq_(PDISASM pMyDisasm)
     EIP_++;
 }
 
-// =======================================
-//
-// =======================================
-void __stdcall clts_(PDISASM pMyDisasm)
+/* =======================================
+ *
+ * ======================================= */
+void __bea_callspec__ clts_(PDISASM pMyDisasm)
 {
     (*pMyDisasm).Instruction.Category = SYSTEM_INSTRUCTION;
     (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "clts ");
@@ -1008,10 +1008,10 @@ void __stdcall clts_(PDISASM pMyDisasm)
 }
 
 
-// =======================================
-//      F5h
-// =======================================
-void __stdcall cmc_(PDISASM pMyDisasm)
+/* =======================================
+ *      F5h
+ * ======================================= */
+void __bea_callspec__ cmc_(PDISASM pMyDisasm)
 {
     (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION + FLAG_CONTROL_INSTRUCTION;
     (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "cmc ");
@@ -1021,10 +1021,10 @@ void __stdcall cmc_(PDISASM pMyDisasm)
     EIP_++;
 }
 
-// =======================================
-//
-// =======================================
-void __stdcall cmovo_(PDISASM pMyDisasm)
+/* =======================================
+ *
+ * ======================================= */
+void __bea_callspec__ cmovo_(PDISASM pMyDisasm)
 {
     (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION + DATA_TRANSFER;
     (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "cmovo ");
@@ -1032,10 +1032,10 @@ void __stdcall cmovo_(PDISASM pMyDisasm)
     FillFlags(pMyDisasm, 19);
 }
 
-// =======================================
-//
-// =======================================
-void __stdcall cmovno_(PDISASM pMyDisasm)
+/* =======================================
+ *
+ * ======================================= */
+void __bea_callspec__ cmovno_(PDISASM pMyDisasm)
 {
     (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION + DATA_TRANSFER;
     (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "cmovno ");
@@ -1043,10 +1043,10 @@ void __stdcall cmovno_(PDISASM pMyDisasm)
     FillFlags(pMyDisasm, 19);
 }
 
-// =======================================
-//
-// =======================================
-void __stdcall cmovb_(PDISASM pMyDisasm)
+/* =======================================
+ *
+ * ======================================= */
+void __bea_callspec__ cmovb_(PDISASM pMyDisasm)
 {
     (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION + DATA_TRANSFER;
     (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "cmovb ");
@@ -1054,10 +1054,10 @@ void __stdcall cmovb_(PDISASM pMyDisasm)
     FillFlags(pMyDisasm, 19);
 }
 
-// =======================================
-//
-// =======================================
-void __stdcall cmovnb_(PDISASM pMyDisasm)
+/* =======================================
+ *
+ * ======================================= */
+void __bea_callspec__ cmovnb_(PDISASM pMyDisasm)
 {
     (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION + DATA_TRANSFER;
     (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "cmovnb ");
@@ -1065,10 +1065,10 @@ void __stdcall cmovnb_(PDISASM pMyDisasm)
     FillFlags(pMyDisasm, 19);
 }
 
-// =======================================
-//
-// =======================================
-void __stdcall cmove_(PDISASM pMyDisasm)
+/* =======================================
+ *
+ * ======================================= */
+void __bea_callspec__ cmove_(PDISASM pMyDisasm)
 {
     (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION + DATA_TRANSFER;
     (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "cmove ");
@@ -1076,10 +1076,10 @@ void __stdcall cmove_(PDISASM pMyDisasm)
     FillFlags(pMyDisasm, 19);
 }
 
-// =======================================
-//
-// =======================================
-void __stdcall cmovne_(PDISASM pMyDisasm)
+/* =======================================
+ *
+ * ======================================= */
+void __bea_callspec__ cmovne_(PDISASM pMyDisasm)
 {
     (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION + DATA_TRANSFER;
     (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "cmovne ");
@@ -1087,10 +1087,10 @@ void __stdcall cmovne_(PDISASM pMyDisasm)
     FillFlags(pMyDisasm, 19);
 }
 
-// =======================================
-//
-// =======================================
-void __stdcall cmovbe_(PDISASM pMyDisasm)
+/* =======================================
+ *
+ * ======================================= */
+void __bea_callspec__ cmovbe_(PDISASM pMyDisasm)
 {
     (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION + DATA_TRANSFER;
     (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "cmovbe ");
@@ -1098,10 +1098,10 @@ void __stdcall cmovbe_(PDISASM pMyDisasm)
     FillFlags(pMyDisasm, 19);
 }
 
-// =======================================
-//
-// =======================================
-void __stdcall cmovnbe_(PDISASM pMyDisasm)
+/* =======================================
+ *
+ * ======================================= */
+void __bea_callspec__ cmovnbe_(PDISASM pMyDisasm)
 {
     (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION + DATA_TRANSFER;
     (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "cmovnbe ");
@@ -1109,10 +1109,10 @@ void __stdcall cmovnbe_(PDISASM pMyDisasm)
     FillFlags(pMyDisasm, 19);
 }
 
-// =======================================
-//
-// =======================================
-void __stdcall cmovs_(PDISASM pMyDisasm)
+/* =======================================
+ *
+ * ======================================= */
+void __bea_callspec__ cmovs_(PDISASM pMyDisasm)
 {
     (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION + DATA_TRANSFER;
     (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "cmovs ");
@@ -1120,10 +1120,10 @@ void __stdcall cmovs_(PDISASM pMyDisasm)
     FillFlags(pMyDisasm, 19);
 }
 
-// =======================================
-//
-// =======================================
-void __stdcall cmovns_(PDISASM pMyDisasm)
+/* =======================================
+ *
+ * ======================================= */
+void __bea_callspec__ cmovns_(PDISASM pMyDisasm)
 {
     (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION + DATA_TRANSFER;
     (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "cmovns ");
@@ -1131,10 +1131,10 @@ void __stdcall cmovns_(PDISASM pMyDisasm)
     FillFlags(pMyDisasm, 19);
 }
 
-// =======================================
-//
-// =======================================
-void __stdcall cmovp_(PDISASM pMyDisasm)
+/* =======================================
+ *
+ * ======================================= */
+void __bea_callspec__ cmovp_(PDISASM pMyDisasm)
 {
     (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION + DATA_TRANSFER;
     (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "cmovp ");
@@ -1142,10 +1142,10 @@ void __stdcall cmovp_(PDISASM pMyDisasm)
     FillFlags(pMyDisasm, 19);
 }
 
-// =======================================
-//
-// =======================================
-void __stdcall cmovnp_(PDISASM pMyDisasm)
+/* =======================================
+ *
+ * ======================================= */
+void __bea_callspec__ cmovnp_(PDISASM pMyDisasm)
 {
     (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION + DATA_TRANSFER;
     (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "cmovnp ");
@@ -1153,10 +1153,10 @@ void __stdcall cmovnp_(PDISASM pMyDisasm)
     FillFlags(pMyDisasm, 19);
 }
 
-// =======================================
-//
-// =======================================
-void __stdcall cmovl_(PDISASM pMyDisasm)
+/* =======================================
+ *
+ * ======================================= */
+void __bea_callspec__ cmovl_(PDISASM pMyDisasm)
 {
     (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION + DATA_TRANSFER;
     (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "cmovl ");
@@ -1164,10 +1164,10 @@ void __stdcall cmovl_(PDISASM pMyDisasm)
     FillFlags(pMyDisasm, 19);
 }
 
-// =======================================
-//
-// =======================================
-void __stdcall cmovnl_(PDISASM pMyDisasm)
+/* =======================================
+ *
+ * ======================================= */
+void __bea_callspec__ cmovnl_(PDISASM pMyDisasm)
 {
     (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION + DATA_TRANSFER;
     (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "cmovnl ");
@@ -1175,10 +1175,10 @@ void __stdcall cmovnl_(PDISASM pMyDisasm)
     FillFlags(pMyDisasm, 19);
 }
 
-// =======================================
-//
-// =======================================
-void __stdcall cmovle_(PDISASM pMyDisasm)
+/* =======================================
+ *
+ * ======================================= */
+void __bea_callspec__ cmovle_(PDISASM pMyDisasm)
 {
     (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION + DATA_TRANSFER;
     (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "cmovle ");
@@ -1186,10 +1186,10 @@ void __stdcall cmovle_(PDISASM pMyDisasm)
     FillFlags(pMyDisasm, 19);
 }
 
-// =======================================
-//
-// =======================================
-void __stdcall cmovnle_(PDISASM pMyDisasm)
+/* =======================================
+ *
+ * ======================================= */
+void __bea_callspec__ cmovnle_(PDISASM pMyDisasm)
 {
     (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION + DATA_TRANSFER;
     (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "cmovnle ");
@@ -1197,10 +1197,10 @@ void __stdcall cmovnle_(PDISASM pMyDisasm)
     FillFlags(pMyDisasm, 19);
 }
 
-// =======================================
-//
-// =======================================
-void __stdcall cmpx_EbGb(PDISASM pMyDisasm)
+/* =======================================
+ *
+ * ======================================= */
+void __bea_callspec__ cmpx_EbGb(PDISASM pMyDisasm)
 {
     if ((*pMyDisasm).Prefix.LockPrefix == InvalidPrefix) {
         (*pMyDisasm).Prefix.LockPrefix = InUsePrefix;
@@ -1211,10 +1211,10 @@ void __stdcall cmpx_EbGb(PDISASM pMyDisasm)
     FillFlags(pMyDisasm,22);
 }
 
-// =======================================
-//
-// =======================================
-void __stdcall cmpx_EvGv(PDISASM pMyDisasm)
+/* =======================================
+ *
+ * ======================================= */
+void __bea_callspec__ cmpx_EvGv(PDISASM pMyDisasm)
 {
     if ((*pMyDisasm).Prefix.LockPrefix == InvalidPrefix) {
         (*pMyDisasm).Prefix.LockPrefix = InUsePrefix;
@@ -1225,10 +1225,10 @@ void __stdcall cmpx_EvGv(PDISASM pMyDisasm)
     FillFlags(pMyDisasm,22);
 }
 
-// =======================================
-//      38h
-// =======================================
-void __stdcall cmp_EbGb(PDISASM pMyDisasm)
+/* =======================================
+ *      38h
+ * ======================================= */
+void __bea_callspec__ cmp_EbGb(PDISASM pMyDisasm)
 {
     (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION + ARITHMETIC_INSTRUCTION;
     (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "cmp ");
@@ -1237,10 +1237,10 @@ void __stdcall cmp_EbGb(PDISASM pMyDisasm)
     FillFlags(pMyDisasm,20);
 }
 
-// =======================================
-//      39h
-// =======================================
-void __stdcall cmp_EvGv(PDISASM pMyDisasm)
+/* =======================================
+ *      39h
+ * ======================================= */
+void __bea_callspec__ cmp_EvGv(PDISASM pMyDisasm)
 {
     (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION + ARITHMETIC_INSTRUCTION;
     (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "cmp ");
@@ -1249,10 +1249,10 @@ void __stdcall cmp_EvGv(PDISASM pMyDisasm)
     FillFlags(pMyDisasm,20);
 }
 
-// =======================================
-//      3ah
-// =======================================
-void __stdcall cmp_GbEb(PDISASM pMyDisasm)
+/* =======================================
+ *      3ah
+ * ======================================= */
+void __bea_callspec__ cmp_GbEb(PDISASM pMyDisasm)
 {
     (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION + ARITHMETIC_INSTRUCTION;
     (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "cmp ");
@@ -1261,10 +1261,10 @@ void __stdcall cmp_GbEb(PDISASM pMyDisasm)
     FillFlags(pMyDisasm,20);
 }
 
-// =======================================
-//      3bh
-// =======================================
-void __stdcall cmp_GvEv(PDISASM pMyDisasm)
+/* =======================================
+ *      3bh
+ * ======================================= */
+void __bea_callspec__ cmp_GvEv(PDISASM pMyDisasm)
 {
     (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION + ARITHMETIC_INSTRUCTION;
     (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "cmp ");
@@ -1273,10 +1273,10 @@ void __stdcall cmp_GvEv(PDISASM pMyDisasm)
     FillFlags(pMyDisasm,20);
 }
 
-// =======================================
-//      3ch
-// =======================================
-void __stdcall cmp_ALIb(PDISASM pMyDisasm)
+/* =======================================
+ *      3ch
+ * ======================================= */
+void __bea_callspec__ cmp_ALIb(PDISASM pMyDisasm)
 {
     (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION + ARITHMETIC_INSTRUCTION;
     (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "cmp ");
@@ -1285,10 +1285,10 @@ void __stdcall cmp_ALIb(PDISASM pMyDisasm)
     FillFlags(pMyDisasm,20);
 }
 
-// =======================================
-//      3dh
-// =======================================
-void __stdcall cmp_eAX_Iv(PDISASM pMyDisasm)
+/* =======================================
+ *      3dh
+ * ======================================= */
+void __bea_callspec__ cmp_eAX_Iv(PDISASM pMyDisasm)
 {
     (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION + ARITHMETIC_INSTRUCTION;
     (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "cmp ");
@@ -1297,10 +1297,10 @@ void __stdcall cmp_eAX_Iv(PDISASM pMyDisasm)
     FillFlags(pMyDisasm,20);
 }
 
-// =======================================
-//      a6h
-// =======================================
-void __stdcall cmpsb_(PDISASM pMyDisasm)
+/* =======================================
+ *      a6h
+ * ======================================= */
+void __bea_callspec__ cmpsb_(PDISASM pMyDisasm)
 {
     (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION + STRING_INSTRUCTION;
     (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "cmpsb ");
@@ -1315,10 +1315,10 @@ void __stdcall cmpsb_(PDISASM pMyDisasm)
     EIP_++;
 }
 
-// =======================================
-//      a7h
-// =======================================
-void __stdcall cmps_(PDISASM pMyDisasm)
+/* =======================================
+ *      a7h
+ * ======================================= */
+void __bea_callspec__ cmps_(PDISASM pMyDisasm)
 {
     (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION + STRING_INSTRUCTION;
     (*pMyDisasm).Argument1.ArgType = MEMORY_TYPE;
@@ -1345,10 +1345,10 @@ void __stdcall cmps_(PDISASM pMyDisasm)
     EIP_++;
 }
 
-// =======================================
-//      98h
-// =======================================
-void __stdcall cwde_(PDISASM pMyDisasm)
+/* =======================================
+ *      98h
+ * ======================================= */
+void __bea_callspec__ cwde_(PDISASM pMyDisasm)
 {
     (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION + DATA_TRANSFER;
     (*pMyDisasm).Argument1.ArgType = REGISTER_TYPE + GENERAL_REG + REG0;
@@ -1382,10 +1382,10 @@ void __stdcall cwde_(PDISASM pMyDisasm)
     EIP_++;
 }
 
-// =======================================
-//      f8h
-// =======================================
-void __stdcall clc_(PDISASM pMyDisasm)
+/* =======================================
+ *      f8h
+ * ======================================= */
+void __bea_callspec__ clc_(PDISASM pMyDisasm)
 {
     (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION + FLAG_CONTROL_INSTRUCTION;
     (*pMyDisasm).Argument1.ArgType = REGISTER_TYPE + SPECIAL_REG + REG0;
@@ -1395,10 +1395,10 @@ void __stdcall clc_(PDISASM pMyDisasm)
     EIP_++;
 }
 
-// =======================================
-//      f8h
-// =======================================
-void __stdcall cld_(PDISASM pMyDisasm)
+/* =======================================
+ *      f8h
+ * ======================================= */
+void __bea_callspec__ cld_(PDISASM pMyDisasm)
 {
     (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION + FLAG_CONTROL_INSTRUCTION;
     (*pMyDisasm).Argument1.ArgType = REGISTER_TYPE + SPECIAL_REG + REG0;
@@ -1408,10 +1408,10 @@ void __stdcall cld_(PDISASM pMyDisasm)
     EIP_++;
 }
 
-// =======================================
-//
-// =======================================
-void __stdcall cli_(PDISASM pMyDisasm)
+/* =======================================
+ *
+ * ======================================= */
+void __bea_callspec__ cli_(PDISASM pMyDisasm)
 {
     (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION + FLAG_CONTROL_INSTRUCTION;
     (*pMyDisasm).Argument1.ArgType = REGISTER_TYPE + SPECIAL_REG + REG0;
@@ -1421,10 +1421,10 @@ void __stdcall cli_(PDISASM pMyDisasm)
     EIP_++;
 }
 
-// =======================================
-//      0fa2h
-// =======================================
-void __stdcall cpuid_(PDISASM pMyDisasm)
+/* =======================================
+ *      0fa2h
+ * ======================================= */
+void __bea_callspec__ cpuid_(PDISASM pMyDisasm)
 {
     (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION + MISCELLANEOUS_INSTRUCTION;
     (*pMyDisasm).Argument1.ArgType = REGISTER_TYPE + GENERAL_REG + REG0 + REG1 + REG2 + REG3;
@@ -1433,10 +1433,10 @@ void __stdcall cpuid_(PDISASM pMyDisasm)
     EIP_++;
 }
 
-// =======================================
-//
-// =======================================
-void __stdcall daa_(PDISASM pMyDisasm)
+/* =======================================
+ *
+ * ======================================= */
+void __bea_callspec__ daa_(PDISASM pMyDisasm)
 {
 
     if (Architecture == 64) {
@@ -1453,10 +1453,10 @@ void __stdcall daa_(PDISASM pMyDisasm)
 
 }
 
-// =======================================
-//
-// =======================================
-void __stdcall das_(PDISASM pMyDisasm)
+/* =======================================
+ *
+ * ======================================= */
+void __bea_callspec__ das_(PDISASM pMyDisasm)
 {
 
     if (Architecture == 64) {
@@ -1473,10 +1473,10 @@ void __stdcall das_(PDISASM pMyDisasm)
 
 }
 
-// =======================================
-//      48h
-// =======================================
-void __stdcall dec_eax(PDISASM pMyDisasm)
+/* =======================================
+ *      48h
+ * ======================================= */
+void __bea_callspec__ dec_eax(PDISASM pMyDisasm)
 {
     if (Architecture == 64) {
         if (!Security(0)) return;
@@ -1489,8 +1489,8 @@ void __stdcall dec_eax(PDISASM pMyDisasm)
         NB_PREFIX++;
         (*pMyDisasm).Prefix.Number++;
         OperandSize = 64;
-        (*pMyDisasm).Instruction.Opcode = *((BYTE*) EIP_);
-        (void) opcode_map1[*((BYTE*) EIP_)](pMyDisasm);
+        (*pMyDisasm).Instruction.Opcode = *((UInt8*) EIP_);
+        (void) opcode_map1[*((UInt8*) EIP_)](pMyDisasm);
         OperandSize = 32;
 
     }
@@ -1515,10 +1515,10 @@ void __stdcall dec_eax(PDISASM pMyDisasm)
     }
 }
 
-// =======================================
-//      49h
-// =======================================
-void __stdcall dec_ecx(PDISASM pMyDisasm)
+/* =======================================
+ *      49h
+ * ======================================= */
+void __bea_callspec__ dec_ecx(PDISASM pMyDisasm)
 {
     if (Architecture == 64) {
         if (!Security(0)) return;
@@ -1531,8 +1531,8 @@ void __stdcall dec_ecx(PDISASM pMyDisasm)
         NB_PREFIX++;
         (*pMyDisasm).Prefix.Number++;
         OperandSize = 64;
-        (*pMyDisasm).Instruction.Opcode = *((BYTE*) EIP_);
-        (void) opcode_map1[*((BYTE*) EIP_)](pMyDisasm);
+        (*pMyDisasm).Instruction.Opcode = *((UInt8*) EIP_);
+        (void) opcode_map1[*((UInt8*) EIP_)](pMyDisasm);
         OperandSize = 32;
 
     }
@@ -1557,10 +1557,10 @@ void __stdcall dec_ecx(PDISASM pMyDisasm)
     }
 }
 
-// =======================================
-//      4ah
-// =======================================
-void __stdcall dec_edx(PDISASM pMyDisasm)
+/* =======================================
+ *      4ah
+ * ======================================= */
+void __bea_callspec__ dec_edx(PDISASM pMyDisasm)
 {
     if (Architecture == 64) {
         if (!Security(0)) return;
@@ -1573,8 +1573,8 @@ void __stdcall dec_edx(PDISASM pMyDisasm)
         NB_PREFIX++;
         (*pMyDisasm).Prefix.Number++;
         OperandSize = 64;
-        (*pMyDisasm).Instruction.Opcode = *((BYTE*) EIP_);
-        (void) opcode_map1[*((BYTE*) EIP_)](pMyDisasm);
+        (*pMyDisasm).Instruction.Opcode = *((UInt8*) EIP_);
+        (void) opcode_map1[*((UInt8*) EIP_)](pMyDisasm);
         OperandSize = 32;
 
     }
@@ -1599,10 +1599,10 @@ void __stdcall dec_edx(PDISASM pMyDisasm)
     }
 }
 
-// =======================================
-//      4bh
-// =======================================
-void __stdcall dec_ebx(PDISASM pMyDisasm)
+/* =======================================
+ *      4bh
+ * ======================================= */
+void __bea_callspec__ dec_ebx(PDISASM pMyDisasm)
 {
     if (Architecture == 64) {
         if (!Security(0)) return;
@@ -1615,8 +1615,8 @@ void __stdcall dec_ebx(PDISASM pMyDisasm)
         NB_PREFIX++;
         (*pMyDisasm).Prefix.Number++;
         OperandSize = 64;
-        (*pMyDisasm).Instruction.Opcode = *((BYTE*) EIP_);
-        (void) opcode_map1[*((BYTE*) EIP_)](pMyDisasm);
+        (*pMyDisasm).Instruction.Opcode = *((UInt8*) EIP_);
+        (void) opcode_map1[*((UInt8*) EIP_)](pMyDisasm);
         OperandSize = 32;
 
     }
@@ -1641,10 +1641,10 @@ void __stdcall dec_ebx(PDISASM pMyDisasm)
     }
 }
 
-// =======================================
-//      4ch
-// =======================================
-void __stdcall dec_esp(PDISASM pMyDisasm)
+/* =======================================
+ *      4ch
+ * ======================================= */
+void __bea_callspec__ dec_esp(PDISASM pMyDisasm)
 {
     if (Architecture == 64) {
         if (!Security(0)) return;
@@ -1657,8 +1657,8 @@ void __stdcall dec_esp(PDISASM pMyDisasm)
         NB_PREFIX++;
         (*pMyDisasm).Prefix.Number++;
         OperandSize = 64;
-        (*pMyDisasm).Instruction.Opcode = *((BYTE*) EIP_);
-        (void) opcode_map1[*((BYTE*) EIP_)](pMyDisasm);
+        (*pMyDisasm).Instruction.Opcode = *((UInt8*) EIP_);
+        (void) opcode_map1[*((UInt8*) EIP_)](pMyDisasm);
         OperandSize = 32;
 
     }
@@ -1683,10 +1683,10 @@ void __stdcall dec_esp(PDISASM pMyDisasm)
     }
 }
 
-// =======================================
-//      4dh
-// =======================================
-void __stdcall dec_ebp(PDISASM pMyDisasm)
+/* =======================================
+ *      4dh
+ * ======================================= */
+void __bea_callspec__ dec_ebp(PDISASM pMyDisasm)
 {
     if (Architecture == 64) {
         if (!Security(0)) return;
@@ -1699,8 +1699,8 @@ void __stdcall dec_ebp(PDISASM pMyDisasm)
         NB_PREFIX++;
         (*pMyDisasm).Prefix.Number++;
         OperandSize = 64;
-        (*pMyDisasm).Instruction.Opcode = *((BYTE*) EIP_);
-        (void) opcode_map1[*((BYTE*) EIP_)](pMyDisasm);
+        (*pMyDisasm).Instruction.Opcode = *((UInt8*) EIP_);
+        (void) opcode_map1[*((UInt8*) EIP_)](pMyDisasm);
         OperandSize = 32;
 
     }
@@ -1725,10 +1725,10 @@ void __stdcall dec_ebp(PDISASM pMyDisasm)
     }
 }
 
-// =======================================
-//      4eh
-// =======================================
-void __stdcall dec_esi(PDISASM pMyDisasm)
+/* =======================================
+ *      4eh
+ * ======================================= */
+void __bea_callspec__ dec_esi(PDISASM pMyDisasm)
 {
     if (Architecture == 64) {
         if (!Security(0)) return;
@@ -1741,8 +1741,8 @@ void __stdcall dec_esi(PDISASM pMyDisasm)
         NB_PREFIX++;
         (*pMyDisasm).Prefix.Number++;
         OperandSize = 64;
-        (*pMyDisasm).Instruction.Opcode = *((BYTE*) EIP_);
-        (void) opcode_map1[*((BYTE*) EIP_)](pMyDisasm);
+        (*pMyDisasm).Instruction.Opcode = *((UInt8*) EIP_);
+        (void) opcode_map1[*((UInt8*) EIP_)](pMyDisasm);
         OperandSize = 32;
 
     }
@@ -1767,10 +1767,10 @@ void __stdcall dec_esi(PDISASM pMyDisasm)
     }
 }
 
-// =======================================
-//      4fh
-// =======================================
-void __stdcall dec_edi(PDISASM pMyDisasm)
+/* =======================================
+ *      4fh
+ * ======================================= */
+void __bea_callspec__ dec_edi(PDISASM pMyDisasm)
 {
     if (Architecture == 64) {
         if (!Security(0)) return;
@@ -1783,8 +1783,8 @@ void __stdcall dec_edi(PDISASM pMyDisasm)
         NB_PREFIX++;
         (*pMyDisasm).Prefix.Number++;
         OperandSize = 64;
-        (*pMyDisasm).Instruction.Opcode = *((BYTE*) EIP_);
-        (void) opcode_map1[*((BYTE*) EIP_)](pMyDisasm);
+        (*pMyDisasm).Instruction.Opcode = *((UInt8*) EIP_);
+        (void) opcode_map1[*((UInt8*) EIP_)](pMyDisasm);
         OperandSize = 32;
 
     }
@@ -1809,56 +1809,56 @@ void __stdcall dec_edi(PDISASM pMyDisasm)
     }
 }
 
-// =======================================
-//      0c8h
-// =======================================
-void __stdcall enter_(PDISASM pMyDisasm)
+/* =======================================
+ *      0c8h
+ * ======================================= */
+void __bea_callspec__ enter_(PDISASM pMyDisasm)
 {
     (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION + CONTROL_TRANSFER;
     (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "enter ");
-    (void) CopyFormattedNumber ((char*) (*pMyDisasm).Argument1.ArgMnemonic,"%.4X", *((WORD*) (EIP_+1)));
+    (void) CopyFormattedNumber ((char*) (*pMyDisasm).Argument1.ArgMnemonic,"%.4X", *((UInt16*) (EIP_+1)));
     (*pMyDisasm).Argument1.ArgSize = 16;
     (*pMyDisasm).Argument1.ArgType = CONSTANT_TYPE + ABSOLUTE_;
-    (void) CopyFormattedNumber ((char*) (*pMyDisasm).Argument2.ArgMnemonic,"%.2X", *((BYTE*) (EIP_+3)));
+    (void) CopyFormattedNumber ((char*) (*pMyDisasm).Argument2.ArgMnemonic,"%.2X", *((UInt8*) (EIP_+3)));
     (*pMyDisasm).Argument2.ArgSize = 8;
     (*pMyDisasm).Argument2.ArgType = CONSTANT_TYPE + ABSOLUTE_;
     EIP_+=4;
 }
 
-// =======================================
-//
-// =======================================
-void __stdcall femms_(PDISASM pMyDisasm)
+/* =======================================
+ *
+ * ======================================= */
+void __bea_callspec__ femms_(PDISASM pMyDisasm)
 {
     (*pMyDisasm).Instruction.Category = AMD_INSTRUCTION;
     (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "femms ");
     EIP_++;
 }
 
-// =======================================
-//
-// =======================================
-void __stdcall hlt_(PDISASM pMyDisasm)
+/* =======================================
+ *
+ * ======================================= */
+void __bea_callspec__ hlt_(PDISASM pMyDisasm)
 {
     (*pMyDisasm).Instruction.Category = SYSTEM_INSTRUCTION;
     (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "hlt ");
     EIP_++;
 }
 
-// =======================================
-//
-// =======================================
-void __stdcall invd_(PDISASM pMyDisasm)
+/* =======================================
+ *
+ * ======================================= */
+void __bea_callspec__ invd_(PDISASM pMyDisasm)
 {
     (*pMyDisasm).Instruction.Category = SYSTEM_INSTRUCTION;
     (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "invd ");
     EIP_++;
 }
 
-// =======================================
-//      40h
-// =======================================
-void __stdcall inc_eax(PDISASM pMyDisasm)
+/* =======================================
+ *      40h
+ * ======================================= */
+void __bea_callspec__ inc_eax(PDISASM pMyDisasm)
 {
     if (Architecture == 64) {
         if (!Security(0)) return;
@@ -1870,8 +1870,8 @@ void __stdcall inc_eax(PDISASM pMyDisasm)
         EIP_++;
         NB_PREFIX++;
         (*pMyDisasm).Prefix.Number++;
-        (*pMyDisasm).Instruction.Opcode = *((BYTE*) EIP_);
-        (void) opcode_map1[*((BYTE*) EIP_)](pMyDisasm);
+        (*pMyDisasm).Instruction.Opcode = *((UInt8*) EIP_);
+        (void) opcode_map1[*((UInt8*) EIP_)](pMyDisasm);
         OperandSize = 32;
 
     }
@@ -1896,10 +1896,10 @@ void __stdcall inc_eax(PDISASM pMyDisasm)
     }
 }
 
-// =======================================
-//      41h
-// =======================================
-void __stdcall inc_ecx(PDISASM pMyDisasm)
+/* =======================================
+ *      41h
+ * ======================================= */
+void __bea_callspec__ inc_ecx(PDISASM pMyDisasm)
 {
     if (Architecture == 64) {
         if (!Security(0)) return;
@@ -1911,8 +1911,8 @@ void __stdcall inc_ecx(PDISASM pMyDisasm)
         EIP_++;
         NB_PREFIX++;
         (*pMyDisasm).Prefix.Number++;
-        (*pMyDisasm).Instruction.Opcode = *((BYTE*) EIP_);
-        (void) opcode_map1[*((BYTE*) EIP_)](pMyDisasm);
+        (*pMyDisasm).Instruction.Opcode = *((UInt8*) EIP_);
+        (void) opcode_map1[*((UInt8*) EIP_)](pMyDisasm);
         OperandSize = 32;
 
     }
@@ -1937,10 +1937,10 @@ void __stdcall inc_ecx(PDISASM pMyDisasm)
     }
 }
 
-// =======================================
-//      42h
-// =======================================
-void __stdcall inc_edx(PDISASM pMyDisasm)
+/* =======================================
+ *      42h
+ * ======================================= */
+void __bea_callspec__ inc_edx(PDISASM pMyDisasm)
 {
     if (Architecture == 64) {
         if (!Security(0)) return;
@@ -1952,8 +1952,8 @@ void __stdcall inc_edx(PDISASM pMyDisasm)
         EIP_++;
         NB_PREFIX++;
         (*pMyDisasm).Prefix.Number++;
-        (*pMyDisasm).Instruction.Opcode = *((BYTE*) EIP_);
-        (void) opcode_map1[*((BYTE*) EIP_)](pMyDisasm);
+        (*pMyDisasm).Instruction.Opcode = *((UInt8*) EIP_);
+        (void) opcode_map1[*((UInt8*) EIP_)](pMyDisasm);
         OperandSize = 32;
 
     }
@@ -1978,10 +1978,10 @@ void __stdcall inc_edx(PDISASM pMyDisasm)
     }
 }
 
-// =======================================
-//      43h
-// =======================================
-void __stdcall inc_ebx(PDISASM pMyDisasm)
+/* =======================================
+ *      43h
+ * ======================================= */
+void __bea_callspec__ inc_ebx(PDISASM pMyDisasm)
 {
     if (Architecture == 64) {
         if (!Security(0)) return;
@@ -1993,8 +1993,8 @@ void __stdcall inc_ebx(PDISASM pMyDisasm)
         EIP_++;
         NB_PREFIX++;
         (*pMyDisasm).Prefix.Number++;
-        (*pMyDisasm).Instruction.Opcode = *((BYTE*) EIP_);
-        (void) opcode_map1[*((BYTE*) EIP_)](pMyDisasm);
+        (*pMyDisasm).Instruction.Opcode = *((UInt8*) EIP_);
+        (void) opcode_map1[*((UInt8*) EIP_)](pMyDisasm);
         OperandSize = 32;
 
     }
@@ -2019,10 +2019,10 @@ void __stdcall inc_ebx(PDISASM pMyDisasm)
     }
 }
 
-// =======================================
-//      44h
-// =======================================
-void __stdcall inc_esp(PDISASM pMyDisasm)
+/* =======================================
+ *      44h
+ * ======================================= */
+void __bea_callspec__ inc_esp(PDISASM pMyDisasm)
 {
     if (Architecture == 64) {
         if (!Security(0)) return;
@@ -2034,8 +2034,8 @@ void __stdcall inc_esp(PDISASM pMyDisasm)
         EIP_++;
         NB_PREFIX++;
         (*pMyDisasm).Prefix.Number++;
-        (*pMyDisasm).Instruction.Opcode = *((BYTE*) EIP_);
-        (void) opcode_map1[*((BYTE*) EIP_)](pMyDisasm);
+        (*pMyDisasm).Instruction.Opcode = *((UInt8*) EIP_);
+        (void) opcode_map1[*((UInt8*) EIP_)](pMyDisasm);
         OperandSize = 32;
 
     }
@@ -2060,10 +2060,10 @@ void __stdcall inc_esp(PDISASM pMyDisasm)
     }
 }
 
-// =======================================
-//      45h
-// =======================================
-void __stdcall inc_ebp(PDISASM pMyDisasm)
+/* =======================================
+ *      45h
+ * ======================================= */
+void __bea_callspec__ inc_ebp(PDISASM pMyDisasm)
 {
     if (Architecture == 64) {
         if (!Security(0)) return;
@@ -2075,8 +2075,8 @@ void __stdcall inc_ebp(PDISASM pMyDisasm)
         EIP_++;
         NB_PREFIX++;
         (*pMyDisasm).Prefix.Number++;
-        (*pMyDisasm).Instruction.Opcode = *((BYTE*) EIP_);
-        (void) opcode_map1[*((BYTE*) EIP_)](pMyDisasm);
+        (*pMyDisasm).Instruction.Opcode = *((UInt8*) EIP_);
+        (void) opcode_map1[*((UInt8*) EIP_)](pMyDisasm);
         OperandSize = 32;
 
     }
@@ -2101,10 +2101,10 @@ void __stdcall inc_ebp(PDISASM pMyDisasm)
     }
 }
 
-// =======================================
-//      46h
-// =======================================
-void __stdcall inc_esi(PDISASM pMyDisasm)
+/* =======================================
+ *      46h
+ * ======================================= */
+void __bea_callspec__ inc_esi(PDISASM pMyDisasm)
 {
     if (Architecture == 64) {
         if (!Security(0)) return;
@@ -2116,8 +2116,8 @@ void __stdcall inc_esi(PDISASM pMyDisasm)
         EIP_++;
         NB_PREFIX++;
         (*pMyDisasm).Prefix.Number++;
-        (*pMyDisasm).Instruction.Opcode = *((BYTE*) EIP_);
-        (void) opcode_map1[*((BYTE*) EIP_)](pMyDisasm);
+        (*pMyDisasm).Instruction.Opcode = *((UInt8*) EIP_);
+        (void) opcode_map1[*((UInt8*) EIP_)](pMyDisasm);
         OperandSize = 32;
 
     }
@@ -2142,10 +2142,10 @@ void __stdcall inc_esi(PDISASM pMyDisasm)
     }
 }
 
-// =======================================
-//      47h
-// =======================================
-void __stdcall inc_edi(PDISASM pMyDisasm)
+/* =======================================
+ *      47h
+ * ======================================= */
+void __bea_callspec__ inc_edi(PDISASM pMyDisasm)
 {
     if (Architecture == 64) {
         if (!Security(0)) return;
@@ -2157,8 +2157,8 @@ void __stdcall inc_edi(PDISASM pMyDisasm)
         EIP_++;
         NB_PREFIX++;
         (*pMyDisasm).Prefix.Number++;
-        (*pMyDisasm).Instruction.Opcode = *((BYTE*) EIP_);
-        (void) opcode_map1[*((BYTE*) EIP_)](pMyDisasm);
+        (*pMyDisasm).Instruction.Opcode = *((UInt8*) EIP_);
+        (void) opcode_map1[*((UInt8*) EIP_)](pMyDisasm);
         OperandSize = 32;
 
     }
@@ -2182,10 +2182,10 @@ void __stdcall inc_edi(PDISASM pMyDisasm)
         FillFlags(pMyDisasm, 40);
     }
 }
-// =======================================
-//  0xcf
-// =======================================
-void __stdcall iret_(PDISASM pMyDisasm)
+/* =======================================
+ *  0xcf
+ * ======================================= */
+void __bea_callspec__ iret_(PDISASM pMyDisasm)
 {
     (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION + CONTROL_TRANSFER;
     (*pMyDisasm).Instruction.BranchType = RetType;
@@ -2201,10 +2201,10 @@ void __stdcall iret_(PDISASM pMyDisasm)
     EIP_++;
 }
 
-// =======================================
-//
-// =======================================
-void __stdcall in_ALDX(PDISASM pMyDisasm)
+/* =======================================
+ *
+ * ======================================= */
+void __bea_callspec__ in_ALDX(PDISASM pMyDisasm)
 {
     (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION + InOutINSTRUCTION;
     (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "in ");
@@ -2217,27 +2217,27 @@ void __stdcall in_ALDX(PDISASM pMyDisasm)
     EIP_++;
 }
 
-// =======================================
-//
-// =======================================
-void __stdcall in_ALIb(PDISASM pMyDisasm)
+/* =======================================
+ *
+ * ======================================= */
+void __bea_callspec__ in_ALIb(PDISASM pMyDisasm)
 {
     (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION + InOutINSTRUCTION;
     (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "in ");
     ALIb(pMyDisasm);
 }
 
-// =======================================
-//      0xe5
-// =======================================
-void __stdcall in_eAX_Ib(PDISASM pMyDisasm)
+/* =======================================
+ *      0xe5
+ * ======================================= */
+void __bea_callspec__ in_eAX_Ib(PDISASM pMyDisasm)
 {
     (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION + InOutINSTRUCTION;
     (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "in ");
     if (!Security(1)) return;
     ImmediatSize = 8;
-    (*pMyDisasm).Instruction.Immediat = *((BYTE*) (EIP_+1));
-    (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument2.ArgMnemonic, "%.2X", *((BYTE*) (EIP_+1)));
+    (*pMyDisasm).Instruction.Immediat = *((UInt8*) (EIP_+1));
+    (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument2.ArgMnemonic, "%.2X", *((UInt8*) (EIP_+1)));
     (void) strcpy ((char*) (*pMyDisasm).Argument1.ArgMnemonic, Registers32Bits[0]);
     (*pMyDisasm).Argument1.ArgType = REGISTER_TYPE + GENERAL_REG + REGS[0];
     (*pMyDisasm).Argument1.ArgSize = 32;
@@ -2246,10 +2246,10 @@ void __stdcall in_eAX_Ib(PDISASM pMyDisasm)
     EIP_+=2;
 }
 
-// =======================================
-//
-// =======================================
-void __stdcall insb_(PDISASM pMyDisasm)
+/* =======================================
+ *
+ * ======================================= */
+void __bea_callspec__ insb_(PDISASM pMyDisasm)
 {
     if ((*pMyDisasm).Prefix.RepnePrefix == SuperfluousPrefix) {
         (*pMyDisasm).Prefix.RepnePrefix = InUsePrefix;
@@ -2270,10 +2270,10 @@ void __stdcall insb_(PDISASM pMyDisasm)
 
 }
 
-// =======================================
-//
-// =======================================
-void __stdcall ins_(PDISASM pMyDisasm)
+/* =======================================
+ *
+ * ======================================= */
+void __bea_callspec__ ins_(PDISASM pMyDisasm)
 {
     if ((*pMyDisasm).Prefix.RepnePrefix == SuperfluousPrefix) {
         (*pMyDisasm).Prefix.RepnePrefix = InUsePrefix;
@@ -2304,10 +2304,10 @@ void __stdcall ins_(PDISASM pMyDisasm)
     }
 }
 
-// =======================================
-//
-// =======================================
-void __stdcall into_(PDISASM pMyDisasm)
+/* =======================================
+ *
+ * ======================================= */
+void __bea_callspec__ into_(PDISASM pMyDisasm)
 {
     if (Architecture == 64) {
         FailDecode(pMyDisasm);
@@ -2320,10 +2320,10 @@ void __stdcall into_(PDISASM pMyDisasm)
     }
 }
 
-// =======================================
-//      0edh
-// =======================================
-void __stdcall in_eAX(PDISASM pMyDisasm)
+/* =======================================
+ *      0edh
+ * ======================================= */
+void __bea_callspec__ in_eAX(PDISASM pMyDisasm)
 {
     (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION + InOutINSTRUCTION;
     (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "in ");
@@ -2346,27 +2346,27 @@ void __stdcall in_eAX(PDISASM pMyDisasm)
     EIP_++;
 }
 
-// =======================================
-//      0cdh
-// =======================================
-void __stdcall int_(PDISASM pMyDisasm)
+/* =======================================
+ *      0cdh
+ * ======================================= */
+void __bea_callspec__ int_(PDISASM pMyDisasm)
 {
     (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION + CONTROL_TRANSFER;
     (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "int ");
     if (!Security(1)) return;
     ImmediatSize = 8;
-    (*pMyDisasm).Instruction.Immediat = *((BYTE*) (EIP_+1));
-    (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%.2X", *((BYTE*) (EIP_+1)));
+    (*pMyDisasm).Instruction.Immediat = *((UInt8*) (EIP_+1));
+    (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%.2X", *((UInt8*) (EIP_+1)));
     (*pMyDisasm).Argument1.ArgType = CONSTANT_TYPE + ABSOLUTE_;
     (*pMyDisasm).Argument1.ArgSize = 8;
     EIP_+=2;
     FillFlags(pMyDisasm, 42);
 }
 
-// =======================================
-//      0f1h
-// =======================================
-void __stdcall int1_(PDISASM pMyDisasm)
+/* =======================================
+ *      0f1h
+ * ======================================= */
+void __bea_callspec__ int1_(PDISASM pMyDisasm)
 {
     (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION + CONTROL_TRANSFER;
     (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "int1 ");
@@ -2374,10 +2374,10 @@ void __stdcall int1_(PDISASM pMyDisasm)
     FillFlags(pMyDisasm, 42);
 }
 
-// =======================================
-//      0cch
-// =======================================
-void __stdcall int3_(PDISASM pMyDisasm)
+/* =======================================
+ *      0cch
+ * ======================================= */
+void __bea_callspec__ int3_(PDISASM pMyDisasm)
 {
     (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION + CONTROL_TRANSFER;
     (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "int3 ");
@@ -2385,10 +2385,10 @@ void __stdcall int3_(PDISASM pMyDisasm)
     FillFlags(pMyDisasm, 42);
 }
 
-// =======================================
-//      69h
-// =======================================
-void __stdcall imul_GvEvIv(PDISASM pMyDisasm)
+/* =======================================
+ *      69h
+ * ======================================= */
+void __bea_callspec__ imul_GvEvIv(PDISASM pMyDisasm)
 {
     (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION + ARITHMETIC_INSTRUCTION;
     (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "imul ");
@@ -2404,8 +2404,8 @@ void __stdcall imul_GvEvIv(PDISASM pMyDisasm)
         EIP_+= DECALAGE_EIP + 6;
         if (!Security(0)) return;
         third_arg = 1;
-        (*pMyDisasm).Instruction.Immediat = *((DWORD*) (EIP_- 4));
-        (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument3.ArgMnemonic, "%.8X", *((DWORD*) (EIP_- 4)));
+        (*pMyDisasm).Instruction.Immediat = *((UInt32*) (EIP_- 4));
+        (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument3.ArgMnemonic, "%.8X", *((UInt32*) (EIP_- 4)));
         (*pMyDisasm).Argument3.ArgType = CONSTANT_TYPE + ABSOLUTE_;
         (*pMyDisasm).Argument3.ArgSize = 32;
         ImmediatSize = 32;
@@ -2418,8 +2418,8 @@ void __stdcall imul_GvEvIv(PDISASM pMyDisasm)
         EIP_+= DECALAGE_EIP + 4;
         if (!Security(0)) return;
         third_arg = 1;
-        (*pMyDisasm).Instruction.Immediat = *((WORD*) (EIP_- 2));
-        (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument3.ArgMnemonic, "%.4X", *((WORD*) (EIP_- 2)));
+        (*pMyDisasm).Instruction.Immediat = *((UInt16*) (EIP_- 2));
+        (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument3.ArgMnemonic, "%.4X", *((UInt16*) (EIP_- 2)));
         (*pMyDisasm).Argument3.ArgType = CONSTANT_TYPE + ABSOLUTE_;
         (*pMyDisasm).Argument3.ArgSize = 16;
         ImmediatSize = 16;
@@ -2427,10 +2427,10 @@ void __stdcall imul_GvEvIv(PDISASM pMyDisasm)
     }
 }
 
-// =======================================
-//      6bh
-// =======================================
-void __stdcall imul_GvEvIb(PDISASM pMyDisasm)
+/* =======================================
+ *      6bh
+ * ======================================= */
+void __bea_callspec__ imul_GvEvIb(PDISASM pMyDisasm)
 {
     (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION + ARITHMETIC_INSTRUCTION;
     (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "imul ");
@@ -2446,8 +2446,8 @@ void __stdcall imul_GvEvIb(PDISASM pMyDisasm)
         EIP_+= DECALAGE_EIP + 3;
         if (!Security(0)) return;
         third_arg = 1;
-        (*pMyDisasm).Instruction.Immediat = *((BYTE*) (EIP_- 1));
-        (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument3.ArgMnemonic, "%.2X", *((BYTE*) (EIP_- 1)));
+        (*pMyDisasm).Instruction.Immediat = *((UInt8*) (EIP_- 1));
+        (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument3.ArgMnemonic, "%.2X", *((UInt8*) (EIP_- 1)));
         (*pMyDisasm).Argument3.ArgType = CONSTANT_TYPE + ABSOLUTE_;
         (*pMyDisasm).Argument3.ArgSize = 8;
         ImmediatSize = 8;
@@ -2460,8 +2460,8 @@ void __stdcall imul_GvEvIb(PDISASM pMyDisasm)
         EIP_+= DECALAGE_EIP + 3;
         if (!Security(0)) return;
         third_arg = 1;
-        (*pMyDisasm).Instruction.Immediat = *((BYTE*) (EIP_- 1));
-        (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument3.ArgMnemonic, "%.2X", *((BYTE*) (EIP_- 1)));
+        (*pMyDisasm).Instruction.Immediat = *((UInt8*) (EIP_- 1));
+        (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument3.ArgMnemonic, "%.2X", *((UInt8*) (EIP_- 1)));
         (*pMyDisasm).Argument3.ArgType = CONSTANT_TYPE + ABSOLUTE_;
         (*pMyDisasm).Argument3.ArgSize = 8;
         ImmediatSize = 8;
@@ -2469,10 +2469,10 @@ void __stdcall imul_GvEvIb(PDISASM pMyDisasm)
     }
 }
 
-// =======================================
-//      0fafh
-// =======================================
-void __stdcall imul_GvEv(PDISASM pMyDisasm)
+/* =======================================
+ *      0fafh
+ * ======================================= */
+void __bea_callspec__ imul_GvEv(PDISASM pMyDisasm)
 {
 
     (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION + ARITHMETIC_INSTRUCTION;
@@ -2481,12 +2481,12 @@ void __stdcall imul_GvEv(PDISASM pMyDisasm)
     FillFlags(pMyDisasm,38);
 }
 
-// =======================================
-//      70h
-// =======================================
-void __stdcall jo_(PDISASM pMyDisasm)
+/* =======================================
+ *      70h
+ * ======================================= */
+void __bea_callspec__ jo_(PDISASM pMyDisasm)
 {
-    long long MyAddress;
+    Int64 MyAddress;
     signed long MyNumber;
     if ((*pMyDisasm).Prefix.CSPrefix == InUsePrefix) {
         (*pMyDisasm).Prefix.CSPrefix = NotUsedPrefix;
@@ -2500,7 +2500,7 @@ void __stdcall jo_(PDISASM pMyDisasm)
     (*pMyDisasm).Instruction.BranchType = JO;
     (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "jo ");
     if (!Security(1)) return;
-    MyNumber = *((SBYTE*) (EIP_+1));
+    MyNumber = *((SUInt8*) (EIP_+1));
     CalculateRelativeAddress(&MyAddress, NB_PREFIX + 2 + MyNumber);
     if (OperandSize == 16) MyAddress = MyAddress & 0xffff;
     if (MyAddress >= 0x100000000) {
@@ -2517,12 +2517,12 @@ void __stdcall jo_(PDISASM pMyDisasm)
     FillFlags(pMyDisasm,49);
 }
 
-// =======================================
-//      71h
-// =======================================
-void __stdcall jno_(PDISASM pMyDisasm)
+/* =======================================
+ *      71h
+ * ======================================= */
+void __bea_callspec__ jno_(PDISASM pMyDisasm)
 {
-    long long MyAddress;
+    Int64 MyAddress;
     signed long MyNumber;
     if ((*pMyDisasm).Prefix.CSPrefix == InUsePrefix) {
         (*pMyDisasm).Prefix.CSPrefix = NotUsedPrefix;
@@ -2536,7 +2536,7 @@ void __stdcall jno_(PDISASM pMyDisasm)
     (*pMyDisasm).Instruction.BranchType = JNO;
     (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "jno ");
     if (!Security(1)) return;
-    MyNumber = *((SBYTE*) (EIP_+1));
+    MyNumber = *((SUInt8*) (EIP_+1));
     CalculateRelativeAddress(&MyAddress, NB_PREFIX + 2 + MyNumber);
     if (OperandSize == 16) MyAddress = MyAddress & 0xffff;
     if (MyAddress >= 0x100000000) {
@@ -2553,12 +2553,12 @@ void __stdcall jno_(PDISASM pMyDisasm)
     FillFlags(pMyDisasm,49);
 }
 
-// =======================================
-//      72h
-// =======================================
-void __stdcall jc_(PDISASM pMyDisasm)
+/* =======================================
+ *      72h
+ * ======================================= */
+void __bea_callspec__ jc_(PDISASM pMyDisasm)
 {
-    long long MyAddress;
+    Int64 MyAddress;
     signed long MyNumber;
     if ((*pMyDisasm).Prefix.CSPrefix == InUsePrefix) {
         (*pMyDisasm).Prefix.CSPrefix = NotUsedPrefix;
@@ -2572,7 +2572,7 @@ void __stdcall jc_(PDISASM pMyDisasm)
     (*pMyDisasm).Instruction.BranchType = JC;
     (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "jc ");
     if (!Security(1)) return;
-    MyNumber = *((SBYTE*) (EIP_+1));
+    MyNumber = *((SUInt8*) (EIP_+1));
     CalculateRelativeAddress(&MyAddress, NB_PREFIX + 2 + MyNumber);
     if (OperandSize == 16) MyAddress = MyAddress & 0xffff;
     if (MyAddress >= 0x100000000) {
@@ -2589,12 +2589,12 @@ void __stdcall jc_(PDISASM pMyDisasm)
     FillFlags(pMyDisasm,49);
 }
 
-// =======================================
-//      73h
-// =======================================
-void __stdcall jnc_(PDISASM pMyDisasm)
+/* =======================================
+ *      73h
+ * ======================================= */
+void __bea_callspec__ jnc_(PDISASM pMyDisasm)
 {
-    long long MyAddress;
+    Int64 MyAddress;
     signed long MyNumber;
     if ((*pMyDisasm).Prefix.CSPrefix == InUsePrefix) {
         (*pMyDisasm).Prefix.CSPrefix = NotUsedPrefix;
@@ -2608,7 +2608,7 @@ void __stdcall jnc_(PDISASM pMyDisasm)
     (*pMyDisasm).Instruction.BranchType = JNC;
     (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "jnc ");
     if (!Security(1)) return;
-    MyNumber = *((SBYTE*) (EIP_+1));
+    MyNumber = *((SUInt8*) (EIP_+1));
     CalculateRelativeAddress(&MyAddress, NB_PREFIX + 2 + MyNumber);
     if (OperandSize == 16) MyAddress = MyAddress & 0xffff;
     if (MyAddress >= 0x100000000) {
@@ -2624,12 +2624,12 @@ void __stdcall jnc_(PDISASM pMyDisasm)
     EIP_+=2;
     FillFlags(pMyDisasm,49);
 }
-// =======================================
-//      74h
-// =======================================
-void __stdcall je_(PDISASM pMyDisasm)
+/* =======================================
+ *      74h
+ * ======================================= */
+void __bea_callspec__ je_(PDISASM pMyDisasm)
 {
-    long long MyAddress;
+    Int64 MyAddress;
     signed long MyNumber;
     if ((*pMyDisasm).Prefix.CSPrefix == InUsePrefix) {
         (*pMyDisasm).Prefix.CSPrefix = NotUsedPrefix;
@@ -2643,7 +2643,7 @@ void __stdcall je_(PDISASM pMyDisasm)
     (*pMyDisasm).Instruction.BranchType = JE;
     (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "je ");
     if (!Security(1)) return;
-    MyNumber = *((SBYTE*) (EIP_+1));
+    MyNumber = *((SUInt8*) (EIP_+1));
     CalculateRelativeAddress(&MyAddress, NB_PREFIX + 2 + MyNumber);
     if (OperandSize == 16) MyAddress = MyAddress & 0xffff;
     if (MyAddress >= 0x100000000) {
@@ -2660,12 +2660,12 @@ void __stdcall je_(PDISASM pMyDisasm)
     FillFlags(pMyDisasm,49);
 }
 
-// =======================================
-//      75h
-// =======================================
-void __stdcall jne_(PDISASM pMyDisasm)
+/* =======================================
+ *      75h
+ * ======================================= */
+void __bea_callspec__ jne_(PDISASM pMyDisasm)
 {
-    long long MyAddress;
+    Int64 MyAddress;
     signed long MyNumber;
     if ((*pMyDisasm).Prefix.CSPrefix == InUsePrefix) {
         (*pMyDisasm).Prefix.CSPrefix = NotUsedPrefix;
@@ -2679,7 +2679,7 @@ void __stdcall jne_(PDISASM pMyDisasm)
     (*pMyDisasm).Instruction.BranchType = JNE;
     (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "jne ");
     if (!Security(1)) return;
-    MyNumber = *((SBYTE*) (EIP_+1));
+    MyNumber = *((SUInt8*) (EIP_+1));
     CalculateRelativeAddress(&MyAddress, NB_PREFIX + 2 + MyNumber);
     if (OperandSize == 16) MyAddress = MyAddress & 0xffff;
     if (MyAddress >= 0x100000000) {
@@ -2696,12 +2696,12 @@ void __stdcall jne_(PDISASM pMyDisasm)
     FillFlags(pMyDisasm,49);
 }
 
-// =======================================
-//      76h
-// =======================================
-void __stdcall jbe_(PDISASM pMyDisasm)
+/* =======================================
+ *      76h
+ * ======================================= */
+void __bea_callspec__ jbe_(PDISASM pMyDisasm)
 {
-    long long MyAddress;
+    Int64 MyAddress;
     signed long MyNumber;
     if ((*pMyDisasm).Prefix.CSPrefix == InUsePrefix) {
         (*pMyDisasm).Prefix.CSPrefix = NotUsedPrefix;
@@ -2715,7 +2715,7 @@ void __stdcall jbe_(PDISASM pMyDisasm)
     (*pMyDisasm).Instruction.BranchType = JB;
     (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "jbe ");
     if (!Security(1)) return;
-    MyNumber = *((SBYTE*) (EIP_+1));
+    MyNumber = *((SUInt8*) (EIP_+1));
     CalculateRelativeAddress(&MyAddress, NB_PREFIX + 2 + MyNumber);
     if (OperandSize == 16) MyAddress = MyAddress & 0xffff;
     if (MyAddress >= 0x100000000) {
@@ -2732,12 +2732,12 @@ void __stdcall jbe_(PDISASM pMyDisasm)
     FillFlags(pMyDisasm,49);
 }
 
-// =======================================
-//      77h
-// =======================================
-void __stdcall jnbe_(PDISASM pMyDisasm)
+/* =======================================
+ *      77h
+ * ======================================= */
+void __bea_callspec__ jnbe_(PDISASM pMyDisasm)
 {
-    long long MyAddress;
+    Int64 MyAddress;
     signed long MyNumber;
     if ((*pMyDisasm).Prefix.CSPrefix == InUsePrefix) {
         (*pMyDisasm).Prefix.CSPrefix = NotUsedPrefix;
@@ -2751,7 +2751,7 @@ void __stdcall jnbe_(PDISASM pMyDisasm)
     (*pMyDisasm).Instruction.BranchType = JNB;
     (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "jnbe ");
     if (!Security(1)) return;
-    MyNumber = *((SBYTE*) (EIP_+1));
+    MyNumber = *((SUInt8*) (EIP_+1));
     CalculateRelativeAddress(&MyAddress, NB_PREFIX + 2 + MyNumber);
     if (OperandSize == 16) MyAddress = MyAddress & 0xffff;
     if (MyAddress >= 0x100000000) {
@@ -2768,12 +2768,12 @@ void __stdcall jnbe_(PDISASM pMyDisasm)
     FillFlags(pMyDisasm,49);
 }
 
-// =======================================
-//      78h
-// =======================================
-void __stdcall js_(PDISASM pMyDisasm)
+/* =======================================
+ *      78h
+ * ======================================= */
+void __bea_callspec__ js_(PDISASM pMyDisasm)
 {
-    long long MyAddress;
+    Int64 MyAddress;
     signed long MyNumber;
     if ((*pMyDisasm).Prefix.CSPrefix == InUsePrefix) {
         (*pMyDisasm).Prefix.CSPrefix = NotUsedPrefix;
@@ -2787,7 +2787,7 @@ void __stdcall js_(PDISASM pMyDisasm)
     (*pMyDisasm).Instruction.BranchType = JS;
     (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "js ");
     if (!Security(1)) return;
-    MyNumber = *((SBYTE*) (EIP_+1));
+    MyNumber = *((SUInt8*) (EIP_+1));
     CalculateRelativeAddress(&MyAddress, NB_PREFIX + 2 + MyNumber);
     if (OperandSize == 16) MyAddress = MyAddress & 0xffff;
     if (MyAddress >= 0x100000000) {
@@ -2804,12 +2804,12 @@ void __stdcall js_(PDISASM pMyDisasm)
     FillFlags(pMyDisasm,49);
 }
 
-// =======================================
-//      79h
-// =======================================
-void __stdcall jns_(PDISASM pMyDisasm)
+/* =======================================
+ *      79h
+ * ======================================= */
+void __bea_callspec__ jns_(PDISASM pMyDisasm)
 {
-    long long MyAddress;
+    Int64 MyAddress;
     signed long MyNumber;
     if ((*pMyDisasm).Prefix.CSPrefix == InUsePrefix) {
         (*pMyDisasm).Prefix.CSPrefix = NotUsedPrefix;
@@ -2823,7 +2823,7 @@ void __stdcall jns_(PDISASM pMyDisasm)
     (*pMyDisasm).Instruction.BranchType = JNS;
     (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "jns ");
     if (!Security(1)) return;
-    MyNumber = *((SBYTE*) (EIP_+1));
+    MyNumber = *((SUInt8*) (EIP_+1));
     CalculateRelativeAddress(&MyAddress, NB_PREFIX + 2 + MyNumber);
     if (OperandSize == 16) MyAddress = MyAddress & 0xffff;
     if (MyAddress >= 0x100000000) {
@@ -2840,12 +2840,12 @@ void __stdcall jns_(PDISASM pMyDisasm)
     FillFlags(pMyDisasm,49);
 }
 
-// =======================================
-//      7ah
-// =======================================
-void __stdcall jp_(PDISASM pMyDisasm)
+/* =======================================
+ *      7ah
+ * ======================================= */
+void __bea_callspec__ jp_(PDISASM pMyDisasm)
 {
-    long long MyAddress;
+    Int64 MyAddress;
     signed long MyNumber;
     if ((*pMyDisasm).Prefix.CSPrefix == InUsePrefix) {
         (*pMyDisasm).Prefix.CSPrefix = NotUsedPrefix;
@@ -2859,7 +2859,7 @@ void __stdcall jp_(PDISASM pMyDisasm)
     (*pMyDisasm).Instruction.BranchType = JP;
     (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "jp ");
     if (!Security(1)) return;
-    MyNumber = *((SBYTE*) (EIP_+1));
+    MyNumber = *((SUInt8*) (EIP_+1));
     CalculateRelativeAddress(&MyAddress, NB_PREFIX + 2 + MyNumber);
     if (OperandSize == 16) MyAddress = MyAddress & 0xffff;
     if (MyAddress >= 0x100000000) {
@@ -2876,12 +2876,12 @@ void __stdcall jp_(PDISASM pMyDisasm)
     FillFlags(pMyDisasm,49);
 }
 
-// =======================================
-//      7bh
-// =======================================
-void __stdcall jnp_(PDISASM pMyDisasm)
+/* =======================================
+ *      7bh
+ * ======================================= */
+void __bea_callspec__ jnp_(PDISASM pMyDisasm)
 {
-    long long MyAddress;
+    Int64 MyAddress;
     signed long MyNumber;
     if ((*pMyDisasm).Prefix.CSPrefix == InUsePrefix) {
         (*pMyDisasm).Prefix.CSPrefix = NotUsedPrefix;
@@ -2895,7 +2895,7 @@ void __stdcall jnp_(PDISASM pMyDisasm)
     (*pMyDisasm).Instruction.BranchType = JNP;
     (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "jnp ");
     if (!Security(1)) return;
-    MyNumber = *((SBYTE*) (EIP_+1));
+    MyNumber = *((SUInt8*) (EIP_+1));
     CalculateRelativeAddress(&MyAddress, NB_PREFIX + 2 + MyNumber);
     if (OperandSize == 16) MyAddress = MyAddress & 0xffff;
     if (MyAddress >= 0x100000000) {
@@ -2912,12 +2912,12 @@ void __stdcall jnp_(PDISASM pMyDisasm)
     FillFlags(pMyDisasm,49);
 }
 
-// =======================================
-//      7ch
-// =======================================
-void __stdcall jl_(PDISASM pMyDisasm)
+/* =======================================
+ *      7ch
+ * ======================================= */
+void __bea_callspec__ jl_(PDISASM pMyDisasm)
 {
-    long long MyAddress;
+    Int64 MyAddress;
     signed long MyNumber;
     if ((*pMyDisasm).Prefix.CSPrefix == InUsePrefix) {
         (*pMyDisasm).Prefix.CSPrefix = NotUsedPrefix;
@@ -2931,7 +2931,7 @@ void __stdcall jl_(PDISASM pMyDisasm)
     (*pMyDisasm).Instruction.BranchType = JL;
     (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "jl ");
     if (!Security(1)) return;
-    MyNumber = *((SBYTE*) (EIP_+1));
+    MyNumber = *((SUInt8*) (EIP_+1));
     CalculateRelativeAddress(&MyAddress, NB_PREFIX + 2 + MyNumber);
     if (OperandSize == 16) MyAddress = MyAddress & 0xffff;
     if (MyAddress >= 0x100000000) {
@@ -2948,12 +2948,12 @@ void __stdcall jl_(PDISASM pMyDisasm)
     FillFlags(pMyDisasm,49);
 }
 
-// =======================================
-//      7dh
-// =======================================
-void __stdcall jnl_(PDISASM pMyDisasm)
+/* =======================================
+ *      7dh
+ * ======================================= */
+void __bea_callspec__ jnl_(PDISASM pMyDisasm)
 {
-    long long MyAddress;
+    Int64 MyAddress;
     signed long MyNumber;
     if ((*pMyDisasm).Prefix.CSPrefix == InUsePrefix) {
         (*pMyDisasm).Prefix.CSPrefix = NotUsedPrefix;
@@ -2967,7 +2967,7 @@ void __stdcall jnl_(PDISASM pMyDisasm)
     (*pMyDisasm).Instruction.BranchType = JNL;
     (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "jnl ");
     if (!Security(1)) return;
-    MyNumber = *((SBYTE*) (EIP_+1));
+    MyNumber = *((SUInt8*) (EIP_+1));
     CalculateRelativeAddress(&MyAddress, NB_PREFIX + 2 + MyNumber);
     if (OperandSize == 16) MyAddress = MyAddress & 0xffff;
     if (MyAddress >= 0x100000000) {
@@ -2984,12 +2984,12 @@ void __stdcall jnl_(PDISASM pMyDisasm)
     FillFlags(pMyDisasm,49);
 }
 
-// =======================================
-//      7eh
-// =======================================
-void __stdcall jle_(PDISASM pMyDisasm)
+/* =======================================
+ *      7eh
+ * ======================================= */
+void __bea_callspec__ jle_(PDISASM pMyDisasm)
 {
-    long long MyAddress;
+    Int64 MyAddress;
     signed long MyNumber;
     if ((*pMyDisasm).Prefix.CSPrefix == InUsePrefix) {
         (*pMyDisasm).Prefix.CSPrefix = NotUsedPrefix;
@@ -3003,7 +3003,7 @@ void __stdcall jle_(PDISASM pMyDisasm)
     (*pMyDisasm).Instruction.BranchType = JL;
     (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "jle ");
     if (!Security(1)) return;
-    MyNumber = *((SBYTE*) (EIP_+1));
+    MyNumber = *((SUInt8*) (EIP_+1));
     CalculateRelativeAddress(&MyAddress, NB_PREFIX + 2 + MyNumber);
     if (OperandSize == 16) MyAddress = MyAddress & 0xffff;
     if (MyAddress >= 0x100000000) {
@@ -3020,12 +3020,12 @@ void __stdcall jle_(PDISASM pMyDisasm)
     FillFlags(pMyDisasm,49);
 }
 
-// =======================================
-//      7fh
-// =======================================
-void __stdcall jnle_(PDISASM pMyDisasm)
+/* =======================================
+ *      7fh
+ * ======================================= */
+void __bea_callspec__ jnle_(PDISASM pMyDisasm)
 {
-    long long MyAddress;
+    Int64 MyAddress;
     signed long MyNumber;
     if ((*pMyDisasm).Prefix.CSPrefix == InUsePrefix) {
         (*pMyDisasm).Prefix.CSPrefix = NotUsedPrefix;
@@ -3039,7 +3039,7 @@ void __stdcall jnle_(PDISASM pMyDisasm)
     (*pMyDisasm).Instruction.BranchType = JNL;
     (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "jnle ");
     if (!Security(1)) return;
-    MyNumber = *((SBYTE*) (EIP_+1));
+    MyNumber = *((SUInt8*) (EIP_+1));
     CalculateRelativeAddress(&MyAddress, NB_PREFIX + 2 + MyNumber);
     if (OperandSize == 16) MyAddress = MyAddress & 0xffff;
     if (MyAddress >= 0x100000000) {
@@ -3057,12 +3057,12 @@ void __stdcall jnle_(PDISASM pMyDisasm)
 }
 
 
-// =======================================
-//      0f80h
-// =======================================
-void __stdcall jo_near(PDISASM pMyDisasm)
+/* =======================================
+ *      0f80h
+ * ======================================= */
+void __bea_callspec__ jo_near(PDISASM pMyDisasm)
 {
-    long long MyAddress;
+    Int64 MyAddress;
     long MyNumber;
     if ((*pMyDisasm).Prefix.CSPrefix == InUsePrefix) {
         (*pMyDisasm).Prefix.CSPrefix = NotUsedPrefix;
@@ -3077,7 +3077,7 @@ void __stdcall jo_near(PDISASM pMyDisasm)
     (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "jo ");
     if (OperandSize >= 32) {
         if (!Security(5)) return;
-        MyNumber = *((SDWORD*) (EIP_+1));
+        MyNumber = *((SUInt32*) (EIP_+1));
         CalculateRelativeAddress(&MyAddress, NB_PREFIX + 6 + MyNumber);
         if (MyAddress >= 0x100000000) {
             (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%I64X", MyAddress);
@@ -3094,7 +3094,7 @@ void __stdcall jo_near(PDISASM pMyDisasm)
     }
     else {
         if (!Security(3)) return;
-        MyNumber = *((SWORD*) (EIP_+1));
+        MyNumber = *((SUInt16*) (EIP_+1));
         CalculateRelativeAddress(&MyAddress, NB_PREFIX + 4 + MyNumber);
         MyAddress = MyAddress & 0xffff;
         (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%.4X", MyAddress);
@@ -3108,12 +3108,12 @@ void __stdcall jo_near(PDISASM pMyDisasm)
 }
 
 
-// =======================================
-//      0f81h
-// =======================================
-void __stdcall jno_near(PDISASM pMyDisasm)
+/* =======================================
+ *      0f81h
+ * ======================================= */
+void __bea_callspec__ jno_near(PDISASM pMyDisasm)
 {
-    long long MyAddress;
+    Int64 MyAddress;
     long MyNumber;
     if ((*pMyDisasm).Prefix.CSPrefix == InUsePrefix) {
         (*pMyDisasm).Prefix.CSPrefix = NotUsedPrefix;
@@ -3128,7 +3128,7 @@ void __stdcall jno_near(PDISASM pMyDisasm)
     (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "jno ");
     if (OperandSize >= 32) {
         if (!Security(5)) return;
-        MyNumber = *((SDWORD*) (EIP_+1));
+        MyNumber = *((SUInt32*) (EIP_+1));
         CalculateRelativeAddress(&MyAddress, NB_PREFIX + 6 + MyNumber);
         if (MyAddress >= 0x100000000) {
             (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%I64X", MyAddress);
@@ -3145,7 +3145,7 @@ void __stdcall jno_near(PDISASM pMyDisasm)
     }
     else {
         if (!Security(3)) return;
-        MyNumber = *((SWORD*) (EIP_+1));
+        MyNumber = *((SUInt16*) (EIP_+1));
         CalculateRelativeAddress(&MyAddress, NB_PREFIX + 4 + MyNumber);
         MyAddress = MyAddress & 0xffff;
         (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%.4X", MyAddress);
@@ -3158,12 +3158,12 @@ void __stdcall jno_near(PDISASM pMyDisasm)
     }
 }
 
-// =======================================
-//      0f82h
-// =======================================
-void __stdcall jc_near(PDISASM pMyDisasm)
+/* =======================================
+ *      0f82h
+ * ======================================= */
+void __bea_callspec__ jc_near(PDISASM pMyDisasm)
 {
-    long long MyAddress;
+    Int64 MyAddress;
     long MyNumber;
     if ((*pMyDisasm).Prefix.CSPrefix == InUsePrefix) {
         (*pMyDisasm).Prefix.CSPrefix = NotUsedPrefix;
@@ -3179,7 +3179,7 @@ void __stdcall jc_near(PDISASM pMyDisasm)
     (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "jc ");
     if (OperandSize >= 32) {
         if (!Security(5)) return;
-        MyNumber = *((SDWORD*) (EIP_+1));
+        MyNumber = *((SUInt32*) (EIP_+1));
         CalculateRelativeAddress(&MyAddress, NB_PREFIX + 6 + MyNumber);
         if (MyAddress >= 0x100000000) {
             (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%I64X", MyAddress);
@@ -3195,7 +3195,7 @@ void __stdcall jc_near(PDISASM pMyDisasm)
     }
     else {
         if (!Security(3)) return;
-        MyNumber = *((SWORD*) (EIP_+1));
+        MyNumber = *((SUInt16*) (EIP_+1));
         CalculateRelativeAddress(&MyAddress, NB_PREFIX + 4 + MyNumber);
         MyAddress = MyAddress & 0xffff;
         (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%.4X", MyAddress);
@@ -3207,12 +3207,12 @@ void __stdcall jc_near(PDISASM pMyDisasm)
     }
 }
 
-// =======================================
-//      0f83h
-// =======================================
-void __stdcall jnc_near(PDISASM pMyDisasm)
+/* =======================================
+ *      0f83h
+ * ======================================= */
+void __bea_callspec__ jnc_near(PDISASM pMyDisasm)
 {
-    long long MyAddress;
+    Int64 MyAddress;
     long MyNumber;
     if ((*pMyDisasm).Prefix.CSPrefix == InUsePrefix) {
         (*pMyDisasm).Prefix.CSPrefix = NotUsedPrefix;
@@ -3228,7 +3228,7 @@ void __stdcall jnc_near(PDISASM pMyDisasm)
     (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "jnc ");
     if (OperandSize >= 32) {
         if (!Security(5)) return;
-        MyNumber = *((SDWORD*) (EIP_+1));
+        MyNumber = *((SUInt32*) (EIP_+1));
         CalculateRelativeAddress(&MyAddress, NB_PREFIX + 6 + MyNumber);
         if (MyAddress >= 0x100000000) {
             (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%I64X", MyAddress);
@@ -3244,7 +3244,7 @@ void __stdcall jnc_near(PDISASM pMyDisasm)
     }
     else {
         if (!Security(3)) return;
-        MyNumber = *((SWORD*) (EIP_+1));
+        MyNumber = *((SUInt16*) (EIP_+1));
         CalculateRelativeAddress(&MyAddress, NB_PREFIX + 4 + MyNumber);
         MyAddress = MyAddress & 0xffff;
         (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%.4X", MyAddress);
@@ -3256,12 +3256,12 @@ void __stdcall jnc_near(PDISASM pMyDisasm)
     }
 }
 
-// =======================================
-//      0f84h
-// =======================================
-void __stdcall je_near(PDISASM pMyDisasm)
+/* =======================================
+ *      0f84h
+ * ======================================= */
+void __bea_callspec__ je_near(PDISASM pMyDisasm)
 {
-    long long MyAddress;
+    Int64 MyAddress;
     long MyNumber;
     if ((*pMyDisasm).Prefix.CSPrefix == InUsePrefix) {
         (*pMyDisasm).Prefix.CSPrefix = NotUsedPrefix;
@@ -3277,7 +3277,7 @@ void __stdcall je_near(PDISASM pMyDisasm)
     (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "je ");
     if (OperandSize >= 32) {
         if (!Security(5)) return;
-        MyNumber = *((SDWORD*) (EIP_+1));
+        MyNumber = *((SUInt32*) (EIP_+1));
         CalculateRelativeAddress(&MyAddress, NB_PREFIX + 6 + MyNumber);
         if (MyAddress >= 0x100000000) {
             (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%I64X", MyAddress);
@@ -3293,7 +3293,7 @@ void __stdcall je_near(PDISASM pMyDisasm)
     }
     else {
         if (!Security(3)) return;
-        MyNumber = *((SWORD*) (EIP_+1));
+        MyNumber = *((SUInt16*) (EIP_+1));
         CalculateRelativeAddress(&MyAddress, NB_PREFIX + 4 + MyNumber);
         MyAddress = MyAddress & 0xffff;
         (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%.4X", MyAddress);
@@ -3305,12 +3305,12 @@ void __stdcall je_near(PDISASM pMyDisasm)
     }
 }
 
-// =======================================
-//      0f85h
-// =======================================
-void __stdcall jne_near(PDISASM pMyDisasm)
+/* =======================================
+ *      0f85h
+ * ======================================= */
+void __bea_callspec__ jne_near(PDISASM pMyDisasm)
 {
-    long long MyAddress;
+    Int64 MyAddress;
     long MyNumber;
     if ((*pMyDisasm).Prefix.CSPrefix == InUsePrefix) {
         (*pMyDisasm).Prefix.CSPrefix = NotUsedPrefix;
@@ -3326,7 +3326,7 @@ void __stdcall jne_near(PDISASM pMyDisasm)
     (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "jne ");
     if (OperandSize >= 32) {
         if (!Security(5)) return;
-        MyNumber = *((SDWORD*) (EIP_+1));
+        MyNumber = *((SUInt32*) (EIP_+1));
         CalculateRelativeAddress(&MyAddress, NB_PREFIX + 6 + MyNumber);
         if (MyAddress >= 0x100000000) {
             (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%I64X", MyAddress);
@@ -3342,7 +3342,7 @@ void __stdcall jne_near(PDISASM pMyDisasm)
     }
     else {
         if (!Security(3)) return;
-        MyNumber = *((SWORD*) (EIP_+1));
+        MyNumber = *((SUInt16*) (EIP_+1));
         CalculateRelativeAddress(&MyAddress, NB_PREFIX + 4 + MyNumber);
         MyAddress = MyAddress & 0xffff;
         (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%.4X", MyAddress);
@@ -3353,12 +3353,12 @@ void __stdcall jne_near(PDISASM pMyDisasm)
         FillFlags(pMyDisasm,49);
     }
 }
-// =======================================
-//      0f86h
-// =======================================
-void __stdcall jbe_near(PDISASM pMyDisasm)
+/* =======================================
+ *      0f86h
+ * ======================================= */
+void __bea_callspec__ jbe_near(PDISASM pMyDisasm)
 {
-    long long MyAddress;
+    Int64 MyAddress;
     long MyNumber;
     if ((*pMyDisasm).Prefix.CSPrefix == InUsePrefix) {
         (*pMyDisasm).Prefix.CSPrefix = NotUsedPrefix;
@@ -3374,7 +3374,7 @@ void __stdcall jbe_near(PDISASM pMyDisasm)
     (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "jbe ");
     if (OperandSize >= 32) {
         if (!Security(5)) return;
-        MyNumber = *((SDWORD*) (EIP_+1));
+        MyNumber = *((SUInt32*) (EIP_+1));
         CalculateRelativeAddress(&MyAddress, NB_PREFIX + 6 + MyNumber);
         if (MyAddress >= 0x100000000) {
             (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%I64X", MyAddress);
@@ -3390,7 +3390,7 @@ void __stdcall jbe_near(PDISASM pMyDisasm)
     }
     else {
         if (!Security(3)) return;
-        MyNumber = *((SWORD*) (EIP_+1));
+        MyNumber = *((SUInt16*) (EIP_+1));
         CalculateRelativeAddress(&MyAddress, NB_PREFIX + 4 + MyNumber);
         MyAddress = MyAddress & 0xffff;
         (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%.4X", MyAddress);
@@ -3403,12 +3403,12 @@ void __stdcall jbe_near(PDISASM pMyDisasm)
 }
 
 
-// =======================================
-//      0f87h
-// =======================================
-void __stdcall ja_near(PDISASM pMyDisasm)
+/* =======================================
+ *      0f87h
+ * ======================================= */
+void __bea_callspec__ ja_near(PDISASM pMyDisasm)
 {
-    long long MyAddress;
+    Int64 MyAddress;
     long MyNumber;
     if ((*pMyDisasm).Prefix.CSPrefix == InUsePrefix) {
         (*pMyDisasm).Prefix.CSPrefix = NotUsedPrefix;
@@ -3424,7 +3424,7 @@ void __stdcall ja_near(PDISASM pMyDisasm)
     (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "ja ");
     if (OperandSize >= 32) {
         if (!Security(5)) return;
-        MyNumber = *((SDWORD*) (EIP_+1));
+        MyNumber = *((SUInt32*) (EIP_+1));
         CalculateRelativeAddress(&MyAddress, NB_PREFIX + 6 + MyNumber);
         if (MyAddress >= 0x100000000) {
             (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%I64X", MyAddress);
@@ -3440,7 +3440,7 @@ void __stdcall ja_near(PDISASM pMyDisasm)
     }
     else {
         if (!Security(3)) return;
-        MyNumber = *((SWORD*) (EIP_+1));
+        MyNumber = *((SUInt16*) (EIP_+1));
         CalculateRelativeAddress(&MyAddress, NB_PREFIX + 4 + MyNumber);
         MyAddress = MyAddress & 0xffff;
         (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%.4X", MyAddress);
@@ -3452,12 +3452,12 @@ void __stdcall ja_near(PDISASM pMyDisasm)
     }
 }
 
-// =======================================
-//      0f88h
-// =======================================
-void __stdcall js_near(PDISASM pMyDisasm)
+/* =======================================
+ *      0f88h
+ * ======================================= */
+void __bea_callspec__ js_near(PDISASM pMyDisasm)
 {
-    long long MyAddress;
+    Int64 MyAddress;
     long MyNumber;
     if ((*pMyDisasm).Prefix.CSPrefix == InUsePrefix) {
         (*pMyDisasm).Prefix.CSPrefix = NotUsedPrefix;
@@ -3473,7 +3473,7 @@ void __stdcall js_near(PDISASM pMyDisasm)
     (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "js ");
     if (OperandSize >= 32) {
         if (!Security(5)) return;
-        MyNumber = *((SDWORD*) (EIP_+1));
+        MyNumber = *((SUInt32*) (EIP_+1));
         CalculateRelativeAddress(&MyAddress, NB_PREFIX + 6 + MyNumber);
         if (MyAddress >= 0x100000000) {
             (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%I64X", MyAddress);
@@ -3489,7 +3489,7 @@ void __stdcall js_near(PDISASM pMyDisasm)
     }
     else {
         if (!Security(3)) return;
-        MyNumber = *((SWORD*) (EIP_+1));
+        MyNumber = *((SUInt16*) (EIP_+1));
         CalculateRelativeAddress(&MyAddress, NB_PREFIX + 4 + MyNumber);
         MyAddress = MyAddress & 0xffff;
         (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%.4X", MyAddress);
@@ -3501,12 +3501,12 @@ void __stdcall js_near(PDISASM pMyDisasm)
     }
 }
 
-// =======================================
-//      0f89h
-// =======================================
-void __stdcall jns_near(PDISASM pMyDisasm)
+/* =======================================
+ *      0f89h
+ * ======================================= */
+void __bea_callspec__ jns_near(PDISASM pMyDisasm)
 {
-    long long MyAddress;
+    Int64 MyAddress;
     long MyNumber;
     if ((*pMyDisasm).Prefix.CSPrefix == InUsePrefix) {
         (*pMyDisasm).Prefix.CSPrefix = NotUsedPrefix;
@@ -3522,7 +3522,7 @@ void __stdcall jns_near(PDISASM pMyDisasm)
     (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "jns ");
     if (OperandSize >= 32) {
         if (!Security(5)) return;
-        MyNumber = *((SDWORD*) (EIP_+1));
+        MyNumber = *((SUInt32*) (EIP_+1));
         CalculateRelativeAddress(&MyAddress, NB_PREFIX + 6 + MyNumber);
         if (MyAddress >= 0x100000000) {
             (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%I64X", MyAddress);
@@ -3538,7 +3538,7 @@ void __stdcall jns_near(PDISASM pMyDisasm)
     }
     else {
         if (!Security(3)) return;
-        MyNumber = *((SWORD*) (EIP_+1));
+        MyNumber = *((SUInt16*) (EIP_+1));
         CalculateRelativeAddress(&MyAddress, NB_PREFIX + 4 + MyNumber);
         MyAddress = MyAddress & 0xffff;
         (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%.4X", MyAddress);
@@ -3550,12 +3550,12 @@ void __stdcall jns_near(PDISASM pMyDisasm)
     }
 }
 
-// =======================================
-//      0f8ah
-// =======================================
-void __stdcall jp_near(PDISASM pMyDisasm)
+/* =======================================
+ *      0f8ah
+ * ======================================= */
+void __bea_callspec__ jp_near(PDISASM pMyDisasm)
 {
-    long long MyAddress;
+    Int64 MyAddress;
     long MyNumber;
     if ((*pMyDisasm).Prefix.CSPrefix == InUsePrefix) {
         (*pMyDisasm).Prefix.CSPrefix = NotUsedPrefix;
@@ -3571,7 +3571,7 @@ void __stdcall jp_near(PDISASM pMyDisasm)
     (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "jp ");
     if (OperandSize >= 32) {
         if (!Security(5)) return;
-        MyNumber = *((SDWORD*) (EIP_+1));
+        MyNumber = *((SUInt32*) (EIP_+1));
         CalculateRelativeAddress(&MyAddress, NB_PREFIX + 6 + MyNumber);
         if (MyAddress >= 0x100000000) {
             (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%I64X", MyAddress);
@@ -3587,7 +3587,7 @@ void __stdcall jp_near(PDISASM pMyDisasm)
     }
     else {
         if (!Security(3)) return;
-        MyNumber = *((SWORD*) (EIP_+1));
+        MyNumber = *((SUInt16*) (EIP_+1));
         CalculateRelativeAddress(&MyAddress, NB_PREFIX + 4 + MyNumber);
         MyAddress = MyAddress & 0xffff;
         (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%.4X", MyAddress);
@@ -3599,12 +3599,12 @@ void __stdcall jp_near(PDISASM pMyDisasm)
     }
 }
 
-// =======================================
-//      0f8bh
-// =======================================
-void __stdcall jnp_near(PDISASM pMyDisasm)
+/* =======================================
+ *      0f8bh
+ * ======================================= */
+void __bea_callspec__ jnp_near(PDISASM pMyDisasm)
 {
-    long long MyAddress;
+    Int64 MyAddress;
     long MyNumber;
     if ((*pMyDisasm).Prefix.CSPrefix == InUsePrefix) {
         (*pMyDisasm).Prefix.CSPrefix = NotUsedPrefix;
@@ -3620,7 +3620,7 @@ void __stdcall jnp_near(PDISASM pMyDisasm)
     (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "jnp ");
     if (OperandSize >= 32) {
         if (!Security(5)) return;
-        MyNumber = *((SDWORD*) (EIP_+1));
+        MyNumber = *((SUInt32*) (EIP_+1));
         CalculateRelativeAddress(&MyAddress, NB_PREFIX + 6 + MyNumber);
         if (MyAddress >= 0x100000000) {
             (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%I64X", MyAddress);
@@ -3636,7 +3636,7 @@ void __stdcall jnp_near(PDISASM pMyDisasm)
     }
     else {
         if (!Security(3)) return;
-        MyNumber = *((SWORD*) (EIP_+1));
+        MyNumber = *((SUInt16*) (EIP_+1));
         CalculateRelativeAddress(&MyAddress, NB_PREFIX + 4 + MyNumber);
         MyAddress = MyAddress & 0xffff;
         (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%.4X", MyAddress);
@@ -3648,12 +3648,12 @@ void __stdcall jnp_near(PDISASM pMyDisasm)
     }
 }
 
-// =======================================
-//      0f8ch
-// =======================================
-void __stdcall jl_near(PDISASM pMyDisasm)
+/* =======================================
+ *      0f8ch
+ * ======================================= */
+void __bea_callspec__ jl_near(PDISASM pMyDisasm)
 {
-    long long MyAddress;
+    Int64 MyAddress;
     long MyNumber;
     if ((*pMyDisasm).Prefix.CSPrefix == InUsePrefix) {
         (*pMyDisasm).Prefix.CSPrefix = NotUsedPrefix;
@@ -3669,7 +3669,7 @@ void __stdcall jl_near(PDISASM pMyDisasm)
     (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "jl ");
     if (OperandSize >= 32) {
         if (!Security(5)) return;
-        MyNumber = *((SDWORD*) (EIP_+1));
+        MyNumber = *((SUInt32*) (EIP_+1));
         CalculateRelativeAddress(&MyAddress, NB_PREFIX + 6 + MyNumber);
         if (MyAddress >= 0x100000000) {
             (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%I64X", MyAddress);
@@ -3685,7 +3685,7 @@ void __stdcall jl_near(PDISASM pMyDisasm)
     }
     else {
         if (!Security(3)) return;
-        MyNumber = *((SWORD*) (EIP_+1));
+        MyNumber = *((SUInt16*) (EIP_+1));
         CalculateRelativeAddress(&MyAddress, NB_PREFIX + 4 + MyNumber);
         MyAddress = MyAddress & 0xffff;
         (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%.4X", MyAddress);
@@ -3697,12 +3697,12 @@ void __stdcall jl_near(PDISASM pMyDisasm)
     }
 }
 
-// =======================================
-//      0f8dh
-// =======================================
-void __stdcall jnl_near(PDISASM pMyDisasm)
+/* =======================================
+ *      0f8dh
+ * ======================================= */
+void __bea_callspec__ jnl_near(PDISASM pMyDisasm)
 {
-    long long MyAddress;
+    Int64 MyAddress;
     long MyNumber;
     if ((*pMyDisasm).Prefix.CSPrefix == InUsePrefix) {
         (*pMyDisasm).Prefix.CSPrefix = NotUsedPrefix;
@@ -3718,7 +3718,7 @@ void __stdcall jnl_near(PDISASM pMyDisasm)
     (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "jnl ");
     if (OperandSize >= 32) {
         if (!Security(5)) return;
-        MyNumber = *((SDWORD*) (EIP_+1));
+        MyNumber = *((SUInt32*) (EIP_+1));
         CalculateRelativeAddress(&MyAddress, NB_PREFIX + 6 + MyNumber);
         if (MyAddress >= 0x100000000) {
             (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%I64X", MyAddress);
@@ -3734,7 +3734,7 @@ void __stdcall jnl_near(PDISASM pMyDisasm)
     }
     else {
         if (!Security(3)) return;
-        MyNumber = *((SWORD*) (EIP_+1));
+        MyNumber = *((SUInt16*) (EIP_+1));
         CalculateRelativeAddress(&MyAddress, NB_PREFIX + 4 + MyNumber);
         MyAddress = MyAddress & 0xffff;
         (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%.4X", MyAddress);
@@ -3746,12 +3746,12 @@ void __stdcall jnl_near(PDISASM pMyDisasm)
     }
 }
 
-// =======================================
-//      0f8eh
-// =======================================
-void __stdcall jle_near(PDISASM pMyDisasm)
+/* =======================================
+ *      0f8eh
+ * ======================================= */
+void __bea_callspec__ jle_near(PDISASM pMyDisasm)
 {
-    long long MyAddress;
+    Int64 MyAddress;
     long MyNumber;
     if ((*pMyDisasm).Prefix.CSPrefix == InUsePrefix) {
         (*pMyDisasm).Prefix.CSPrefix = NotUsedPrefix;
@@ -3767,7 +3767,7 @@ void __stdcall jle_near(PDISASM pMyDisasm)
     (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "jng ");
     if (OperandSize >= 32) {
         if (!Security(5)) return;
-        MyNumber = *((SDWORD*) (EIP_+1));
+        MyNumber = *((SUInt32*) (EIP_+1));
         CalculateRelativeAddress(&MyAddress, NB_PREFIX + 6 + MyNumber);
         if (MyAddress >= 0x100000000) {
             (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%I64X", MyAddress);
@@ -3783,7 +3783,7 @@ void __stdcall jle_near(PDISASM pMyDisasm)
     }
     else {
         if (!Security(3)) return;
-        MyNumber = *((SWORD*) (EIP_+1));
+        MyNumber = *((SUInt16*) (EIP_+1));
         CalculateRelativeAddress(&MyAddress, NB_PREFIX + 4 + MyNumber);
         MyAddress = MyAddress & 0xffff;
         (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%.4X", MyAddress);
@@ -3795,12 +3795,12 @@ void __stdcall jle_near(PDISASM pMyDisasm)
     }
 }
 
-// =======================================
-//      0f8fh
-// =======================================
-void __stdcall jnle_near(PDISASM pMyDisasm)
+/* =======================================
+ *      0f8fh
+ * ======================================= */
+void __bea_callspec__ jnle_near(PDISASM pMyDisasm)
 {
-    long long MyAddress;
+    Int64 MyAddress;
     long MyNumber;
     if ((*pMyDisasm).Prefix.CSPrefix == InUsePrefix) {
         (*pMyDisasm).Prefix.CSPrefix = NotUsedPrefix;
@@ -3816,7 +3816,7 @@ void __stdcall jnle_near(PDISASM pMyDisasm)
     (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "jg ");
     if (OperandSize >= 32) {
         if (!Security(5)) return;
-        MyNumber = *((SDWORD*) (EIP_+1));
+        MyNumber = *((SUInt32*) (EIP_+1));
         CalculateRelativeAddress(&MyAddress, NB_PREFIX + 6 + MyNumber);
         if (MyAddress >= 0x100000000) {
             (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%I64X", MyAddress);
@@ -3832,7 +3832,7 @@ void __stdcall jnle_near(PDISASM pMyDisasm)
     }
     else {
         if (!Security(3)) return;
-        MyNumber = *((SWORD*) (EIP_+1));
+        MyNumber = *((SUInt16*) (EIP_+1));
         CalculateRelativeAddress(&MyAddress, NB_PREFIX + 4 + MyNumber);
         MyAddress = MyAddress & 0xffff;
         (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%.4X", MyAddress);
@@ -3844,12 +3844,12 @@ void __stdcall jnle_near(PDISASM pMyDisasm)
     }
 }
 
-// =======================================
-//      0e3h
-// =======================================
-void __stdcall jecxz_(PDISASM pMyDisasm)
+/* =======================================
+ *      0e3h
+ * ======================================= */
+void __bea_callspec__ jecxz_(PDISASM pMyDisasm)
 {
-    long long MyAddress;
+    Int64 MyAddress;
     signed long MyNumber;
     if ((*pMyDisasm).Prefix.CSPrefix == InUsePrefix) {
         (*pMyDisasm).Prefix.CSPrefix = NotUsedPrefix;
@@ -3873,7 +3873,7 @@ void __stdcall jecxz_(PDISASM pMyDisasm)
     }
     if (OperandSize >= 32) {
         if (!Security(5)) return;
-        MyNumber = *((SBYTE*) (EIP_+1));
+        MyNumber = *((SUInt8*) (EIP_+1));
         CalculateRelativeAddress(&MyAddress, NB_PREFIX + 2 + MyNumber);
         if (MyAddress >= 0x100000000) {
             (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%I64X", MyAddress);
@@ -3889,7 +3889,7 @@ void __stdcall jecxz_(PDISASM pMyDisasm)
     }
     else {
         if (!Security(3)) return;
-        MyNumber = *((SBYTE*) (EIP_+1));
+        MyNumber = *((SUInt8*) (EIP_+1));
         CalculateRelativeAddress(&MyAddress, NB_PREFIX + 2 + MyNumber);
         MyAddress = MyAddress & 0xffff;
         (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%.4X", MyAddress);
@@ -3901,12 +3901,12 @@ void __stdcall jecxz_(PDISASM pMyDisasm)
     }
 }
 
-// =======================================
-//      0e9h
-// =======================================
-void __stdcall jmp_near(PDISASM pMyDisasm)
+/* =======================================
+ *      0e9h
+ * ======================================= */
+void __bea_callspec__ jmp_near(PDISASM pMyDisasm)
 {
-    long long MyAddress;
+    Int64 MyAddress;
     long MyNumber;
     (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION + CONTROL_TRANSFER;
     (*pMyDisasm).Instruction.BranchType = JmpType;
@@ -3915,7 +3915,7 @@ void __stdcall jmp_near(PDISASM pMyDisasm)
     (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "jmp ");
     if (OperandSize >= 32) {
         if (!Security(5)) return;
-        MyNumber = *((SDWORD*) (EIP_+1));
+        MyNumber = *((SUInt32*) (EIP_+1));
         CalculateRelativeAddress(&MyAddress, NB_PREFIX + 5 + MyNumber);
         if (MyAddress >= 0x100000000) {
             (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%I64X", MyAddress);
@@ -3931,7 +3931,7 @@ void __stdcall jmp_near(PDISASM pMyDisasm)
     }
     else {
         if (!Security(3)) return;
-        MyNumber = *((SWORD*) (EIP_+1));
+        MyNumber = *((SUInt16*) (EIP_+1));
         CalculateRelativeAddress(&MyAddress, NB_PREFIX + 3 + MyNumber);
         MyAddress = MyAddress & 0xffff;
         (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%.4X", MyAddress);
@@ -3943,19 +3943,19 @@ void __stdcall jmp_near(PDISASM pMyDisasm)
 }
 
 
-// =======================================
-//      0ebh
-// =======================================
-void __stdcall jmp_short(PDISASM pMyDisasm)
+/* =======================================
+ *      0ebh
+ * ======================================= */
+void __bea_callspec__ jmp_short(PDISASM pMyDisasm)
 {
-    long long MyAddress = 0;
+    Int64 MyAddress = 0;
     signed long MyNumber = 0;
     (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION + CONTROL_TRANSFER;
     (*pMyDisasm).Instruction.BranchType = JmpType;
     (*pMyDisasm).Argument1.ArgSize = OperandSize;
     (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "jmp ");
     if (!Security(1)) return;
-    MyNumber = *((SBYTE*) (EIP_+1));
+    MyNumber = *((SUInt8*) (EIP_+1));
     CalculateRelativeAddress(&MyAddress, NB_PREFIX + 2 + MyNumber);
     if (OperandSize == 16) MyAddress = MyAddress & 0xffff;
     if (MyAddress >= 0x100000000) {
@@ -3972,10 +3972,10 @@ void __stdcall jmp_short(PDISASM pMyDisasm)
 }
 
 
-// =======================================
-//
-// =======================================
-void __stdcall jmp_far(PDISASM pMyDisasm)
+/* =======================================
+ *
+ * ======================================= */
+void __bea_callspec__ jmp_far(PDISASM pMyDisasm)
 {
     long MyNumber;
     int i = 0;
@@ -3996,12 +3996,12 @@ void __stdcall jmp_far(PDISASM pMyDisasm)
         }
         if (OperandSize ==32) {
             if (!Security(7)) return;
-            MyNumber = *((WORD*) (EIP_+5));
+            MyNumber = *((UInt16*) (EIP_+5));
             i += CopyFormattedNumber((char*) &(*pMyDisasm).Argument1.ArgMnemonic+i, "%.4X", MyNumber);
         }
         else {
             if (!Security(5)) return;
-            MyNumber = *((WORD*) (EIP_+3));
+            MyNumber = *((UInt16*) (EIP_+3));
             i += CopyFormattedNumber((char*) &(*pMyDisasm).Argument1.ArgMnemonic+i, "%.4X", MyNumber);
         }
         if (SYNTAX_ == ATSyntax) {
@@ -4012,7 +4012,7 @@ void __stdcall jmp_far(PDISASM pMyDisasm)
             (void) strcpy ((*pMyDisasm).Argument1.ArgMnemonic+i, " : ");
             i+=3;
         }
-        MyNumber = *((DWORD*) (EIP_+1));
+        MyNumber = *((UInt32*) (EIP_+1));
         if (OperandSize == 16) {
             MyNumber = MyNumber & 0xffff;
         }
@@ -4026,10 +4026,10 @@ void __stdcall jmp_far(PDISASM pMyDisasm)
     }
 }
 
-// =======================================
-//
-// =======================================
-void __stdcall lahf_(PDISASM pMyDisasm)
+/* =======================================
+ *
+ * ======================================= */
+void __bea_callspec__ lahf_(PDISASM pMyDisasm)
 {
     (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION + FLAG_CONTROL_INSTRUCTION;
     (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "lahf ");
@@ -4040,10 +4040,10 @@ void __stdcall lahf_(PDISASM pMyDisasm)
     EIP_++;
 }
 
-// =======================================
-//
-// =======================================
-void __stdcall lar_GvEw(PDISASM pMyDisasm)
+/* =======================================
+ *
+ * ======================================= */
+void __bea_callspec__ lar_GvEw(PDISASM pMyDisasm)
 {
     (*pMyDisasm).Instruction.Category = SYSTEM_INSTRUCTION;
     (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "lar ");
@@ -4051,10 +4051,10 @@ void __stdcall lar_GvEw(PDISASM pMyDisasm)
     FillFlags(pMyDisasm, 53);
 }
 
-// =======================================
-//
-// =======================================
-void __stdcall lds_GvM(PDISASM pMyDisasm)
+/* =======================================
+ *
+ * ======================================= */
+void __bea_callspec__ lds_GvM(PDISASM pMyDisasm)
 {
 
     if (Architecture == 64) {
@@ -4078,10 +4078,10 @@ void __stdcall lds_GvM(PDISASM pMyDisasm)
     }
 }
 
-// =======================================
-//      0c9h
-// =======================================
-void __stdcall leave_(PDISASM pMyDisasm)
+/* =======================================
+ *      0c9h
+ * ======================================= */
+void __bea_callspec__ leave_(PDISASM pMyDisasm)
 {
     (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION + CONTROL_TRANSFER;
     (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "leave ");
@@ -4092,10 +4092,10 @@ void __stdcall leave_(PDISASM pMyDisasm)
     EIP_++;
 }
 
-// =======================================
-//
-// =======================================
-void __stdcall lea_GvM(PDISASM pMyDisasm)
+/* =======================================
+ *
+ * ======================================= */
+void __bea_callspec__ lea_GvM(PDISASM pMyDisasm)
 {
     (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION + MISCELLANEOUS_INSTRUCTION;
     (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "lea ");
@@ -4119,10 +4119,10 @@ void __stdcall lea_GvM(PDISASM pMyDisasm)
 
 }
 
-// =======================================
-//
-// =======================================
-void __stdcall les_GvM(PDISASM pMyDisasm)
+/* =======================================
+ *
+ * ======================================= */
+void __bea_callspec__ les_GvM(PDISASM pMyDisasm)
 {
 
     if (Architecture == 64) {
@@ -4146,10 +4146,10 @@ void __stdcall les_GvM(PDISASM pMyDisasm)
     }
 }
 
-// =======================================
-//      0ach
-// =======================================
-void __stdcall lodsb_(PDISASM pMyDisasm)
+/* =======================================
+ *      0ach
+ * ======================================= */
+void __bea_callspec__ lodsb_(PDISASM pMyDisasm)
 {
     if ((*pMyDisasm).Prefix.RepnePrefix == SuperfluousPrefix) {
         (*pMyDisasm).Prefix.RepnePrefix = InUsePrefix;
@@ -4169,10 +4169,10 @@ void __stdcall lodsb_(PDISASM pMyDisasm)
     FillFlags(pMyDisasm, 59);
 }
 
-// =======================================
-//      0adh
-// =======================================
-void __stdcall lodsw_(PDISASM pMyDisasm)
+/* =======================================
+ *      0adh
+ * ======================================= */
+void __bea_callspec__ lodsw_(PDISASM pMyDisasm)
 {
     if ((*pMyDisasm).Prefix.RepnePrefix == SuperfluousPrefix) {
         (*pMyDisasm).Prefix.RepnePrefix = InUsePrefix;
@@ -4216,19 +4216,19 @@ void __stdcall lodsw_(PDISASM pMyDisasm)
     }
 }
 
-// =======================================
-//      0e2h
-// =======================================
-void __stdcall loop_(PDISASM pMyDisasm)
+/* =======================================
+ *      0e2h
+ * ======================================= */
+void __bea_callspec__ loop_(PDISASM pMyDisasm)
 {
     signed long MyNumber;
-    long long MyAddress;
+    Int64 MyAddress;
     (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION + CONTROL_TRANSFER;
     (*pMyDisasm).Instruction.BranchType = JE;
     (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "loop ");
     if (!Security(1)) return;
     if (OperandSize >= 32) {
-        MyNumber = *((SBYTE*) (EIP_+1));
+        MyNumber = *((SUInt8*) (EIP_+1));
         CalculateRelativeAddress(&MyAddress, NB_PREFIX + 2 + MyNumber);
         if (MyAddress >= 0x100000000) {
             (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%I64X", MyAddress);
@@ -4244,7 +4244,7 @@ void __stdcall loop_(PDISASM pMyDisasm)
         FillFlags(pMyDisasm, 60);
     }
     else {
-        MyNumber = *((SBYTE*) (EIP_+1));
+        MyNumber = *((SUInt8*) (EIP_+1));
         CalculateRelativeAddress(&MyAddress, NB_PREFIX + 2 + MyNumber);
         MyAddress = MyAddress & 0xffff;
         (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%.4X", MyAddress);
@@ -4258,19 +4258,19 @@ void __stdcall loop_(PDISASM pMyDisasm)
     }
 }
 
-// =======================================
-//      0xe0
-// =======================================
-void __stdcall loopne_(PDISASM pMyDisasm)
+/* =======================================
+ *      0xe0
+ * ======================================= */
+void __bea_callspec__ loopne_(PDISASM pMyDisasm)
 {
     signed long MyNumber;
-    long long MyAddress;
+    Int64 MyAddress;
     (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION + CONTROL_TRANSFER;
     (*pMyDisasm).Instruction.BranchType = JNE;
     (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "loopne ");
     if (!Security(1)) return;
     if (OperandSize >= 32) {
-        MyNumber = *((SBYTE*) (EIP_+1));
+        MyNumber = *((SUInt8*) (EIP_+1));
         CalculateRelativeAddress(&MyAddress, NB_PREFIX + 2 + MyNumber);
         if (MyAddress >= 0x100000000) {
             (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%I64X", MyAddress);
@@ -4286,7 +4286,7 @@ void __stdcall loopne_(PDISASM pMyDisasm)
         FillFlags(pMyDisasm, 61);
     }
     else {
-        MyNumber = *((SBYTE*) (EIP_+1));
+        MyNumber = *((SUInt8*) (EIP_+1));
         CalculateRelativeAddress(&MyAddress, NB_PREFIX + 2 + MyNumber);
         MyAddress = MyAddress & 0xffff;
         (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%.4X", MyAddress);
@@ -4300,19 +4300,19 @@ void __stdcall loopne_(PDISASM pMyDisasm)
     }
 }
 
-// =======================================
-//      0xe1
-// =======================================
-void __stdcall loope_(PDISASM pMyDisasm)
+/* =======================================
+ *      0xe1
+ * ======================================= */
+void __bea_callspec__ loope_(PDISASM pMyDisasm)
 {
     signed long MyNumber;
-    long long MyAddress;
+    Int64 MyAddress;
     (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION + CONTROL_TRANSFER;
     (*pMyDisasm).Instruction.BranchType = JE;
     (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "loope ");
     if (!Security(1)) return;
     if (OperandSize >= 32) {
-        MyNumber = *((SBYTE*) (EIP_+1));
+        MyNumber = *((SUInt8*) (EIP_+1));
         CalculateRelativeAddress(&MyAddress, NB_PREFIX + 2 + MyNumber);
         if (MyAddress >= 0x100000000) {
             (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%I64X", MyAddress);
@@ -4328,7 +4328,7 @@ void __stdcall loope_(PDISASM pMyDisasm)
         FillFlags(pMyDisasm, 61);
     }
     else {
-        MyNumber = *((SBYTE*) (EIP_+1));
+        MyNumber = *((SUInt8*) (EIP_+1));
         CalculateRelativeAddress(&MyAddress, NB_PREFIX + 2 + MyNumber);
         MyAddress = MyAddress & 0xffff;
         (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%.4X", MyAddress);
@@ -4342,10 +4342,10 @@ void __stdcall loope_(PDISASM pMyDisasm)
     }
 }
 
-// =======================================
-//
-// =======================================
-void __stdcall lsl_GvEw(PDISASM pMyDisasm)
+/* =======================================
+ *
+ * ======================================= */
+void __bea_callspec__ lsl_GvEw(PDISASM pMyDisasm)
 {
     (*pMyDisasm).Instruction.Category = SYSTEM_INSTRUCTION;
     (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "lsl ");
@@ -4353,40 +4353,40 @@ void __stdcall lsl_GvEw(PDISASM pMyDisasm)
     FillFlags(pMyDisasm, 62);
 }
 
-// =======================================
-//
-// =======================================
-void __stdcall lss_Mp(PDISASM pMyDisasm)
+/* =======================================
+ *
+ * ======================================= */
+void __bea_callspec__ lss_Mp(PDISASM pMyDisasm)
 {
     (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION + SEGMENT_REGISTER;
     (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "lss ");
     GvEv(pMyDisasm);
 }
 
-// =======================================
-//
-// =======================================
-void __stdcall lfs_Mp(PDISASM pMyDisasm)
+/* =======================================
+ *
+ * ======================================= */
+void __bea_callspec__ lfs_Mp(PDISASM pMyDisasm)
 {
     (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION + SEGMENT_REGISTER;
     (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "lfs ");
     GvEv(pMyDisasm);
 }
 
-// =======================================
-//
-// =======================================
-void __stdcall lgs_Mp(PDISASM pMyDisasm)
+/* =======================================
+ *
+ * ======================================= */
+void __bea_callspec__ lgs_Mp(PDISASM pMyDisasm)
 {
     (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION + SEGMENT_REGISTER;
     (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "lgs ");
     GvEv(pMyDisasm);
 }
 
-// =======================================
-//
-// =======================================
-void __stdcall mov_RdCd(PDISASM pMyDisasm)
+/* =======================================
+ *
+ * ======================================= */
+void __bea_callspec__ mov_RdCd(PDISASM pMyDisasm)
 {
     (*pMyDisasm).Instruction.Category = SYSTEM_INSTRUCTION;
     MOD_RM(&(*pMyDisasm).Argument1);
@@ -4404,10 +4404,10 @@ void __stdcall mov_RdCd(PDISASM pMyDisasm)
 }
 
 
-// =======================================
-//
-// =======================================
-void __stdcall mov_RdDd(PDISASM pMyDisasm)
+/* =======================================
+ *
+ * ======================================= */
+void __bea_callspec__ mov_RdDd(PDISASM pMyDisasm)
 {
     (*pMyDisasm).Instruction.Category = SYSTEM_INSTRUCTION;
     MOD_RM(&(*pMyDisasm).Argument1);
@@ -4424,10 +4424,10 @@ void __stdcall mov_RdDd(PDISASM pMyDisasm)
     }
 }
 
-// =======================================
-//
-// =======================================
-void __stdcall mov_CdRd(PDISASM pMyDisasm)
+/* =======================================
+ *
+ * ======================================= */
+void __bea_callspec__ mov_CdRd(PDISASM pMyDisasm)
 {
     (*pMyDisasm).Instruction.Category = SYSTEM_INSTRUCTION;
     MOD_RM(&(*pMyDisasm).Argument2);
@@ -4444,10 +4444,10 @@ void __stdcall mov_CdRd(PDISASM pMyDisasm)
     }
 }
 
-// =======================================
-//
-// =======================================
-void __stdcall mov_DdRd(PDISASM pMyDisasm)
+/* =======================================
+ *
+ * ======================================= */
+void __bea_callspec__ mov_DdRd(PDISASM pMyDisasm)
 {
     (*pMyDisasm).Instruction.Category = SYSTEM_INSTRUCTION;
     MOD_RM(&(*pMyDisasm).Argument2);
@@ -4464,52 +4464,52 @@ void __stdcall mov_DdRd(PDISASM pMyDisasm)
     }
 }
 
-// =======================================
-//      88h
-// =======================================
-void __stdcall mov_EbGb(PDISASM pMyDisasm)
+/* =======================================
+ *      88h
+ * ======================================= */
+void __bea_callspec__ mov_EbGb(PDISASM pMyDisasm)
 {
     (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION + DATA_TRANSFER;
     (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "mov ");
     EbGb(pMyDisasm);
 }
 
-// =======================================
-//      89h
-// =======================================
-void __stdcall mov_EvGv(PDISASM pMyDisasm)
+/* =======================================
+ *      89h
+ * ======================================= */
+void __bea_callspec__ mov_EvGv(PDISASM pMyDisasm)
 {
     (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION + DATA_TRANSFER;
     (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "mov ");
     EvGv(pMyDisasm);
 }
 
-// =======================================
-//      8ah
-// =======================================
-void __stdcall mov_GbEb(PDISASM pMyDisasm)
+/* =======================================
+ *      8ah
+ * ======================================= */
+void __bea_callspec__ mov_GbEb(PDISASM pMyDisasm)
 {
     (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION + DATA_TRANSFER;
     (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "mov ");
     GbEb(pMyDisasm);
 }
 
-// =======================================
-//      8bh
-// =======================================
-void __stdcall mov_GvEv(PDISASM pMyDisasm)
+/* =======================================
+ *      8bh
+ * ======================================= */
+void __bea_callspec__ mov_GvEv(PDISASM pMyDisasm)
 {
     (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION + DATA_TRANSFER;
     (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "mov ");
     GvEv(pMyDisasm);
 }
 
-// =======================================
-//      0a0h
-// =======================================
-void __stdcall mov_ALOb(PDISASM pMyDisasm)
+/* =======================================
+ *      0a0h
+ * ======================================= */
+void __bea_callspec__ mov_ALOb(PDISASM pMyDisasm)
 {
-    long long MyAddress;
+    Int64 MyAddress;
     (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION + DATA_TRANSFER;
     (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "mov ");
     OpSize = 101;
@@ -4521,21 +4521,21 @@ void __stdcall mov_ALOb(PDISASM pMyDisasm)
     (*pMyDisasm).Argument2.ArgSize = 8;
     if (AddressSize == 64) {
         if (!Security(9)) return;
-        MyAddress = *((unsigned long long *) (EIP_+1));
+        MyAddress = *((UInt64 *) (EIP_+1));
        (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument2.ArgMnemonic, "%I64X", MyAddress);
        EIP_+=9;
        (*pMyDisasm).Argument2.Memory.Displacement = MyAddress;
     }
     else if (AddressSize == 32) {
         if (!Security(5)) return;
-        MyAddress = *((DWORD*) (EIP_+1));
+        MyAddress = *((UInt32*) (EIP_+1));
        (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument2.ArgMnemonic, "%.8X", MyAddress);
        EIP_+=5;
        (*pMyDisasm).Argument2.Memory.Displacement = MyAddress;
     }
     else {
         if (!Security(3)) return;
-        MyAddress = *((WORD*) (EIP_+1));
+        MyAddress = *((UInt16*) (EIP_+1));
        (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument2.ArgMnemonic, "%.4X", MyAddress);
        EIP_+=3;
        (*pMyDisasm).Argument2.Memory.Displacement = MyAddress;
@@ -4550,33 +4550,33 @@ void __stdcall mov_ALOb(PDISASM pMyDisasm)
 
 }
 
-// =======================================
-//      0a1h
-// =======================================
-void __stdcall mov_eAXOv(PDISASM pMyDisasm)
+/* =======================================
+ *      0a1h
+ * ======================================= */
+void __bea_callspec__ mov_eAXOv(PDISASM pMyDisasm)
 {
-    long long MyAddress;
+    Int64 MyAddress;
     (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION + DATA_TRANSFER;
     (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "mov ");
     RM_ = 5;
     MOD_ = 0;
     if (AddressSize == 64) {
         if (!Security(9)) return;
-        MyAddress = *((unsigned long long *) (EIP_+1));
+        MyAddress = *((UInt64 *) (EIP_+1));
        (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument2.ArgMnemonic, "%I64X", MyAddress);
        EIP_+=9;
        (*pMyDisasm).Argument2.Memory.Displacement = MyAddress;
     }
     else if (AddressSize == 32) {
         if (!Security(5)) return;
-        MyAddress = *((DWORD*) (EIP_+1));
+        MyAddress = *((UInt32*) (EIP_+1));
        (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument2.ArgMnemonic, "%.8X", MyAddress);
        EIP_+=5;
        (*pMyDisasm).Argument2.Memory.Displacement = MyAddress;
     }
     else {
         if (!Security(3)) return;
-        MyAddress = *((WORD*) (EIP_+1));
+        MyAddress = *((UInt16*) (EIP_+1));
        (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument2.ArgMnemonic, "%.4X", MyAddress);
        EIP_+=3;
        (*pMyDisasm).Argument2.Memory.Displacement = MyAddress;
@@ -4627,12 +4627,12 @@ void __stdcall mov_eAXOv(PDISASM pMyDisasm)
 
 }
 
-// =======================================
-//      0a2h
-// =======================================
-void __stdcall mov_ObAL(PDISASM pMyDisasm)
+/* =======================================
+ *      0a2h
+ * ======================================= */
+void __bea_callspec__ mov_ObAL(PDISASM pMyDisasm)
 {
-    long long MyAddress;
+    Int64 MyAddress;
     (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION + DATA_TRANSFER;
     (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "mov ");
     OpSize = 1;
@@ -4644,21 +4644,21 @@ void __stdcall mov_ObAL(PDISASM pMyDisasm)
     (*pMyDisasm).Argument2.ArgSize = 8;
     if (AddressSize == 64) {
         if (!Security(9)) return;
-        MyAddress = *((unsigned long long *) (EIP_+1));
+        MyAddress = *((UInt64 *) (EIP_+1));
        (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%I64X", MyAddress);
        EIP_+=9;
        (*pMyDisasm).Argument1.Memory.Displacement = MyAddress;
     }
     else if (AddressSize == 32) {
         if (!Security(5)) return;
-        MyAddress = *((DWORD*) (EIP_+1));
+        MyAddress = *((UInt32*) (EIP_+1));
        (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%.8X", MyAddress);
        EIP_+=5;
        (*pMyDisasm).Argument1.Memory.Displacement = MyAddress;
     }
     else {
         if (!Security(3)) return;
-        MyAddress = *((WORD*) (EIP_+1));
+        MyAddress = *((UInt16*) (EIP_+1));
        (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%.4X", MyAddress);
        EIP_+=3;
        (*pMyDisasm).Argument1.Memory.Displacement = MyAddress;
@@ -4673,33 +4673,33 @@ void __stdcall mov_ObAL(PDISASM pMyDisasm)
 
 }
 
-// =======================================
-//      0a3h
-// =======================================
-void __stdcall mov_OveAX(PDISASM pMyDisasm)
+/* =======================================
+ *      0a3h
+ * ======================================= */
+void __bea_callspec__ mov_OveAX(PDISASM pMyDisasm)
 {
-    long long MyAddress;
+    Int64 MyAddress;
     (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION + DATA_TRANSFER;
     (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "mov ");
     RM_ = 5;
     MOD_ = 0;
     if (AddressSize == 64) {
         if (!Security(9)) return;
-        MyAddress = *((unsigned long long *) (EIP_+1));
+        MyAddress = *((UInt64 *) (EIP_+1));
        (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%I64X", MyAddress);
        EIP_+=9;
        (*pMyDisasm).Argument1.Memory.Displacement = MyAddress;
     }
     else if (AddressSize == 32) {
         if (!Security(5)) return;
-        MyAddress = *((DWORD*) (EIP_+1));
+        MyAddress = *((UInt32*) (EIP_+1));
        (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%.8X", MyAddress);
        EIP_+=5;
        (*pMyDisasm).Argument1.Memory.Displacement = MyAddress;
     }
     else {
         if (!Security(3)) return;
-        MyAddress = *((WORD*) (EIP_+1));
+        MyAddress = *((UInt16*) (EIP_+1));
        (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%.4X", MyAddress);
        EIP_+=3;
        (*pMyDisasm).Argument1.Memory.Displacement = MyAddress;
@@ -4750,27 +4750,27 @@ void __stdcall mov_OveAX(PDISASM pMyDisasm)
     }
 }
 
-// =======================================
-//      0b0h
-// =======================================
-void __stdcall mov_ALIb(PDISASM pMyDisasm)
+/* =======================================
+ *      0b0h
+ * ======================================= */
+void __bea_callspec__ mov_ALIb(PDISASM pMyDisasm)
 {
     (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION + DATA_TRANSFER;
     (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "mov ");
     ALIb(pMyDisasm);
 }
 
-// =======================================
-//      0b1h
-// =======================================
-void __stdcall mov_CLIb(PDISASM pMyDisasm)
+/* =======================================
+ *      0b1h
+ * ======================================= */
+void __bea_callspec__ mov_CLIb(PDISASM pMyDisasm)
 {
     long MyNumber;
     (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION + DATA_TRANSFER;
     (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "mov ");
     if (!Security(2)) return;
     ImmediatSize = 8;
-    MyNumber = *((BYTE*) (EIP_ + 1));
+    MyNumber = *((UInt8*) (EIP_ + 1));
     (void) CopyFormattedNumber((char*) &(*pMyDisasm).Argument2.ArgMnemonic,"%.2X", MyNumber);
     (*pMyDisasm).Instruction.Immediat = MyNumber;
     (void) strcpy((char*) &(*pMyDisasm).Argument1.ArgMnemonic, Registers8BitsLegacy[1]);
@@ -4781,17 +4781,17 @@ void __stdcall mov_CLIb(PDISASM pMyDisasm)
     EIP_ += 2;
 }
 
-// =======================================
-//      0b2h
-// =======================================
-void __stdcall mov_DLIb(PDISASM pMyDisasm)
+/* =======================================
+ *      0b2h
+ * ======================================= */
+void __bea_callspec__ mov_DLIb(PDISASM pMyDisasm)
 {
     long MyNumber;
     (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION + DATA_TRANSFER;
     (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "mov ");
     if (!Security(2)) return;
     ImmediatSize = 8;
-    MyNumber = *((BYTE*) (EIP_ + 1));
+    MyNumber = *((UInt8*) (EIP_ + 1));
     (void) CopyFormattedNumber((char*) &(*pMyDisasm).Argument2.ArgMnemonic,"%.2X", MyNumber);
     (*pMyDisasm).Instruction.Immediat = MyNumber;
     (void) strcpy((char*) &(*pMyDisasm).Argument1.ArgMnemonic, Registers8BitsLegacy[2]);
@@ -4802,17 +4802,17 @@ void __stdcall mov_DLIb(PDISASM pMyDisasm)
     EIP_ += 2;
 }
 
-// =======================================
-//      0b3h
-// =======================================
-void __stdcall mov_BLIb(PDISASM pMyDisasm)
+/* =======================================
+ *      0b3h
+ * ======================================= */
+void __bea_callspec__ mov_BLIb(PDISASM pMyDisasm)
 {
     long MyNumber;
     (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION + DATA_TRANSFER;
     (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "mov ");
     if (!Security(2)) return;
     ImmediatSize = 8;
-    MyNumber = *((BYTE*) (EIP_ + 1));
+    MyNumber = *((UInt8*) (EIP_ + 1));
     (void) CopyFormattedNumber((char*) &(*pMyDisasm).Argument2.ArgMnemonic,"%.2X", MyNumber);
     (*pMyDisasm).Instruction.Immediat = MyNumber;
     (void) strcpy((char*) &(*pMyDisasm).Argument1.ArgMnemonic, Registers8BitsLegacy[3]);
@@ -4823,17 +4823,17 @@ void __stdcall mov_BLIb(PDISASM pMyDisasm)
     EIP_ += 2;
 }
 
-// =======================================
-//      0b4h
-// =======================================
-void __stdcall mov_AHIb(PDISASM pMyDisasm)
+/* =======================================
+ *      0b4h
+ * ======================================= */
+void __bea_callspec__ mov_AHIb(PDISASM pMyDisasm)
 {
     long MyNumber;
     (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION + DATA_TRANSFER;
     (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "mov ");
     if (!Security(2)) return;
     ImmediatSize = 8;
-    MyNumber = *((BYTE*) (EIP_ + 1));
+    MyNumber = *((UInt8*) (EIP_ + 1));
     (void) CopyFormattedNumber((char*) &(*pMyDisasm).Argument2.ArgMnemonic,"%.2X", MyNumber);
     (*pMyDisasm).Instruction.Immediat = MyNumber;
     (void) strcpy((char*) &(*pMyDisasm).Argument1.ArgMnemonic, Registers8BitsLegacy[4]);
@@ -4844,17 +4844,17 @@ void __stdcall mov_AHIb(PDISASM pMyDisasm)
     EIP_ += 2;
 }
 
-// =======================================
-//      0b5h
-// =======================================
-void __stdcall mov_CHIb(PDISASM pMyDisasm)
+/* =======================================
+ *      0b5h
+ * ======================================= */
+void __bea_callspec__ mov_CHIb(PDISASM pMyDisasm)
 {
     long MyNumber;
     (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION + DATA_TRANSFER;
     (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "mov ");
     if (!Security(2)) return;
     ImmediatSize = 8;
-    MyNumber = *((BYTE*) (EIP_ + 1));
+    MyNumber = *((UInt8*) (EIP_ + 1));
     (void) CopyFormattedNumber((char*) &(*pMyDisasm).Argument2.ArgMnemonic,"%.2X", MyNumber);
     (*pMyDisasm).Instruction.Immediat = MyNumber;
     (void) strcpy((char*) &(*pMyDisasm).Argument1.ArgMnemonic, Registers8BitsLegacy[5]);
@@ -4865,17 +4865,17 @@ void __stdcall mov_CHIb(PDISASM pMyDisasm)
     EIP_ += 2;
 }
 
-// =======================================
-//      0b6h
-// =======================================
-void __stdcall mov_DHIb(PDISASM pMyDisasm)
+/* =======================================
+ *      0b6h
+ * ======================================= */
+void __bea_callspec__ mov_DHIb(PDISASM pMyDisasm)
 {
     long MyNumber;
     (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION + DATA_TRANSFER;
     (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "mov ");
     if (!Security(2)) return;
     ImmediatSize = 8;
-    MyNumber = *((BYTE*) (EIP_ + 1));
+    MyNumber = *((UInt8*) (EIP_ + 1));
     (void) CopyFormattedNumber((char*) &(*pMyDisasm).Argument2.ArgMnemonic,"%.2X", MyNumber);
     (*pMyDisasm).Instruction.Immediat = MyNumber;
     (void) strcpy((char*) &(*pMyDisasm).Argument1.ArgMnemonic, Registers8BitsLegacy[6]);
@@ -4886,17 +4886,17 @@ void __stdcall mov_DHIb(PDISASM pMyDisasm)
     EIP_ += 2;
 }
 
-// =======================================
-//      0b7h
-// =======================================
-void __stdcall mov_BHIb(PDISASM pMyDisasm)
+/* =======================================
+ *      0b7h
+ * ======================================= */
+void __bea_callspec__ mov_BHIb(PDISASM pMyDisasm)
 {
     long MyNumber;
     (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION + DATA_TRANSFER;
     (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "mov ");
     if (!Security(2)) return;
     ImmediatSize = 8;
-    MyNumber = *((BYTE*) (EIP_ + 1));
+    MyNumber = *((UInt8*) (EIP_ + 1));
     (void) CopyFormattedNumber((char*) &(*pMyDisasm).Argument2.ArgMnemonic,"%.2X", MyNumber);
     (*pMyDisasm).Instruction.Immediat = MyNumber;
     (void) strcpy((char*) &(*pMyDisasm).Argument1.ArgMnemonic, Registers8BitsLegacy[7]);
@@ -4908,10 +4908,10 @@ void __stdcall mov_BHIb(PDISASM pMyDisasm)
 }
 
 
-// =======================================
-//      0a4h
-// =======================================
-void __stdcall movs_(PDISASM pMyDisasm)
+/* =======================================
+ *      0a4h
+ * ======================================= */
+void __bea_callspec__ movs_(PDISASM pMyDisasm)
 {
     if ((*pMyDisasm).Prefix.RepnePrefix == SuperfluousPrefix) {
         (*pMyDisasm).Prefix.RepnePrefix = InUsePrefix;
@@ -4932,10 +4932,10 @@ void __stdcall movs_(PDISASM pMyDisasm)
     FillFlags(pMyDisasm, 68);
 }
 
-// =======================================
-//      0a5h
-// =======================================
-void __stdcall movsw_(PDISASM pMyDisasm)
+/* =======================================
+ *      0a5h
+ * ======================================= */
+void __bea_callspec__ movsw_(PDISASM pMyDisasm)
 {
     if ((*pMyDisasm).Prefix.RepnePrefix == SuperfluousPrefix) {
         (*pMyDisasm).Prefix.RepnePrefix = InUsePrefix;
@@ -4982,10 +4982,10 @@ void __stdcall movsw_(PDISASM pMyDisasm)
     }
 }
 
-// =======================================
-//      0fb6h
-// =======================================
-void __stdcall movzx_GvEb(PDISASM pMyDisasm)
+/* =======================================
+ *      0fb6h
+ * ======================================= */
+void __bea_callspec__ movzx_GvEb(PDISASM pMyDisasm)
 {
     (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION + DATA_TRANSFER;
     (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "movzx ");
@@ -4993,49 +4993,49 @@ void __stdcall movzx_GvEb(PDISASM pMyDisasm)
 }
 
 
-// =======================================
-//      0fbeh
-// =======================================
-void __stdcall movsx_GvEb(PDISASM pMyDisasm)
+/* =======================================
+ *      0fbeh
+ * ======================================= */
+void __bea_callspec__ movsx_GvEb(PDISASM pMyDisasm)
 {
     (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION + DATA_TRANSFER;
     (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "movsx ");
     GvEb(pMyDisasm);
 }
 
-// =======================================
-//      0fbfh
-// =======================================
-void __stdcall movsx_GvEw(PDISASM pMyDisasm)
+/* =======================================
+ *      0fbfh
+ * ======================================= */
+void __bea_callspec__ movsx_GvEw(PDISASM pMyDisasm)
 {
     (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION + DATA_TRANSFER;
     (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "movsx ");
     GvEw(pMyDisasm);
 }
 
-// =======================================
-//      0fb7h
-// =======================================
-void __stdcall movzx_GvEw(PDISASM pMyDisasm)
+/* =======================================
+ *      0fb7h
+ * ======================================= */
+void __bea_callspec__ movzx_GvEw(PDISASM pMyDisasm)
 {
     (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION + DATA_TRANSFER;
     (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "movzx ");
     GvEw(pMyDisasm);
 }
 
-// =======================================
-//      0b8h
-// =======================================
-void __stdcall mov_EAX(PDISASM pMyDisasm)
+/* =======================================
+ *      0b8h
+ * ======================================= */
+void __bea_callspec__ mov_EAX(PDISASM pMyDisasm)
 {
-    long long MyAddress;
+    Int64 MyAddress;
     (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION + DATA_TRANSFER;
     (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "mov ");
     (*pMyDisasm).Argument1.ArgType = REGISTER_TYPE + GENERAL_REG + REG0;
     (*pMyDisasm).Argument2.ArgType = CONSTANT_TYPE + ABSOLUTE_;
     if (OperandSize == 64) {
         if (!Security(9)) return;
-        MyAddress = *((unsigned long long *) (EIP_+1));
+        MyAddress = *((UInt64 *) (EIP_+1));
         (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument2.ArgMnemonic, "%I64X", MyAddress);
         EIP_+=9;
         (*pMyDisasm).Instruction.Immediat = MyAddress;
@@ -5044,7 +5044,7 @@ void __stdcall mov_EAX(PDISASM pMyDisasm)
     }
     else if (OperandSize == 32) {
         if (!Security(5)) return;
-        MyAddress = *((DWORD*) (EIP_+1));
+        MyAddress = *((UInt32*) (EIP_+1));
        (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument2.ArgMnemonic, "%.8X", MyAddress);
        EIP_+=5;
        (*pMyDisasm).Instruction.Immediat = MyAddress;
@@ -5053,7 +5053,7 @@ void __stdcall mov_EAX(PDISASM pMyDisasm)
     }
     else {
         if (!Security(3)) return;
-        MyAddress = *((WORD*) (EIP_+1));
+        MyAddress = *((UInt16*) (EIP_+1));
        (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument2.ArgMnemonic, "%.4X", MyAddress);
        EIP_+=3;
        (*pMyDisasm).Instruction.Immediat = MyAddress;
@@ -5086,19 +5086,19 @@ void __stdcall mov_EAX(PDISASM pMyDisasm)
 
 }
 
-// =======================================
-//      0b9h
-// =======================================
-void __stdcall mov_ECX(PDISASM pMyDisasm)
+/* =======================================
+ *      0b9h
+ * ======================================= */
+void __bea_callspec__ mov_ECX(PDISASM pMyDisasm)
 {
-    long long MyAddress;
+    Int64 MyAddress;
     (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION + DATA_TRANSFER;
     (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "mov ");
     (*pMyDisasm).Argument1.ArgType = REGISTER_TYPE + GENERAL_REG + REG1;
     (*pMyDisasm).Argument2.ArgType = CONSTANT_TYPE + ABSOLUTE_;
     if (OperandSize == 64) {
         if (!Security(9)) return;
-        MyAddress = *((unsigned long long *) (EIP_+1));
+        MyAddress = *((UInt64 *) (EIP_+1));
         (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument2.ArgMnemonic, "%I64X", MyAddress);
         EIP_+=9;
         (*pMyDisasm).Instruction.Immediat = MyAddress;
@@ -5107,7 +5107,7 @@ void __stdcall mov_ECX(PDISASM pMyDisasm)
     }
     else if (OperandSize == 32) {
         if (!Security(5)) return;
-        MyAddress = *((DWORD*) (EIP_+1));
+        MyAddress = *((UInt32*) (EIP_+1));
        (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument2.ArgMnemonic, "%.8X", MyAddress);
        EIP_+=5;
        (*pMyDisasm).Instruction.Immediat = MyAddress;
@@ -5116,7 +5116,7 @@ void __stdcall mov_ECX(PDISASM pMyDisasm)
     }
     else {
         if (!Security(3)) return;
-        MyAddress = *((WORD*) (EIP_+1));
+        MyAddress = *((UInt16*) (EIP_+1));
        (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument2.ArgMnemonic, "%.4X", MyAddress);
        EIP_+=3;
        (*pMyDisasm).Instruction.Immediat = MyAddress;
@@ -5149,19 +5149,19 @@ void __stdcall mov_ECX(PDISASM pMyDisasm)
 
 }
 
-// =======================================
-//      0bah
-// =======================================
-void __stdcall mov_EDX(PDISASM pMyDisasm)
+/* =======================================
+ *      0bah
+ * ======================================= */
+void __bea_callspec__ mov_EDX(PDISASM pMyDisasm)
 {
-    long long MyAddress;
+    Int64 MyAddress;
     (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION + DATA_TRANSFER;
     (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "mov ");
     (*pMyDisasm).Argument1.ArgType = REGISTER_TYPE + GENERAL_REG + REG2;
     (*pMyDisasm).Argument2.ArgType = CONSTANT_TYPE + ABSOLUTE_;
     if (OperandSize == 64) {
         if (!Security(9)) return;
-        MyAddress = *((unsigned long long *) (EIP_+1));
+        MyAddress = *((UInt64 *) (EIP_+1));
        (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument2.ArgMnemonic, "%I64X", MyAddress);
        EIP_+=9;
        (*pMyDisasm).Instruction.Immediat = MyAddress;
@@ -5170,7 +5170,7 @@ void __stdcall mov_EDX(PDISASM pMyDisasm)
     }
     else if (OperandSize == 32) {
         if (!Security(5)) return;
-        MyAddress = *((DWORD*) (EIP_+1));
+        MyAddress = *((UInt32*) (EIP_+1));
        (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument2.ArgMnemonic, "%.8X", MyAddress);
        EIP_+=5;
        (*pMyDisasm).Instruction.Immediat = MyAddress;
@@ -5179,7 +5179,7 @@ void __stdcall mov_EDX(PDISASM pMyDisasm)
     }
     else {
         if (!Security(3)) return;
-        MyAddress = *((WORD*) (EIP_+1));
+        MyAddress = *((UInt16*) (EIP_+1));
        (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument2.ArgMnemonic, "%.4X", MyAddress);
        EIP_+=3;
        (*pMyDisasm).Instruction.Immediat = MyAddress;
@@ -5212,19 +5212,19 @@ void __stdcall mov_EDX(PDISASM pMyDisasm)
 
 }
 
-// =======================================
-//      0bbh
-// =======================================
-void __stdcall mov_EBX(PDISASM pMyDisasm)
+/* =======================================
+ *      0bbh
+ * ======================================= */
+void __bea_callspec__ mov_EBX(PDISASM pMyDisasm)
 {
-    long long MyAddress;
+    Int64 MyAddress;
     (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION + DATA_TRANSFER;
     (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "mov ");
     (*pMyDisasm).Argument1.ArgType = REGISTER_TYPE + GENERAL_REG + REG3;
     (*pMyDisasm).Argument2.ArgType = CONSTANT_TYPE + ABSOLUTE_;
     if (OperandSize == 64) {
         if (!Security(9)) return;
-        MyAddress = *((unsigned long long *) (EIP_+1));
+        MyAddress = *((UInt64 *) (EIP_+1));
        (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument2.ArgMnemonic, "%I64X", MyAddress);
        EIP_+=9;
        (*pMyDisasm).Instruction.Immediat = MyAddress;
@@ -5233,7 +5233,7 @@ void __stdcall mov_EBX(PDISASM pMyDisasm)
     }
     else if (OperandSize == 32) {
         if (!Security(5)) return;
-        MyAddress = *((DWORD*) (EIP_+1));
+        MyAddress = *((UInt32*) (EIP_+1));
        (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument2.ArgMnemonic, "%.8X", MyAddress);
        EIP_+=5;
        (*pMyDisasm).Instruction.Immediat = MyAddress;
@@ -5242,7 +5242,7 @@ void __stdcall mov_EBX(PDISASM pMyDisasm)
     }
     else {
         if (!Security(3)) return;
-        MyAddress = *((WORD*) (EIP_+1));
+        MyAddress = *((UInt16*) (EIP_+1));
        (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument2.ArgMnemonic, "%.4X", MyAddress);
        EIP_+=3;
        (*pMyDisasm).Instruction.Immediat = MyAddress;
@@ -5275,19 +5275,19 @@ void __stdcall mov_EBX(PDISASM pMyDisasm)
 
 }
 
-// =======================================
-//      0bch
-// =======================================
-void __stdcall mov_ESP(PDISASM pMyDisasm)
+/* =======================================
+ *      0bch
+ * ======================================= */
+void __bea_callspec__ mov_ESP(PDISASM pMyDisasm)
 {
-    long long MyAddress;
+    Int64 MyAddress;
     (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION + DATA_TRANSFER;
     (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "mov ");
     (*pMyDisasm).Argument1.ArgType = REGISTER_TYPE + GENERAL_REG + REG4;
     (*pMyDisasm).Argument2.ArgType = CONSTANT_TYPE + ABSOLUTE_;
     if (OperandSize == 64) {
         if (!Security(9)) return;
-        MyAddress = *((unsigned long long *) (EIP_+1));
+        MyAddress = *((UInt64 *) (EIP_+1));
        (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument2.ArgMnemonic, "%I64X", MyAddress);
        EIP_+=9;
        (*pMyDisasm).Instruction.Immediat = MyAddress;
@@ -5296,7 +5296,7 @@ void __stdcall mov_ESP(PDISASM pMyDisasm)
     }
     else if (OperandSize == 32) {
         if (!Security(5)) return;
-        MyAddress = *((DWORD*) (EIP_+1));
+        MyAddress = *((UInt32*) (EIP_+1));
        (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument2.ArgMnemonic, "%.8X", MyAddress);
        EIP_+=5;
        (*pMyDisasm).Instruction.Immediat = MyAddress;
@@ -5305,7 +5305,7 @@ void __stdcall mov_ESP(PDISASM pMyDisasm)
     }
     else {
         if (!Security(3)) return;
-        MyAddress = *((WORD*) (EIP_+1));
+        MyAddress = *((UInt16*) (EIP_+1));
        (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument2.ArgMnemonic, "%.4X", MyAddress);
        EIP_+=3;
        (*pMyDisasm).Instruction.Immediat = MyAddress;
@@ -5338,19 +5338,19 @@ void __stdcall mov_ESP(PDISASM pMyDisasm)
 
 }
 
-// =======================================
-//      0bdh
-// =======================================
-void __stdcall mov_EBP(PDISASM pMyDisasm)
+/* =======================================
+ *      0bdh
+ * ======================================= */
+void __bea_callspec__ mov_EBP(PDISASM pMyDisasm)
 {
-    long long MyAddress;
+    Int64 MyAddress;
     (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION + DATA_TRANSFER;
     (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "mov ");
     (*pMyDisasm).Argument1.ArgType = REGISTER_TYPE + GENERAL_REG + REG5;
     (*pMyDisasm).Argument2.ArgType = CONSTANT_TYPE + ABSOLUTE_;
     if (OperandSize == 64) {
         if (!Security(9)) return;
-        MyAddress = *((unsigned long long *) (EIP_+1));
+        MyAddress = *((UInt64 *) (EIP_+1));
        (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument2.ArgMnemonic, "%I64X", MyAddress);
        EIP_+=9;
        (*pMyDisasm).Instruction.Immediat = MyAddress;
@@ -5359,7 +5359,7 @@ void __stdcall mov_EBP(PDISASM pMyDisasm)
     }
     else if (OperandSize == 32) {
         if (!Security(5)) return;
-        MyAddress = *((DWORD*) (EIP_+1));
+        MyAddress = *((UInt32*) (EIP_+1));
        (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument2.ArgMnemonic, "%.8X", MyAddress);
        EIP_+=5;
        (*pMyDisasm).Instruction.Immediat = MyAddress;
@@ -5368,7 +5368,7 @@ void __stdcall mov_EBP(PDISASM pMyDisasm)
     }
     else {
         if (!Security(3)) return;
-        MyAddress = *((WORD*) (EIP_+1));
+        MyAddress = *((UInt16*) (EIP_+1));
        (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument2.ArgMnemonic, "%.4X", MyAddress);
        EIP_+=3;
        (*pMyDisasm).Instruction.Immediat = MyAddress;
@@ -5401,19 +5401,19 @@ void __stdcall mov_EBP(PDISASM pMyDisasm)
 
 }
 
-// =======================================
-//      0beh
-// =======================================
-void __stdcall mov_ESI(PDISASM pMyDisasm)
+/* =======================================
+ *      0beh
+ * ======================================= */
+void __bea_callspec__ mov_ESI(PDISASM pMyDisasm)
 {
-    long long MyAddress;
+    Int64 MyAddress;
     (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION + DATA_TRANSFER;
     (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "mov ");
     (*pMyDisasm).Argument1.ArgType = REGISTER_TYPE + GENERAL_REG + REG6;
     (*pMyDisasm).Argument2.ArgType = CONSTANT_TYPE + ABSOLUTE_;
     if (OperandSize == 64) {
         if (!Security(9)) return;
-        MyAddress = *((unsigned long long *) (EIP_+1));
+        MyAddress = *((UInt64 *) (EIP_+1));
        (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument2.ArgMnemonic, "%I64X", MyAddress);
        EIP_+=9;
        (*pMyDisasm).Instruction.Immediat = MyAddress;
@@ -5422,7 +5422,7 @@ void __stdcall mov_ESI(PDISASM pMyDisasm)
     }
     else if (OperandSize == 32) {
         if (!Security(5)) return;
-        MyAddress = *((DWORD*) (EIP_+1));
+        MyAddress = *((UInt32*) (EIP_+1));
        (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument2.ArgMnemonic, "%.8X", MyAddress);
        EIP_+=5;
        (*pMyDisasm).Instruction.Immediat = MyAddress;
@@ -5431,7 +5431,7 @@ void __stdcall mov_ESI(PDISASM pMyDisasm)
     }
     else {
         if (!Security(3)) return;
-        MyAddress = *((WORD*) (EIP_+1));
+        MyAddress = *((UInt16*) (EIP_+1));
        (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument2.ArgMnemonic, "%.4X", MyAddress);
        EIP_+=3;
        (*pMyDisasm).Instruction.Immediat = MyAddress;
@@ -5464,19 +5464,19 @@ void __stdcall mov_ESI(PDISASM pMyDisasm)
 
 }
 
-// =======================================
-//      0bfh
-// =======================================
-void __stdcall mov_EDI(PDISASM pMyDisasm)
+/* =======================================
+ *      0bfh
+ * ======================================= */
+void __bea_callspec__ mov_EDI(PDISASM pMyDisasm)
 {
-    long long MyAddress;
+    Int64 MyAddress;
     (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION + DATA_TRANSFER;
     (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "mov ");
     (*pMyDisasm).Argument1.ArgType = REGISTER_TYPE + GENERAL_REG + REG7;
     (*pMyDisasm).Argument2.ArgType = CONSTANT_TYPE + ABSOLUTE_;
     if (OperandSize == 64) {
         if (!Security(9)) return;
-        MyAddress = *((unsigned long long *) (EIP_+1));
+        MyAddress = *((UInt64 *) (EIP_+1));
        (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument2.ArgMnemonic, "%I64X", MyAddress);
        EIP_+=9;
        (*pMyDisasm).Instruction.Immediat = MyAddress;
@@ -5485,7 +5485,7 @@ void __stdcall mov_EDI(PDISASM pMyDisasm)
     }
     else if (OperandSize == 32) {
         if (!Security(5)) return;
-        MyAddress = *((DWORD*) (EIP_+1));
+        MyAddress = *((UInt32*) (EIP_+1));
        (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument2.ArgMnemonic, "%.8X", MyAddress);
        EIP_+=5;
        (*pMyDisasm).Instruction.Immediat = MyAddress;
@@ -5494,7 +5494,7 @@ void __stdcall mov_EDI(PDISASM pMyDisasm)
     }
     else {
         if (!Security(3)) return;
-        MyAddress = *((WORD*) (EIP_+1));
+        MyAddress = *((UInt16*) (EIP_+1));
        (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument2.ArgMnemonic, "%.4X", MyAddress);
        EIP_+=3;
        (*pMyDisasm).Instruction.Immediat = MyAddress;
@@ -5526,12 +5526,12 @@ void __stdcall mov_EDI(PDISASM pMyDisasm)
     }
 
 }
-// =======================================
-//      0c6h - Group 11
-// =======================================
-void __stdcall mov_EbIb(PDISASM pMyDisasm)
+/* =======================================
+ *      0c6h - Group 11
+ * ======================================= */
+void __bea_callspec__ mov_EbIb(PDISASM pMyDisasm)
 {
-    REGOPCODE = ((*((BYTE*) (EIP_ + 1))) >> 3) & 0x7;
+    REGOPCODE = ((*((UInt8*) (EIP_ + 1))) >> 3) & 0x7;
     if (REGOPCODE == 0) {
         (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION + DATA_TRANSFER;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "mov ");
@@ -5542,12 +5542,12 @@ void __stdcall mov_EbIb(PDISASM pMyDisasm)
     }
 }
 
-// =======================================
-//      0c7h - Group 11
-// =======================================
-void __stdcall mov_EvIv(PDISASM pMyDisasm)
+/* =======================================
+ *      0c7h - Group 11
+ * ======================================= */
+void __bea_callspec__ mov_EvIv(PDISASM pMyDisasm)
 {
-    REGOPCODE = ((*((BYTE*) (EIP_ + 1))) >> 3) & 0x7;
+    REGOPCODE = ((*((UInt8*) (EIP_ + 1))) >> 3) & 0x7;
     if (REGOPCODE == 0) {
         (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION + DATA_TRANSFER;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "mov ");
@@ -5558,10 +5558,10 @@ void __stdcall mov_EvIv(PDISASM pMyDisasm)
     }
 }
 
-// =======================================
-//      08ch
-// =======================================
-void __stdcall mov_EwSreg(PDISASM pMyDisasm)
+/* =======================================
+ *      08ch
+ * ======================================= */
+void __bea_callspec__ mov_EwSreg(PDISASM pMyDisasm)
 {
     (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION + DATA_TRANSFER;
     (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "mov ");
@@ -5575,10 +5575,10 @@ void __stdcall mov_EwSreg(PDISASM pMyDisasm)
     EIP_ += DECALAGE_EIP + 2;
 }
 
-// =======================================
-//      08eh
-// =======================================
-void __stdcall mov_SregEw(PDISASM pMyDisasm)
+/* =======================================
+ *      08eh
+ * ======================================= */
+void __bea_callspec__ mov_SregEw(PDISASM pMyDisasm)
 {
     (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION + DATA_TRANSFER;
     (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "mov ");

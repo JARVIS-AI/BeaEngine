@@ -1,16 +1,19 @@
 #ifndef _BEA_ENGINE_
 #define _BEA_ENGINE_
 
+#include "Includes/export.h"
+#include "Includes/basic_types.h"
+
 
 #define INSTRUCT_LENGTH 64
 
 #pragma pack(1)
 typedef struct {
-   BYTE W_;
-   BYTE R_;
-   BYTE X_;
-   BYTE B_;
-   BYTE state;
+   UInt8 W_;
+   UInt8 R_;
+   UInt8 X_;
+   UInt8 B_;
+   UInt8 state;
 } REX_Struct  ;
 #pragma pack()
 
@@ -18,37 +21,37 @@ typedef struct {
 typedef struct {
    int Number;
    int NbUndefined;
-   BYTE LockPrefix;
-   BYTE OperandSize;
-   BYTE AddressSize;
-   BYTE RepnePrefix;
-   BYTE RepPrefix;
-   BYTE FSPrefix;
-   BYTE SSPrefix;
-   BYTE GSPrefix;
-   BYTE ESPrefix;
-   BYTE CSPrefix;
-   BYTE DSPrefix;
-   BYTE BranchTaken;
-   BYTE BranchNotTaken;
+   UInt8 LockPrefix;
+   UInt8 OperandSize;
+   UInt8 AddressSize;
+   UInt8 RepnePrefix;
+   UInt8 RepPrefix;
+   UInt8 FSPrefix;
+   UInt8 SSPrefix;
+   UInt8 GSPrefix;
+   UInt8 ESPrefix;
+   UInt8 CSPrefix;
+   UInt8 DSPrefix;
+   UInt8 BranchTaken;
+   UInt8 BranchNotTaken;
    REX_Struct REX;
 } PREFIXINFO  ;
 #pragma pack()
 
 #pragma pack(1)
 typedef struct {
-   BYTE OF_;
-   BYTE SF_;
-   BYTE ZF_;
-   BYTE AF_;
-   BYTE PF_;
-   BYTE CF_;
-   BYTE TF_;
-   BYTE IF_;
-   BYTE DF_;
-   BYTE NT_;
-   BYTE RF_;
-   BYTE alignment;
+   UInt8 OF_;
+   UInt8 SF_;
+   UInt8 ZF_;
+   UInt8 AF_;
+   UInt8 PF_;
+   UInt8 CF_;
+   UInt8 TF_;
+   UInt8 IF_;
+   UInt8 DF_;
+   UInt8 NT_;
+   UInt8 RF_;
+   UInt8 alignment;
 } EFLStruct  ;
 #pragma pack()
 
@@ -57,7 +60,7 @@ typedef struct {
    long BaseRegister;
    long IndexRegister;
    long Scale;
-   long long Displacement;
+   Int64 Displacement;
 } MEMORYTYPE ;
 #pragma pack()
 
@@ -69,8 +72,8 @@ typedef struct  {
    char Mnemonic[16];
    long BranchType;
    EFLStruct Flags;
-   long long AddrValue;
-   long long Immediat;
+   Int64 AddrValue;
+   Int64 Immediat;
    long ImplicitModifiedRegs;
 } INSTRTYPE;
 #pragma pack()
@@ -90,8 +93,8 @@ typedef struct  {
 
 #pragma pack(1)
 typedef struct _Disasm {
-   long long EIP;
-   long long VirtualAddr;
+   Int64 EIP;
+   Int64 VirtualAddr;
    long SecurityBlock;
    char CompleteInstr[INSTRUCT_LENGTH];
    long Archi;
@@ -141,7 +144,7 @@ enum INSTRUCTION_TYPE
     ARITHMETIC_INSTRUCTION,
     LOGICAL_INSTRUCTION,
     SHIFT_ROTATE,
-    BIT_BYTE,
+    BIT_UInt8,
     CONTROL_TRANSFER,
     STRING_INSTRUCTION,
     InOutINSTRUCTION,
@@ -178,7 +181,7 @@ enum INSTRUCTION_TYPE
     INSERTION_EXTRACTION,
     DOT_PRODUCT,
     SAD_INSTRUCTION,
-    ACCELERATOR_INSTRUCTION,    // crc32, popcnt (sse4.2)
+    ACCELERATOR_INSTRUCTION,    /* crc32, popcnt (sse4.2) */
     ROUND_INSTRUCTION
 
 };
@@ -257,7 +260,7 @@ enum ARGUMENTS_TYPE
   REG12 = 0x1000,
   REG13 = 0x2000,
   REG14 = 0x4000,
-  REG15 = 0x8000,
+  REG15 = 0x8000
 };
 
 enum SPECIAL_INFO
@@ -265,21 +268,21 @@ enum SPECIAL_INFO
   UNKNOWN_OPCODE = -1,
   OUT_OF_BLOCK = 0,
 
-  // === mask = 0xff
+  /* === mask = 0xff */
   NoTabulation      = 0x00000000,
   Tabulation        = 0x00000001,
 
-  // === mask = 0xff00
+  /* === mask = 0xff00 */
   MasmSyntax        = 0x00000000,
   GoAsmSyntax       = 0x00000100,
   NasmSyntax        = 0x00000200,
   ATSyntax          = 0x00000400,
 
-  // === mask = 0xff0000
+  /* === mask = 0xff0000 */
   PrefixedNumeral   = 0x00010000,
   SuffixedNumeral   = 0x00000000,
 
-  // === mask = 0xff000000
+  /* === mask = 0xff000000 */
   ShowSegmentRegs   = 0x01000000
 };
 
@@ -287,6 +290,6 @@ enum SPECIAL_INFO
 #ifdef __cplusplus
 extern "C"
 #endif
-int __stdcall Disasm(LPDISASM pDisAsm);
+int __bea_callspec__ Disasm(LPDISASM pDisAsm);
 
 #endif
