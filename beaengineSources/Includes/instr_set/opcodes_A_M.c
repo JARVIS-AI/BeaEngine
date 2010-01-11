@@ -906,7 +906,7 @@ void __bea_callspec__ call_(PDISASM pMyDisasm)
 void __bea_callspec__ callf_(PDISASM pMyDisasm)
 {
     long MyNumber;
-    int i = 0;
+    size_t i = 0;
     if (Architecture == 64) {
         FailDecode(pMyDisasm);
     }
@@ -3978,7 +3978,7 @@ void __bea_callspec__ jmp_short(PDISASM pMyDisasm)
 void __bea_callspec__ jmp_far(PDISASM pMyDisasm)
 {
     long MyNumber;
-    int i = 0;
+    size_t i = 0;
     if (Architecture == 64) {
         FailDecode(pMyDisasm);
     }
@@ -4509,7 +4509,7 @@ void __bea_callspec__ mov_GvEv(PDISASM pMyDisasm)
  * ======================================= */
 void __bea_callspec__ mov_ALOb(PDISASM pMyDisasm)
 {
-    Int64 MyAddress;
+    UInt64 MyAddress;
     (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION + DATA_TRANSFER;
     (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "mov ");
     OpSize = 101;
@@ -5469,7 +5469,7 @@ void __bea_callspec__ mov_ESI(PDISASM pMyDisasm)
  * ======================================= */
 void __bea_callspec__ mov_EDI(PDISASM pMyDisasm)
 {
-    Int64 MyAddress;
+    UInt64 MyAddress;
     (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION + DATA_TRANSFER;
     (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "mov ");
     (*pMyDisasm).Argument1.ArgType = REGISTER_TYPE + GENERAL_REG + REG7;

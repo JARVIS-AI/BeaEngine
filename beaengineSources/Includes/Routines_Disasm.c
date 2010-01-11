@@ -19,7 +19,7 @@
 /* ====================================================================
  *
  * ==================================================================== */
-int __bea_callspec__ Disasm (PDISASM pMyDisasm) {
+Int64 __bea_callspec__ Disasm (PDISASM pMyDisasm) {
 
     InitVariables(pMyDisasm);
     (void) AnalyzeOpcode(pMyDisasm);
@@ -494,9 +494,9 @@ void __bea_callspec__ CalculateRelativeAddress(Int64 * pMyAddress, signed long M
 /* ====================================================================
  *
  * ==================================================================== */
-int __bea_callspec__ CopyFormattedNumber(char* pBuffer,char* pFormat, Int64 MyNumber)
+size_t __bea_callspec__ CopyFormattedNumber(char* pBuffer,char* pFormat, Int64 MyNumber)
 {
-    int i = 0;
+    size_t i = 0;
     if (FORMATNUMBER == PrefixedNumeral) {
         (void) strcpy(pBuffer, "0x");
         (void) sprintf (pBuffer+2, pFormat, MyNumber);
@@ -651,7 +651,7 @@ void __bea_callspec__ FillSegmentsRegisters(PDISASM pMyDisasm)
  * ==================================================================== */
 void __bea_callspec__ BuildCompleteInstruction(PDISASM pMyDisasm)
 {
-    int i = 0;
+    size_t i = 0;
     /* =============== Copy Instruction Mnemonic */
 
     if ((*pMyDisasm).Prefix.RepnePrefix == InUsePrefix) {
@@ -814,7 +814,7 @@ void __bea_callspec__ BuildCompleteInstruction(PDISASM pMyDisasm)
  * ==================================================================== */
 void __bea_callspec__ BuildCompleteInstructionATSyntax(PDISASM pMyDisasm)
 {
-    int i = 0;
+    size_t i = 0;
     /* =============== Copy Instruction Mnemonic */
     (void) strcpy ((char*) &(*pMyDisasm).CompleteInstr, (char*) &(*pMyDisasm).Instruction.Mnemonic);
     i = strlen((char*) &(*pMyDisasm).CompleteInstr);

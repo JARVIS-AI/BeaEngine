@@ -10,6 +10,8 @@
 #ifndef __BEA_BASIC_TYPES_HPP__
 #define __BEA_BASIC_TYPES_HPP__
 
+#include <stddef.h>
+
 #if defined(_MSC_VER)
 	/*
 	* Windows/Visual C++

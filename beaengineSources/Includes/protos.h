@@ -56,10 +56,10 @@ void __bea_callspec__ _rEBP(ARGTYPE*);
 void __bea_callspec__ _rESI(ARGTYPE*);
 void __bea_callspec__ _rEDI(ARGTYPE*);
 
-int __bea_callspec__ SIB_0(ARGTYPE*, int);
-int __bea_callspec__ SIB_1(ARGTYPE*, int);
-int __bea_callspec__ SIB_2(ARGTYPE*, int);
-int __bea_callspec__ SIB_3(ARGTYPE*, int);
+size_t __bea_callspec__ SIB_0(ARGTYPE*, size_t);
+size_t __bea_callspec__ SIB_1(ARGTYPE*, size_t);
+size_t __bea_callspec__ SIB_2(ARGTYPE*, size_t);
+size_t __bea_callspec__ SIB_3(ARGTYPE*, size_t);
 
 /* ====================================== Routines_Disasm */
 void __bea_callspec__ EbGb(PDISASM);
@@ -80,7 +80,7 @@ void __bea_callspec__ eAX_Iv(PDISASM);
 int __bea_callspec__ AnalyzeOpcode (PDISASM);
 int __bea_callspec__ Security(int);
 void __bea_callspec__ CalculateRelativeAddress(Int64 *, long);
-int __bea_callspec__ CopyFormattedNumber(char*,char*, Int64);
+size_t __bea_callspec__ CopyFormattedNumber(char*,char*, Int64);
 void __bea_callspec__ BuildCompleteInstruction(PDISASM);
 void __bea_callspec__ BuildCompleteInstructionATSyntax(PDISASM);
 void __bea_callspec__ InitVariables (PDISASM);

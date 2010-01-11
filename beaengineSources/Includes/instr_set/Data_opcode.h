@@ -166,7 +166,7 @@ void (__bea_callspec__ *ModRM_0[])(ARGTYPE*) = {
      _rEDI,
  };
 
-int (__bea_callspec__ *SIB[])(ARGTYPE*, int) = {
+size_t (__bea_callspec__ *SIB[])(ARGTYPE*, size_t) = {
      SIB_0,
      SIB_1,
      SIB_2,

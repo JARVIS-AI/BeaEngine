@@ -290,6 +290,6 @@ enum SPECIAL_INFO
 #ifdef __cplusplus
 extern "C"
 #endif
-int __bea_callspec__ Disasm(LPDISASM pDisAsm);
+Int64 __bea_callspec__ Disasm(LPDISASM pDisAsm);
 
 #endif
