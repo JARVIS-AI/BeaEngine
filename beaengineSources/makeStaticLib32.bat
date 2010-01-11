@@ -10,7 +10,7 @@ echo *
 echo *  COMPILATION with POCC.EXE (Pelles C)
 echo *
 echo ____________________________________
-\PellesC\bin\Pocc /Ze /W0 %name%.c
+\PellesC\bin\Pocc /Ze /W0  %name%.c
 
 echo ____________________________________
 echo *

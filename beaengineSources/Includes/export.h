@@ -63,7 +63,7 @@
 /* Use C calling convention by default*/
 
 #ifndef __bea_callspec__
-#if defined(__WIN32__) && !defined(__GNUC__)
+#if defined(__WIN32__) || defined(WIN32) || defined(_WIN32) && !defined(__GNUC__)
 #define __bea_callspec__	 __stdcall
 #else
 #ifdef __OS2__
