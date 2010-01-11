@@ -26,5 +26,4 @@ BeatriX 	- Author (France) : beaengine (at) gmail.com
 
 Contributors :
 
-	andrewl, bax, William Pomian, Ange Albertini, Pyrae, Vincent Roy, Kharneth, Eedy, Neitsa, KumaT, Rafal Cyran, 29a metal, sessiondiy, Tim, vince, Igor Gutnik, ouadji.
-
+	andrewl, bax, William Pomian, Ange Albertini, Pyrae, Vincent Roy, Kharneth, Eedy, Neitsa, KumaT, Rafal Cyran, 29a metal, sessiondiy, Tim, vince, Igor Gutnik, ouadji, Helle.
