@@ -51,8 +51,13 @@
 		typedef signed long        Int64;
 		typedef unsigned long      UInt64;
 	#else
+             #if defined (__INTEL_COMPILER) || defined (__ICC) || defined (_ICC)
+		typedef __int64           Int64;
+		typedef unsigned __int64  UInt64;
+             #else
 		typedef signed long long   Int64;
 		typedef unsigned long long UInt64;
+             #endif
 	#endif
 	#define BEA_HAVE_INT64 1
 #elif defined(__DECCXX)
