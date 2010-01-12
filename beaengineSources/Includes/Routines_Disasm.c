@@ -155,7 +155,7 @@ void __bea_callspec__ FixREXPrefixes (PDISASM pMyDisasm) {
  * ==================================================================== */
 int __bea_callspec__ AnalyzeOpcode (PDISASM pMyDisasm) {
 
-    (*pMyDisasm).Instruction.Opcode = *((UInt8*) EIP_);
+  (*pMyDisasm).Instruction.Opcode = *((UInt8*) (EIP_));
     (void) opcode_map1[*((UInt8*) EIP_)](pMyDisasm);
     return 1;
 }
@@ -405,7 +405,7 @@ void __bea_callspec__ ALIb(PDISASM pMyDisasm)
  * ==================================================================== */
 void __bea_callspec__ eAX_Iv(PDISASM pMyDisasm)
 {
-    long MyNumber;
+    UInt32 MyNumber;
     (*pMyDisasm).Argument1.ArgType = REGISTER_TYPE + GENERAL_REG + REG0;
     (*pMyDisasm).Argument2.ArgType = CONSTANT_TYPE + ABSOLUTE_;
     if (OperandSize == 64) {
@@ -494,7 +494,7 @@ void __bea_callspec__ CalculateRelativeAddress(Int64 * pMyAddress, signed long M
 /* ====================================================================
  *
  * ==================================================================== */
-size_t __bea_callspec__ CopyFormattedNumber(char* pBuffer,char* pFormat, Int64 MyNumber)
+size_t __bea_callspec__ CopyFormattedNumber(char* pBuffer, const char* pFormat, Int64 MyNumber)
 {
     size_t i = 0;
     if (FORMATNUMBER == PrefixedNumeral) {

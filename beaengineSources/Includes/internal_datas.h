@@ -16,29 +16,26 @@
  *    You should have received a copy of the GNU Lesser General Public License
  *    along with BeaEngine.  If not, see <http://www.gnu.org/licenses/>. */
 
-#define SUInt8 signed char
-#define SUInt16 signed short
-#define SUInt32 signed long
 
 static Int64 EIP_, EIP_VA, EIP_REAL;
-static long OriginalOperandSize;        /* keep original OperandSize value if it is used as a mandatory prefix */
-static long OperandSize;
-static long OpSize;
-static long AddressSize;
-static int MOD_, RM_, INDEX_, SCALE_, BASE_, MMX_, SSE_, CR_, DR_, SEG_, REGOPCODE;
-static long DECALAGE_EIP;
-static long FORMATNUMBER;
-static long SYNTAX_;
+static Int32 OriginalOperandSize;        /* keep original OperandSize value if it is used as a mandatory prefix */
+static Int32 OperandSize;
+static Int32 OpSize;
+static Int32 AddressSize;
+static Int32 MOD_, RM_, INDEX_, SCALE_, BASE_, MMX_, SSE_, CR_, DR_, SEG_, REGOPCODE;
+static Int32 DECALAGE_EIP;
+static Int32 FORMATNUMBER;
+static Int32 SYNTAX_;
 static Int64 EndOfBlock;
-static int RelativeAddress;
-static long Architecture;
-static long ImmediatSize;
-static long NB_PREFIX;
-static long PrefRepe, PrefRepne;
-static long SEGMENTREGS, SEGMENTFS;
-static long third_arg;
-static long TAB_;
-static long ERROR_OPCODE;
+static Int32 RelativeAddress;
+static Int32 Architecture;
+static Int32 ImmediatSize;
+static Int32 NB_PREFIX;
+static Int32 PrefRepe, PrefRepne;
+static Int32 SEGMENTREGS, SEGMENTFS;
+static Int32 third_arg;
+static Int32 TAB_;
+static Int32 ERROR_OPCODE;
 
 
 EFLStruct EFLAGS_TABLE[] = {
@@ -456,7 +453,7 @@ char Registers8BitsLegacy[8][4] = {
     "bh",
 };
 
-long REGS8BITS[] = {
+Int32 REGS8BITS[] = {
     REG0,
     REG1,
     REG2,
@@ -524,7 +521,7 @@ char RegistersSSE[16][8] = {
     "xmm15",    /* SSE3, SSSE3, SSE4 */
 };
 
-long REGS[] = {
+Int32 REGS[] = {
     REG0,        /* REG0 */
     REG1,        /* REG1 */
     REG2,        /* REG2 */

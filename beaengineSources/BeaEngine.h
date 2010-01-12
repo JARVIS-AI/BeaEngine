@@ -68,7 +68,7 @@ typedef struct {
 #pragma pack(1)
 typedef struct  {
    long Category;
-   long Opcode;
+   UInt64 Opcode;
    char Mnemonic[16];
    long BranchType;
    EFLStruct Flags;
