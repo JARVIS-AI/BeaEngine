@@ -12,7 +12,7 @@ class My_SearchCtrl(wx.SearchCtrl):
                  pos=wx.DefaultPosition, size=wx.DefaultSize, style=0):
         wx.SearchCtrl.__init__(self, parent, id, value,
                                pos, size, style)
-        
+    
         #-------------------------------------------------------------------
         
         # Crée une référence du parent

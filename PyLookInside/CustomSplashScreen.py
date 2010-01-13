@@ -41,7 +41,7 @@ class BoutonAnime(wx.Window):
 
 class My_SplashScreen(wx.Frame):
     """ Crée la classe du SplashScreen. """
-    def __init__(self, tempo = 2):
+    def __init__(self, tempo=2):
         self.tempo = tempo
         
         wx.Frame.__init__(self, None, -1,
@@ -171,10 +171,7 @@ class My_SplashScreen(wx.Frame):
         self.frame.SetIcon(frameicon)
        
         self.frame.Show(True)
-        self.ctrl.Stop()            # ajout à vérifier sur mac
         
         if self.fc.IsRunning():
             self.Raise()
-
-
 

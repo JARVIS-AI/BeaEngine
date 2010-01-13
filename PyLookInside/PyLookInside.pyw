@@ -4,7 +4,7 @@
 """
 1) Indique à Linux où se trouve l'interpréteur Python et
    permet un lancement du script par double-clic.
-2) Prise en charge des caractères spéciaux..
+2) Prise en charge des caractères spéciaux.
 """
 
 
@@ -40,8 +40,13 @@ import TaskBarIcon
 import time
 import locale
 import SearchCtrl
+import Splitter
 import ListCtrlVirtual
-#import StaticBoxThreePanel
+import StaticBoxFirst
+import StaticBoxSecond
+import StaticBoxThree
+import StaticBoxFour
+import StaticBoxFive
 import AboutNotebook
 import MementoProvider
 from WilcardList import *
@@ -143,14 +148,14 @@ class My_Frame(wx.Frame):
         # Crée le conteneur (doit être déclaré avant
         # les méthodes d'initialisation simplifiées)
         self.panel = wx.Panel(self, -1)
-        
+
         #-------------------------------------------------------------------
         #-------------------------------------------------------------------
         
         # Crée une instance de la classe My_CustomStatusBar        
         self.sb = My_CustomStatusBar(self)
         self.SetStatusBar(self.sb)
-        self.SetStatusText(u"Bienvenue à PyLookInside !", 0)
+        self.SetStatusText(u"Welcome to PyLookInside !", 0)                 # u"Bienvenue à PyLookInside !"
       
         #-------------------------------------------------------------------                        
         #-------------------------------------------------------------------
@@ -159,6 +164,8 @@ class My_Frame(wx.Frame):
         self.createMenuBar()
         self.createToolBar()
         self.createSplitter()
+        self.createListCtrl()
+        self.createStaticBox()
         self.createTaskBarIcon()
         self.doLayout()
         
@@ -190,8 +197,8 @@ class My_Frame(wx.Frame):
         bmp = wx.Bitmap("Bitmaps/item_Open.png", wx.BITMAP_TYPE_PNG)
         
         item = wx.MenuItem(menuFile, -1,
-                           text=u"&Ouvrir\tCtrl+O",
-                           help=u"Ouvre un fichier.")
+                           text=u"&Open\tCtrl+O",                           # u"&Ouvrir\tCtrl+O"
+                           help=u"Open a file.")                            # u"Ouvre un fichier."
         item.SetBitmap(bmp)
         menuFile.AppendItem(item)
 
@@ -205,8 +212,8 @@ class My_Frame(wx.Frame):
         bmp = wx.Bitmap("Bitmaps/item_Exit.png", wx.BITMAP_TYPE_PNG)
         
         item = wx.MenuItem(menuFile, -1,
-                           text=u"&Quitter\tCtrl+Q",
-                           help=u"Quitte l'application.")
+                           text=u"E&xit\tCtrl+Q",                           # u"&Quitter\tCtrl+Q"
+                           help=u"Exit the application.")                  # u"Quitte l'application."
         item.SetBitmap(bmp)
         menuFile.AppendItem(item)
 
@@ -227,8 +234,8 @@ class My_Frame(wx.Frame):
         bmp = wx.Bitmap("Bitmaps/item_RollUp.png", wx.BITMAP_TYPE_PNG)
                         
         item = wx.MenuItem(menuView, -1,
-                           text=u"En&rouler\tF3",
-                           help=u"Réduit l'application à sa barre de titre.")
+                           text=u"&Roll\tF3",                               # u"En&rouler\tF3"
+                           help=u"Minimize the application to this titleBar.")      # u"Réduit l'application à sa barre de titre." 
         item.SetBitmap(bmp)
         menuView.AppendItem(item)
 
@@ -242,8 +249,8 @@ class My_Frame(wx.Frame):
         bmp = wx.Bitmap("Bitmaps/item_Unroll.png", wx.BITMAP_TYPE_PNG)
                         
         item = wx.MenuItem(menuView, -1,
-                           text=u"&Dérouler\tF4",
-                           help=u"Restaure l'application à sa taille initiale.")
+                           text=u"&UnRoll\tF4",                                      # u"&Dérouler\tF4"
+                           help=u"Restore the application to this initial size.")     # u"Restaure l'application à sa taille initiale."
         item.SetBitmap(bmp)
         menuView.AppendItem(item)
 
@@ -264,8 +271,8 @@ class My_Frame(wx.Frame):
         bmp = wx.Bitmap("Bitmaps/item_About.png", wx.BITMAP_TYPE_PNG)
         
         item = wx.MenuItem(menuHelp, -1,
-                           text=u"À p&ropos...\tCtrl+A",
-                           help=u"Au sujet de cette application.")
+                           text=u"&About...\tCtrl+A",                         # u"À p&ropos...\tCtrl+A"
+                           help=u"About this application.")                   # u"Au sujet de cette application."
         item.SetBitmap(bmp)
         menuHelp.AppendItem(item)
 
@@ -279,8 +286,8 @@ class My_Frame(wx.Frame):
         bmp = wx.Bitmap("Bitmaps/item_Note.png", wx.BITMAP_TYPE_PNG)
         
         item = wx.MenuItem(menuHelp, -1,
-                           text=u"Me&mento\tCtrl+M",
-                           help=u"Pense-bête.")
+                           text=u"Me&mento\tCtrl+M",                           # u"Me&mento\tCtrl+M"
+                           help=u"Pense-bête.")                                # u"Pense-bête."
         item.SetBitmap(bmp)
         menuHelp.AppendItem(item)
 
@@ -294,8 +301,8 @@ class My_Frame(wx.Frame):
         bmp = wx.Bitmap("Bitmaps/item_Help.png", wx.BITMAP_TYPE_PNG)
         
         item = wx.MenuItem(menuHelp, -1,
-                           text=u"Aide\tCtrl+H",
-                           help=u"Aide en ligne.")
+                           text=u"&Help\tCtrl+H",                              # u"Aide\tCtrl+H"
+                           help=u"Help online.")                            # u"Aide en ligne."
         item.SetBitmap(bmp)
         menuHelp.AppendItem(item)
 
@@ -306,9 +313,9 @@ class My_Frame(wx.Frame):
         #-------------------------------------------------------------------
         
         # Place les menus dans la barre de menus
-        menuBar.Append(menuFile, title=u"&Fichier")
-        menuBar.Append(menuView, title=u"&Affichage")
-        menuBar.Append(menuHelp, title=u"&?")
+        menuBar.Append(menuFile, title=u"&File")                               # u"&Fichier"
+        menuBar.Append(menuView, title=u"&View")                               # u"&Affichage"
+        menuBar.Append(menuHelp, title=u"&?")                                  # u"&?"
         
         #-------------------------------------------------------------------
         #-------------------------------------------------------------------
@@ -332,52 +339,52 @@ class My_Frame(wx.Frame):
 
         # Ajoute un bouton
                                   #images.Tb_Open.GetBitmap(),
-        self.toolbar.AddLabelTool(20, u"Ouvrir",
+        self.toolbar.AddLabelTool(20, u"Open",                                                 # u"Ouvrir"
                                   wx.Bitmap("Bitmaps/tb_Open.png", wx.BITMAP_TYPE_PNG),
                                   shortHelp=u"",
-                                  longHelp=u"Ouvre un fichier.")
+                                  longHelp=u"Open a file.")                                 # u"Ouvre un fichier."
         self.toolbar.AddSeparator()
                                   #images.Tb_Disassemble.GetBitmap(),
-        self.toolbar.AddLabelTool(21, u"Désassembler",
+        self.toolbar.AddLabelTool(21, u"Désassembler",                                           # u"Désassembler"
                                   wx.Bitmap("Bitmaps/tb_Disassemble.png", wx.BITMAP_TYPE_PNG),
                                   shortHelp=u"",
-                                  longHelp=u"Lance le désassemblage.")
+                                  longHelp=u"Lance le désassemblage.")                           # u"Lance le désassemblage."
         self.toolbar.AddSeparator()
                                   #images.Tb_About.GetBitmap(),
-        self.toolbar.AddLabelTool(22, u"A propos",
+        self.toolbar.AddLabelTool(22, u"About",                                               # u"A propos
                                   wx.Bitmap("Bitmaps/tb_About.png", wx.BITMAP_TYPE_PNG),
                                   shortHelp=u"",
-                                  longHelp=u"Au sujet de cette application.")
+                                  longHelp=u"About this application.")                    # u"Au sujet de cette application."
         self.toolbar.AddSeparator()
                                   #images.Tb_Note.GetBitmap(),
-        self.toolbar.AddLabelTool(23, u"Memento",
+        self.toolbar.AddLabelTool(23, u"Memento",                                                # u"Memento"
                                   wx.Bitmap("Bitmaps/tb_Note.png", wx.BITMAP_TYPE_PNG),
                                   shortHelp=u"Coucou !",
-                                  longHelp=u"Pense-bête.")
+                                  longHelp=u"Pense-bête.")                                       # u"Pense-bête."
         self.toolbar.AddSeparator()
                                   #images.Tb_Help.GetBitmap(),
-        self.toolbar.AddLabelTool(24, u"Aide",
+        self.toolbar.AddLabelTool(24, u"Help",                                                   # u"Aide"
                                   wx.Bitmap("Bitmaps/tb_Help.png", wx.BITMAP_TYPE_PNG),
                                   shortHelp=u"",
-                                  longHelp=u"Aide en ligne.")
+                                  longHelp=u"Help online.")                                    # u"Aide en ligne."
         self.toolbar.AddSeparator()
                                   #images.Tb_Print.GetBitmap(),
-        self.toolbar.AddLabelTool(25, u"Imprimer",
+        self.toolbar.AddLabelTool(25, u"Screenshot",                                               # u"Imprimer"
                                   wx.Bitmap("Bitmaps/tb_Print.png", wx.BITMAP_TYPE_PNG),
                                   shortHelp=u"meuh",
-                                  longHelp=u"Fait une capture écran de l'application.")
+                                  longHelp=u"Fait une capture écran de l'application.")          # u"Fait une capture écran de l'application."
         self.toolbar.AddSeparator()
                                   #images.Tb_Quit.GetBitmap(),
-        self.toolbar.AddLabelTool(26, u"Quitter",
+        self.toolbar.AddLabelTool(26, u"Exit",                                                # u"Quitter"
                                   wx.Bitmap("Bitmaps/tb_Quit.png", wx.BITMAP_TYPE_PNG),
                                   shortHelp=u"meuh",
-                                  longHelp=u"Quitte l'application.")
+                                  longHelp=u"Exit the application.")                             # u"Quitte l'application."
         self.toolbar.AddSeparator()
         self.toolbar.AddSeparator()
                                   # Crée le  searchCtrl
         self.searchCtrl = SearchCtrl.My_SearchCtrl(self.toolbar, 50,
                                                    value="0040711E")     
-        self.toolbar.AddControl(self.searchCtrl) # Ajoute le searchCtrl d
+        self.toolbar.AddControl(self.searchCtrl) # Ajoute le searchCtrl
         self.toolbar.AddSeparator()        
         self.toolbar.AddSeparator()
         
@@ -398,14 +405,8 @@ class My_Frame(wx.Frame):
     def createSplitter(self):
         """ Crée le splitter. """
 
-        # Crée le splitter        
-        self.sp1 = wx.SplitterWindow(self.panel, style=wx.NO_3D |
-                                     wx.SP_3D | wx.SP_LIVE_UPDATE |
-                                     wx.TAB_TRAVERSAL)
-       
-         # Lie des événements au gestionnaire d'événements
-        # self.Bind(wx.EVT_SIZE, self.OnSize)
-        self.Bind(wx.EVT_SPLITTER_DCLICK, self.OnDoubleClick, id=-1)
+        # Crée une instance de la classe My_Splitter
+        self.sp1 = Splitter.My_Splitter(self.panel)
 
         #-------------------------------------------------------------------
         
@@ -413,557 +414,36 @@ class My_Frame(wx.Frame):
         self.leftpanel = wx.Panel (self.sp1, style=wx.BORDER_SIMPLE | wx.TAB_TRAVERSAL)  #BORDER_NONE
         self.rightpanel = wx.Panel (self.sp1, style=wx.BORDER_SIMPLE | wx.TAB_TRAVERSAL)  #BORDER_NONE
 
+        # Ajoute les contrôles dans le splitter
+        self.sp1.SplitVertically(self.leftpanel, self.rightpanel)  # , -500
 
-        #-------------------------------------------------------------------
-
-        # Paramètre les différents styles de police de caractères
-        # Récupère taille et police de l'OS
-        fontSize = self.GetFont().GetPointSize()
-
-        # wx.Font(pointSize, family, style, weight, underline, faceName) 
-        if wx.Platform == "__WXMAC__":
-            self.normalFont = wx.Font(fontSize-3, wx.DEFAULT, wx.NORMAL, wx.NORMAL, False, "")          
-
-        elif wx.Platform == "__WXGTK__":
-            self.normalFont = wx.Font(fontSize+0, wx.DEFAULT, wx.NORMAL, wx.NORMAL, False, "")
-              
-        else:
-            self.normalFont = wx.Font(fontSize+0, wx.DEFAULT, wx.NORMAL, wx.NORMAL, False, "")
-         
-        self.SetFont(self.normalFont)
-
-#-------------------------------------------------------------------
-
-        # Crée la staticbox "Instruction. Category"
-        box = wx.StaticBox(self.rightpanel, -1, "Instruction. Category :")
-        bsizer1 = wx.StaticBoxSizer(box, wx.VERTICAL)
+    #-----------------------------------------------------------------------
        
-        # Affiche le texte
-        texte1 = wx.StaticText(self.rightpanel, -1,
-                               "GENERAL_PURPOSE_INSTRUCTION + CONTROL_TRANSFER",
-                               style=wx.ALIGN_LEFT)
-        texte1.SetFont(self.normalFont)
-        texte1.SetForegroundColour("#892903")
-        bsizer1.Add(texte1, 1, wx.ALL|wx.EXPAND, 0)
-        
-        #-------------------------------------------------------------------
+    def createListCtrl(self):
+        """ Crée la liste virtuelle. """
 
-        # Crée la staticbox "Instruction. Mnemonic"
-        box = wx.StaticBox(self.rightpanel, -1, "Instruction. Mnemonic :")
-        bsizer2 = wx.StaticBoxSizer(box, wx.VERTICAL)
-        
-        # Affiche le texte
-        texte1 = wx.StaticText(self.rightpanel, -1, "jean",
-                               style=wx.ALIGN_LEFT)
-        texte1.SetFont(self.normalFont)
-        texte1.SetForegroundColour("#892903")
-        bsizer2.Add(texte1, 1, wx.ALL|wx.EXPAND, 0)
-        
-        #-------------------------------------------------------------------
-        
-        # Crée la staticbox "Instruction. Opcode"
-        box = wx.StaticBox(self.rightpanel, -1, "Instruction. Opcode :")
-        bsizer3 = wx.StaticBoxSizer(box, wx.VERTICAL)
-        
-        # Affiche le texte
-        texte1 = wx.StaticText(self.rightpanel, -1, "00000074",
-                               style=wx.ALIGN_LEFT)
-        texte1.SetFont(self.normalFont)
-        texte1.SetForegroundColour("#892903")
-        bsizer3.Add(texte1, 1, wx.ALL|wx.EXPAND, 0)
-        
-        #-------------------------------------------------------------------
-        
-        # Crée la staticbox "Instruction. Branch Type"
-        box = wx.StaticBox(self.rightpanel, -1, "Instruction. Branch Type :")
-        bsizer4 = wx.StaticBoxSizer(box, wx.VERTICAL)
-        
-        # Affiche le texte
-        texte1 = wx.StaticText(self.rightpanel, -1, "je",
-                               style=wx.ALIGN_LEFT)
-        texte1.SetFont(self.normalFont)
-        texte1.SetForegroundColour("#892903")
-        bsizer4.Add(texte1, 1, wx.ALL|wx.EXPAND, 0)
-        
-        #-------------------------------------------------------------------
-
-        # Crée la staticbox "Instruction. Prefixes"
-        box = wx.StaticBox(self.rightpanel, -1, "Instruction. Prefixes :")
-        bsizer5 = wx.StaticBoxSizer(box, wx.VERTICAL)
-        
-        # Affiche le texte
-        texte1 = wx.StaticText(self.rightpanel, -1, "---",
-                               style=wx.ALIGN_LEFT)
-        texte1.SetFont(self.normalFont)
-        texte1.SetForegroundColour("#892903")
-        bsizer5.Add(texte1, 1, wx.ALL|wx.EXPAND, 0)
-        
-        #-------------------------------------------------------------------
-        
-        # Crée la staticbox "Instruction. Immediat"
-        box = wx.StaticBox(self.rightpanel, -1, "Instruction. Immediat :")
-        bsizer6 = wx.StaticBoxSizer(box, wx.VERTICAL)
-        
-        # Affiche le texte
-        texte1 = wx.StaticText(self.rightpanel, -1, "---",
-                               style=wx.ALIGN_LEFT)
-        texte1.SetFont(self.normalFont)
-        texte1.SetForegroundColour("#892903")
-        bsizer6.Add(texte1, 1, wx.ALL|wx.EXPAND, 0)
-        
-        #-------------------------------------------------------------------
-        
-        # Crée la staticbox "Implicit Modified Regs"
-        box = wx.StaticBox(self.rightpanel, -1, "Implicit Modified Regs :")
-        bsizer7 = wx.StaticBoxSizer(box, wx.VERTICAL)
-        
-        # Affiche le texte
-        texte1 = wx.StaticText(self.rightpanel, -1, "---",
-                               style=wx.ALIGN_LEFT)
-        texte1.SetFont(self.normalFont)
-        texte1.SetForegroundColour("#892903")
-        bsizer7.Add(texte1, 1, wx.ALL|wx.EXPAND, 0)
-
-#-------------------------------------------------------------------
-
-          # Crée la staticbox "Argument n°1"
-        box = wx.StaticBox(self.rightpanel, -1, u"Argument n°1 :")
-        bsizer8 = wx.StaticBoxSizer(box, wx.VERTICAL)
-        
-        # Affiche le texte "Arg. Type"
-        texte1 = wx.StaticText(self.rightpanel, -1, "Arg. Type = NO_ARGUMENT",
-                               style=wx.ALIGN_LEFT)
-        texte1.SetFont(self.normalFont)
-        bsizer8.Add(texte1, 1, wx.ALL|wx.EXPAND, 0)
-        
-        # Affiche le texte "Access. Mode"
-        texte1 = wx.StaticText(self.rightpanel, -1, "Access. Mode = WRITE",
-                               style=wx.ALIGN_LEFT)
-        texte1.SetFont(self.normalFont) 
-        bsizer8.Add(texte1, 1, wx.ALL|wx.EXPAND, 0)
-        
-        # Affiche le texte "Arg. Mnemonic"
-        texte1 = wx.StaticText(self.rightpanel, -1, "Arg. Mnemonic = -",
-                               style=wx.ALIGN_LEFT)
-        texte1.SetFont(self.normalFont) 
-        bsizer8.Add(texte1, 1, wx.ALL|wx.EXPAND, 0)
-        
-        # Affiche le texte "Arg. Size"
-        texte1 = wx.StaticText(self.rightpanel, -1, "Arg. Size = 00000000",
-                               style=wx.ALIGN_LEFT)
-        texte1.SetFont(self.normalFont)
-        bsizer8.Add(texte1, 1, wx.ALL|wx.EXPAND, 0)
-        
-        # Affiche le texte "Memory. Base Register"
-        texte1 = wx.StaticText(self.rightpanel, -1, "Memory. Base Register = -",
-                               style=wx.ALIGN_LEFT)
-        texte1.SetFont(self.normalFont)
-        bsizer8.Add(texte1, 1, wx.ALL|wx.EXPAND, 0)
-        
-        # Affiche le texte "Memory. Index Register"
-        texte1 = wx.StaticText(self.rightpanel, -1, "Memory. Index Register = -",
-                               style=wx.ALIGN_LEFT)
-        texte1.SetFont(self.normalFont)
-        bsizer8.Add(texte1, 1, wx.ALL|wx.EXPAND, 0)
-        
-        # Affiche le texte "Memory. Scale"
-        texte1 = wx.StaticText(self.rightpanel, -1, "Memory. Scale = 00000000",
-                               style=wx.ALIGN_LEFT)
-        texte1.SetFont(self.normalFont) 
-        bsizer8.Add(texte1, 1, wx.ALL|wx.EXPAND, 0)
-        
-        # Affiche le texte "Memory. Displacement"
-        texte1 = wx.StaticText(self.rightpanel, -1, "Memory. Displacement = 00000000",
-                               style=wx.ALIGN_LEFT)
-        texte1.SetFont(self.normalFont) 
-        bsizer8.Add(texte1, 1, wx.ALL|wx.EXPAND, 0)
-
-#-------------------------------------------------------------------
-
-        # Crée la staticbox "Argument n°2"
-        box = wx.StaticBox(self.rightpanel, -1, u"Argument n°2 :")
-        bsizer9 = wx.StaticBoxSizer(box, wx.VERTICAL)
-        
-        # Affiche le texte "Arg. Type"
-        texte1 = wx.StaticText(self.rightpanel, -1, "Arg. Type = CONSTANT_TYPE + RELATIVE",
-                               style=wx.ALIGN_LEFT)
-        texte1.SetFont(self.normalFont)
-        bsizer9.Add(texte1, 1, wx.ALL|wx.EXPAND, 0)
-        
-        # Affiche le texte "Access. Mode"
-        texte1 = wx.StaticText(self.rightpanel, -1, "Access. Mode = READ",
-                               style=wx.ALIGN_LEFT)
-        texte1.SetFont(self.normalFont)
-        bsizer9.Add(texte1, 1, wx.ALL|wx.EXPAND, 0)
-        
-        # Affiche le texte "Arg. Mnemonic"
-        texte1 = wx.StaticText(self.rightpanel, -1, "Arg. Mnemonic = 40717Eh",
-                               style=wx.ALIGN_LEFT)
-        texte1.SetFont(self.normalFont)
-        bsizer9.Add(texte1, 1, wx.ALL|wx.EXPAND, 0)
-        
-        # Affiche le texte "Arg. Size"
-        texte1 = wx.StaticText(self.rightpanel, -1, "Arg. Size = 00000000",
-                               style=wx.ALIGN_LEFT)
-        texte1.SetFont(self.normalFont)
-        bsizer9.Add(texte1, 1, wx.ALL|wx.EXPAND, 0)
-        
-        # Affiche le texte "Memory. Base Register"
-        texte1 = wx.StaticText(self.rightpanel, -1, "Memory. Base Register = -",
-                               style=wx.ALIGN_LEFT)
-        texte1.SetFont(self.normalFont)
-        bsizer9.Add(texte1, 1, wx.ALL|wx.EXPAND, 0)
-        
-        # Affiche le texte "Memory. Index Register"
-        texte1 = wx.StaticText(self.rightpanel, -1, "Memory. Index Register = -",
-                               style=wx.ALIGN_LEFT)
-        texte1.SetFont(self.normalFont)
-        bsizer9.Add(texte1, 1, wx.ALL|wx.EXPAND, 0)
-        
-        # Affiche le texte "Memory. Scale"
-        texte1 = wx.StaticText(self.rightpanel, -1, "Memory. Scale = 00000000",
-                               style=wx.ALIGN_LEFT)
-        texte1.SetFont(self.normalFont)
-        bsizer9.Add(texte1, 1, wx.ALL|wx.EXPAND, 0)
-        
-        # Affiche le texte "Memory. Displacement"
-        texte1 = wx.StaticText(self.rightpanel, -1, "Memory. Displacement = 00000000",
-                               style=wx.ALIGN_LEFT)
-        texte1.SetFont(self.normalFont)
-        bsizer9.Add(texte1, 1, wx.ALL|wx.EXPAND, 0)
-
-#-------------------------------------------------------------------
-
-        # Crée la staticbox "Argument n°3"
-        box = wx.StaticBox(self.rightpanel, -1, u"Argument n°3 :")
-        bsizer10 = wx.StaticBoxSizer(box, wx.VERTICAL)
-        
-        # Affiche le texte "Arg. Type"
-        texte1 = wx.StaticText(self.rightpanel, -1, "Arg. Type = NO_ARGUMENT")
-        texte1.SetFont(self.normalFont)
-        bsizer10.Add(texte1, 1, wx.ALL|wx.EXPAND, 0)
-        
-        # Affiche le texte "Arg. Mnemonic"
-        texte1 = wx.StaticText(self.rightpanel, -1, "Arg. Mnemonic = -",
-                               style=wx.ALIGN_LEFT)
-        texte1.SetFont(self.normalFont) 
-        bsizer10.Add(texte1, 1, wx.ALL|wx.EXPAND, 0)
-        
-        # Affiche le texte "Arg. Size"
-        texte1 = wx.StaticText(self.rightpanel, -1, "Arg. Size = 00000000",
-                               style=wx.ALIGN_LEFT)
-        texte1.SetFont(self.normalFont) 
-        bsizer10.Add(texte1, 1, wx.ALL|wx.EXPAND, 0)
-
-#-------------------------------------------------------------------
-
-        # Crée la staticbox "Instruction. Eflag"
-        box = wx.StaticBox(self.rightpanel, -1, "", style=wx.BORDER_NONE)
-        bsizer11 = wx.StaticBoxSizer(box, wx.VERTICAL)
-        
-        # Affiche le texte "OF"
-        texte1 = wx.StaticText(self.rightpanel, -1, "OF",
-                               style = wx.TE_CENTRE)
-        texte1.SetFont(self.normalFont)
-        texte1.SetForegroundColour("#404040")
-        bsizer11.Add(texte1, 1, wx.ALL|wx.EXPAND, 0)
-        
-        # Crée le champ "OF"
-        basicText = wx.TextCtrl(self.rightpanel, -1, "M",
-                                style = wx.TE_CENTRE)
-        basicText.SetFont(self.normalFont)
-        basicText.SetBackgroundColour("#edecfe") 
-        basicText.SetInsertionPoint(0)
-        bsizer11.Add(basicText, 1, wx.ALL|wx.EXPAND, 0)
-
-        #-------
-
-        # Crée la staticbox "Instruction. Eflag"
-        box = wx.StaticBox(self.rightpanel, -1, "", style=wx.BORDER_NONE)
-        bsizer12 = wx.StaticBoxSizer(box, wx.VERTICAL)
-        
-        # Affiche le texte "SF"
-        texte1 = wx.StaticText(self.rightpanel, -1, "SF",
-                               style = wx.TE_CENTRE)
-        texte1.SetFont(self.normalFont)
-        texte1.SetForegroundColour("#404040")
-        bsizer12.Add(texte1, 1, wx.ALL|wx.EXPAND, 0)
-        
-        # Crée le champ "OF"
-        basicText = wx.TextCtrl(self.rightpanel, -1, "O",
-                                style = wx.TE_CENTRE)
-        basicText.SetFont(self.normalFont)
-        basicText.SetBackgroundColour("#edecfe")
-        basicText.SetInsertionPoint(0)
-        bsizer12.Add(basicText, 1, wx.ALL|wx.EXPAND, 0)
-
-        #-------
-
-        # Crée la staticbox "Instruction. Eflag"
-        box = wx.StaticBox(self.rightpanel, -1, "", style=wx.BORDER_NONE)
-        bsizer13 = wx.StaticBoxSizer(box, wx.VERTICAL)
-        
-        # Affiche le texte "ZF"
-        texte1 = wx.StaticText(self.rightpanel, -1, "ZF",
-                               style = wx.TE_CENTRE)
-        texte1.SetFont(self.normalFont) 
-        texte1.SetForegroundColour("#404040")
-        bsizer13.Add(texte1, 1, wx.ALL|wx.EXPAND, 0)
-        
-        # Crée le champ "ZF"
-        basicText = wx.TextCtrl(self.rightpanel, -1, "---",
-                                style = wx.TE_CENTRE)
-        basicText.SetFont(self.normalFont)
-        basicText.SetBackgroundColour("#edecfe")
-        basicText.SetInsertionPoint(0)
-        bsizer13.Add(basicText, 1, wx.ALL|wx.EXPAND, 0)
-        
-        #-------
-
-        # Crée la staticbox "Instruction. Eflag"
-        box = wx.StaticBox(self.rightpanel, -1, "", style=wx.BORDER_NONE)
-        bsizer14 = wx.StaticBoxSizer(box, wx.VERTICAL)
-        
-        # Affiche le texte "AF"
-        texte1 = wx.StaticText(self.rightpanel, -1, "AF",
-                               style = wx.TE_CENTRE)
-        texte1.SetFont(self.normalFont)
-        texte1.SetForegroundColour("#404040")
-        bsizer14.Add(texte1, 1, wx.ALL|wx.EXPAND, 0)
-        
-        # Crée le champ "AF"
-        basicText = wx.TextCtrl(self.rightpanel, -1, "1",
-                                style = wx.TE_CENTRE)
-        basicText.SetFont(self.normalFont)
-        basicText.SetBackgroundColour("#edecfe")
-        basicText.SetInsertionPoint(0)
-        bsizer14.Add(basicText, 1, wx.ALL|wx.EXPAND, 0)
-        
-        #-------
-
-        # Crée la staticbox "Instruction. Eflag"
-        box = wx.StaticBox(self.rightpanel, -1, "", style=wx.BORDER_NONE)
-        bsizer15 = wx.StaticBoxSizer(box, wx.VERTICAL)
-        
-        # Affiche le texte "PF"
-        texte1 = wx.StaticText(self.rightpanel, -1, "PF",
-                               style = wx.TE_CENTRE)
-        texte1.SetFont(self.normalFont)
-        texte1.SetForegroundColour("#404040")
-        bsizer15.Add(texte1, 1, wx.ALL|wx.EXPAND, 0)
-        
-        # Crée le champ "PF"
-        basicText = wx.TextCtrl(self.rightpanel, -1, "M",
-                                style = wx.TE_CENTRE)
-        basicText.SetFont(self.normalFont)
-        basicText.SetBackgroundColour("#edecfe")
-        basicText.SetInsertionPoint(0)
-        bsizer15.Add(basicText, 1, wx.ALL|wx.EXPAND, 0)
-        
-        #-------
-
-        # Crée la staticbox "Instruction. Eflag"
-        box = wx.StaticBox(self.rightpanel, -1, "", style=wx.BORDER_NONE)
-        bsizer16 = wx.StaticBoxSizer(box, wx.VERTICAL)
-        
-        # Affiche le texte "CF"
-        texte1 = wx.StaticText(self.rightpanel, -1, "CF",
-                               style = wx.TE_CENTRE)
-        texte1.SetFont(self.normalFont) 
-        texte1.SetForegroundColour("#404040")
-        bsizer16.Add(texte1, 1, wx.ALL|wx.EXPAND, 0)
-        
-        # Crée le champ "CF"
-        basicText = wx.TextCtrl(self.rightpanel, -1, "2",
-                                style = wx.TE_CENTRE)
-        basicText.SetFont(self.normalFont)
-        basicText.SetBackgroundColour("#edecfe")
-        basicText.SetInsertionPoint(0)
-        bsizer16.Add(basicText, 1, wx.ALL|wx.EXPAND, 0)
-
-        #-------
-
-        # Crée la staticbox "Instruction. Eflag"
-        box = wx.StaticBox(self.rightpanel, -1, "", style=wx.BORDER_NONE)
-        bsizer17 = wx.StaticBoxSizer(box, wx.VERTICAL)
-        
-        # Affiche le texte "TF"
-        texte1 = wx.StaticText(self.rightpanel, -1, "TF",
-                               style = wx.TE_CENTRE)
-        texte1.SetFont(self.normalFont) 
-        texte1.SetForegroundColour("#404040")
-        bsizer17.Add(texte1, 1, wx.ALL|wx.EXPAND, 0)
-        
-        # Crée le champ "TF"
-        basicText = wx.TextCtrl(self.rightpanel, -1, "1",
-                                style = wx.TE_CENTRE)
-        basicText.SetFont(self.normalFont)
-        basicText.SetBackgroundColour("#edecfe")
-        basicText.SetInsertionPoint(0)
-        bsizer17.Add(basicText, 1, wx.ALL|wx.EXPAND, 0)
-        
-        #-------
-
-        # Crée la staticbox "Instruction. Eflag"
-        box = wx.StaticBox(self.rightpanel, -1, "", style=wx.BORDER_NONE)
-        bsizer18 = wx.StaticBoxSizer(box, wx.VERTICAL)
-        
-        # Affiche le texte "CF"
-        texte1 = wx.StaticText(self.rightpanel, -1, "IF",
-                               style = wx.TE_CENTRE)
-        texte1.SetFont(self.normalFont) 
-        texte1.SetForegroundColour("#404040")
-        bsizer18.Add(texte1, 1, wx.ALL|wx.EXPAND, 0)
-        
-        # Crée le champ "CF"
-        basicText = wx.TextCtrl(self.rightpanel, -1, "M",
-                                style = wx.TE_CENTRE)
-        basicText.SetFont(self.normalFont)
-        basicText.SetBackgroundColour("#edecfe")
-        basicText.SetInsertionPoint(0)
-        bsizer18.Add(basicText, 1, wx.ALL|wx.EXPAND, 0)
-        
-        #-------
-
-        # Crée la staticbox "Instruction. Eflag"
-        box = wx.StaticBox(self.rightpanel, -1, "", style=wx.BORDER_NONE)
-        bsizer19 = wx.StaticBoxSizer(box, wx.VERTICAL)
-        
-        # Affiche le texte "CF"
-        texte1 = wx.StaticText(self.rightpanel, -1, "DF",
-                               style = wx.TE_CENTRE)
-        texte1.SetFont(self.normalFont) 
-        texte1.SetForegroundColour("#404040")
-        bsizer19.Add(texte1, 1, wx.ALL|wx.EXPAND, 0)
-        
-        # Crée le champ "CF"
-        basicText = wx.TextCtrl(self.rightpanel, -1, "0",
-                                style = wx.TE_CENTRE)
-        basicText.SetFont(self.normalFont)
-        basicText.SetBackgroundColour("#edecfe")
-        basicText.SetInsertionPoint(0)
-        bsizer19.Add(basicText, 1, wx.ALL|wx.EXPAND, 0)
-        
-        #-------
-
-        # Crée la staticbox "Instruction. Eflag"
-        box = wx.StaticBox(self.rightpanel, -1, "", style=wx.BORDER_NONE)
-        bsizer20 = wx.StaticBoxSizer(box, wx.VERTICAL)
-        
-        # Affiche le texte "NT"
-        texte1 = wx.StaticText(self.rightpanel, -1, "NT",
-                               style = wx.TE_CENTRE)
-        texte1.SetFont(self.normalFont)
-        texte1.SetForegroundColour("#404040")
-        bsizer20.Add(texte1, 1, wx.ALL|wx.EXPAND, 0)
-        
-        # Crée le champ "NT"
-        basicText = wx.TextCtrl(self.rightpanel, -1, "P",
-                                style = wx.TE_CENTRE)
-        basicText.SetFont(self.normalFont)
-        basicText.SetBackgroundColour("#edecfe")
-        basicText.SetInsertionPoint(0)
-        bsizer20.Add(basicText, 1, wx.ALL|wx.EXPAND, 0)
-        
-        #-------
-
-        # Crée la staticbox "Instruction. Eflag"
-        box = wx.StaticBox(self.rightpanel, -1, "", style=wx.BORDER_NONE)
-        bsizer21 = wx.StaticBoxSizer(box, wx.VERTICAL)
-        
-        # Affiche le texte "RF"
-        texte1 = wx.StaticText(self.rightpanel, -1, "RF",
-                               style = wx.TE_CENTRE)
-        texte1.SetFont(self.normalFont) 
-        texte1.SetForegroundColour("#404040")
-        bsizer21.Add(texte1, 1, wx.ALL|wx.EXPAND, 0)
-        
-        # Crée le champ "RF"
-        basicText = wx.TextCtrl(self.rightpanel, -1, "2",
-                                style = wx.TE_CENTRE)
-        basicText.SetFont(self.normalFont)
-        basicText.SetBackgroundColour("#edecfe")
-        basicText.SetInsertionPoint(0)
-        bsizer21.Add(basicText, 1, wx.ALL|wx.EXPAND, 0)
-        
-        #-------------------------------------------------------------------
-        #-------------------------------------------------------------------
-
-        # Crée les Sizer et gére la disposition des widgets
-        # Crée des BoxSizer pour chaque widget ou groupe de widgets
-        sizer1 = wx.BoxSizer(wx.HORIZONTAL)
-        sizer1.Add(bsizer1, 1, wx.EXPAND | wx.ALL, 0) # 5
-
-      
-        sizer2 = wx.BoxSizer(wx.HORIZONTAL)
-        sizer2.Add(bsizer2, 1, wx.EXPAND | wx.ALL, 0) # 5
-        sizer2.Add(bsizer3, 1, wx.EXPAND | wx.ALL, 0) # 5
-        sizer2.Add(bsizer4, 1, wx.EXPAND | wx.ALL, 0) # 5
-
-        sizer3 = wx.BoxSizer(wx.HORIZONTAL)
-        sizer3.Add(bsizer5, 1, wx.EXPAND | wx.ALL, 0) # 5
-        sizer3.Add(bsizer6, 1, wx.EXPAND | wx.ALL, 0) # 5
-        sizer3.Add(bsizer7, 1, wx.EXPAND | wx.ALL, 0) # 5
-
-        sizer4 = wx.BoxSizer(wx.HORIZONTAL)
-        sizer4.Add(bsizer8, 1, wx.EXPAND | wx.ALL, 0) # 5
-
-        sizer5 = wx.BoxSizer(wx.HORIZONTAL)
-        sizer5.Add(bsizer9, 1, wx.EXPAND | wx.ALL, 0) # 5
-
-        sizer6 = wx.BoxSizer(wx.HORIZONTAL)
-        sizer6.Add(bsizer10, 1, wx.EXPAND | wx.ALL, 0) # 5
-
-        sizer7 = wx.BoxSizer(wx.HORIZONTAL)
-        sizer7.Add(bsizer11, 1, wx.EXPAND | wx.ALL, 0) # 5
-        sizer7.Add(bsizer12, 1, wx.EXPAND | wx.ALL, 0) # 5
-        sizer7.Add(bsizer13, 1, wx.EXPAND | wx.ALL, 0) # 5
-        sizer7.Add(bsizer14, 1, wx.EXPAND | wx.ALL, 0) # 5
-        sizer7.Add(bsizer15, 1, wx.EXPAND | wx.ALL, 0) # 5
-        sizer7.Add(bsizer16, 1, wx.EXPAND | wx.ALL, 0) # 5
-        sizer7.Add(bsizer17, 1, wx.EXPAND | wx.ALL, 0) # 5
-        sizer7.Add(bsizer18, 1, wx.EXPAND | wx.ALL, 0) # 5
-        sizer7.Add(bsizer19, 1, wx.EXPAND | wx.ALL, 0) # 5
-        sizer7.Add(bsizer20, 1, wx.EXPAND | wx.ALL, 0) # 5
-        sizer7.Add(bsizer21, 1, wx.EXPAND | wx.ALL, 0) # 5
-        
-        # Crée une BoxSizer VERTICALE générale
-        topSizer = wx.BoxSizer(wx.VERTICAL)
-
-        # Ajoute les BoxSizer dans la BoxSizer générale 
-        topSizer.Add(sizer1, 0, wx.EXPAND | wx.ALL, 5)
-        topSizer.Add(sizer2, 0, wx.EXPAND | wx.ALL, 5)
-        topSizer.Add(sizer3, 0, wx.EXPAND | wx.ALL, 5)
-        topSizer.Add(sizer4, 0, wx.EXPAND | wx.ALL, 5)
-        topSizer.Add(sizer5, 0, wx.EXPAND | wx.ALL, 5)
-        topSizer.Add(sizer6, 0, wx.EXPAND | wx.ALL, 5)
-        topSizer.Add(sizer7, 0, wx.EXPAND | wx.ALL, 5)
-
-        self.rightpanel.SetSizer(topSizer)
-        topSizer.Fit(self.rightpanel)
-        
-        #-------------------------------------------------------------------
-        #-------------------------------------------------------------------
-        
         # Crée une instance de la classe My_ListCtrl
         self.list = ListCtrlVirtual.My_ListCtrl(self.leftpanel)        
 
         # Donne le Focus au contrôle
-        self.list.SetFocus()
+        self.list.SetFocus()     
+        
+    #-----------------------------------------------------------------------
 
-        self.sp1.SetMinimumPaneSize(1)
+    def createStaticBox(self):
+        """ Crée la StaticBox. """
 
-        # Ajoute les contrôles dans le splitter
-        self.sp1.SplitVertically(self.leftpanel, self.rightpanel)  # , -500
-
-        # Paramètre la taille par défaut du splitter
-        self.sp1.SetSashPosition(350, True)
-
+        # Crée une instance de la classe My_StaticBox
+        self.stbx1 = StaticBoxFirst.My_StaticBox(self.rightpanel)
+        self.stbx2 = StaticBoxSecond.My_StaticBox(self.rightpanel)
+        self.stbx3 = StaticBoxThree.My_StaticBox(self.rightpanel)
+        self.stbx4 = StaticBoxFour.My_StaticBox(self.rightpanel)
+        self.stbx5 = StaticBoxFive.My_StaticBox(self.rightpanel)
+        
     #-----------------------------------------------------------------------
         
     def doLayout(self):
         """ Crée les Sizer et gére la disposition des widgets. """
-
 
         # Crée des Sizer pour chaque widget ou groupe de widgets   
 #        scrollHorSizer = wx.BoxSizer(wx.HORIZONTAL)
@@ -981,9 +461,39 @@ class My_Frame(wx.Frame):
         listHorSizer.Add(self.list, 1, wx.EXPAND)
         listVerSizer.Add(listHorSizer, 1, wx.EXPAND)
 
-        #--------------
-        #--------------
+        #-------------------------------------------------------------------
+
+        # Gére la disposition des widgets StaticBox
+        # Crée les Sizer et gére la disposition des widgets
+        # Crée des BoxSizer pour chaque widget ou groupe de widgets
+        sizer1 = wx.BoxSizer(wx.HORIZONTAL)
+        sizer2 = wx.BoxSizer(wx.HORIZONTAL)
+        sizer3 = wx.BoxSizer(wx.HORIZONTAL)
+        sizer4 = wx.BoxSizer(wx.HORIZONTAL)
+        sizer5 = wx.BoxSizer(wx.HORIZONTAL)
         
+        # Ajoute les widgets dans les BoxSizers appropriées 
+        sizer1.Add(self.stbx1, 1, wx.EXPAND | wx.ALL, 0)
+        sizer2.Add(self.stbx2, 1, wx.EXPAND | wx.ALL, 0)
+        sizer3.Add(self.stbx3, 1, wx.EXPAND | wx.ALL, 0)
+        sizer4.Add(self.stbx4, 1, wx.EXPAND | wx.ALL, 0)
+        sizer5.Add(self.stbx5, 1, wx.EXPAND | wx.ALL, 0)
+        
+        # Crée une BoxSizer VERTICALE générale
+        topSizer = wx.BoxSizer(wx.VERTICAL)
+
+        # Ajoute les BoxSizer dans la BoxSizer générale 
+        topSizer.Add(sizer1, 0, wx.EXPAND | wx.ALL, 3)
+        topSizer.Add(sizer2, 0, wx.EXPAND | wx.ALL, 3)
+        topSizer.Add(sizer3, 0, wx.EXPAND | wx.ALL, 3)
+        topSizer.Add(sizer4, 0, wx.EXPAND | wx.ALL, 3)
+        topSizer.Add(sizer5, 0, wx.EXPAND | wx.ALL, 3)
+
+        self.rightpanel.SetSizer(topSizer)
+        topSizer.Fit(self.rightpanel)
+
+        #-------------------------------------------------------------------
+                
         # Gére les sizers et la disposition des widgets        
         self.leftpanel.SetAutoLayout(True)
         self.rightpanel.SetAutoLayout(True)
@@ -994,7 +504,7 @@ class My_Frame(wx.Frame):
         listVerSizer.Fit(self.leftpanel)
 #        scrollVerSizer.Fit(self.rightpanel)
 
-       #--------------
+        #--------------
         #--------------
 
         # Crée une BoxSizer VERTICALE générale qui ajoute
@@ -1016,28 +526,9 @@ class My_Frame(wx.Frame):
         # Fit ourselves to the sizer
         borderSizer.Fit(self.panel)
 
-        
-        
-        # Crée une BoxSizer VERTICALE principale qui englobe tous les widgets
-#        topSizer = wx.BoxSizer(wx.HORIZONTAL)
-        
-        # Ajoute les Sizer dans la BoxSizer VERTICALE principale
-#        topSizer.Add(splitSizer, 1, wx.EXPAND, 0) 
-#        topSizer.Add(listCtrlSizer, 1, wx.EXPAND | wx.LEFT |
-#                     wx.RIGHT | wx.BOTTOM, 0)     
-
         # SetSizeHints(minW, minH, maxW, maxH)
         # self.SetSizeHints(800, 640, -1, -1)
 
-        #--------------
-        #--------------
-
-#        # Sizer sans panel
-#        self.SetAutoLayout(True)
-#        # Set the sizer
-#        self.SetSizer(topSizer)
-#        # Fit ourselves to the sizer
-#        topSizer.Fit(self)
 
     #-----------------------------------------------------------------------      
 
@@ -1095,7 +586,41 @@ class My_Frame(wx.Frame):
     def OnPrint(self, event):
         """ Fait une capture écran de l'appplication. """
 
-        pass    
+#    def TakeScreenShot(self, rect):
+#      """ Takes a screenshot of the screen at give pos & size (rect). """
+
+        #Create a DC for the whole screen area
+        dcScreen = wx.ScreenDC()
+       
+        #Create a Bitmap that will later on hold the screenshot image
+        #Note that the Bitmap must have a size big enough to hold the screenshot
+        #-1 means using the current default colour depth
+        bmp = wx.EmptyBitmap(rect.width, rect.height)
+
+        #Create a memory DC that will be used for actually taking the screenshot
+        memDC = wx.MemoryDC()
+
+        #Tell the memory DC to use our Bitmap
+        #all drawing action on the memory DC will go to the Bitmap now
+        memDC.SelectObject(bmp)
+
+        #Blit (in this case copy) the actual screen on the memory DC
+        #and thus the Bitmap
+        memDC.Blit( 0, #Copy to this X coordinate
+                    0, #Copy to this Y coordinate
+                    rect.width, #Copy this width
+                    rect.height, #Copy this height
+                    dcScreen, #From where do we copy?
+                    rect.x, #What's the X offset in the original DC?
+                    rect.y  #What's the Y offset in the original DC?
+                    )
+
+        #Select the Bitmap out of the memory DC by selecting a new
+        #uninitialized Bitmap
+        memDC.SelectObject(wx.NullBitmap)
+
+        return bmp
+    
     #-----------------------------------------------------------------------
         
     def OnPass(self, event):
@@ -1104,11 +629,11 @@ class My_Frame(wx.Frame):
     
     #-----------------------------------------------------------------------
         
-    def OnDoubleClick(self, event):
-        """ Applique au splitter sa taille par défaut. """   
-        size = self.GetSize()
+#    def OnDoubleClick(self, event):
+#        """ Applique au splitter sa taille par défaut. """   
+#        size = self.GetSize()
 #        self.sp1.SetSashPosition(size.x / 2)
-        self.sp1.SetSashPosition(350, True)
+#        self.sp1.SetSashPosition(350, True)
         
 #    def OnSize(self, event):
 #        size = self.GetSize()
@@ -1283,3 +808,10 @@ if __name__ == '__main__':
 ######################################################################
 
 
+#And then, for the widget you want to take the screenshot (it can be
+#also the main frame), you can do something like:
+
+#bmp = self.TakeScreenShot(self.GetRect())
+#img = bmp.ConvertToImage()
+#fileName = "myImage.png"
+#img.SaveFile(fileName, wx.BITMAP_TYPE_PNG) 
