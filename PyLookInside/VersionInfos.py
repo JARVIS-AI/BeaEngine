@@ -1,6 +1,6 @@
 # -*- coding: utf8 -*-
 
-# Import des modules
+# Import packages
 
 import sys
 
@@ -8,12 +8,12 @@ import sys
 
 NAME_STRING = u"PyLookInside"
 VERSION_STRING = u"v" + sys.version.split()[0]
-AUTHORS_STRING = u"Beatrix & Zig."
+AUTHORS_STRING = u"Beatrix"
 CREATED_STRING = u"December 2009"
-COPYRIGHT_STRING = u"© Copyright 2009-2010."
-LICENSE1_STRING = u"Beatrix  |  BeaCorporation, Inc."
-LICENSE2_STRING = u"Licence : wxWindows Library, Version 3.1."
-LICENSE3_STRING = u"Cette application Open Source est sous license LGPL  :-) ."
-COMMENT_STRING = u"PyLookInside est une interface GUI de désassemblage."
-OS_STRING = u"Le système d'exploitation en cours est "
+COPYRIGHT_STRING = u"© Copyright 2009-2010  |  Beatrix"
+LICENSE1_STRING = u"Beatrix"
+LICENSE2_STRING = u"License : wxWindows Library Version 3.1"
+LICENSE3_STRING = u"This application is Open Source - License LGPL version 2 (:-)"
+COMMENT_STRING = u""
+OS_STRING = u"Current Operating System - "
 
