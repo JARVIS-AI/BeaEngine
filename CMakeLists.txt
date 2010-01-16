@@ -42,7 +42,13 @@ if (NOT BEA_COMPILER)
       if (CYGWIN)
 	set (BEA_COMPILER gnu)
       else ()
-	set (BEA_COMPILER msvc)
+	if (BORLAND)
+	  set (BEA_COMPILER borland)
+	else ()
+	  if (MSVC)
+	    set (BEA_COMPILER msvc)
+	  endif ()
+	endif ()
       endif ()
     endif ()
   endif ()
@@ -100,7 +106,25 @@ if (BEA_COMPILER STREQUAL intel)
   endif ()
 endif ()
 
-
+# =========================================
+# Borland C configuration
+# =========================================
+if (BEA_COMPILER STREQUAL borland)
+  set (CMAKE_C_COMPILER   bcc32)
+  set (CMAKE_CXX_COMPILER bcc32)
+  
+  set (BEA_WARNINGS -w)
+  set (BEA_FLAGS    -pc -p- -H- -b -d -Hu-)
+  if (optHAS_SYMBOLS)
+    list (APPEND BEA_FLAGS -v -y -R)
+  endif ()
+  if (optHAS_OPTIMIZED)
+    list (APPEND BEA_FLAGS -O2)
+  endif ()
+  if (optBUILD_64BIT)
+#    list (APPEND BEA_FLAGS -m64)
+  endif ()
+endif ()
 # ============================================
 # construct compiler flags
 # ============================================
@@ -172,12 +196,12 @@ set (CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${myLIB_OUTPUT})
 set (CMAKE_LIBRARY_OUTPUT_DIRECTORY ${myLIB_OUTPUT})
 set (CMAKE_RUNTIME_OUTPUT_DIRECTORY ${myBIN_OUTPUT})
 
+set (build_modules 
+  beaengineSources
+)
 
-set (BEA_SOURCES BeaEngine.c)
-
-if (optBUILD_DLL)
-  add_library (BeaEngine SHARED ${BEA_SOURCES})
-else ()
-  add_library (BeaEngine STATIC ${BEA_SOURCES})
-endif ()
-
+foreach (mdl ${build_modules})
+  set (MDL_SRC "${mdl}")
+  set (MDL_OBJ "${myOBJ_OUTPUT}/${myQualification}/${mdl}")
+  add_subdirectory (${MDL_SRC} ${MDL_OBJ})
+endforeach () 
