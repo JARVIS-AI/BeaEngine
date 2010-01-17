@@ -80,6 +80,9 @@ if (BEA_COMPILER STREQUAL gnu)
   if (optBUILD_64BIT)
     list (APPEND BEA_FLAGS -m64)
   endif ()
+  if (optBUILD_STDCALL)
+    set (BEA_DEFINITIONS "-DBEA_USE_STDCALL")
+  endif ()
 endif ()
 # =========================================
 # SunStudio configuration
@@ -94,6 +97,9 @@ endif ()
 if (BEA_COMPILER STREQUAL msvc)
   set (CMAKE_C_COMPILER   cl)
   set (CMAKE_CXX_COMPILER cl)
+  if (optBUILD_STDCALL)
+    set (BEA_DEFINITIONS "/DBEA_USE_STDCALL")
+  endif ()
 endif ()
 # =========================================
 # Intel Compiler configuration
@@ -111,6 +117,9 @@ if (BEA_COMPILER STREQUAL intel)
   endif ()
   if (optBUILD_64BIT)
     list (APPEND BEA_FLAGS -m64)
+  endif ()
+  if (optBUILD_STDCALL)
+    set (BEA_DEFINITIONS "-DBEA_USE_STDCALL")
   endif ()
 endif ()
 
@@ -132,6 +141,9 @@ if (BEA_COMPILER STREQUAL borland)
   if (optBUILD_64BIT)
 #    list (APPEND BEA_FLAGS -m64)
   endif ()
+  if (optBUILD_STDCALL)
+    set (BEA_DEFINITIONS "-DBEA_USE_STDCALL")
+  endif ()
 endif ()
 # =========================================
 # Watcom C configuration
@@ -151,6 +163,32 @@ if (BEA_COMPILER STREQUAL watcom)
   if (optBUILD_64BIT)
 #    list (APPEND BEA_FLAGS -m64)
   endif ()
+  if (optBUILD_STDCALL)
+    set (BEA_DEFINITIONS "-DBEA_USE_STDCALL")
+  endif ()
+endif ()
+
+# =========================================
+# Watcom C configuration
+# =========================================
+if (BEA_COMPILER STREQUAL pelles)
+  set (CMAKE_C_COMPILER   pocc)
+  #set (CMAKE_CXX_COMPILER pocc)
+  
+  set (BEA_WARNINGS /W2)
+  set (BEA_FLAGS    /Gm /Gn)
+  if (optHAS_SYMBOLS)
+    list (APPEND BEA_FLAGS /Zi )
+  endif ()
+  if (optHAS_OPTIMIZED)
+    list (APPEND BEA_FLAGS /Ox )
+  endif ()
+  if (optBUILD_64BIT)
+#    list (APPEND BEA_FLAGS -m64)
+  endif ()
+  if (optBUILD_STDCALL)
+    set (BEA_DEFINITIONS "/DBEA_USE_STDCALL")
+  endif ()
 endif ()
 # ============================================
 # construct compiler flags
@@ -159,6 +197,10 @@ set (myC_FLAGS "")
 set (myCXX_FLAGS "")
 
 foreach (flag ${BEA_FLAGS})
+  set (myC_FLAGS "${myC_FLAGS} ${flag}")
+endforeach ()
+
+foreach (flag ${BEA_DEFINITIONS})
   set (myC_FLAGS "${myC_FLAGS} ${flag}")
 endforeach ()
 
@@ -200,7 +242,6 @@ endif ()
 
 
 
-add_definitions     (${BEA_DEFINITIONS})
 include_directories (${BEA_SRC_ROOT} ${BEA_INCLUDE_PATH})
 link_directories    (${BEA_LIBS_PATH})
 
@@ -226,6 +267,27 @@ set (CMAKE_RUNTIME_OUTPUT_DIRECTORY ${myBIN_OUTPUT})
 set (build_modules 
   beaengineSources
 )
+
+
+set (BEA_TARGET "BeaEngine")
+
+if (NOT optBUILD_DLL)
+  set (BEA_TARGET "${BEA_TARGET}_s")
+endif ()
+
+if (NOT optHAS_OPTIMIZED)
+  set (BEA_TARGET "${BEA_TARGET}_d")
+endif ()
+
+if (optBUILD_STDCALL)
+  set (BEA_TARGET "${BEA_TARGET}_stdcall")
+endif ()
+
+if (optBUILD_64BIT)
+  set (BEA_TARGET "${BEA_TARGET}_64")
+endif ()
+
+
 
 foreach (mdl ${build_modules})
   set (MDL_SRC "${mdl}")

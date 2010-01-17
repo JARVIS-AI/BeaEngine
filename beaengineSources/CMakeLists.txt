@@ -1,9 +1,7 @@
-
-
 set (BEA_SOURCES BeaEngine.c)
 
 if (optBUILD_DLL)
-  add_library (BeaEngine SHARED ${BEA_SOURCES})
+  add_library (${BEA_TARGET} SHARED BeaEngine.c)
 else ()
-  add_library (BeaEngine STATIC ${BEA_SOURCES})
+  add_library (${BEA_TARGET} STATIC BeaEngine.c)
 endif ()

@@ -63,18 +63,24 @@
 /* Use C calling convention by default*/
 
 #ifndef __bea_callspec__
-#if defined(__WIN32__) || defined(WIN32) || defined(_WIN32) && !defined(__GNUC__)
-#define __bea_callspec__	 __stdcall
+#if defined(BEA_USE_STDCALL)
+    #if defined(__WIN32__) || defined(WIN32) || defined(_WIN32) && !defined(__GNUC__)
+        #if defined(__BORLANDC__) || defined(__WATCOMC__) || defined(__MSC_VER)
+            #define __bea_callspec__	 __stdcall
+        #else
+            #define __bea_callspec__	 
+        #endif
+    #else
+       #ifdef __OS2__
+          #define __bea_callspec__ _System
+       #else
+          #define __bea_callspec__
+       #endif
+    #endif
 #else
-#ifdef __OS2__
-/* But on OS/2, we use the _System calling convention */
-/* to be compatible with every compiler */
-#define __bea_callspec__ _System
-#else
-#define __bea_callspec__
+    #define __bea_callspec__
 #endif
 #endif
-#endif /* __bea_callspec__*/
 
 #ifdef __SYMBIAN32__ 
 #	ifndef EKA2 
