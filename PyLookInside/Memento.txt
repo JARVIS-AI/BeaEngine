@@ -1,9 +1,7 @@
 ﻿Ceci est un essai de texte unicode codé en utf-8.
 &à éèç öîà&@@ççèèààé1
-coucou2.
 
 TODO :
-- Faire une classe séparée pour la wx.FileDialog.
 - Coder la fonction screenshot avec répertoire de destination et prise en charge d'une multitude d'images.
 
 - Régler les retours à ligne du memento pour les sytèmes unix, linux et windows (/n, /r...).

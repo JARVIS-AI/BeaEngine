@@ -1,12 +1,33 @@
 #!/usr/bin/env python
 # -*- coding: utf8 -*-
 
+"""
+
+Copyright 2006-2009, BeatriX
+
+This file is part of BeaEngine.
+ 
+BeaEngine is free software: you can redistribute it and/or modify
+ it under the terms of the GNU Lesser General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+BeaEngine is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Lesser General Public License for more details.
+
+You should have received a copy of the GNU Lesser General Public License
+along with BeaEngine.  If not, see <http://www.gnu.org/licenses/>.
+
+"""
+
 #########################################################################
 # Name      :  PyLookInside.py                                          #
-# Version   :  2.6.4                                                    #
-# Authors   :  Beatrix                                                  #
+# Version   :  4.0                                                      #
+# Authors   :  Sigman                                                   #
 # Created   :  December 2009                                            #
-# Copyright :  (c) 2009-2010 Beatrix, Inc                               #
+# Copyright :  © Copyright 2009-2010  |  BeatriX                        #
 # License   :  wxWindows License                                        #
 # About     :  PyTemplateDataBase was built using Python 2.6.4,         #
 #              wxPython 2.8.10.1 unicode, and wxWindows                 #
@@ -16,22 +37,21 @@
 # Import packages
 
 import wxversion
-wxversion.select("2.8")     # Le script démarre uniquement sous wx.Python 2.8
+wxversion.select("2.8-unicode")  # Launch the script only from wx.Python 2.8
 
 import sys
-import os
+#import os
 
 try:
     import wx                        # This module uses the new wx namespace
 except ImportError:
-    raise ImportError, u"Le module wx.Python unicode est requi pour lancer l'application."
+    raise ImportError, u"The wxPython unicode module is required to run this program."
 
 import VersionInfos
-import CustomSplashScreen
+import SplashScreen
+import ToolBar
+import StatusBar
 import TaskBarIcon
-import time
-import locale
-import SearchCtrl
 import Splitter
 import ListCtrlVirtual
 import StaticBoxOne
@@ -49,65 +69,6 @@ import webbrowser
 
 #---------------------------------------------------------------------------
 
-class My_CustomStatusBar(wx.StatusBar):
-    def __init__(self, parent):
-        wx.StatusBar.__init__(self, parent, -1)
-
-        #-------------------------------------------------------------------
-        
-        self.parent = parent
-        
-        #-------------------------------------------------------------------
-        
-        self.SetFieldsCount(2)
-        self.SetStatusWidths([-7, -3])
-
-        #-------------------------------------------------------------------
-        
-        self.sizeChanged = False
-
-        # Bind some events to an events handler
-        self.Bind(wx.EVT_SIZE, self.OnSize)
-        self.Bind(wx.EVT_IDLE, self.OnIdle)
-
-        #-------------------------------------------------------------------
-        
-        self.timer = wx.PyTimer(self.Notify)
-        # Update every 1000 milliseconds
-        self.timer.Start(1000)
-        self.Notify()
-        
-    #-----------------------------------------------------------------------
-
-    # Handles events from the timer we started in __init__().
-    # We're using it to drive a 'clock' in field 2 (the third field).
-    def Notify(self):
-        """ Timer event """
-        locale.setlocale(locale.LC_ALL,'')
-        temp = time.strftime('Le %a %d %b %Y - %Hh%M')
-
-        self.SetStatusText(temp, 1)
-
-
-    def OnSize(self, evt):
-        self.Reposition()  # For normal size events
-
-        # Set a flag so the idle time handler will also do the repositioning.
-        # It is done this way to get around a buglet where GetFieldRect is not
-        # accurate during the EVT_SIZE resulting from a frame maximize.
-        self.sizeChanged = True
-
-
-    def OnIdle(self, evt):
-        if self.sizeChanged:
-            self.Reposition()
-
-
-    def Reposition(self):
-        self.sizeChanged = False
-
-#---------------------------------------------------------------------------
-
 class My_Frame(wx.Frame):
     isRolled = 0
     def __init__(self, parent, id):
@@ -115,34 +76,27 @@ class My_Frame(wx.Frame):
                           title=u"PyLookInside %s"
                           % VersionInfos.VERSION_STRING,
                           pos=wx.DefaultPosition,
-                          size=(830, 675),
+                          size=(830, 673),
                           style=wx.DEFAULT_FRAME_STYLE |
                           wx.NO_FULL_REPAINT_ON_RESIZE |
                           wx.TAB_TRAVERSAL)
-
-        self.frame = parent
         
         # Bind the event close to an events handler
         self.Bind(wx.EVT_CLOSE, self.OnCloseWindow)
 
         #-------------------------------------------------------------------
 
-        self.panel = wx.Panel(self, -1)
-
-        #-------------------------------------------------------------------
-        
-        self.sb = My_CustomStatusBar(self)
-        self.SetStatusBar(self.sb)
-        self.SetStatusText(u"Welcome to PyLookInside !", 0)
-      
+        # self.SetBackgroundColour(wx.NamedColour("LIGHTGREY"))
+        self.SetBackgroundColour("LIGHTGREY")    
         #-------------------------------------------------------------------
         
         self.createMenuBar()
         self.createToolBar()
+        self.createStatusBar()
+        self.createTaskBarIcon()
         self.createSplitter()
         self.createListCtrl()
         self.createStaticBox()
-        self.createTaskBarIcon()
         self.doLayout()
         
         #-------------------------------------------------------------------
@@ -170,6 +124,34 @@ class My_Frame(wx.Frame):
 
         # Bind the menu event to an events handler
         self.Bind(wx.EVT_MENU, self.OnFileOpen, item)
+
+        #-------------------------------------------------------------------
+
+        bmp = wx.Bitmap("Bitmaps/item_Disassemble.png", wx.BITMAP_TYPE_PNG)
+        
+        item = wx.MenuItem(menuFile, -1,
+                           text=u"&Disassemble\tCtrl+D",
+                           help=u"Launch the disassembling.")
+        item.SetBitmap(bmp)
+        menuFile.AppendItem(item)
+        menuFile.AppendSeparator()
+        
+        # Bind the menu event to an events handler
+        self.Bind(wx.EVT_MENU, self.OnDisassemble, item)
+
+        #-------------------------------------------------------------------
+
+        bmp = wx.Bitmap("Bitmaps/item_Print.png", wx.BITMAP_TYPE_PNG)
+        
+        item = wx.MenuItem(menuFile, -1,
+                           text=u"&Screen Shot\tCtrl+P",
+                           help=u"Frame screen shot.")
+        item.SetBitmap(bmp)
+        menuFile.AppendItem(item)
+        menuFile.AppendSeparator()
+        
+        # Bind the menu event to an events handler
+        self.Bind(wx.EVT_MENU, self.OnScreenShot, item)
 
         #-------------------------------------------------------------------
 
@@ -249,8 +231,8 @@ class My_Frame(wx.Frame):
         bmp = wx.Bitmap("Bitmaps/item_Help.png", wx.BITMAP_TYPE_PNG)
         
         item = wx.MenuItem(menuHelp, -1,
-                           text=u"&Help online\tCtrl+H",
-                           help=u"Help online.")
+                           text=u"Online &help\tCtrl+H",
+                           help=u"Online help.")
         item.SetBitmap(bmp)
         menuHelp.AppendItem(item)
 
@@ -270,79 +252,39 @@ class My_Frame(wx.Frame):
     #----------------------------------------------------------------------- 
 
     def createToolBar(self):        
-        self.toolbar = self.CreateToolBar(wx.TB_HORIZONTAL | wx.NO_BORDER |
-                                          wx.TB_FLAT | wx.TB_TEXT |
-                                          wx.NO_FULL_REPAINT_ON_RESIZE)
+        self.tb = ToolBar.My_Toolbar(self)
+        self.SetToolBar(self.tb)
 
-        toolSize = (24, 24)
-        self.toolbar.SetToolBitmapSize(toolSize)
-
-        self.toolbar.AddLabelTool(20, u"Open",
-                                  wx.Bitmap("Bitmaps/tb_Open.png", wx.BITMAP_TYPE_PNG),
-                                  shortHelp=u"",
-                                  longHelp=u"Display the open file dialog.")
-        self.toolbar.AddSeparator()
-        self.toolbar.AddLabelTool(21, u"Disassemble",
-                                  wx.Bitmap("Bitmaps/tb_Disassemble.png", wx.BITMAP_TYPE_PNG),
-                                  shortHelp=u"",
-                                  longHelp=u"Launch the disassembling.")
-        self.toolbar.AddSeparator()
-        self.toolbar.AddLabelTool(22, u"About",
-                                  wx.Bitmap("Bitmaps/tb_About.png", wx.BITMAP_TYPE_PNG),
-                                  shortHelp=u"",
-                                  longHelp=u"About this application.")
-        self.toolbar.AddSeparator()
-        self.toolbar.AddLabelTool(23, u"Memento",
-                                  wx.Bitmap("Bitmaps/tb_Note.png", wx.BITMAP_TYPE_PNG),
-                                  shortHelp=u"",
-                                  longHelp=u"Little reminder.")
-        self.toolbar.AddSeparator()
-        self.toolbar.AddLabelTool(24, u"Screenshot",
-                                  wx.Bitmap("Bitmaps/tb_Print.png", wx.BITMAP_TYPE_PNG),
-                                  shortHelp=u"",
-                                  longHelp=u"Frame screen shot.")
-        self.toolbar.AddSeparator()
-        self.toolbar.AddLabelTool(25, u"HelpOnline",
-                                  wx.Bitmap("Bitmaps/tb_Help.png", wx.BITMAP_TYPE_PNG),
-                                  shortHelp=u"",
-                                  longHelp=u"Help online.")
-        self.toolbar.AddSeparator()
-        self.toolbar.AddLabelTool(26, u"Quit",
-                                  wx.Bitmap("Bitmaps/tb_Quit.png", wx.BITMAP_TYPE_PNG),
-                                  shortHelp=u"",
-                                  longHelp=u"Quit the application.")
-        self.toolbar.AddSeparator()
-        self.toolbar.AddSeparator()
-        self.searchCtrl = SearchCtrl.My_SearchCtrl(self.toolbar, 50,
-                                                   value="0040711E")
-        self.toolbar.AddControl(self.searchCtrl)
-        self.toolbar.AddSeparator()        
-        self.toolbar.AddSeparator()
-        
-        self.toolbar.Realize()
-        
-        # Bind some events to an event handler
+        # Bind some events to an events handler
         self.Bind(wx.EVT_TOOL, self.OnFileOpen, id=20)
         self.Bind(wx.EVT_TOOL, self.OnDisassemble, id=21)
-        self.Bind(wx.EVT_TOOL, self.OnAbout, id=22)
-        self.Bind(wx.EVT_TOOL, self.OnMemento, id=23)
-        self.Bind(wx.EVT_TOOL, self.OnScreenShot, id=24)
+        self.Bind(wx.EVT_TOOL, self.OnScreenShot, id=22)
+        self.Bind(wx.EVT_TOOL, self.OnAbout, id=23)
+        self.Bind(wx.EVT_TOOL, self.OnMemento, id=24)
         self.Bind(wx.EVT_TOOL, self.OnlineHelp, id=25)
         self.Bind(wx.EVT_TOOL, self.OnClose, id=26)
+        
+    #-----------------------------------------------------------------------
+
+    def createStatusBar(self):
+        self.sb = StatusBar.My_CustomStatusBar(self)
+        self.SetStatusBar(self.sb)
+        self.SetStatusText(u"Welcome to PyLookInside !", 0)
+        
+    #-----------------------------------------------------------------------
+
+    def createTaskBarIcon(self):        
+        self.tskic = TaskBarIcon.My_TaskBarIcon(self)
 
     #-----------------------------------------------------------------------
 
     def createSplitter(self):
-        self.sp1 = Splitter.My_Splitter(self.panel)
+        self.sp1 = Splitter.My_Splitter(self)
         
         self.leftpanel = wx.Panel (self.sp1,
                                    style=wx.BORDER_SIMPLE | wx.TAB_TRAVERSAL)
         self.rightpanel = wx.Panel (self.sp1,
                                     style=wx.BORDER_SIMPLE | wx.TAB_TRAVERSAL)
-               
-        #-------------------------------------------------------------------
-        
-        self.sp1.SplitVertically(self.leftpanel, self.rightpanel)
 
     #-----------------------------------------------------------------------
        
@@ -361,22 +303,13 @@ class My_Frame(wx.Frame):
         
     #-----------------------------------------------------------------------
         
-    def doLayout(self):
-        borderSizer = wx.BoxSizer(wx.VERTICAL)
-        borderSizer.Add(self.sp1, 1, wx.EXPAND | wx.ALL , 0)
+    def doLayout(self):        
+        listSizer = wx.BoxSizer(wx.VERTICAL)
+
+        listSizer.Add(self.list, 1, wx.EXPAND)
 
         #----------
-        
-        listHorSizer = wx.BoxSizer(wx.HORIZONTAL)
-        listHorSizer.Add(self.list, 1, wx.EXPAND)
 
-        #----------
-        
-        listVerSizer = wx.BoxSizer(wx.VERTICAL)
-        listVerSizer.Add(listHorSizer, 1, wx.EXPAND)
-
-        #----------
-        
         sizer1 = wx.BoxSizer(wx.HORIZONTAL)
         sizer2 = wx.BoxSizer(wx.HORIZONTAL)
         sizer3 = wx.BoxSizer(wx.HORIZONTAL)
@@ -400,22 +333,24 @@ class My_Frame(wx.Frame):
         topSizer.Add(sizer5, 0, wx.EXPAND | wx.ALL, 3)
 
         #----------
-
-        self.rightpanel.SetAutoLayout(True)
-        self.rightpanel.SetSizer(topSizer)
-        topSizer.Fit(self.rightpanel)
+       
+        self.sp1.SplitVertically(self.leftpanel, self.rightpanel)
 
         #----------
 
         self.leftpanel.SetAutoLayout(True)
-        self.leftpanel.SetSizer(listVerSizer)
-        listVerSizer.Fit(self.leftpanel)
+        self.rightpanel.SetAutoLayout(True)
 
         #----------
         
-        self.panel.SetSizer(borderSizer)
-        borderSizer.Fit(self.panel)
-        
+        self.leftpanel.SetSizer(listSizer)
+        self.rightpanel.SetSizer(topSizer)
+
+        #----------
+
+        topSizer.Fit(self.rightpanel)
+        listSizer.Fit(self.leftpanel)
+
     #-----------------------------------------------------------------------      
 
     def OnFileOpen(self, event):
@@ -446,7 +381,7 @@ class My_Frame(wx.Frame):
 
 #def capture_screenshot(event):
         
-    def OnScreenShot(event):
+    def OnScreenShot():
      
         #Works on Windows XP and Linux.
         event.Skip()
@@ -513,11 +448,6 @@ class My_Frame(wx.Frame):
             self.SetSize(self.size1)
      
     #-----------------------------------------------------------------------
-
-    def createTaskBarIcon(self):        
-        self.tskic = TaskBarIcon.My_TaskBarIcon(self)
-
-    #-----------------------------------------------------------------------
         
     def OnClose(self, event):
         # Triggers wx.EVT_CLOSE event and hence onCloseWindow()
@@ -556,7 +486,7 @@ class My_App(wx.App):
         # application window(s).  In this case we have nothing else to
         # do so we'll delay showing the main frame until later (see
         # ShowMain above) so the users can see the SplashScreen effect        
-        self.splash = CustomSplashScreen.My_SplashScreen()
+        self.splash = SplashScreen.My_SplashScreen()
         self.splash.Show()
 
         return True   

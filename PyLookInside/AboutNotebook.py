@@ -1,39 +1,78 @@
 # -*- coding: utf8 -*-
 
+"""
+
+Copyright 2006-2009, BeatriX
+
+This file is part of BeaEngine.
+ 
+BeaEngine is free software: you can redistribute it and/or modify
+ it under the terms of the GNU Lesser General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+BeaEngine is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Lesser General Public License for more details.
+
+You should have received a copy of the GNU Lesser General Public License
+along with BeaEngine.  If not, see <http://www.gnu.org/licenses/>.
+
+"""
+
 # Import packages
 
 import wx                            # This module uses the new wx namespace
 import wx.html
-        
+import VersionInfos
+
+text = u"""<html><body><div align="center">
+<br>
+<br>
+<h3><font color="#d52c00"><b>PyLookInside %(version)s</h3></font>
+<p><i>wxPython GUI for disassembling library...</i>
+<br>
+<br>
+<p><b>&copy; Copyright 2009-2010.</b></p>
+<br>
+<p><b>Sweet Home : </b>
+<a href="http://www.beaengine.org">BeaEngine</a></p>
+<br>
+<p>License GNU-LGPL version 3.</div></body></html>"""
+
+#---------------------------------------------------------------------------
+
+class HtmlWindow(wx.html.HtmlWindow):
+    def __init__(self, parent):
+        wx.html.HtmlWindow.__init__(self, parent)
+
+        if "gtk2" in wx.PlatformInfo:
+            self.SetStandardFonts()
+
+
+    def OnLinkClicked(self, link):
+        wx.LaunchDefaultBrowser(link.GetHref())
+
 #---------------------------------------------------------------------------
 
 class PageCopyright(wx.Panel):
     def __init__(self, parent):
         wx.Panel.__init__(self, parent)
         
-        html = wx.html.HtmlWindow(self)
-        if "gtk2" in wx.PlatformInfo:
-            html.SetStandardFonts()
-
-        html.SetPage(u'''<html><body><div align="center">
-        <br>
-        <br>
-        <h3><font color="#ff9804">PyLookInside v2.64</h3></font>
-        <p>Blah ,Blah</font>
-        <br>
-        <p><b>© Copyright 2009-2010.</b>
-        <br>
-        <p><b>Sweet Home :</b>
-        <br><font color="blue">http://beatrix2004.free.fr/BeaEngine/index.php</font>
-
-        <br>
-        <br>License GNU-LGPL version 2.</div></body></html>''')
+        html = HtmlWindow(self)
+        vers = {}
+        vers["version"] = VersionInfos.VERSION_STRING
+        html.SetPage(text % vers)
 
         sizer = wx.BoxSizer(wx.HORIZONTAL)
         sizer.Add(html, 1, wx.EXPAND, 0)
 
         self.SetSizer(sizer)
         sizer.Fit(self)
+
+    def OnLinkClicked(self, link):
+        wx.LaunchDefaultBrowser(link.GetHref())
         
 #---------------------------------------------------------------------------
         
@@ -83,17 +122,16 @@ class PageDevelopers(wx.Panel):
     def __init__(self, parent):
         wx.Panel.__init__(self, parent)
 
-        html = wx.html.HtmlWindow(self)
-        if "gtk2" in wx.PlatformInfo:
-            html.SetStandardFonts()
-
-        html.SetPage(u'''<html><body><div align="center">
+        html = HtmlWindow(self)
+        html.SetPage(u'''<html><body><div align="left">
         <br>
         <br>
-        <br>- Blah ,Blah
-        <br>- Blah ,Blah
-        <br>- Blah ,Blah
-        <br></div></body></html>''')
+        <p><b>● BeatriX</b> <i>(original library developer)</i>
+        <br>
+        <br><b>● Igor Gutnik</b> <i>(Linux & portable plateforms developer)</i>
+        <br>
+        <br><b>● Sigman</b> <i>(PyLookInside developer)</i>
+        <p></div></body></html>''')
         
         sizer = wx.BoxSizer(wx.HORIZONTAL)
         sizer.Add(html, 1, wx.EXPAND, 0)
@@ -103,23 +141,24 @@ class PageDevelopers(wx.Panel):
         
 #---------------------------------------------------------------------------
 
-class PageThanksTo(wx.Panel):
+class PageContributors(wx.Panel):
     def __init__(self, parent):
         wx.Panel.__init__(self, parent)
         
-        html = wx.html.HtmlWindow(self)
-        if "gtk2" in wx.PlatformInfo:
-            html.SetStandardFonts()
-
-        html.SetPage(u'''<html><body><div align="center">        
+        html = HtmlWindow(self)
+        html.SetPage(u'''<html><body><div align="left">
         <br>
         <br>
-        <br>- Blah ,Blah
-        <br>- Blah ,Blah
-        <br>- Blah ,Blah
-        <br>- Blah ,Blah
-        <br>- Blah ,Blah
-        <br></div></body></html>''')
+        <p>Contributors have done a very useful job to improve and to
+        fix bugs on BeaEngine. Thanks to them, BeaEngine is stable and
+        efficient.</p>
+        <br>
+        <p><b><u>Here they are :</u></b></p>
+        <br>
+        <p><b><i>andrewl, Ange Albertini, bax, William Pomian, Pyrae,
+        Vincent Roy, Kharneth, Eedy, Neitsa, KumaT, Rafal Cyran,
+        29a metal, sessiondiy, Tim, vince, ouadji, Helle.</i></b></p>
+        <p></div></body></html>''')
 
         sizer = wx.BoxSizer(wx.HORIZONTAL)
         sizer.Add(html, 1, wx.EXPAND, 0)
@@ -149,12 +188,12 @@ class My_Notebook(wx.Dialog):
         page1 = PageCopyright(notebook)
         page2 = PageLicence(notebook)
         page3 = PageDevelopers(notebook)
-        page4 = PageThanksTo(notebook)
+        page4 = PageContributors(notebook)
         
         notebook.AddPage(page1, u"Copyright")
         notebook.AddPage(page2, u"License")
         notebook.AddPage(page3, u"Developers")
-        notebook.AddPage(page4, u"Thanks to")
+        notebook.AddPage(page4, u"Contributors")
         
         #-------------------------------------------------------------------
         
