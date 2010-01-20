@@ -52,7 +52,7 @@ class My_StaticBox(wx.Panel):
         self.SetFont(self.normalFont)
 
        #-------------------------------------------------------------------
-
+        
         box = wx.StaticBox(self, -1, "", style=wx.BORDER_NONE)
         bsizer1 = wx.StaticBoxSizer(box, wx.VERTICAL)
         
@@ -65,7 +65,7 @@ class My_StaticBox(wx.Panel):
         basicText = wx.TextCtrl(self, -1, "M",
                                 style = wx.TE_CENTRE)
         basicText.SetFont(self.normalFont)
-        basicText.SetBackgroundColour("#edecfe") 
+        basicText.SetBackgroundColour("#e2ceff")  #e2ceff 
         basicText.SetInsertionPoint(0)
         bsizer1.Add(basicText, 1, wx.ALL|wx.EXPAND, 0)
 
@@ -83,7 +83,7 @@ class My_StaticBox(wx.Panel):
         basicText = wx.TextCtrl(self, -1, "O",
                                 style = wx.TE_CENTRE)
         basicText.SetFont(self.normalFont)
-        basicText.SetBackgroundColour("#edecfe")
+        basicText.SetBackgroundColour("#e2ceff")
         basicText.SetInsertionPoint(0)
         bsizer2.Add(basicText, 1, wx.ALL|wx.EXPAND, 0)
 
@@ -101,7 +101,7 @@ class My_StaticBox(wx.Panel):
         basicText = wx.TextCtrl(self, -1, "---",
                                 style = wx.TE_CENTRE)
         basicText.SetFont(self.normalFont)
-        basicText.SetBackgroundColour("#edecfe")
+        basicText.SetBackgroundColour("#e2ceff")
         basicText.SetInsertionPoint(0)
         bsizer3.Add(basicText, 1, wx.ALL|wx.EXPAND, 0)
         
@@ -119,7 +119,7 @@ class My_StaticBox(wx.Panel):
         basicText = wx.TextCtrl(self, -1, "1",
                                 style = wx.TE_CENTRE)
         basicText.SetFont(self.normalFont)
-        basicText.SetBackgroundColour("#edecfe")
+        basicText.SetBackgroundColour("#e2ceff")
         basicText.SetInsertionPoint(0)
         bsizer4.Add(basicText, 1, wx.ALL|wx.EXPAND, 0)
         
@@ -137,7 +137,7 @@ class My_StaticBox(wx.Panel):
         basicText = wx.TextCtrl(self, -1, "M",
                                 style = wx.TE_CENTRE)
         basicText.SetFont(self.normalFont)
-        basicText.SetBackgroundColour("#edecfe")
+        basicText.SetBackgroundColour("#e2ceff")
         basicText.SetInsertionPoint(0)
         bsizer5.Add(basicText, 1, wx.ALL|wx.EXPAND, 0)
         
@@ -155,7 +155,7 @@ class My_StaticBox(wx.Panel):
         basicText = wx.TextCtrl(self, -1, "2",
                                 style = wx.TE_CENTRE)
         basicText.SetFont(self.normalFont)
-        basicText.SetBackgroundColour("#edecfe")
+        basicText.SetBackgroundColour("#e2ceff")
         basicText.SetInsertionPoint(0)
         bsizer6.Add(basicText, 1, wx.ALL|wx.EXPAND, 0)
 
@@ -173,7 +173,7 @@ class My_StaticBox(wx.Panel):
         basicText = wx.TextCtrl(self, -1, "1",
                                 style = wx.TE_CENTRE)
         basicText.SetFont(self.normalFont)
-        basicText.SetBackgroundColour("#edecfe")
+        basicText.SetBackgroundColour("#e2ceff")
         basicText.SetInsertionPoint(0)
         bsizer7.Add(basicText, 1, wx.ALL|wx.EXPAND, 0)
         
@@ -191,7 +191,7 @@ class My_StaticBox(wx.Panel):
         basicText = wx.TextCtrl(self, -1, "M",
                                 style = wx.TE_CENTRE)
         basicText.SetFont(self.normalFont)
-        basicText.SetBackgroundColour("#edecfe")
+        basicText.SetBackgroundColour("#e2ceff")
         basicText.SetInsertionPoint(0)
         bsizer8.Add(basicText, 1, wx.ALL|wx.EXPAND, 0)
         
@@ -209,7 +209,7 @@ class My_StaticBox(wx.Panel):
         basicText = wx.TextCtrl(self, -1, "0",
                                 style = wx.TE_CENTRE)
         basicText.SetFont(self.normalFont)
-        basicText.SetBackgroundColour("#edecfe")
+        basicText.SetBackgroundColour("#e2ceff")
         basicText.SetInsertionPoint(0)
         bsizer9.Add(basicText, 1, wx.ALL|wx.EXPAND, 0)
         
@@ -227,7 +227,7 @@ class My_StaticBox(wx.Panel):
         basicText = wx.TextCtrl(self, -1, "P",
                                 style = wx.TE_CENTRE)
         basicText.SetFont(self.normalFont)
-        basicText.SetBackgroundColour("#edecfe")
+        basicText.SetBackgroundColour("#e2ceff")
         basicText.SetInsertionPoint(0)
         bsizer10.Add(basicText, 1, wx.ALL|wx.EXPAND, 0)
         
@@ -245,7 +245,7 @@ class My_StaticBox(wx.Panel):
         basicText = wx.TextCtrl(self, -1, "2",
                                 style = wx.TE_CENTRE)
         basicText.SetFont(self.normalFont)
-        basicText.SetBackgroundColour("#edecfe")
+        basicText.SetBackgroundColour("#e2ceff")
         basicText.SetInsertionPoint(0)
         bsizer11.Add(basicText, 1, wx.ALL|wx.EXPAND, 0)
         
@@ -265,14 +265,19 @@ class My_StaticBox(wx.Panel):
         sizer.Add(bsizer10, 1, wx.EXPAND | wx.ALL, 0)
         sizer.Add(bsizer11, 1, wx.EXPAND | wx.ALL, 0)
 
+        #-------
+
+        box = wx.StaticBox(self, -1, "Eflags :", style=wx.BORDER_NONE)
+        box.SetForegroundColour("#0074ff")
+        allSizer = wx.StaticBoxSizer(box, wx.VERTICAL)        
+        allSizer.Add(sizer, 1, wx.ALL|wx.EXPAND, 0)
+        
         #----------
         
         topSizer = wx.BoxSizer(wx.VERTICAL)
-        topSizer.Add(sizer, 0, wx.EXPAND | wx.ALL, 0)
-        
-        #----------
+        topSizer.Add(allSizer, 0, wx.EXPAND | wx.ALL, 0)
         
         self.SetSizer(topSizer)
         topSizer.Fit(self)
 
-        
+
