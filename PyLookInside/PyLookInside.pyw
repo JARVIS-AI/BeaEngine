@@ -386,17 +386,17 @@ class My_Frame(wx.Frame):
         #Works on Windows XP and Linux.
         event.Skip()
         rect = self.GetRect()
-        #if sys.platform == 'linux2':
+        if sys.platform == 'linux2':
         #On linux, GetRect() returns size of client, not size of window.
         #Compensate for this
-        client_x, client_y = self.ClientToScreen((0, 0))
-        border_width = client_x - rect.x
-        title_bar_height = client_y - rect.y
-        #If the window has a menu bar, remove it from the title bar height.
-        if self.GetMenuBar():
-            title_bar_height /= 2
-        rect.width += (border_width * 2)
-        rect.height += title_bar_height + border_width
+            client_x, client_y = self.ClientToScreen((0, 0))
+            border_width = client_x - rect.x
+            title_bar_height = client_y - rect.y
+            #If the window has a menu bar, remove it from the title bar height.
+            if self.GetMenuBar():
+                title_bar_height /= 2
+            rect.width += (border_width * 2)
+            rect.height += title_bar_height + border_width
         self.Raise()
         viewer_dc = wx.ScreenDC()
         bitmap = wx.EmptyBitmap(rect.width, rect.height)
