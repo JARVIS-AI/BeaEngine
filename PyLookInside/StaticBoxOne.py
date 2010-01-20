@@ -54,6 +54,7 @@ class My_StaticBox(wx.Panel):
         #-------------------------------------------------------------------
 
         box = wx.StaticBox(self, -1, "Instruction. Category :")
+        box.SetForegroundColour("#0074ff")
         bsizer1 = wx.StaticBoxSizer(box, wx.VERTICAL)
        
         texte1 = wx.StaticText(self, -1,
@@ -66,6 +67,7 @@ class My_StaticBox(wx.Panel):
         #-------------------------------------------------------------------
 
         box = wx.StaticBox(self, -1, "Instruction. Mnemonic :")
+        box.SetForegroundColour("#0074ff")
         bsizer2 = wx.StaticBoxSizer(box, wx.VERTICAL)
         
         texte1 = wx.StaticText(self, -1, "jean",
@@ -77,6 +79,7 @@ class My_StaticBox(wx.Panel):
         #-------------------------------------------------------------------
         
         box = wx.StaticBox(self, -1, "Instruction. Opcode :")
+        box.SetForegroundColour("#0074ff")
         bsizer3 = wx.StaticBoxSizer(box, wx.VERTICAL)
         
         texte1 = wx.StaticText(self, -1, "00000074",
@@ -88,6 +91,7 @@ class My_StaticBox(wx.Panel):
         #-------------------------------------------------------------------
         
         box = wx.StaticBox(self, -1, "Instruction. Branch Type :")
+        box.SetForegroundColour("#0074ff")
         bsizer4 = wx.StaticBoxSizer(box, wx.VERTICAL)
         
         texte1 = wx.StaticText(self, -1, "je",
@@ -99,6 +103,7 @@ class My_StaticBox(wx.Panel):
         #-------------------------------------------------------------------
 
         box = wx.StaticBox(self, -1, "Instruction. Prefixes :")
+        box.SetForegroundColour("#0074ff")
         bsizer5 = wx.StaticBoxSizer(box, wx.VERTICAL)
         
         texte1 = wx.StaticText(self, -1, "---",
@@ -110,6 +115,7 @@ class My_StaticBox(wx.Panel):
         #-------------------------------------------------------------------
         
         box = wx.StaticBox(self, -1, "Instruction. Immediat :")
+        box.SetForegroundColour("#0074ff")
         bsizer6 = wx.StaticBoxSizer(box, wx.VERTICAL)
         
         texte1 = wx.StaticText(self, -1, "---",
@@ -121,6 +127,7 @@ class My_StaticBox(wx.Panel):
         #-------------------------------------------------------------------
         
         box = wx.StaticBox(self, -1, "Implicit Modified Regs :")
+        box.SetForegroundColour("#0074ff")
         bsizer7 = wx.StaticBoxSizer(box, wx.VERTICAL)
         
         texte1 = wx.StaticText(self, -1, "---",

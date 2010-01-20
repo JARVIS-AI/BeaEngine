@@ -54,6 +54,7 @@ class My_StaticBox(wx.Panel):
         #-------------------------------------------------------------------
 
         box = wx.StaticBox(self, -1, u"Argument n°2 :")
+        box.SetForegroundColour("#0074ff")
         bsizer1 = wx.StaticBoxSizer(box, wx.VERTICAL)
         
         texte1 = wx.StaticText(self, -1, "Arg. Type = CONSTANT_TYPE + RELATIVE",
