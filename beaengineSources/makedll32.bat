@@ -9,7 +9,7 @@ echo *
 echo *  COMPILATION with POCC.EXE (Pelles C)
 echo *
 echo ____________________________________
-\PellesC\bin\Pocc /Ze /W0 %name%.c
+\PellesC\bin\Pocc /Ze %name%.c
 
 
 echo ____________________________________
@@ -17,7 +17,7 @@ echo *
 echo *   CREATE DLL with POLINK.EXE (Pelles C)
 echo *
 echo ____________________________________
-\PellesC\bin\PoLink /DLL /EXPORT:_Disasm@4 %name%.obj kernel32.lib 
+\PellesC\bin\PoLink /DLL /EXPORT:Disasm %name%.obj kernel32.lib 
 pause
 
 

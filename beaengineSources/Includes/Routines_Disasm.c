@@ -19,7 +19,7 @@
 /* ====================================================================
  *
  * ==================================================================== */
-Int64 __bea_callspec__ Disasm (PDISASM pMyDisasm) {
+size_t __bea_callspec__ Disasm (PDISASM pMyDisasm) {
 
     InitVariables(pMyDisasm);
     (void) AnalyzeOpcode(pMyDisasm);
@@ -480,7 +480,7 @@ void __bea_callspec__ FillFlags(PDISASM pMyDisasm, int index)
 /* ====================================================================
  *
  * ==================================================================== */
-void __bea_callspec__ CalculateRelativeAddress(Int64 * pMyAddress, signed long MyNumber)
+void __bea_callspec__ CalculateRelativeAddress(UInt64 * pMyAddress, Int64 MyNumber)
 {
     RelativeAddress = 1;
     if (EIP_VA != 0) {

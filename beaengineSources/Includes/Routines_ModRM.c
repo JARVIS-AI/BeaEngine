@@ -313,8 +313,8 @@ void __bea_callspec__ Addr_SIB(ARGTYPE* pMyArgument)
  * ======================================= */
 void __bea_callspec__ Addr_disp32(ARGTYPE* pMyArgument)
 {
-    long MyNumber;
-    Int64 MyAddress;
+    Int32 MyNumber;
+    UInt64 MyAddress;
     size_t i = 0;
     (*pMyArgument).ArgType = MEMORY_TYPE;
     if (AddressSize >= 32) {

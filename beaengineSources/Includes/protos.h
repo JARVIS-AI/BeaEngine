@@ -79,7 +79,7 @@ void __bea_callspec__ ALIb(PDISASM);
 void __bea_callspec__ eAX_Iv(PDISASM);
 int __bea_callspec__ AnalyzeOpcode (PDISASM);
 int __bea_callspec__ Security(int);
-void __bea_callspec__ CalculateRelativeAddress(Int64 *, long);
+void __bea_callspec__ CalculateRelativeAddress(UInt64 *, Int64);
 size_t __bea_callspec__ CopyFormattedNumber(char*, const char*, Int64);
 void __bea_callspec__ BuildCompleteInstruction(PDISASM);
 void __bea_callspec__ BuildCompleteInstructionATSyntax(PDISASM);

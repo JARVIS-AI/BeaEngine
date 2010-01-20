@@ -68,7 +68,7 @@ typedef struct {
 #pragma pack(1)
 typedef struct  {
    long Category;
-   UInt64 Opcode;
+   long Opcode;
    char Mnemonic[16];
    long BranchType;
    EFLStruct Flags;
@@ -290,6 +290,6 @@ enum SPECIAL_INFO
 #ifdef __cplusplus
 extern "C"
 #endif
-Int64 __bea_callspec__ Disasm(LPDISASM pDisAsm);
+size_t __bea_callspec__ Disasm(LPDISASM pDisAsm);
 
 #endif

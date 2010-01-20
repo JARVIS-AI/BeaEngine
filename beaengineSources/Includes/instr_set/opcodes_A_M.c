@@ -863,7 +863,7 @@ void __bea_callspec__ bts_EvGv(PDISASM pMyDisasm)
  * ======================================= */
 void __bea_callspec__ call_(PDISASM pMyDisasm)
 {
-    Int64 MyAddress;
+    UInt64 MyAddress;
     long MyNumber;
     (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION + CONTROL_TRANSFER;
     (*pMyDisasm).Instruction.BranchType = CallType;
@@ -2486,7 +2486,7 @@ void __bea_callspec__ imul_GvEv(PDISASM pMyDisasm)
  * ======================================= */
 void __bea_callspec__ jo_(PDISASM pMyDisasm)
 {
-    Int64 MyAddress;
+    UInt64 MyAddress;
     signed long MyNumber;
     if ((*pMyDisasm).Prefix.CSPrefix == InUsePrefix) {
         (*pMyDisasm).Prefix.CSPrefix = NotUsedPrefix;
@@ -2522,7 +2522,7 @@ void __bea_callspec__ jo_(PDISASM pMyDisasm)
  * ======================================= */
 void __bea_callspec__ jno_(PDISASM pMyDisasm)
 {
-    Int64 MyAddress;
+    UInt64 MyAddress;
     signed long MyNumber;
     if ((*pMyDisasm).Prefix.CSPrefix == InUsePrefix) {
         (*pMyDisasm).Prefix.CSPrefix = NotUsedPrefix;
@@ -2558,7 +2558,7 @@ void __bea_callspec__ jno_(PDISASM pMyDisasm)
  * ======================================= */
 void __bea_callspec__ jc_(PDISASM pMyDisasm)
 {
-    Int64 MyAddress;
+    UInt64 MyAddress;
     signed long MyNumber;
     if ((*pMyDisasm).Prefix.CSPrefix == InUsePrefix) {
         (*pMyDisasm).Prefix.CSPrefix = NotUsedPrefix;
@@ -2594,7 +2594,7 @@ void __bea_callspec__ jc_(PDISASM pMyDisasm)
  * ======================================= */
 void __bea_callspec__ jnc_(PDISASM pMyDisasm)
 {
-    Int64 MyAddress;
+    UInt64 MyAddress;
     signed long MyNumber;
     if ((*pMyDisasm).Prefix.CSPrefix == InUsePrefix) {
         (*pMyDisasm).Prefix.CSPrefix = NotUsedPrefix;
@@ -2629,7 +2629,7 @@ void __bea_callspec__ jnc_(PDISASM pMyDisasm)
  * ======================================= */
 void __bea_callspec__ je_(PDISASM pMyDisasm)
 {
-    Int64 MyAddress;
+    UInt64 MyAddress;
     signed long MyNumber;
     if ((*pMyDisasm).Prefix.CSPrefix == InUsePrefix) {
         (*pMyDisasm).Prefix.CSPrefix = NotUsedPrefix;
@@ -2665,7 +2665,7 @@ void __bea_callspec__ je_(PDISASM pMyDisasm)
  * ======================================= */
 void __bea_callspec__ jne_(PDISASM pMyDisasm)
 {
-    Int64 MyAddress;
+    UInt64 MyAddress;
     signed long MyNumber;
     if ((*pMyDisasm).Prefix.CSPrefix == InUsePrefix) {
         (*pMyDisasm).Prefix.CSPrefix = NotUsedPrefix;
@@ -2701,7 +2701,7 @@ void __bea_callspec__ jne_(PDISASM pMyDisasm)
  * ======================================= */
 void __bea_callspec__ jbe_(PDISASM pMyDisasm)
 {
-    Int64 MyAddress;
+    UInt64 MyAddress;
     signed long MyNumber;
     if ((*pMyDisasm).Prefix.CSPrefix == InUsePrefix) {
         (*pMyDisasm).Prefix.CSPrefix = NotUsedPrefix;
@@ -2737,7 +2737,7 @@ void __bea_callspec__ jbe_(PDISASM pMyDisasm)
  * ======================================= */
 void __bea_callspec__ jnbe_(PDISASM pMyDisasm)
 {
-    Int64 MyAddress;
+    UInt64 MyAddress;
     signed long MyNumber;
     if ((*pMyDisasm).Prefix.CSPrefix == InUsePrefix) {
         (*pMyDisasm).Prefix.CSPrefix = NotUsedPrefix;
@@ -2773,7 +2773,7 @@ void __bea_callspec__ jnbe_(PDISASM pMyDisasm)
  * ======================================= */
 void __bea_callspec__ js_(PDISASM pMyDisasm)
 {
-    Int64 MyAddress;
+    UInt64 MyAddress;
     signed long MyNumber;
     if ((*pMyDisasm).Prefix.CSPrefix == InUsePrefix) {
         (*pMyDisasm).Prefix.CSPrefix = NotUsedPrefix;
@@ -2809,7 +2809,7 @@ void __bea_callspec__ js_(PDISASM pMyDisasm)
  * ======================================= */
 void __bea_callspec__ jns_(PDISASM pMyDisasm)
 {
-    Int64 MyAddress;
+    UInt64 MyAddress;
     signed long MyNumber;
     if ((*pMyDisasm).Prefix.CSPrefix == InUsePrefix) {
         (*pMyDisasm).Prefix.CSPrefix = NotUsedPrefix;
@@ -2845,7 +2845,7 @@ void __bea_callspec__ jns_(PDISASM pMyDisasm)
  * ======================================= */
 void __bea_callspec__ jp_(PDISASM pMyDisasm)
 {
-    Int64 MyAddress;
+    UInt64 MyAddress;
     signed long MyNumber;
     if ((*pMyDisasm).Prefix.CSPrefix == InUsePrefix) {
         (*pMyDisasm).Prefix.CSPrefix = NotUsedPrefix;
@@ -2881,7 +2881,7 @@ void __bea_callspec__ jp_(PDISASM pMyDisasm)
  * ======================================= */
 void __bea_callspec__ jnp_(PDISASM pMyDisasm)
 {
-    Int64 MyAddress;
+    UInt64 MyAddress;
     signed long MyNumber;
     if ((*pMyDisasm).Prefix.CSPrefix == InUsePrefix) {
         (*pMyDisasm).Prefix.CSPrefix = NotUsedPrefix;
@@ -2917,7 +2917,7 @@ void __bea_callspec__ jnp_(PDISASM pMyDisasm)
  * ======================================= */
 void __bea_callspec__ jl_(PDISASM pMyDisasm)
 {
-    Int64 MyAddress;
+    UInt64 MyAddress;
     signed long MyNumber;
     if ((*pMyDisasm).Prefix.CSPrefix == InUsePrefix) {
         (*pMyDisasm).Prefix.CSPrefix = NotUsedPrefix;
@@ -2953,7 +2953,7 @@ void __bea_callspec__ jl_(PDISASM pMyDisasm)
  * ======================================= */
 void __bea_callspec__ jnl_(PDISASM pMyDisasm)
 {
-    Int64 MyAddress;
+    UInt64 MyAddress;
     signed long MyNumber;
     if ((*pMyDisasm).Prefix.CSPrefix == InUsePrefix) {
         (*pMyDisasm).Prefix.CSPrefix = NotUsedPrefix;
@@ -2989,7 +2989,7 @@ void __bea_callspec__ jnl_(PDISASM pMyDisasm)
  * ======================================= */
 void __bea_callspec__ jle_(PDISASM pMyDisasm)
 {
-    Int64 MyAddress;
+    UInt64 MyAddress;
     signed long MyNumber;
     if ((*pMyDisasm).Prefix.CSPrefix == InUsePrefix) {
         (*pMyDisasm).Prefix.CSPrefix = NotUsedPrefix;
@@ -3025,7 +3025,7 @@ void __bea_callspec__ jle_(PDISASM pMyDisasm)
  * ======================================= */
 void __bea_callspec__ jnle_(PDISASM pMyDisasm)
 {
-    Int64 MyAddress;
+    UInt64 MyAddress;
     signed long MyNumber;
     if ((*pMyDisasm).Prefix.CSPrefix == InUsePrefix) {
         (*pMyDisasm).Prefix.CSPrefix = NotUsedPrefix;
@@ -3062,7 +3062,7 @@ void __bea_callspec__ jnle_(PDISASM pMyDisasm)
  * ======================================= */
 void __bea_callspec__ jo_near(PDISASM pMyDisasm)
 {
-    Int64 MyAddress;
+    UInt64 MyAddress;
     long MyNumber;
     if ((*pMyDisasm).Prefix.CSPrefix == InUsePrefix) {
         (*pMyDisasm).Prefix.CSPrefix = NotUsedPrefix;
@@ -3113,7 +3113,7 @@ void __bea_callspec__ jo_near(PDISASM pMyDisasm)
  * ======================================= */
 void __bea_callspec__ jno_near(PDISASM pMyDisasm)
 {
-    Int64 MyAddress;
+    UInt64 MyAddress;
     long MyNumber;
     if ((*pMyDisasm).Prefix.CSPrefix == InUsePrefix) {
         (*pMyDisasm).Prefix.CSPrefix = NotUsedPrefix;
@@ -3163,7 +3163,7 @@ void __bea_callspec__ jno_near(PDISASM pMyDisasm)
  * ======================================= */
 void __bea_callspec__ jc_near(PDISASM pMyDisasm)
 {
-    Int64 MyAddress;
+    UInt64 MyAddress;
     long MyNumber;
     if ((*pMyDisasm).Prefix.CSPrefix == InUsePrefix) {
         (*pMyDisasm).Prefix.CSPrefix = NotUsedPrefix;
@@ -3212,7 +3212,7 @@ void __bea_callspec__ jc_near(PDISASM pMyDisasm)
  * ======================================= */
 void __bea_callspec__ jnc_near(PDISASM pMyDisasm)
 {
-    Int64 MyAddress;
+    UInt64 MyAddress;
     long MyNumber;
     if ((*pMyDisasm).Prefix.CSPrefix == InUsePrefix) {
         (*pMyDisasm).Prefix.CSPrefix = NotUsedPrefix;
@@ -3261,7 +3261,7 @@ void __bea_callspec__ jnc_near(PDISASM pMyDisasm)
  * ======================================= */
 void __bea_callspec__ je_near(PDISASM pMyDisasm)
 {
-    Int64 MyAddress;
+    UInt64 MyAddress;
     long MyNumber;
     if ((*pMyDisasm).Prefix.CSPrefix == InUsePrefix) {
         (*pMyDisasm).Prefix.CSPrefix = NotUsedPrefix;
@@ -3310,7 +3310,7 @@ void __bea_callspec__ je_near(PDISASM pMyDisasm)
  * ======================================= */
 void __bea_callspec__ jne_near(PDISASM pMyDisasm)
 {
-    Int64 MyAddress;
+    UInt64 MyAddress;
     long MyNumber;
     if ((*pMyDisasm).Prefix.CSPrefix == InUsePrefix) {
         (*pMyDisasm).Prefix.CSPrefix = NotUsedPrefix;
@@ -3358,7 +3358,7 @@ void __bea_callspec__ jne_near(PDISASM pMyDisasm)
  * ======================================= */
 void __bea_callspec__ jbe_near(PDISASM pMyDisasm)
 {
-    Int64 MyAddress;
+    UInt64 MyAddress;
     long MyNumber;
     if ((*pMyDisasm).Prefix.CSPrefix == InUsePrefix) {
         (*pMyDisasm).Prefix.CSPrefix = NotUsedPrefix;
@@ -3408,7 +3408,7 @@ void __bea_callspec__ jbe_near(PDISASM pMyDisasm)
  * ======================================= */
 void __bea_callspec__ ja_near(PDISASM pMyDisasm)
 {
-    Int64 MyAddress;
+    UInt64 MyAddress;
     long MyNumber;
     if ((*pMyDisasm).Prefix.CSPrefix == InUsePrefix) {
         (*pMyDisasm).Prefix.CSPrefix = NotUsedPrefix;
@@ -3457,7 +3457,7 @@ void __bea_callspec__ ja_near(PDISASM pMyDisasm)
  * ======================================= */
 void __bea_callspec__ js_near(PDISASM pMyDisasm)
 {
-    Int64 MyAddress;
+    UInt64 MyAddress;
     long MyNumber;
     if ((*pMyDisasm).Prefix.CSPrefix == InUsePrefix) {
         (*pMyDisasm).Prefix.CSPrefix = NotUsedPrefix;
@@ -3506,7 +3506,7 @@ void __bea_callspec__ js_near(PDISASM pMyDisasm)
  * ======================================= */
 void __bea_callspec__ jns_near(PDISASM pMyDisasm)
 {
-    Int64 MyAddress;
+    UInt64 MyAddress;
     long MyNumber;
     if ((*pMyDisasm).Prefix.CSPrefix == InUsePrefix) {
         (*pMyDisasm).Prefix.CSPrefix = NotUsedPrefix;
@@ -3555,7 +3555,7 @@ void __bea_callspec__ jns_near(PDISASM pMyDisasm)
  * ======================================= */
 void __bea_callspec__ jp_near(PDISASM pMyDisasm)
 {
-    Int64 MyAddress;
+    UInt64 MyAddress;
     long MyNumber;
     if ((*pMyDisasm).Prefix.CSPrefix == InUsePrefix) {
         (*pMyDisasm).Prefix.CSPrefix = NotUsedPrefix;
@@ -3604,7 +3604,7 @@ void __bea_callspec__ jp_near(PDISASM pMyDisasm)
  * ======================================= */
 void __bea_callspec__ jnp_near(PDISASM pMyDisasm)
 {
-    Int64 MyAddress;
+    UInt64 MyAddress;
     long MyNumber;
     if ((*pMyDisasm).Prefix.CSPrefix == InUsePrefix) {
         (*pMyDisasm).Prefix.CSPrefix = NotUsedPrefix;
@@ -3653,7 +3653,7 @@ void __bea_callspec__ jnp_near(PDISASM pMyDisasm)
  * ======================================= */
 void __bea_callspec__ jl_near(PDISASM pMyDisasm)
 {
-    Int64 MyAddress;
+    UInt64 MyAddress;
     long MyNumber;
     if ((*pMyDisasm).Prefix.CSPrefix == InUsePrefix) {
         (*pMyDisasm).Prefix.CSPrefix = NotUsedPrefix;
@@ -3702,7 +3702,7 @@ void __bea_callspec__ jl_near(PDISASM pMyDisasm)
  * ======================================= */
 void __bea_callspec__ jnl_near(PDISASM pMyDisasm)
 {
-    Int64 MyAddress;
+    UInt64 MyAddress;
     long MyNumber;
     if ((*pMyDisasm).Prefix.CSPrefix == InUsePrefix) {
         (*pMyDisasm).Prefix.CSPrefix = NotUsedPrefix;
@@ -3752,7 +3752,7 @@ void __bea_callspec__ jnl_near(PDISASM pMyDisasm)
 void __bea_callspec__ jle_near(PDISASM pMyDisasm)
 {
     UInt64 MyAddress;
-    UInt64 MyNumber;
+    Int32 MyNumber;
     if ((*pMyDisasm).Prefix.CSPrefix == InUsePrefix) {
         (*pMyDisasm).Prefix.CSPrefix = NotUsedPrefix;
         (*pMyDisasm).Prefix.BranchNotTaken = InUsePrefix;
@@ -3801,7 +3801,7 @@ void __bea_callspec__ jle_near(PDISASM pMyDisasm)
 void __bea_callspec__ jnle_near(PDISASM pMyDisasm)
 {
     UInt64 MyAddress;
-    UInt64 MyNumber;
+    Int64 MyNumber;
     if ((*pMyDisasm).Prefix.CSPrefix == InUsePrefix) {
         (*pMyDisasm).Prefix.CSPrefix = NotUsedPrefix;
         (*pMyDisasm).Prefix.BranchNotTaken = InUsePrefix;
@@ -3849,7 +3849,7 @@ void __bea_callspec__ jnle_near(PDISASM pMyDisasm)
  * ======================================= */
 void __bea_callspec__ jecxz_(PDISASM pMyDisasm)
 {
-    Int64 MyAddress;
+    UInt64 MyAddress;
     Int64 MyNumber;
     if ((*pMyDisasm).Prefix.CSPrefix == InUsePrefix) {
         (*pMyDisasm).Prefix.CSPrefix = NotUsedPrefix;
@@ -3906,7 +3906,7 @@ void __bea_callspec__ jecxz_(PDISASM pMyDisasm)
  * ======================================= */
 void __bea_callspec__ jmp_near(PDISASM pMyDisasm)
 {
-    Int64 MyAddress;
+    UInt64 MyAddress;
     long MyNumber;
     (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION + CONTROL_TRANSFER;
     (*pMyDisasm).Instruction.BranchType = JmpType;
@@ -3948,7 +3948,7 @@ void __bea_callspec__ jmp_near(PDISASM pMyDisasm)
  * ======================================= */
 void __bea_callspec__ jmp_short(PDISASM pMyDisasm)
 {
-    Int64 MyAddress = 0;
+    UInt64 MyAddress = 0;
     signed long MyNumber = 0;
     (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION + CONTROL_TRANSFER;
     (*pMyDisasm).Instruction.BranchType = JmpType;
@@ -4222,7 +4222,7 @@ void __bea_callspec__ lodsw_(PDISASM pMyDisasm)
 void __bea_callspec__ loop_(PDISASM pMyDisasm)
 {
     signed long MyNumber;
-    Int64 MyAddress;
+    UInt64 MyAddress;
     (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION + CONTROL_TRANSFER;
     (*pMyDisasm).Instruction.BranchType = JE;
     (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "loop ");
@@ -4264,7 +4264,7 @@ void __bea_callspec__ loop_(PDISASM pMyDisasm)
 void __bea_callspec__ loopne_(PDISASM pMyDisasm)
 {
     signed long MyNumber;
-    Int64 MyAddress;
+    UInt64 MyAddress;
     (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION + CONTROL_TRANSFER;
     (*pMyDisasm).Instruction.BranchType = JNE;
     (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "loopne ");
@@ -4306,7 +4306,7 @@ void __bea_callspec__ loopne_(PDISASM pMyDisasm)
 void __bea_callspec__ loope_(PDISASM pMyDisasm)
 {
     signed long MyNumber;
-    Int64 MyAddress;
+    UInt64 MyAddress;
     (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION + CONTROL_TRANSFER;
     (*pMyDisasm).Instruction.BranchType = JE;
     (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "loope ");
@@ -4555,7 +4555,7 @@ void __bea_callspec__ mov_ALOb(PDISASM pMyDisasm)
  * ======================================= */
 void __bea_callspec__ mov_eAXOv(PDISASM pMyDisasm)
 {
-    Int64 MyAddress;
+    UInt64 MyAddress;
     (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION + DATA_TRANSFER;
     (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "mov ");
     RM_ = 5;
@@ -4632,7 +4632,7 @@ void __bea_callspec__ mov_eAXOv(PDISASM pMyDisasm)
  * ======================================= */
 void __bea_callspec__ mov_ObAL(PDISASM pMyDisasm)
 {
-    Int64 MyAddress;
+    UInt64 MyAddress;
     (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION + DATA_TRANSFER;
     (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "mov ");
     OpSize = 1;
@@ -4678,7 +4678,7 @@ void __bea_callspec__ mov_ObAL(PDISASM pMyDisasm)
  * ======================================= */
 void __bea_callspec__ mov_OveAX(PDISASM pMyDisasm)
 {
-    Int64 MyAddress;
+    UInt64 MyAddress;
     (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION + DATA_TRANSFER;
     (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "mov ");
     RM_ = 5;
@@ -5028,7 +5028,7 @@ void __bea_callspec__ movzx_GvEw(PDISASM pMyDisasm)
  * ======================================= */
 void __bea_callspec__ mov_EAX(PDISASM pMyDisasm)
 {
-    Int64 MyAddress;
+    UInt64 MyAddress;
     (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION + DATA_TRANSFER;
     (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "mov ");
     (*pMyDisasm).Argument1.ArgType = REGISTER_TYPE + GENERAL_REG + REG0;
@@ -5091,7 +5091,7 @@ void __bea_callspec__ mov_EAX(PDISASM pMyDisasm)
  * ======================================= */
 void __bea_callspec__ mov_ECX(PDISASM pMyDisasm)
 {
-    Int64 MyAddress;
+    UInt64 MyAddress;
     (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION + DATA_TRANSFER;
     (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "mov ");
     (*pMyDisasm).Argument1.ArgType = REGISTER_TYPE + GENERAL_REG + REG1;
@@ -5154,7 +5154,7 @@ void __bea_callspec__ mov_ECX(PDISASM pMyDisasm)
  * ======================================= */
 void __bea_callspec__ mov_EDX(PDISASM pMyDisasm)
 {
-    Int64 MyAddress;
+    UInt64 MyAddress;
     (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION + DATA_TRANSFER;
     (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "mov ");
     (*pMyDisasm).Argument1.ArgType = REGISTER_TYPE + GENERAL_REG + REG2;
@@ -5217,7 +5217,7 @@ void __bea_callspec__ mov_EDX(PDISASM pMyDisasm)
  * ======================================= */
 void __bea_callspec__ mov_EBX(PDISASM pMyDisasm)
 {
-    Int64 MyAddress;
+    UInt64 MyAddress;
     (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION + DATA_TRANSFER;
     (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "mov ");
     (*pMyDisasm).Argument1.ArgType = REGISTER_TYPE + GENERAL_REG + REG3;
@@ -5280,7 +5280,7 @@ void __bea_callspec__ mov_EBX(PDISASM pMyDisasm)
  * ======================================= */
 void __bea_callspec__ mov_ESP(PDISASM pMyDisasm)
 {
-    Int64 MyAddress;
+    UInt64 MyAddress;
     (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION + DATA_TRANSFER;
     (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "mov ");
     (*pMyDisasm).Argument1.ArgType = REGISTER_TYPE + GENERAL_REG + REG4;
@@ -5343,7 +5343,7 @@ void __bea_callspec__ mov_ESP(PDISASM pMyDisasm)
  * ======================================= */
 void __bea_callspec__ mov_EBP(PDISASM pMyDisasm)
 {
-    Int64 MyAddress;
+    UInt64 MyAddress;
     (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION + DATA_TRANSFER;
     (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "mov ");
     (*pMyDisasm).Argument1.ArgType = REGISTER_TYPE + GENERAL_REG + REG5;
@@ -5406,7 +5406,7 @@ void __bea_callspec__ mov_EBP(PDISASM pMyDisasm)
  * ======================================= */
 void __bea_callspec__ mov_ESI(PDISASM pMyDisasm)
 {
-    Int64 MyAddress;
+    UInt64 MyAddress;
     (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION + DATA_TRANSFER;
     (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "mov ");
     (*pMyDisasm).Argument1.ArgType = REGISTER_TYPE + GENERAL_REG + REG6;
