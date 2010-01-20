@@ -381,11 +381,11 @@ class My_Frame(wx.Frame):
 
 #def capture_screenshot(event):
         
-    def OnScreenShot():
+    def OnScreenShot(self, event):
      
         #Works on Windows XP and Linux.
         event.Skip()
-        rect = self.frame.GetRect()
+        rect = self.GetRect()
         if sys.platform == 'linux2':
             #On linux, GetRect() returns size of client, not size of window.
             #Compensate for this
