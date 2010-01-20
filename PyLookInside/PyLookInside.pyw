@@ -386,7 +386,7 @@ class My_Frame(wx.Frame):
         #Works on Windows XP and Linux.
         event.Skip()
         rect = self.GetRect()
-        if sys.platform == 'linux2':
+        if sys.platform == "linux2":
         #On linux, GetRect() returns size of client, not size of window.
         #Compensate for this
             client_x, client_y = self.ClientToScreen((0, 0))
@@ -405,7 +405,7 @@ class My_Frame(wx.Frame):
         memory_dc.Blit(0, 0, rect.width, rect.height, viewer_dc, rect.x, rect.y)
         memory_dc.SelectObject(wx.NullBitmap)
         image = bitmap.ConvertToImage()
-        image.SaveFile('screenshot.png', wx.BITMAP_TYPE_PNG)
+        image.SaveFile("ScreenShots/Capture.png", wx.BITMAP_TYPE_PNG)
 
     #-----------------------------------------------------------------------
         
