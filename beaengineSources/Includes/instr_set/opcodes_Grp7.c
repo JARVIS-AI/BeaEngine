@@ -22,9 +22,9 @@
 void __bea_callspec__ G7_(PDISASM pMyDisasm)
 {
     (*pMyDisasm).Instruction.Category = SYSTEM_INSTRUCTION;
-    REGOPCODE = ((*((UInt8*)(ULONG_PTR) (EIP_+1))) >> 3) & 0x7;
-    MOD_ = ((*((UInt8*)(ULONG_PTR) (EIP_+1))) >> 6) & 0x3;
-    RM_  = (*((UInt8*)(ULONG_PTR) (EIP_+1))) & 0x7;
+    REGOPCODE = ((*((UInt8*)(UIntPtr) (EIP_+1))) >> 3) & 0x7;
+    MOD_ = ((*((UInt8*)(UIntPtr) (EIP_+1))) >> 6) & 0x3;
+    RM_  = (*((UInt8*)(UIntPtr) (EIP_+1))) & 0x7;
     if (REGOPCODE == 0) {
         if (MOD_ == 0x3) {
             if (RM_ == 0x1) {

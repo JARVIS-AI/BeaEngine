@@ -1,6 +1,6 @@
 ; ========================================
 ;
-;		BeaEngine 3.2.0
+;		BeaEngine 4.0.0
 ;
 ; ========================================
 
@@ -16,7 +16,7 @@ See the COPYING and COPYING.LESSER files for more details.
 
 For online documentation, visit :
 
-    http://beatrix2004.free.fr/BeaEngine/index1.php
+    http://www.beaengine.org
 
 
 3) AUTHOR, CONTRIBUTORS, BETA-TESTERS

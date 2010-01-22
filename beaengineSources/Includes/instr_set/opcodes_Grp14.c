@@ -23,7 +23,7 @@ void __bea_callspec__ G14_(PDISASM pMyDisasm)
 {
     long MyNumber;
 
-    REGOPCODE = ((*((UInt8*)(ULONG_PTR) (EIP_+1))) >> 3) & 0x7;
+    REGOPCODE = ((*((UInt8*)(UIntPtr) (EIP_+1))) >> 3) & 0x7;
     if (REGOPCODE == 2) {
         if (OperandSize == 16) {
             (*pMyDisasm).Instruction.Category = SSE_INSTRUCTION+SHIFT_ROTATE;
@@ -40,7 +40,7 @@ void __bea_callspec__ G14_(PDISASM pMyDisasm)
             EIP_ += DECALAGE_EIP+3;
             if (!Security(0)) return;
             ImmediatSize = 8;
-            MyNumber = *((UInt8*)(ULONG_PTR) (EIP_-1));
+            MyNumber = *((UInt8*)(UIntPtr) (EIP_-1));
             (void) CopyFormattedNumber((char*) &(*pMyDisasm).Argument2.ArgMnemonic,"%.2X", MyNumber);
             (*pMyDisasm).Instruction.Immediat = MyNumber;
             (*pMyDisasm).Argument2.ArgType = CONSTANT_TYPE+ABSOLUTE_;
@@ -61,7 +61,7 @@ void __bea_callspec__ G14_(PDISASM pMyDisasm)
             EIP_ += DECALAGE_EIP+3;
             if (!Security(0)) return;
             ImmediatSize = 8;
-            MyNumber = *((UInt8*)(ULONG_PTR) (EIP_-1));
+            MyNumber = *((UInt8*)(UIntPtr) (EIP_-1));
             (void) CopyFormattedNumber((char*) &(*pMyDisasm).Argument2.ArgMnemonic,"%.2X", MyNumber);
             (*pMyDisasm).Instruction.Immediat = MyNumber;
             (*pMyDisasm).Argument2.ArgType = CONSTANT_TYPE+ABSOLUTE_;
@@ -84,7 +84,7 @@ void __bea_callspec__ G14_(PDISASM pMyDisasm)
             EIP_ += DECALAGE_EIP+3;
             if (!Security(0)) return;
             ImmediatSize = 8;
-            MyNumber = *((UInt8*)(ULONG_PTR) (EIP_-1));
+            MyNumber = *((UInt8*)(UIntPtr) (EIP_-1));
             (void) CopyFormattedNumber((char*) &(*pMyDisasm).Argument2.ArgMnemonic,"%.2X", MyNumber);
             (*pMyDisasm).Instruction.Immediat = MyNumber;
             (*pMyDisasm).Argument2.ArgType = CONSTANT_TYPE+ABSOLUTE_;
@@ -111,7 +111,7 @@ void __bea_callspec__ G14_(PDISASM pMyDisasm)
             EIP_ += DECALAGE_EIP+3;
             if (!Security(0)) return;
             ImmediatSize = 8;
-            MyNumber = *((UInt8*)(ULONG_PTR) (EIP_-1));
+            MyNumber = *((UInt8*)(UIntPtr) (EIP_-1));
             (void) CopyFormattedNumber((char*) &(*pMyDisasm).Argument2.ArgMnemonic,"%.2X", MyNumber);
             (*pMyDisasm).Instruction.Immediat = MyNumber;
             (*pMyDisasm).Argument2.ArgType = CONSTANT_TYPE+ABSOLUTE_;
@@ -132,7 +132,7 @@ void __bea_callspec__ G14_(PDISASM pMyDisasm)
             EIP_ += DECALAGE_EIP+3;
             if (!Security(0)) return;
             ImmediatSize = 8;
-            MyNumber = *((UInt8*)(ULONG_PTR) (EIP_-1));
+            MyNumber = *((UInt8*)(UIntPtr) (EIP_-1));
             (void) CopyFormattedNumber((char*) &(*pMyDisasm).Argument2.ArgMnemonic,"%.2X", MyNumber);
             (*pMyDisasm).Instruction.Immediat = MyNumber;
             (*pMyDisasm).Argument2.ArgType = CONSTANT_TYPE+ABSOLUTE_;
@@ -155,7 +155,7 @@ void __bea_callspec__ G14_(PDISASM pMyDisasm)
             EIP_ += DECALAGE_EIP+3;
             if (!Security(0)) return;
             ImmediatSize = 8;
-            MyNumber = *((UInt8*)(ULONG_PTR) (EIP_-1));
+            MyNumber = *((UInt8*)(UIntPtr) (EIP_-1));
             (void) CopyFormattedNumber((char*) &(*pMyDisasm).Argument2.ArgMnemonic,"%.2X", MyNumber);
             (*pMyDisasm).Instruction.Immediat = MyNumber;
             (*pMyDisasm).Argument2.ArgType = CONSTANT_TYPE+ABSOLUTE_;

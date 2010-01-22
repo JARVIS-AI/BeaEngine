@@ -245,7 +245,7 @@ void __bea_callspec__ out_IbAL(PDISASM pMyDisasm)
     (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "out ");
     if (!Security(2)) return;
     ImmediatSize = 8;
-    MyNumber = *((UInt8*)(ULONG_PTR) (EIP_+1));
+    MyNumber = *((UInt8*)(UIntPtr) (EIP_+1));
     (void) CopyFormattedNumber((char*) &(*pMyDisasm).Argument1.ArgMnemonic,"%.2X", MyNumber);
     (*pMyDisasm).Argument1.ArgType = CONSTANT_TYPE+ABSOLUTE_;
     (*pMyDisasm).Argument1.ArgSize = 8;
@@ -268,7 +268,7 @@ void __bea_callspec__ out_Ib_eAX(PDISASM pMyDisasm)
     (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "out ");
     if (!Security(2)) return;
     ImmediatSize = 8;
-    MyNumber = *((UInt8*)(ULONG_PTR) (EIP_+1));
+    MyNumber = *((UInt8*)(UIntPtr) (EIP_+1));
     (void) CopyFormattedNumber((char*) &(*pMyDisasm).Argument1.ArgMnemonic,"%.2X", MyNumber);
     (*pMyDisasm).Argument1.ArgSize = 8;
     (*pMyDisasm).Argument1.AccessMode = READ;
@@ -327,7 +327,7 @@ void __bea_callspec__ out_DXeAX(PDISASM pMyDisasm)
 void __bea_callspec__ pop_Ev(PDISASM pMyDisasm)
 {
     (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+DATA_TRANSFER;
-    REGOPCODE = ((*((UInt8*)(ULONG_PTR) (EIP_+1))) >> 3) & 0x7;
+    REGOPCODE = ((*((UInt8*)(UIntPtr) (EIP_+1))) >> 3) & 0x7;
     if (REGOPCODE == 0) {
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "pop ");
         if (Architecture == 64) {
@@ -1320,9 +1320,9 @@ void __bea_callspec__ push_Iv(PDISASM pMyDisasm)
     (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "push ");
     if (Architecture == 64) {
         if (!Security(5)) return;
-        (void) CopyFormattedNumber((char*) &(*pMyDisasm).Argument2.ArgMnemonic,"%.8X",*((UInt32*)(ULONG_PTR) (EIP_+1)));
+        (void) CopyFormattedNumber((char*) &(*pMyDisasm).Argument2.ArgMnemonic,"%.8X",*((UInt32*)(UIntPtr) (EIP_+1)));
         ImmediatSize = 32;
-        (*pMyDisasm).Instruction.Immediat = *((UInt32*)(ULONG_PTR) (EIP_+1));
+        (*pMyDisasm).Instruction.Immediat = *((UInt32*)(UIntPtr) (EIP_+1));
         EIP_ += 5;
         (*pMyDisasm).Argument1.ArgType = MEMORY_TYPE;
         (*pMyDisasm).Argument1.ArgSize = 64;
@@ -1333,9 +1333,9 @@ void __bea_callspec__ push_Iv(PDISASM pMyDisasm)
     }
     else if (OperandSize == 32) {
         if (!Security(5)) return;
-        (void) CopyFormattedNumber((char*) &(*pMyDisasm).Argument2.ArgMnemonic,"%.8X",*((UInt32*)(ULONG_PTR) (EIP_+1)));
+        (void) CopyFormattedNumber((char*) &(*pMyDisasm).Argument2.ArgMnemonic,"%.8X",*((UInt32*)(UIntPtr) (EIP_+1)));
         ImmediatSize = 32;
-        (*pMyDisasm).Instruction.Immediat = *((UInt32*)(ULONG_PTR) (EIP_+1));
+        (*pMyDisasm).Instruction.Immediat = *((UInt32*)(UIntPtr) (EIP_+1));
         EIP_ += 5;
         (*pMyDisasm).Argument1.ArgType = MEMORY_TYPE;
         (*pMyDisasm).Argument1.ArgSize = 32;
@@ -1346,9 +1346,9 @@ void __bea_callspec__ push_Iv(PDISASM pMyDisasm)
     }
     else {
         if (!Security(3)) return;
-        (void) CopyFormattedNumber((char*) &(*pMyDisasm).Argument2.ArgMnemonic,"%.4X",*((UInt16*)(ULONG_PTR) (EIP_+1)));
+        (void) CopyFormattedNumber((char*) &(*pMyDisasm).Argument2.ArgMnemonic,"%.4X",*((UInt16*)(UIntPtr) (EIP_+1)));
         ImmediatSize = 16;
-        (*pMyDisasm).Instruction.Immediat = *((UInt16*)(ULONG_PTR) (EIP_+1));
+        (*pMyDisasm).Instruction.Immediat = *((UInt16*)(UIntPtr) (EIP_+1));
         EIP_ += 3;
         (*pMyDisasm).Argument1.ArgType = MEMORY_TYPE;
         (*pMyDisasm).Argument1.ArgSize = 16;
@@ -1367,9 +1367,9 @@ void __bea_callspec__ push_Ib(PDISASM pMyDisasm)
     (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+DATA_TRANSFER;
     (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "push ");
     if (!Security(1)) return;
-    (void) CopyFormattedNumber((char*) &(*pMyDisasm).Argument2.ArgMnemonic,"%.2X",*((UInt8*)(ULONG_PTR) (EIP_+1)));
+    (void) CopyFormattedNumber((char*) &(*pMyDisasm).Argument2.ArgMnemonic,"%.2X",*((UInt8*)(UIntPtr) (EIP_+1)));
     ImmediatSize = 8;
-    (*pMyDisasm).Instruction.Immediat = *((UInt8*)(ULONG_PTR) (EIP_+1));
+    (*pMyDisasm).Instruction.Immediat = *((UInt8*)(UIntPtr) (EIP_+1));
     EIP_ += 2;
     (*pMyDisasm).Argument1.ArgType = MEMORY_TYPE;
     (*pMyDisasm).Argument1.ArgSize = 32;
@@ -1465,9 +1465,9 @@ void __bea_callspec__ retn_(PDISASM pMyDisasm)
     (*pMyDisasm).Instruction.BranchType = RetType;
     (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "retn ");
     if (!Security(3)) return;
-    (void) CopyFormattedNumber((char*) &(*pMyDisasm).Argument1.ArgMnemonic,"%.4X",*((UInt16*)(ULONG_PTR) (EIP_+1)));
+    (void) CopyFormattedNumber((char*) &(*pMyDisasm).Argument1.ArgMnemonic,"%.4X",*((UInt16*)(UIntPtr) (EIP_+1)));
     ImmediatSize = 16;
-    (*pMyDisasm).Instruction.Immediat = *((UInt16*)(ULONG_PTR) (EIP_+1));
+    (*pMyDisasm).Instruction.Immediat = *((UInt16*)(UIntPtr) (EIP_+1));
     EIP_+=3;
     (*pMyDisasm).Argument1.ArgType = CONSTANT_TYPE+ABSOLUTE_;
     (*pMyDisasm).Argument1.ArgSize = 16;
@@ -1528,9 +1528,9 @@ void __bea_callspec__ retf_Iw(PDISASM pMyDisasm)
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "retf ");
     }
     if (!Security(3)) return;
-    (void) CopyFormattedNumber((char*) &(*pMyDisasm).Argument1.ArgMnemonic+i,"%.4X",*((UInt16*)(ULONG_PTR) (EIP_+1)));
+    (void) CopyFormattedNumber((char*) &(*pMyDisasm).Argument1.ArgMnemonic+i,"%.4X",*((UInt16*)(UIntPtr) (EIP_+1)));
     ImmediatSize = 16;
-    (*pMyDisasm).Instruction.Immediat = *((UInt16*)(ULONG_PTR) (EIP_+1));
+    (*pMyDisasm).Instruction.Immediat = *((UInt16*)(UIntPtr) (EIP_+1));
     EIP_+=3;
     (*pMyDisasm).Argument1.ArgType = CONSTANT_TYPE+ABSOLUTE_;
     (*pMyDisasm).Argument1.ArgSize = 16;
@@ -2177,8 +2177,8 @@ void __bea_callspec__ shld_EvGvIb(PDISASM pMyDisasm)
     EIP_+= 1;
     if (!Security(0)) return;
     third_arg = 1;
-    (*pMyDisasm).Instruction.Immediat = *((UInt8*)(ULONG_PTR) (EIP_- 1));
-    (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument3.ArgMnemonic, "%.8X", *((UInt8*)(ULONG_PTR) (EIP_- 1)));
+    (*pMyDisasm).Instruction.Immediat = *((UInt8*)(UIntPtr) (EIP_- 1));
+    (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument3.ArgMnemonic, "%.8X", *((UInt8*)(UIntPtr) (EIP_- 1)));
     (*pMyDisasm).Argument3.ArgType = CONSTANT_TYPE+ABSOLUTE_;
     (*pMyDisasm).Argument3.ArgSize = 8;
     ImmediatSize = 8;
@@ -2212,8 +2212,8 @@ void __bea_callspec__ shrd_EvGvIb(PDISASM pMyDisasm)
     EIP_+= 1;
     if (!Security(0)) return;
     third_arg = 1;
-    (*pMyDisasm).Instruction.Immediat = *((UInt8*)(ULONG_PTR) (EIP_- 1));
-    (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument3.ArgMnemonic, "%.8X", *((UInt8*)(ULONG_PTR) (EIP_- 1)));
+    (*pMyDisasm).Instruction.Immediat = *((UInt8*)(UIntPtr) (EIP_- 1));
+    (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument3.ArgMnemonic, "%.8X", *((UInt8*)(UIntPtr) (EIP_- 1)));
     (*pMyDisasm).Argument3.ArgType = CONSTANT_TYPE+ABSOLUTE_;
     (*pMyDisasm).Argument3.ArgSize = 8;
     ImmediatSize = 8;

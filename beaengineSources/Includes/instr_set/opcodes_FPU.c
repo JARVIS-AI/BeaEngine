@@ -26,14 +26,14 @@ void __bea_callspec__ D8_(PDISASM pMyDisasm)
 
     DECALAGE_EIP = 0;
     if (!Security(1)) {return;}
-    MyMODRM = *((UInt8*)(ULONG_PTR) (EIP_+1));
+    MyMODRM = *((UInt8*)(UIntPtr) (EIP_+1));
     pRegistersFPU = &RegistersFPU_Masm;
     if (SYNTAX_ == NasmSyntax) {
         pRegistersFPU = &RegistersFPU_Nasm;
     }
     if (MyMODRM <= 0xbf) {
         OpSize = 103;
-        REGOPCODE = ((*((UInt8*)(ULONG_PTR) (EIP_+1))) >> 3) & 0x7;
+        REGOPCODE = ((*((UInt8*)(UIntPtr) (EIP_+1))) >> 3) & 0x7;
         if (REGOPCODE == 0) {
             MOD_RM(&(*pMyDisasm).Argument2);
             (*pMyDisasm).Instruction.Category = FPU_INSTRUCTION+ARITHMETIC_INSTRUCTION;
@@ -175,14 +175,14 @@ void __bea_callspec__ D9_(PDISASM pMyDisasm)
 
     DECALAGE_EIP = 0;
     if (!Security(1)) {return;}
-    MyMODRM = *((UInt8*)(ULONG_PTR) (EIP_+1));
+    MyMODRM = *((UInt8*)(UIntPtr) (EIP_+1));
     pRegistersFPU = &RegistersFPU_Masm;
     if (SYNTAX_ == NasmSyntax) {
         pRegistersFPU = &RegistersFPU_Nasm;
     }
     if (MyMODRM <= 0xbf) {
 
-        REGOPCODE = ((*((UInt8*)(ULONG_PTR) (EIP_+1))) >> 3) & 0x7;
+        REGOPCODE = ((*((UInt8*)(UIntPtr) (EIP_+1))) >> 3) & 0x7;
         if (REGOPCODE == 0) {
             OpSize = 103;
             MOD_RM(&(*pMyDisasm).Argument2);
@@ -477,14 +477,14 @@ void __bea_callspec__ DA_(PDISASM pMyDisasm)
 
     DECALAGE_EIP = 0;
     if (!Security(1)) {return;}
-    MyMODRM = *((UInt8*)(ULONG_PTR) (EIP_+1));
+    MyMODRM = *((UInt8*)(UIntPtr) (EIP_+1));
     pRegistersFPU = &RegistersFPU_Masm;
     if (SYNTAX_ == NasmSyntax) {
         pRegistersFPU = &RegistersFPU_Nasm;
     }
     if (MyMODRM <= 0xbf) {
 
-        REGOPCODE = ((*((UInt8*)(ULONG_PTR) (EIP_+1))) >> 3) & 0x7;
+        REGOPCODE = ((*((UInt8*)(UIntPtr) (EIP_+1))) >> 3) & 0x7;
         if (REGOPCODE == 0) {
             OpSize = 103;
             MOD_RM(&(*pMyDisasm).Argument2);
@@ -616,14 +616,14 @@ void __bea_callspec__ DB_(PDISASM pMyDisasm)
 
     DECALAGE_EIP = 0;
     if (!Security(1)) {return;}
-    MyMODRM = *((UInt8*)(ULONG_PTR) (EIP_+1));
+    MyMODRM = *((UInt8*)(UIntPtr) (EIP_+1));
     pRegistersFPU = &RegistersFPU_Masm;
     if (SYNTAX_ == NasmSyntax) {
         pRegistersFPU = &RegistersFPU_Nasm;
     }
     if (MyMODRM <= 0xbf) {
 
-        REGOPCODE = ((*((UInt8*)(ULONG_PTR) (EIP_+1))) >> 3) & 0x7;
+        REGOPCODE = ((*((UInt8*)(UIntPtr) (EIP_+1))) >> 3) & 0x7;
         if (REGOPCODE == 0) {
             OpSize = 103;
             MOD_RM(&(*pMyDisasm).Argument2);
@@ -786,14 +786,14 @@ void __bea_callspec__ DC_(PDISASM pMyDisasm)
 
     DECALAGE_EIP = 0;
     if (!Security(1)) {return;}
-    MyMODRM = *((UInt8*)(ULONG_PTR) (EIP_+1));
+    MyMODRM = *((UInt8*)(UIntPtr) (EIP_+1));
     pRegistersFPU = &RegistersFPU_Masm;
     if (SYNTAX_ == NasmSyntax) {
         pRegistersFPU = &RegistersFPU_Nasm;
     }
     if (MyMODRM <= 0xbf) {
 
-        REGOPCODE = ((*((UInt8*)(ULONG_PTR) (EIP_+1))) >> 3) & 0x7;
+        REGOPCODE = ((*((UInt8*)(UIntPtr) (EIP_+1))) >> 3) & 0x7;
         if (REGOPCODE == 0) {
             OpSize = 103;
             MOD_RM(&(*pMyDisasm).Argument2);
@@ -958,14 +958,14 @@ void __bea_callspec__ DD_(PDISASM pMyDisasm)
 
     DECALAGE_EIP = 0;
     if (!Security(1)) {return;}
-    MyMODRM = *((UInt8*)(ULONG_PTR) (EIP_+1));
+    MyMODRM = *((UInt8*)(UIntPtr) (EIP_+1));
     pRegistersFPU = &RegistersFPU_Masm;
     if (SYNTAX_ == NasmSyntax) {
         pRegistersFPU = &RegistersFPU_Nasm;
     }
     if (MyMODRM <= 0xbf) {
 
-        REGOPCODE = ((*((UInt8*)(ULONG_PTR) (EIP_+1))) >> 3) & 0x7;
+        REGOPCODE = ((*((UInt8*)(UIntPtr) (EIP_+1))) >> 3) & 0x7;
         if (REGOPCODE == 0) {
             OpSize = 103;
             MOD_RM(&(*pMyDisasm).Argument2);
@@ -1098,14 +1098,14 @@ void __bea_callspec__ DE_(PDISASM pMyDisasm)
 
     DECALAGE_EIP = 0;
     if (!Security(1)) {return;}
-    MyMODRM = *((UInt8*)(ULONG_PTR) (EIP_+1));
+    MyMODRM = *((UInt8*)(UIntPtr) (EIP_+1));
     pRegistersFPU = &RegistersFPU_Masm;
     if (SYNTAX_ == NasmSyntax) {
         pRegistersFPU = &RegistersFPU_Nasm;
     }
     if (MyMODRM <= 0xbf) {
 
-        REGOPCODE = ((*((UInt8*)(ULONG_PTR) (EIP_+1))) >> 3) & 0x7;
+        REGOPCODE = ((*((UInt8*)(UIntPtr) (EIP_+1))) >> 3) & 0x7;
         if (REGOPCODE == 0) {
             OpSize = 103;
             MOD_RM(&(*pMyDisasm).Argument2);
@@ -1264,14 +1264,14 @@ void __bea_callspec__ DF_(PDISASM pMyDisasm)
 
     DECALAGE_EIP = 0;
     if (!Security(1)) {return;}
-    MyMODRM = *((UInt8*)(ULONG_PTR) (EIP_+1));
+    MyMODRM = *((UInt8*)(UIntPtr) (EIP_+1));
     pRegistersFPU = &RegistersFPU_Masm;
     if (SYNTAX_ == NasmSyntax) {
         pRegistersFPU = &RegistersFPU_Nasm;
     }
     if (MyMODRM <= 0xbf) {
 
-        REGOPCODE = ((*((UInt8*)(ULONG_PTR) (EIP_+1))) >> 3) & 0x7;
+        REGOPCODE = ((*((UInt8*)(UIntPtr) (EIP_+1))) >> 3) & 0x7;
         if (REGOPCODE == 0) {
             OpSize = 102;
             MOD_RM(&(*pMyDisasm).Argument2);

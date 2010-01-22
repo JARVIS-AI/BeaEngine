@@ -21,7 +21,7 @@
  * ==================================================================== */
 void __bea_callspec__ G16_(PDISASM pMyDisasm)
 {
-    REGOPCODE = ((*((UInt8*)(ULONG_PTR) (EIP_+1))) >> 3) & 0x7;
+    REGOPCODE = ((*((UInt8*)(UIntPtr) (EIP_+1))) >> 3) & 0x7;
     if (REGOPCODE == 0) {
         MOD_RM(&(*pMyDisasm).Argument2);
         if (MOD_ != 0x3) {

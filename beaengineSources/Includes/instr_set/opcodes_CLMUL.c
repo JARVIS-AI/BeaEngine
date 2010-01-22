@@ -33,7 +33,7 @@ void __bea_callspec__ pclmulqdq_(PDISASM pMyDisasm)
         EIP_++;
         if (!Security(0)) return;
 
-        (*pMyDisasm).Instruction.Immediat = *((UInt8*)(ULONG_PTR) (EIP_- 1));
+        (*pMyDisasm).Instruction.Immediat = *((UInt8*)(UIntPtr) (EIP_- 1));
         ImmediatSize = 8;
         if ((*pMyDisasm).Instruction.Immediat == 0) {
             (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "pclmullqlqdq ");
@@ -50,7 +50,7 @@ void __bea_callspec__ pclmulqdq_(PDISASM pMyDisasm)
         else {
             (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "pclmulqdq ");
             third_arg = 1;
-            (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument3.ArgMnemonic, "%.2X", *((UInt8*)(ULONG_PTR) (EIP_- 1)));
+            (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument3.ArgMnemonic, "%.2X", *((UInt8*)(UIntPtr) (EIP_- 1)));
             (*pMyDisasm).Argument3.ArgType = CONSTANT_TYPE+ABSOLUTE_;
             (*pMyDisasm).Argument3.ArgSize = 8;
         }
