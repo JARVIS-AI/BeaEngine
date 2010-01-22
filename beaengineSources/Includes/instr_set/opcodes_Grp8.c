@@ -21,10 +21,10 @@
  * ==================================================================== */
 void __bea_callspec__ G8_EvIb(PDISASM pMyDisasm)
 {
-    REGOPCODE = ((*((UInt8*) (EIP_ + 1))) >> 3) & 0x7;
+    REGOPCODE = ((*((UInt8*)(ULONG_PTR) (EIP_+1))) >> 3) & 0x7;
     EvIb(pMyDisasm);
     if (REGOPCODE == 4) {
-        (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION + BIT_UInt8;
+        (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+BIT_UInt8;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "bt ");
         (*pMyDisasm).Argument1.AccessMode = READ;
         FillFlags(pMyDisasm, 11);
@@ -33,7 +33,7 @@ void __bea_callspec__ G8_EvIb(PDISASM pMyDisasm)
         if ((*pMyDisasm).Prefix.LockPrefix == InvalidPrefix) {
             (*pMyDisasm).Prefix.LockPrefix = InUsePrefix;
         }
-        (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION + BIT_UInt8;
+        (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+BIT_UInt8;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "bts ");
         (*pMyDisasm).Argument1.AccessMode = READ;
         FillFlags(pMyDisasm, 11);
@@ -42,7 +42,7 @@ void __bea_callspec__ G8_EvIb(PDISASM pMyDisasm)
         if ((*pMyDisasm).Prefix.LockPrefix == InvalidPrefix) {
             (*pMyDisasm).Prefix.LockPrefix = InUsePrefix;
         }
-        (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION + BIT_UInt8;
+        (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+BIT_UInt8;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "btr ");
         (*pMyDisasm).Argument1.AccessMode = READ;
         FillFlags(pMyDisasm, 11);
@@ -51,7 +51,7 @@ void __bea_callspec__ G8_EvIb(PDISASM pMyDisasm)
         if ((*pMyDisasm).Prefix.LockPrefix == InvalidPrefix) {
             (*pMyDisasm).Prefix.LockPrefix = InUsePrefix;
         }
-        (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION + BIT_UInt8;
+        (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+BIT_UInt8;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "btc ");
         (*pMyDisasm).Argument1.AccessMode = READ;
         FillFlags(pMyDisasm, 11);

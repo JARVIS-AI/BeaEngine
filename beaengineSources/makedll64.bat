@@ -9,7 +9,7 @@ echo *
 echo *  COMPILATION with POCC.EXE (Pelles C)
 echo *
 echo ____________________________________
-"\Program Files\PellesC\bin\pocc" /Tamd64-coff /Ze %name%.c
+"\Program Files\PellesC\bin\pocc" /Tamd64-coff /Ze /W2 %name%.c
 
 
 echo ____________________________________

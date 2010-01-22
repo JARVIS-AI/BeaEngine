@@ -139,9 +139,9 @@ void __bea_callspec__ aeskeygen(PDISASM pMyDisasm)
         EIP_++;
         if (!Security(0)) return;
         third_arg = 1;
-        (*pMyDisasm).Instruction.Immediat = *((UInt8*) (EIP_- 1));
-        (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument3.ArgMnemonic, "%.2X", *((UInt8*) (EIP_- 1)));
-        (*pMyDisasm).Argument3.ArgType = CONSTANT_TYPE + ABSOLUTE_;
+        (*pMyDisasm).Instruction.Immediat = *((UInt8*)(ULONG_PTR) (EIP_- 1));
+        (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument3.ArgMnemonic, "%.2X", *((UInt8*)(ULONG_PTR) (EIP_- 1)));
+        (*pMyDisasm).Argument3.ArgType = CONSTANT_TYPE+ABSOLUTE_;
         (*pMyDisasm).Argument3.ArgSize = 8;
         ImmediatSize = 8;
 

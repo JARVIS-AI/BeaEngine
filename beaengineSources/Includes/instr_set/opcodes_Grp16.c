@@ -21,12 +21,12 @@
  * ==================================================================== */
 void __bea_callspec__ G16_(PDISASM pMyDisasm)
 {
-    REGOPCODE = ((*((UInt8*) (EIP_ + 1))) >> 3) & 0x7;
+    REGOPCODE = ((*((UInt8*)(ULONG_PTR) (EIP_+1))) >> 3) & 0x7;
     if (REGOPCODE == 0) {
         MOD_RM(&(*pMyDisasm).Argument2);
         if (MOD_ != 0x3) {
             OpSize = 101;
-            (*pMyDisasm).Instruction.Category = SSE_INSTRUCTION + CACHEABILITY_CONTROL;
+            (*pMyDisasm).Instruction.Category = SSE_INSTRUCTION+CACHEABILITY_CONTROL;
             (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "prefetchNTA ");
         }
         else {
@@ -37,7 +37,7 @@ void __bea_callspec__ G16_(PDISASM pMyDisasm)
         MOD_RM(&(*pMyDisasm).Argument2);
         if (MOD_ != 0x3) {
             OpSize = 101;
-            (*pMyDisasm).Instruction.Category = SSE_INSTRUCTION + CACHEABILITY_CONTROL;
+            (*pMyDisasm).Instruction.Category = SSE_INSTRUCTION+CACHEABILITY_CONTROL;
             (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "prefetchT0 ");
         }
         else {
@@ -49,7 +49,7 @@ void __bea_callspec__ G16_(PDISASM pMyDisasm)
         MOD_RM(&(*pMyDisasm).Argument2);
         if (MOD_ != 0x3) {
             OpSize = 101;
-            (*pMyDisasm).Instruction.Category = SSE_INSTRUCTION + CACHEABILITY_CONTROL;
+            (*pMyDisasm).Instruction.Category = SSE_INSTRUCTION+CACHEABILITY_CONTROL;
             (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "prefetchT1 ");
         }
         else {
@@ -61,7 +61,7 @@ void __bea_callspec__ G16_(PDISASM pMyDisasm)
         MOD_RM(&(*pMyDisasm).Argument2);
         if (MOD_ != 0x3) {
             OpSize = 101;
-            (*pMyDisasm).Instruction.Category = SSE_INSTRUCTION + CACHEABILITY_CONTROL;
+            (*pMyDisasm).Instruction.Category = SSE_INSTRUCTION+CACHEABILITY_CONTROL;
             (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "prefetchT2 ");
         }
         else {
@@ -73,5 +73,5 @@ void __bea_callspec__ G16_(PDISASM pMyDisasm)
     else {
         FailDecode(pMyDisasm);
     }
-    EIP_+= DECALAGE_EIP + 2;
+    EIP_+= DECALAGE_EIP+2;
 }

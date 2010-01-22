@@ -1,5 +1,5 @@
 /*
- * BeaEngine 3.0 - x86 & x86-64 disassembler library
+ * BeaEngine 3.0-x86 & x86-64 disassembler library
  *
  * Copyright 2006-2009, BeatriX
  * File coded by BeatriX

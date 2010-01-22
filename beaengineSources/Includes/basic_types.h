@@ -219,7 +219,7 @@
 
 #ifndef C_STATIC_ASSERT
 #define C_STATIC_ASSERT(tag_name, x)            \
-       typedef int cache_static_assert_ ## tag_name[(x) * 2 - 1]
+       typedef int cache_static_assert_ ## tag_name[(x) * 2-1]
 #endif
 
 C_STATIC_ASSERT(sizeof_Int8 , (sizeof(Int8)  == 1));
