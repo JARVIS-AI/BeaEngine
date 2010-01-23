@@ -50,7 +50,7 @@ void __bea_callspec__ pclmulqdq_(PDISASM pMyDisasm)
         else {
             (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "pclmulqdq ");
             third_arg = 1;
-            (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument3.ArgMnemonic, "%.2X", *((UInt8*)(UIntPtr) (EIP_- 1)));
+            (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument3.ArgMnemonic, "%.2X",(Int64) *((UInt8*)(UIntPtr) (EIP_- 1)));
             (*pMyDisasm).Argument3.ArgType = CONSTANT_TYPE+ABSOLUTE_;
             (*pMyDisasm).Argument3.ArgSize = 8;
         }

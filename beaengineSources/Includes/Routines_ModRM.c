@@ -325,11 +325,11 @@ void __bea_callspec__ Addr_disp32(ARGTYPE* pMyArgument)
         if (Architecture == 64) {
             MyNumber += 6;
             MyNumber += NB_PREFIX;
-            CalculateRelativeAddress(&MyAddress, MyNumber);
-            i+= CopyFormattedNumber((char*) (*pMyArgument).ArgMnemonic+i,"%I64X", MyAddress);
+            CalculateRelativeAddress(&MyAddress, (Int64)MyNumber);
+            i+= CopyFormattedNumber((char*) (*pMyArgument).ArgMnemonic+i,"%I64X", (Int64)MyAddress);
         }
         else {
-            i+= CopyFormattedNumber((char*) (*pMyArgument).ArgMnemonic+i,"%.8X", MyNumber);
+            i+= CopyFormattedNumber((char*) (*pMyArgument).ArgMnemonic+i,"%.8X", (Int64)MyNumber);
         }
     }
     else {
@@ -376,7 +376,7 @@ void __bea_callspec__ Addr_ESI(ARGTYPE* pMyArgument)
         MyNumber = *((UInt16*)(UIntPtr) (EIP_+2));
         (*pMyArgument).Memory.Displacement = MyNumber;
         if (!Security(2)) return;
-        (void) CopyFormattedNumber((char*) (*pMyArgument).ArgMnemonic+i,"%.4X", MyNumber);
+        (void) CopyFormattedNumber((char*) (*pMyArgument).ArgMnemonic+i,"%.4X", (Int64)MyNumber);
     }
     i = strlen ((char*) &(*pMyArgument).ArgMnemonic);
     if (SYNTAX_ == ATSyntax) {
@@ -442,11 +442,11 @@ void __bea_callspec__ Addr_EAX_disp8(ARGTYPE* pMyArgument)
             (void) strcpy((char*) (*pMyArgument).ArgMnemonic+i, "-");
             i++;
             j=i;
-            i+= CopyFormattedNumber((char*) (*pMyArgument).ArgMnemonic+j,"%.2X", ~MyNumber+1);
+            i+= CopyFormattedNumber((char*) (*pMyArgument).ArgMnemonic+j,"%.2X",(Int64) ~MyNumber+1);
         }
         else {
             j=i;
-            i+= CopyFormattedNumber((char*) (*pMyArgument).ArgMnemonic+j,"%.2X", MyNumber);
+            i+= CopyFormattedNumber((char*) (*pMyArgument).ArgMnemonic+j,"%.2X",(Int64) MyNumber);
         }
         (void) strcpy((char*) (*pMyArgument).ArgMnemonic+i, "(%");
         i+=2;
@@ -486,12 +486,12 @@ void __bea_callspec__ Addr_EAX_disp8(ARGTYPE* pMyArgument)
         if (MyNumber < 0) {
             (void) strcpy((char*) (*pMyArgument).ArgMnemonic+i, "-");
             i++;
-            i+= CopyFormattedNumber((char*) (*pMyArgument).ArgMnemonic+i,"%.2X", ~MyNumber+1);
+            i+= CopyFormattedNumber((char*) (*pMyArgument).ArgMnemonic+i,"%.2X",(Int64) ~MyNumber+1);
         }
         else {
             (void) strcpy((char*) (*pMyArgument).ArgMnemonic+i, "+");
             i++;
-            i+= CopyFormattedNumber((char*) (*pMyArgument).ArgMnemonic+i,"%.2X", MyNumber);
+            i+= CopyFormattedNumber((char*) (*pMyArgument).ArgMnemonic+i,"%.2X",(Int64) MyNumber);
         }
     }
 }
@@ -510,11 +510,11 @@ void __bea_callspec__ Addr_ECX_disp8(ARGTYPE* pMyArgument)
             (void) strcpy((char*) (*pMyArgument).ArgMnemonic+i, "-");
             i++;
             j=i;
-            i+= CopyFormattedNumber((char*) (*pMyArgument).ArgMnemonic+j,"%.2X", ~MyNumber+1);
+            i+= CopyFormattedNumber((char*) (*pMyArgument).ArgMnemonic+j,"%.2X",(Int64) ~MyNumber+1);
         }
         else {
             j=i;
-            i+= CopyFormattedNumber((char*) (*pMyArgument).ArgMnemonic+j,"%.2X", MyNumber);
+            i+= CopyFormattedNumber((char*) (*pMyArgument).ArgMnemonic+j,"%.2X",(Int64) MyNumber);
         }
         (void) strcpy((char*) (*pMyArgument).ArgMnemonic+i, "(%");
         i+=2;
@@ -554,12 +554,12 @@ void __bea_callspec__ Addr_ECX_disp8(ARGTYPE* pMyArgument)
         if (MyNumber < 0) {
             (void) strcpy((char*) (*pMyArgument).ArgMnemonic+i, "-");
             i++;
-            i+= CopyFormattedNumber((char*) (*pMyArgument).ArgMnemonic+i,"%.2X", ~MyNumber+1);
+            i+= CopyFormattedNumber((char*) (*pMyArgument).ArgMnemonic+i,"%.2X",(Int64) ~MyNumber+1);
         }
         else {
             (void) strcpy((char*) (*pMyArgument).ArgMnemonic+i, "+");
             i++;
-            i+= CopyFormattedNumber((char*) (*pMyArgument).ArgMnemonic+i,"%.2X", MyNumber);
+            i+= CopyFormattedNumber((char*) (*pMyArgument).ArgMnemonic+i,"%.2X",(Int64) MyNumber);
         }
     }
 }
@@ -578,11 +578,11 @@ void __bea_callspec__ Addr_EDX_disp8(ARGTYPE* pMyArgument)
             (void) strcpy((char*) (*pMyArgument).ArgMnemonic+i, "-");
             i++;
             j=i;
-            i+= CopyFormattedNumber((char*) (*pMyArgument).ArgMnemonic+j,"%.2X", ~MyNumber+1);
+            i+= CopyFormattedNumber((char*) (*pMyArgument).ArgMnemonic+j,"%.2X",(Int64) ~MyNumber+1);
         }
         else {
             j=i;
-            i+= CopyFormattedNumber((char*) (*pMyArgument).ArgMnemonic+j,"%.2X", MyNumber);
+            i+= CopyFormattedNumber((char*) (*pMyArgument).ArgMnemonic+j,"%.2X",(Int64) MyNumber);
         }
         (void) strcpy((char*) (*pMyArgument).ArgMnemonic+i, "(%");
         i+=2;
@@ -621,12 +621,12 @@ void __bea_callspec__ Addr_EDX_disp8(ARGTYPE* pMyArgument)
         if (MyNumber < 0) {
             (void) strcpy((char*) (*pMyArgument).ArgMnemonic+i, "-");
             i++;
-            i+= CopyFormattedNumber((char*) (*pMyArgument).ArgMnemonic+i,"%.2X", ~MyNumber+1);
+            i+= CopyFormattedNumber((char*) (*pMyArgument).ArgMnemonic+i,"%.2X",(Int64) ~MyNumber+1);
         }
         else {
             (void) strcpy((char*) (*pMyArgument).ArgMnemonic+i, "+");
             i++;
-            i+= CopyFormattedNumber((char*) (*pMyArgument).ArgMnemonic+i,"%.2X", MyNumber);
+            i+= CopyFormattedNumber((char*) (*pMyArgument).ArgMnemonic+i,"%.2X",(Int64) MyNumber);
         }
     }
 }
@@ -645,11 +645,11 @@ void __bea_callspec__ Addr_EBX_disp8(ARGTYPE* pMyArgument)
             (void) strcpy((char*) (*pMyArgument).ArgMnemonic+i, "-");
             i++;
             j=i;
-            i+= CopyFormattedNumber((char*) (*pMyArgument).ArgMnemonic+j,"%.2X", ~MyNumber+1);
+            i+= CopyFormattedNumber((char*) (*pMyArgument).ArgMnemonic+j,"%.2X",(Int64) ~MyNumber+1);
         }
         else {
             j=i;
-            i+= CopyFormattedNumber((char*) (*pMyArgument).ArgMnemonic+j,"%.2X", MyNumber);
+            i+= CopyFormattedNumber((char*) (*pMyArgument).ArgMnemonic+j,"%.2X",(Int64) MyNumber);
         }
         (void) strcpy((char*) (*pMyArgument).ArgMnemonic+i, "(%");
         i+=2;
@@ -688,12 +688,12 @@ void __bea_callspec__ Addr_EBX_disp8(ARGTYPE* pMyArgument)
         if (MyNumber < 0) {
             (void) strcpy((char*) (*pMyArgument).ArgMnemonic+i, "-");
             i++;
-            i+= CopyFormattedNumber((char*) (*pMyArgument).ArgMnemonic+i,"%.2X", ~MyNumber+1);
+            i+= CopyFormattedNumber((char*) (*pMyArgument).ArgMnemonic+i,"%.2X",(Int64) ~MyNumber+1);
         }
         else {
             (void) strcpy((char*) (*pMyArgument).ArgMnemonic+i, "+");
             i++;
-            i+= CopyFormattedNumber((char*) (*pMyArgument).ArgMnemonic+i,"%.2X", MyNumber);
+            i+= CopyFormattedNumber((char*) (*pMyArgument).ArgMnemonic+i,"%.2X",(Int64) MyNumber);
         }
     }
 }
@@ -713,11 +713,11 @@ void __bea_callspec__ Addr_SIB_disp8(ARGTYPE* pMyArgument)
             (void) strcpy((char*) (*pMyArgument).ArgMnemonic+i, "-");
             i++;
             j=i;
-            i+= CopyFormattedNumber((char*) (*pMyArgument).ArgMnemonic+j,"%.2X", ~MyNumber+1);
+            i+= CopyFormattedNumber((char*) (*pMyArgument).ArgMnemonic+j,"%.2X",(Int64) ~MyNumber+1);
         }
         else {
             j=i;
-            i+= CopyFormattedNumber((char*) (*pMyArgument).ArgMnemonic+j,"%.2X", MyNumber);
+            i+= CopyFormattedNumber((char*) (*pMyArgument).ArgMnemonic+j,"%.2X",(Int64) MyNumber);
         }
         /*(void) strcpy((char*) (*pMyArgument).ArgMnemonic+i, "(%");
          *i+=2; */
@@ -744,12 +744,12 @@ void __bea_callspec__ Addr_SIB_disp8(ARGTYPE* pMyArgument)
         if (MyNumber < 0) {
             (void) strcpy((char*) (*pMyArgument).ArgMnemonic+i, "-");
             i++;
-            i+= CopyFormattedNumber((char*) (*pMyArgument).ArgMnemonic+i,"%.2X", ~MyNumber+1);
+            i+= CopyFormattedNumber((char*) (*pMyArgument).ArgMnemonic+i,"%.2X",(Int64) ~MyNumber+1);
         }
         else {
             (void) strcpy((char*) (*pMyArgument).ArgMnemonic+i, "+");
             i++;
-            i+= CopyFormattedNumber((char*) (*pMyArgument).ArgMnemonic+i,"%.2X", MyNumber);
+            i+= CopyFormattedNumber((char*) (*pMyArgument).ArgMnemonic+i,"%.2X",(Int64) MyNumber);
         }
     }
 
@@ -769,11 +769,11 @@ void __bea_callspec__ Addr_EBP_disp8(ARGTYPE* pMyArgument)
             (void) strcpy((char*) (*pMyArgument).ArgMnemonic+i, "-");
             i++;
             j=i;
-            i+= CopyFormattedNumber((char*) (*pMyArgument).ArgMnemonic+j,"%.2X", ~MyNumber+1);
+            i+= CopyFormattedNumber((char*) (*pMyArgument).ArgMnemonic+j,"%.2X",(Int64) ~MyNumber+1);
         }
         else {
             j=i;
-            i+= CopyFormattedNumber((char*) (*pMyArgument).ArgMnemonic+j,"%.2X", MyNumber);
+            i+= CopyFormattedNumber((char*) (*pMyArgument).ArgMnemonic+j,"%.2X",(Int64) MyNumber);
         }
         (void) strcpy((char*) (*pMyArgument).ArgMnemonic+i, "(%");
         i+=2;
@@ -813,12 +813,12 @@ void __bea_callspec__ Addr_EBP_disp8(ARGTYPE* pMyArgument)
         if (MyNumber < 0) {
             (void) strcpy((char*) (*pMyArgument).ArgMnemonic+i, "-");
             i++;
-            i+= CopyFormattedNumber((char*) (*pMyArgument).ArgMnemonic+i,"%.2X", ~MyNumber+1);
+            i+= CopyFormattedNumber((char*) (*pMyArgument).ArgMnemonic+i,"%.2X",(Int64) ~MyNumber+1);
         }
         else {
             (void) strcpy((char*) (*pMyArgument).ArgMnemonic+i, "+");
             i++;
-            i+= CopyFormattedNumber((char*) (*pMyArgument).ArgMnemonic+i,"%.2X", MyNumber);
+            i+= CopyFormattedNumber((char*) (*pMyArgument).ArgMnemonic+i,"%.2X",(Int64) MyNumber);
         }
     }
 }
@@ -837,11 +837,11 @@ void __bea_callspec__ Addr_ESI_disp8(ARGTYPE* pMyArgument)
             (void) strcpy((char*) (*pMyArgument).ArgMnemonic+i, "-");
             i++;
             j=i;
-            i+= CopyFormattedNumber((char*) (*pMyArgument).ArgMnemonic+j,"%.2X", ~MyNumber+1);
+            i+= CopyFormattedNumber((char*) (*pMyArgument).ArgMnemonic+j,"%.2X",(Int64) ~MyNumber+1);
         }
         else {
             j=i;
-            i+= CopyFormattedNumber((char*) (*pMyArgument).ArgMnemonic+j,"%.2X", MyNumber);
+            i+= CopyFormattedNumber((char*) (*pMyArgument).ArgMnemonic+j,"%.2X",(Int64) MyNumber);
         }
         (void) strcpy((char*) (*pMyArgument).ArgMnemonic+i, "(%");
         i+=2;
@@ -881,12 +881,12 @@ void __bea_callspec__ Addr_ESI_disp8(ARGTYPE* pMyArgument)
         if (MyNumber < 0) {
             (void) strcpy((char*) (*pMyArgument).ArgMnemonic+i, "-");
             i++;
-            i+= CopyFormattedNumber((char*) (*pMyArgument).ArgMnemonic+i,"%.2X", ~MyNumber+1);
+            i+= CopyFormattedNumber((char*) (*pMyArgument).ArgMnemonic+i,"%.2X",(Int64) ~MyNumber+1);
         }
         else {
             (void) strcpy((char*) (*pMyArgument).ArgMnemonic+i, "+");
             i++;
-            i+= CopyFormattedNumber((char*) (*pMyArgument).ArgMnemonic+i,"%.2X", MyNumber);
+            i+= CopyFormattedNumber((char*) (*pMyArgument).ArgMnemonic+i,"%.2X",(Int64) MyNumber);
         }
     }
 }
@@ -905,11 +905,11 @@ void __bea_callspec__ Addr_EDI_disp8(ARGTYPE* pMyArgument)
             (void) strcpy((char*) (*pMyArgument).ArgMnemonic+i, "-");
             i++;
             j=i;
-            i+= CopyFormattedNumber((char*) (*pMyArgument).ArgMnemonic+j,"%.2X", ~MyNumber+1);
+            i+= CopyFormattedNumber((char*) (*pMyArgument).ArgMnemonic+j,"%.2X",(Int64) ~MyNumber+1);
         }
         else {
             j=i;
-            i+= CopyFormattedNumber((char*) (*pMyArgument).ArgMnemonic+j,"%.2X", MyNumber);
+            i+= CopyFormattedNumber((char*) (*pMyArgument).ArgMnemonic+j,"%.2X",(Int64) MyNumber);
         }
         (void) strcpy((char*) (*pMyArgument).ArgMnemonic+i, "(%");
         i+=2;
@@ -949,12 +949,12 @@ void __bea_callspec__ Addr_EDI_disp8(ARGTYPE* pMyArgument)
         if (MyNumber < 0) {
             (void) strcpy((char*) (*pMyArgument).ArgMnemonic+i, "-");
             i++;
-            i+= CopyFormattedNumber((char*) (*pMyArgument).ArgMnemonic+i,"%.2X", ~MyNumber+1);
+            i+= CopyFormattedNumber((char*) (*pMyArgument).ArgMnemonic+i,"%.2X",(Int64) ~MyNumber+1);
         }
         else {
             (void) strcpy((char*) (*pMyArgument).ArgMnemonic+i, "+");
             i++;
-            i+= CopyFormattedNumber((char*) (*pMyArgument).ArgMnemonic+i,"%.2X", MyNumber);
+            i+= CopyFormattedNumber((char*) (*pMyArgument).ArgMnemonic+i,"%.2X",(Int64) MyNumber);
         }
     }
 }
@@ -973,11 +973,11 @@ void __bea_callspec__ Addr_EAX_disp32(ARGTYPE* pMyArgument)
             (void) strcpy((char*) (*pMyArgument).ArgMnemonic+i, "-");
             i ++;
             j=i;
-            i+= CopyFormattedNumber((char*) (*pMyArgument).ArgMnemonic+j,"%.8X", ~MyNumber+1);
+            i+= CopyFormattedNumber((char*) (*pMyArgument).ArgMnemonic+j,"%.8X",(Int64) ~MyNumber+1);
         }
         else {
             j = i;
-            i+= CopyFormattedNumber((char*) (*pMyArgument).ArgMnemonic+j,"%.8X", MyNumber);
+            i+= CopyFormattedNumber((char*) (*pMyArgument).ArgMnemonic+j,"%.8X",(Int64) MyNumber);
         }
         (void) strcpy((char*) (*pMyArgument).ArgMnemonic+i, "(%");
         i+=2;
@@ -1015,12 +1015,12 @@ void __bea_callspec__ Addr_EAX_disp32(ARGTYPE* pMyArgument)
         if (MyNumber < 0) {
             (void) strcpy((char*) (*pMyArgument).ArgMnemonic+i, "-");
             i++;
-            i+= CopyFormattedNumber((char*) (*pMyArgument).ArgMnemonic+i,"%.8X", ~MyNumber+1);
+            i+= CopyFormattedNumber((char*) (*pMyArgument).ArgMnemonic+i,"%.8X",(Int64) ~MyNumber+1);
         }
         else {
             (void) strcpy((char*) (*pMyArgument).ArgMnemonic+i, "+");
             i++;
-            i+= CopyFormattedNumber((char*) (*pMyArgument).ArgMnemonic+i,"%.8X", MyNumber);
+            i+= CopyFormattedNumber((char*) (*pMyArgument).ArgMnemonic+i,"%.8X",(Int64) MyNumber);
         }
     }
 }
@@ -1040,11 +1040,11 @@ void __bea_callspec__ Addr_ECX_disp32(ARGTYPE* pMyArgument)
             (void) strcpy((char*) (*pMyArgument).ArgMnemonic+i, "-");
             i ++;
             j=i;
-            i+= CopyFormattedNumber((char*) (*pMyArgument).ArgMnemonic+j,"%.8X", ~MyNumber+1);
+            i+= CopyFormattedNumber((char*) (*pMyArgument).ArgMnemonic+j,"%.8X",(Int64) ~MyNumber+1);
         }
         else {
             j = i;
-            i+= CopyFormattedNumber((char*) (*pMyArgument).ArgMnemonic+j,"%.8X", MyNumber);
+            i+= CopyFormattedNumber((char*) (*pMyArgument).ArgMnemonic+j,"%.8X",(Int64) MyNumber);
         }
         (void) strcpy((char*) (*pMyArgument).ArgMnemonic+i, "(%");
         i+=2;
@@ -1083,12 +1083,12 @@ void __bea_callspec__ Addr_ECX_disp32(ARGTYPE* pMyArgument)
         if (MyNumber < 0) {
             (void) strcpy((char*) (*pMyArgument).ArgMnemonic+i, "-");
             i++;
-            i+= CopyFormattedNumber((char*) (*pMyArgument).ArgMnemonic+i,"%.8X", ~MyNumber+1);
+            i+= CopyFormattedNumber((char*) (*pMyArgument).ArgMnemonic+i,"%.8X",(Int64) ~MyNumber+1);
         }
         else {
             (void) strcpy((char*) (*pMyArgument).ArgMnemonic+i, "+");
             i++;
-            i+= CopyFormattedNumber((char*) (*pMyArgument).ArgMnemonic+i,"%.8X", MyNumber);
+            i+= CopyFormattedNumber((char*) (*pMyArgument).ArgMnemonic+i,"%.8X",(Int64) MyNumber);
         }
     }
 }
@@ -1107,11 +1107,11 @@ void __bea_callspec__ Addr_EDX_disp32(ARGTYPE* pMyArgument)
             (void) strcpy((char*) (*pMyArgument).ArgMnemonic+i, "-");
             i ++;
             j=i;
-            i+= CopyFormattedNumber((char*) (*pMyArgument).ArgMnemonic+j,"%.8X", ~MyNumber+1);
+            i+= CopyFormattedNumber((char*) (*pMyArgument).ArgMnemonic+j,"%.8X",(Int64) ~MyNumber+1);
         }
         else {
             j = i;
-            i+= CopyFormattedNumber((char*) (*pMyArgument).ArgMnemonic+j,"%.8X", MyNumber);
+            i+= CopyFormattedNumber((char*) (*pMyArgument).ArgMnemonic+j,"%.8X",(Int64) MyNumber);
         }
         (void) strcpy((char*) (*pMyArgument).ArgMnemonic+i, "(%");
         i+=2;
@@ -1150,12 +1150,12 @@ void __bea_callspec__ Addr_EDX_disp32(ARGTYPE* pMyArgument)
         if (MyNumber < 0) {
             (void) strcpy((char*) (*pMyArgument).ArgMnemonic+i, "-");
             i++;
-            i+= CopyFormattedNumber((char*) (*pMyArgument).ArgMnemonic+i,"%.8X", ~MyNumber+1);
+            i+= CopyFormattedNumber((char*) (*pMyArgument).ArgMnemonic+i,"%.8X",(Int64) ~MyNumber+1);
         }
         else {
             (void) strcpy((char*) (*pMyArgument).ArgMnemonic+i, "+");
             i++;
-            i+= CopyFormattedNumber((char*) (*pMyArgument).ArgMnemonic+i,"%.8X", MyNumber);
+            i+= CopyFormattedNumber((char*) (*pMyArgument).ArgMnemonic+i,"%.8X",(Int64) MyNumber);
         }
     }
 }
@@ -1174,11 +1174,11 @@ void __bea_callspec__ Addr_EBX_disp32(ARGTYPE* pMyArgument)
             (void) strcpy((char*) (*pMyArgument).ArgMnemonic+i, "-");
             i ++;
             j=i;
-            i+= CopyFormattedNumber((char*) (*pMyArgument).ArgMnemonic+j,"%.8X", ~MyNumber+1);
+            i+= CopyFormattedNumber((char*) (*pMyArgument).ArgMnemonic+j,"%.8X",(Int64) ~MyNumber+1);
         }
         else {
             j = i;
-            i+= CopyFormattedNumber((char*) (*pMyArgument).ArgMnemonic+j,"%.8X", MyNumber);
+            i+= CopyFormattedNumber((char*) (*pMyArgument).ArgMnemonic+j,"%.8X",(Int64) MyNumber);
         }
         (void) strcpy((char*) (*pMyArgument).ArgMnemonic+i, "(%");
         i+=2;
@@ -1217,12 +1217,12 @@ void __bea_callspec__ Addr_EBX_disp32(ARGTYPE* pMyArgument)
         if (MyNumber < 0) {
             (void) strcpy((char*) (*pMyArgument).ArgMnemonic+i, "-");
             i++;
-            i+= CopyFormattedNumber((char*) (*pMyArgument).ArgMnemonic+i,"%.8X", ~MyNumber+1);
+            i+= CopyFormattedNumber((char*) (*pMyArgument).ArgMnemonic+i,"%.8X",(Int64) ~MyNumber+1);
         }
         else {
             (void) strcpy((char*) (*pMyArgument).ArgMnemonic+i, "+");
             i++;
-            i+= CopyFormattedNumber((char*) (*pMyArgument).ArgMnemonic+i,"%.8X", MyNumber);
+            i+= CopyFormattedNumber((char*) (*pMyArgument).ArgMnemonic+i,"%.8X",(Int64) MyNumber);
         }
     }
 }
@@ -1242,11 +1242,11 @@ void __bea_callspec__ Addr_SIB_disp32(ARGTYPE* pMyArgument)
             (void) strcpy((char*) (*pMyArgument).ArgMnemonic+i, "-");
             i ++;
             j=i;
-            i+= CopyFormattedNumber((char*) (*pMyArgument).ArgMnemonic+j,"%.8X", ~MyNumber+1);
+            i+= CopyFormattedNumber((char*) (*pMyArgument).ArgMnemonic+j,"%.8X",(Int64) ~MyNumber+1);
         }
         else {
             j = i;
-            i+= CopyFormattedNumber((char*) (*pMyArgument).ArgMnemonic+j,"%.8X", MyNumber);
+            i+= CopyFormattedNumber((char*) (*pMyArgument).ArgMnemonic+j,"%.8X",(Int64) MyNumber);
         }
         /*(void) strcpy((char*) (*pMyArgument).ArgMnemonic+i, "(%");
          *i+=2; */
@@ -1274,12 +1274,12 @@ void __bea_callspec__ Addr_SIB_disp32(ARGTYPE* pMyArgument)
         if (MyNumber < 0) {
             (void) strcpy((char*) (*pMyArgument).ArgMnemonic+i, "-");
             i++;
-            i+= CopyFormattedNumber((char*) (*pMyArgument).ArgMnemonic+i,"%.8X", ~MyNumber+1);
+            i+= CopyFormattedNumber((char*) (*pMyArgument).ArgMnemonic+i,"%.8X",(Int64) ~MyNumber+1);
         }
         else {
             (void) strcpy((char*) (*pMyArgument).ArgMnemonic+i, "+");
             i++;
-            i+= CopyFormattedNumber((char*) (*pMyArgument).ArgMnemonic+i,"%.8X", MyNumber);
+            i+= CopyFormattedNumber((char*) (*pMyArgument).ArgMnemonic+i,"%.8X",(Int64) MyNumber);
         }
     }
 
@@ -1299,11 +1299,11 @@ void __bea_callspec__ Addr_EBP_disp32(ARGTYPE* pMyArgument)
             (void) strcpy((char*) (*pMyArgument).ArgMnemonic+i, "-");
             i ++;
             j=i;
-            i+= CopyFormattedNumber((char*) (*pMyArgument).ArgMnemonic+j,"%.8X", ~MyNumber+1);
+            i+= CopyFormattedNumber((char*) (*pMyArgument).ArgMnemonic+j,"%.8X",(Int64) ~MyNumber+1);
         }
         else {
             j = i;
-            i+= CopyFormattedNumber((char*) (*pMyArgument).ArgMnemonic+j,"%.8X", MyNumber);
+            i+= CopyFormattedNumber((char*) (*pMyArgument).ArgMnemonic+j,"%.8X",(Int64) MyNumber);
         }
         (void) strcpy((char*) (*pMyArgument).ArgMnemonic+i, "(%");
         i+=2;
@@ -1343,12 +1343,12 @@ void __bea_callspec__ Addr_EBP_disp32(ARGTYPE* pMyArgument)
         if (MyNumber < 0) {
             (void) strcpy((char*) (*pMyArgument).ArgMnemonic+i, "-");
             i++;
-            i+= CopyFormattedNumber((char*) (*pMyArgument).ArgMnemonic+i,"%.8X", ~MyNumber+1);
+            i+= CopyFormattedNumber((char*) (*pMyArgument).ArgMnemonic+i,"%.8X",(Int64) ~MyNumber+1);
         }
         else {
             (void) strcpy((char*) (*pMyArgument).ArgMnemonic+i, "+");
             i++;
-            i+= CopyFormattedNumber((char*) (*pMyArgument).ArgMnemonic+i,"%.8X", MyNumber);
+            i+= CopyFormattedNumber((char*) (*pMyArgument).ArgMnemonic+i,"%.8X",(Int64) MyNumber);
         }
     }
 }
@@ -1367,11 +1367,11 @@ void __bea_callspec__ Addr_ESI_disp32(ARGTYPE* pMyArgument)
             (void) strcpy((char*) (*pMyArgument).ArgMnemonic+i, "-");
             i ++;
             j=i;
-            i+= CopyFormattedNumber((char*) (*pMyArgument).ArgMnemonic+j,"%.8X", ~MyNumber+1);
+            i+= CopyFormattedNumber((char*) (*pMyArgument).ArgMnemonic+j,"%.8X",(Int64) ~MyNumber+1);
         }
         else {
             j = i;
-            i+= CopyFormattedNumber((char*) (*pMyArgument).ArgMnemonic+j,"%.8X", MyNumber);
+            i+= CopyFormattedNumber((char*) (*pMyArgument).ArgMnemonic+j,"%.8X",(Int64) MyNumber);
         }
         (void) strcpy((char*) (*pMyArgument).ArgMnemonic+i, "(%");
         i+=2;
@@ -1411,12 +1411,12 @@ void __bea_callspec__ Addr_ESI_disp32(ARGTYPE* pMyArgument)
         if (MyNumber < 0) {
             (void) strcpy((char*) (*pMyArgument).ArgMnemonic+i, "-");
             i++;
-            i+= CopyFormattedNumber((char*) (*pMyArgument).ArgMnemonic+i,"%.8X", ~MyNumber+1);
+            i+= CopyFormattedNumber((char*) (*pMyArgument).ArgMnemonic+i,"%.8X",(Int64) ~MyNumber+1);
         }
         else {
             (void) strcpy((char*) (*pMyArgument).ArgMnemonic+i, "+");
             i++;
-            i+= CopyFormattedNumber((char*) (*pMyArgument).ArgMnemonic+i,"%.8X", MyNumber);
+            i+= CopyFormattedNumber((char*) (*pMyArgument).ArgMnemonic+i,"%.8X",(Int64) MyNumber);
         }
     }
 }
@@ -1435,11 +1435,11 @@ void __bea_callspec__ Addr_EDI_disp32(ARGTYPE* pMyArgument)
             (void) strcpy((char*) (*pMyArgument).ArgMnemonic+i, "-");
             i ++;
             j=i;
-            i+= CopyFormattedNumber((char*) (*pMyArgument).ArgMnemonic+j,"%.8X", ~MyNumber+1);
+            i+= CopyFormattedNumber((char*) (*pMyArgument).ArgMnemonic+j,"%.8X",(Int64) ~MyNumber+1);
         }
         else {
             j = i;
-            i+= CopyFormattedNumber((char*) (*pMyArgument).ArgMnemonic+j,"%.8X", MyNumber);
+            i+= CopyFormattedNumber((char*) (*pMyArgument).ArgMnemonic+j,"%.8X",(Int64) MyNumber);
         }
         (void) strcpy((char*) (*pMyArgument).ArgMnemonic+i, "(%");
         i+=2;
@@ -1479,12 +1479,12 @@ void __bea_callspec__ Addr_EDI_disp32(ARGTYPE* pMyArgument)
         if (MyNumber < 0) {
             (void) strcpy((char*) (*pMyArgument).ArgMnemonic+i, "-");
             i++;
-            i+= CopyFormattedNumber((char*) (*pMyArgument).ArgMnemonic+i,"%.8X", ~MyNumber+1);
+            i+= CopyFormattedNumber((char*) (*pMyArgument).ArgMnemonic+i,"%.8X",(Int64) ~MyNumber+1);
         }
         else {
             (void) strcpy((char*) (*pMyArgument).ArgMnemonic+i, "+");
             i++;
-            i+= CopyFormattedNumber((char*) (*pMyArgument).ArgMnemonic+i,"%.8X", MyNumber);
+            i+= CopyFormattedNumber((char*) (*pMyArgument).ArgMnemonic+i,"%.8X",(Int64) MyNumber);
         }
     }
 }
@@ -2285,7 +2285,7 @@ size_t __bea_callspec__ SIB_1(ARGTYPE* pMyArgument, size_t i)
         DECALAGE_EIP += 4;
         if (!Security(7)) return i;
         j = i;
-        i+= CopyFormattedNumber((char*) (*pMyArgument).ArgMnemonic+j,"%.8X", *((UInt32*)(UIntPtr) (EIP_+3)));
+        i+= CopyFormattedNumber((char*) (*pMyArgument).ArgMnemonic+j,"%.8X",(Int64) *((UInt32*)(UIntPtr) (EIP_+3)));
         (*pMyArgument).Memory.Displacement = *((UInt32*)(UIntPtr) (EIP_+3));
     }
     else {
@@ -2393,7 +2393,7 @@ size_t __bea_callspec__ SIB_2(ARGTYPE* pMyArgument, size_t i)
         DECALAGE_EIP += 4;
         if (!Security(7)) return i;
         j = i;
-        i+= CopyFormattedNumber((char*) (*pMyArgument).ArgMnemonic+j,"%.8X", *((UInt32*)(UIntPtr) (EIP_+3)));
+        i+= CopyFormattedNumber((char*) (*pMyArgument).ArgMnemonic+j,"%.8X",(Int64) *((UInt32*)(UIntPtr) (EIP_+3)));
         (*pMyArgument).Memory.Displacement = *((UInt32*)(UIntPtr) (EIP_+3));
     }
     else {
@@ -2500,7 +2500,7 @@ size_t __bea_callspec__ SIB_3(ARGTYPE* pMyArgument, size_t i)
         DECALAGE_EIP += 4;
         if (!Security(7)) return i;
         j = i;
-        i+= CopyFormattedNumber((char*) (*pMyArgument).ArgMnemonic+j,"%.8X", *((UInt32*)(UIntPtr) (EIP_+3)));
+        i+= CopyFormattedNumber((char*) (*pMyArgument).ArgMnemonic+j,"%.8X",(Int64) *((UInt32*)(UIntPtr) (EIP_+3)));
         (*pMyArgument).Memory.Displacement = *((UInt32*)(UIntPtr) (EIP_+3));
     }
     else {

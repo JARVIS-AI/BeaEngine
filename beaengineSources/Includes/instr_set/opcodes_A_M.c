@@ -55,7 +55,7 @@ void __bea_callspec__ aad_(PDISASM pMyDisasm)
         ImmediatSize = 8;
         if (*((UInt8*)(UIntPtr) (EIP_+1)) != 0x0A) {
             (*pMyDisasm).Instruction.Immediat = *((UInt8*)(UIntPtr) (EIP_+1));
-            (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument2.ArgMnemonic, "%.2X", *((UInt8*)(UIntPtr) (EIP_+1)));
+            (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument2.ArgMnemonic, "%.2X",(Int64) *((UInt8*)(UIntPtr) (EIP_+1)));
             (*pMyDisasm).Argument2.ArgType = CONSTANT_TYPE+ABSOLUTE_;
             (*pMyDisasm).Argument2.ArgSize = 8;
         }
@@ -80,7 +80,7 @@ void __bea_callspec__ aam_(PDISASM pMyDisasm)
         ImmediatSize = 8;
         if (*((UInt8*)(UIntPtr) (EIP_+1)) != 0x0A) {
             (*pMyDisasm).Instruction.Immediat = *((UInt8*)(UIntPtr) (EIP_+1));
-            (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument2.ArgMnemonic, "%.2X", *((UInt8*)(UIntPtr) (EIP_+1)));
+            (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument2.ArgMnemonic, "%.2X",(Int64) *((UInt8*)(UIntPtr) (EIP_+1)));
             (*pMyDisasm).Argument2.ArgType = CONSTANT_TYPE+ABSOLUTE_;
             (*pMyDisasm).Argument2.ArgSize = 8;
         }
@@ -873,14 +873,14 @@ void __bea_callspec__ call_(PDISASM pMyDisasm)
     if (OperandSize >= 32) {
         if (!Security(5)) return;
         MyNumber = *((Int32*)(UIntPtr) (EIP_+1))+5+NB_PREFIX;
-        CalculateRelativeAddress(&MyAddress, MyNumber);
+        CalculateRelativeAddress(&MyAddress,(Int64) MyNumber);
         (*pMyDisasm).Instruction.AddrValue = MyAddress;
         (*pMyDisasm).Instruction.ImplicitModifiedRegs = GENERAL_REG+REG4;
         if (MyAddress >= 0x80000000) {
-            (void) CopyFormattedNumber((char*) &(*pMyDisasm).Argument1.ArgMnemonic, "%I64X", MyAddress);
+            (void) CopyFormattedNumber((char*) &(*pMyDisasm).Argument1.ArgMnemonic, "%I64X",(Int64) MyAddress);
         }
         else {
-            (void) CopyFormattedNumber((char*) &(*pMyDisasm).Argument1.ArgMnemonic, "%.8X", MyAddress);
+            (void) CopyFormattedNumber((char*) &(*pMyDisasm).Argument1.ArgMnemonic, "%.8X",(Int64) MyAddress);
         }
         (*pMyDisasm).Argument1.ArgType = CONSTANT_TYPE+RELATIVE_;
         (*pMyDisasm).Instruction.AddrValue = MyAddress;
@@ -889,11 +889,11 @@ void __bea_callspec__ call_(PDISASM pMyDisasm)
     else {
         if (!Security(3)) return;
         MyNumber = *((Int32*)(UIntPtr) (EIP_+1))+3+NB_PREFIX;
-        CalculateRelativeAddress(&MyAddress, MyNumber);
+        CalculateRelativeAddress(&MyAddress,(Int64) MyNumber);
         MyAddress = MyAddress & 0xffff;
         (*pMyDisasm).Instruction.AddrValue = MyAddress;
         (*pMyDisasm).Instruction.ImplicitModifiedRegs = GENERAL_REG+REG4;
-        (void) CopyFormattedNumber((char*) &(*pMyDisasm).Argument1.ArgMnemonic, "%.8X", MyAddress);
+        (void) CopyFormattedNumber((char*) &(*pMyDisasm).Argument1.ArgMnemonic, "%.8X",(Int64) MyAddress);
         (*pMyDisasm).Argument1.ArgType = CONSTANT_TYPE+RELATIVE_;
         (*pMyDisasm).Instruction.AddrValue = MyAddress;
         EIP_+=3;
@@ -924,12 +924,12 @@ void __bea_callspec__ callf_(PDISASM pMyDisasm)
         if (OperandSize ==32) {
             if (!Security(7)) return;
             MyNumber = *((UInt16*)(UIntPtr) (EIP_+5));
-            i += CopyFormattedNumber((char*) &(*pMyDisasm).Argument1.ArgMnemonic+i, "%.4X", MyNumber);
+            i += CopyFormattedNumber((char*) &(*pMyDisasm).Argument1.ArgMnemonic+i, "%.4X",(Int64) MyNumber);
         }
         else {
             if (!Security(5)) return;
             MyNumber = *((UInt16*)(UIntPtr) (EIP_+3));
-            i += CopyFormattedNumber((char*) &(*pMyDisasm).Argument1.ArgMnemonic+i, "%.4X", MyNumber);
+            i += CopyFormattedNumber((char*) &(*pMyDisasm).Argument1.ArgMnemonic+i, "%.4X",(Int64) MyNumber);
         }
         if (SYNTAX_ == ATSyntax) {
             (void) strcpy ((*pMyDisasm).Argument1.ArgMnemonic+i, " , \x24");
@@ -943,7 +943,7 @@ void __bea_callspec__ callf_(PDISASM pMyDisasm)
         if (OperandSize == 16) {
             MyNumber = MyNumber & 0xffff;
         }
-        i += CopyFormattedNumber((char*) &(*pMyDisasm).Argument1.ArgMnemonic+i, "%.8X", MyNumber);
+        i += CopyFormattedNumber((char*) &(*pMyDisasm).Argument1.ArgMnemonic+i, "%.8X",(Int64) MyNumber);
         if (OperandSize == 32) {
             EIP_+=7;
         }
@@ -1816,10 +1816,10 @@ void __bea_callspec__ enter_(PDISASM pMyDisasm)
 {
     (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+CONTROL_TRANSFER;
     (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "enter ");
-    (void) CopyFormattedNumber ((char*) (*pMyDisasm).Argument1.ArgMnemonic,"%.4X", *((UInt16*)(UIntPtr) (EIP_+1)));
+    (void) CopyFormattedNumber ((char*) (*pMyDisasm).Argument1.ArgMnemonic,"%.4X",(Int64) *((UInt16*)(UIntPtr) (EIP_+1)));
     (*pMyDisasm).Argument1.ArgSize = 16;
     (*pMyDisasm).Argument1.ArgType = CONSTANT_TYPE+ABSOLUTE_;
-    (void) CopyFormattedNumber ((char*) (*pMyDisasm).Argument2.ArgMnemonic,"%.2X", *((UInt8*)(UIntPtr) (EIP_+3)));
+    (void) CopyFormattedNumber ((char*) (*pMyDisasm).Argument2.ArgMnemonic,"%.2X",(Int64) *((UInt8*)(UIntPtr) (EIP_+3)));
     (*pMyDisasm).Argument2.ArgSize = 8;
     (*pMyDisasm).Argument2.ArgType = CONSTANT_TYPE+ABSOLUTE_;
     EIP_+=4;
@@ -2237,7 +2237,7 @@ void __bea_callspec__ in_eAX_Ib(PDISASM pMyDisasm)
     if (!Security(1)) return;
     ImmediatSize = 8;
     (*pMyDisasm).Instruction.Immediat = *((UInt8*)(UIntPtr) (EIP_+1));
-    (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument2.ArgMnemonic, "%.2X", *((UInt8*)(UIntPtr) (EIP_+1)));
+    (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument2.ArgMnemonic, "%.2X",(Int64) *((UInt8*)(UIntPtr) (EIP_+1)));
     (void) strcpy ((char*) (*pMyDisasm).Argument1.ArgMnemonic, Registers32Bits[0]);
     (*pMyDisasm).Argument1.ArgType = REGISTER_TYPE+GENERAL_REG+REGS[0];
     (*pMyDisasm).Argument1.ArgSize = 32;
@@ -2356,7 +2356,7 @@ void __bea_callspec__ int_(PDISASM pMyDisasm)
     if (!Security(1)) return;
     ImmediatSize = 8;
     (*pMyDisasm).Instruction.Immediat = *((UInt8*)(UIntPtr) (EIP_+1));
-    (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%.2X", *((UInt8*)(UIntPtr) (EIP_+1)));
+    (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%.2X",(Int64) *((UInt8*)(UIntPtr) (EIP_+1)));
     (*pMyDisasm).Argument1.ArgType = CONSTANT_TYPE+ABSOLUTE_;
     (*pMyDisasm).Argument1.ArgSize = 8;
     EIP_+=2;
@@ -2405,7 +2405,7 @@ void __bea_callspec__ imul_GvEvIv(PDISASM pMyDisasm)
         if (!Security(0)) return;
         third_arg = 1;
         (*pMyDisasm).Instruction.Immediat = *((UInt32*)(UIntPtr) (EIP_- 4));
-        (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument3.ArgMnemonic, "%.8X", *((UInt32*)(UIntPtr) (EIP_- 4)));
+        (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument3.ArgMnemonic, "%.8X",(Int64) *((UInt32*)(UIntPtr) (EIP_- 4)));
         (*pMyDisasm).Argument3.ArgType = CONSTANT_TYPE+ABSOLUTE_;
         (*pMyDisasm).Argument3.ArgSize = 32;
         ImmediatSize = 32;
@@ -2419,7 +2419,7 @@ void __bea_callspec__ imul_GvEvIv(PDISASM pMyDisasm)
         if (!Security(0)) return;
         third_arg = 1;
         (*pMyDisasm).Instruction.Immediat = *((UInt16*)(UIntPtr) (EIP_- 2));
-        (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument3.ArgMnemonic, "%.4X", *((UInt16*)(UIntPtr) (EIP_- 2)));
+        (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument3.ArgMnemonic, "%.4X",(Int64) *((UInt16*)(UIntPtr) (EIP_- 2)));
         (*pMyDisasm).Argument3.ArgType = CONSTANT_TYPE+ABSOLUTE_;
         (*pMyDisasm).Argument3.ArgSize = 16;
         ImmediatSize = 16;
@@ -2447,7 +2447,7 @@ void __bea_callspec__ imul_GvEvIb(PDISASM pMyDisasm)
         if (!Security(0)) return;
         third_arg = 1;
         (*pMyDisasm).Instruction.Immediat = *((UInt8*)(UIntPtr) (EIP_- 1));
-        (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument3.ArgMnemonic, "%.2X", *((UInt8*)(UIntPtr) (EIP_- 1)));
+        (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument3.ArgMnemonic, "%.2X",(Int64) *((UInt8*)(UIntPtr) (EIP_- 1)));
         (*pMyDisasm).Argument3.ArgType = CONSTANT_TYPE+ABSOLUTE_;
         (*pMyDisasm).Argument3.ArgSize = 8;
         ImmediatSize = 8;
@@ -2461,7 +2461,7 @@ void __bea_callspec__ imul_GvEvIb(PDISASM pMyDisasm)
         if (!Security(0)) return;
         third_arg = 1;
         (*pMyDisasm).Instruction.Immediat = *((UInt8*)(UIntPtr) (EIP_- 1));
-        (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument3.ArgMnemonic, "%.2X", *((UInt8*)(UIntPtr) (EIP_- 1)));
+        (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument3.ArgMnemonic, "%.2X",(Int64) *((UInt8*)(UIntPtr) (EIP_- 1)));
         (*pMyDisasm).Argument3.ArgType = CONSTANT_TYPE+ABSOLUTE_;
         (*pMyDisasm).Argument3.ArgSize = 8;
         ImmediatSize = 8;
@@ -2502,13 +2502,13 @@ void __bea_callspec__ jo_(PDISASM pMyDisasm)
     (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "jo ");
     if (!Security(1)) return;
     MyNumber = *((Int8*)(UIntPtr) (EIP_+1));
-    CalculateRelativeAddress(&MyAddress, NB_PREFIX+2+MyNumber);
+    CalculateRelativeAddress(&MyAddress,(Int64) NB_PREFIX+2+MyNumber);
     if (OperandSize == 16) MyAddress = MyAddress & 0xffff;
     if (MyAddress >= 0x100000000LL) {
-        (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%I64X", MyAddress);
+        (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%I64X",(Int64) MyAddress);
     }
     else {
-        (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%.8X", MyAddress);
+        (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%.8X",(Int64) MyAddress);
     }
     (*pMyDisasm).Argument1.ArgType = CONSTANT_TYPE+RELATIVE_;
     (*pMyDisasm).Argument1.ArgSize = OperandSize;
@@ -2538,13 +2538,13 @@ void __bea_callspec__ jno_(PDISASM pMyDisasm)
     (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "jno ");
     if (!Security(1)) return;
     MyNumber = *((Int8*)(UIntPtr) (EIP_+1));
-    CalculateRelativeAddress(&MyAddress, NB_PREFIX+2+MyNumber);
+    CalculateRelativeAddress(&MyAddress,(Int64) NB_PREFIX+2+MyNumber);
     if (OperandSize == 16) MyAddress = MyAddress & 0xffff;
     if (MyAddress >= 0x100000000LL) {
-        (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%I64X", MyAddress);
+        (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%I64X",(Int64) MyAddress);
     }
     else {
-        (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%.8X", MyAddress);
+        (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%.8X",(Int64) MyAddress);
     }
     (*pMyDisasm).Argument1.ArgType = CONSTANT_TYPE+RELATIVE_;
     (*pMyDisasm).Argument1.ArgSize = OperandSize;
@@ -2574,13 +2574,13 @@ void __bea_callspec__ jc_(PDISASM pMyDisasm)
     (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "jc ");
     if (!Security(1)) return;
     MyNumber = *((Int8*)(UIntPtr) (EIP_+1));
-    CalculateRelativeAddress(&MyAddress, NB_PREFIX+2+MyNumber);
+    CalculateRelativeAddress(&MyAddress,(Int64) NB_PREFIX+2+MyNumber);
     if (OperandSize == 16) MyAddress = MyAddress & 0xffff;
     if (MyAddress >= 0x100000000LL) {
-        (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%I64X", MyAddress);
+        (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%I64X",(Int64) MyAddress);
     }
     else {
-        (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%.8X", MyAddress);
+        (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%.8X",(Int64) MyAddress);
     }
     (*pMyDisasm).Argument1.ArgType = CONSTANT_TYPE+RELATIVE_;
     (*pMyDisasm).Argument1.ArgSize = OperandSize;
@@ -2610,13 +2610,13 @@ void __bea_callspec__ jnc_(PDISASM pMyDisasm)
     (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "jnc ");
     if (!Security(1)) return;
     MyNumber = *((Int8*)(UIntPtr) (EIP_+1));
-    CalculateRelativeAddress(&MyAddress, NB_PREFIX+2+MyNumber);
+    CalculateRelativeAddress(&MyAddress,(Int64) NB_PREFIX+2+MyNumber);
     if (OperandSize == 16) MyAddress = MyAddress & 0xffff;
     if (MyAddress >= 0x100000000LL) {
-        (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%I64X", MyAddress);
+        (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%I64X",(Int64) MyAddress);
     }
     else {
-        (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%.8X", MyAddress);
+        (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%.8X",(Int64) MyAddress);
     }
     (*pMyDisasm).Argument1.ArgType = CONSTANT_TYPE+RELATIVE_;
     (*pMyDisasm).Argument1.ArgSize = OperandSize;
@@ -2645,13 +2645,13 @@ void __bea_callspec__ je_(PDISASM pMyDisasm)
     (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "je ");
     if (!Security(1)) return;
     MyNumber = *((Int8*)(UIntPtr) (EIP_+1));
-    CalculateRelativeAddress(&MyAddress, NB_PREFIX+2+MyNumber);
+    CalculateRelativeAddress(&MyAddress,(Int64) NB_PREFIX+2+MyNumber);
     if (OperandSize == 16) MyAddress = MyAddress & 0xffff;
     if (MyAddress >= 0x100000000LL) {
-        (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%I64X", MyAddress);
+        (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%I64X",(Int64) MyAddress);
     }
     else {
-        (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%.8X", MyAddress);
+        (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%.8X",(Int64) MyAddress);
     }
     (*pMyDisasm).Argument1.ArgType = CONSTANT_TYPE+RELATIVE_;
     (*pMyDisasm).Argument1.ArgSize = OperandSize;
@@ -2681,13 +2681,13 @@ void __bea_callspec__ jne_(PDISASM pMyDisasm)
     (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "jne ");
     if (!Security(1)) return;
     MyNumber = *((Int8*)(UIntPtr) (EIP_+1));
-    CalculateRelativeAddress(&MyAddress, NB_PREFIX+2+MyNumber);
+    CalculateRelativeAddress(&MyAddress,(Int64) NB_PREFIX+2+MyNumber);
     if (OperandSize == 16) MyAddress = MyAddress & 0xffff;
     if (MyAddress >= 0x100000000LL) {
-        (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%I64X", MyAddress);
+        (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%I64X",(Int64) MyAddress);
     }
     else {
-        (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%.8X", MyAddress);
+        (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%.8X",(Int64) MyAddress);
     }
     (*pMyDisasm).Argument1.ArgType = CONSTANT_TYPE+RELATIVE_;
     (*pMyDisasm).Argument1.ArgSize = OperandSize;
@@ -2717,13 +2717,13 @@ void __bea_callspec__ jbe_(PDISASM pMyDisasm)
     (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "jbe ");
     if (!Security(1)) return;
     MyNumber = *((Int8*)(UIntPtr) (EIP_+1));
-    CalculateRelativeAddress(&MyAddress, NB_PREFIX+2+MyNumber);
+    CalculateRelativeAddress(&MyAddress,(Int64) NB_PREFIX+2+MyNumber);
     if (OperandSize == 16) MyAddress = MyAddress & 0xffff;
     if (MyAddress >= 0x100000000LL) {
-        (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%I64X", MyAddress);
+        (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%I64X",(Int64) MyAddress);
     }
     else {
-        (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%.8X", MyAddress);
+        (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%.8X",(Int64) MyAddress);
     }
     (*pMyDisasm).Argument1.ArgType = CONSTANT_TYPE+RELATIVE_;
     (*pMyDisasm).Argument1.ArgSize = OperandSize;
@@ -2753,13 +2753,13 @@ void __bea_callspec__ jnbe_(PDISASM pMyDisasm)
     (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "jnbe ");
     if (!Security(1)) return;
     MyNumber = *((Int8*)(UIntPtr) (EIP_+1));
-    CalculateRelativeAddress(&MyAddress, NB_PREFIX+2+MyNumber);
+    CalculateRelativeAddress(&MyAddress,(Int64) NB_PREFIX+2+MyNumber);
     if (OperandSize == 16) MyAddress = MyAddress & 0xffff;
     if (MyAddress >= 0x100000000LL) {
-        (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%I64X", MyAddress);
+        (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%I64X",(Int64) MyAddress);
     }
     else {
-        (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%.8X", MyAddress);
+        (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%.8X",(Int64) MyAddress);
     }
     (*pMyDisasm).Argument1.ArgType = CONSTANT_TYPE+RELATIVE_;
     (*pMyDisasm).Argument1.ArgSize = OperandSize;
@@ -2789,13 +2789,13 @@ void __bea_callspec__ js_(PDISASM pMyDisasm)
     (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "js ");
     if (!Security(1)) return;
     MyNumber = *((Int8*)(UIntPtr) (EIP_+1));
-    CalculateRelativeAddress(&MyAddress, NB_PREFIX+2+MyNumber);
+    CalculateRelativeAddress(&MyAddress,(Int64) NB_PREFIX+2+MyNumber);
     if (OperandSize == 16) MyAddress = MyAddress & 0xffff;
     if (MyAddress >= 0x100000000LL) {
-        (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%I64X", MyAddress);
+        (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%I64X",(Int64) MyAddress);
     }
     else {
-        (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%.8X", MyAddress);
+        (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%.8X",(Int64) MyAddress);
     }
     (*pMyDisasm).Argument1.ArgType = CONSTANT_TYPE+RELATIVE_;
     (*pMyDisasm).Argument1.ArgSize = OperandSize;
@@ -2825,13 +2825,13 @@ void __bea_callspec__ jns_(PDISASM pMyDisasm)
     (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "jns ");
     if (!Security(1)) return;
     MyNumber = *((Int8*)(UIntPtr) (EIP_+1));
-    CalculateRelativeAddress(&MyAddress, NB_PREFIX+2+MyNumber);
+    CalculateRelativeAddress(&MyAddress,(Int64) NB_PREFIX+2+MyNumber);
     if (OperandSize == 16) MyAddress = MyAddress & 0xffff;
     if (MyAddress >= 0x100000000LL) {
-        (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%I64X", MyAddress);
+        (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%I64X",(Int64) MyAddress);
     }
     else {
-        (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%.8X", MyAddress);
+        (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%.8X",(Int64) MyAddress);
     }
     (*pMyDisasm).Argument1.ArgType = CONSTANT_TYPE+RELATIVE_;
     (*pMyDisasm).Argument1.ArgSize = OperandSize;
@@ -2861,13 +2861,13 @@ void __bea_callspec__ jp_(PDISASM pMyDisasm)
     (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "jp ");
     if (!Security(1)) return;
     MyNumber = *((Int8*)(UIntPtr) (EIP_+1));
-    CalculateRelativeAddress(&MyAddress, NB_PREFIX+2+MyNumber);
+    CalculateRelativeAddress(&MyAddress,(Int64) NB_PREFIX+2+MyNumber);
     if (OperandSize == 16) MyAddress = MyAddress & 0xffff;
     if (MyAddress >= 0x100000000LL) {
-        (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%I64X", MyAddress);
+        (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%I64X",(Int64) MyAddress);
     }
     else {
-        (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%.8X", MyAddress);
+        (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%.8X",(Int64) MyAddress);
     }
     (*pMyDisasm).Argument1.ArgType = CONSTANT_TYPE+RELATIVE_;
     (*pMyDisasm).Argument1.ArgSize = OperandSize;
@@ -2897,13 +2897,13 @@ void __bea_callspec__ jnp_(PDISASM pMyDisasm)
     (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "jnp ");
     if (!Security(1)) return;
     MyNumber = *((Int8*)(UIntPtr) (EIP_+1));
-    CalculateRelativeAddress(&MyAddress, NB_PREFIX+2+MyNumber);
+    CalculateRelativeAddress(&MyAddress,(Int64) NB_PREFIX+2+MyNumber);
     if (OperandSize == 16) MyAddress = MyAddress & 0xffff;
     if (MyAddress >= 0x100000000LL) {
-        (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%I64X", MyAddress);
+        (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%I64X",(Int64) MyAddress);
     }
     else {
-        (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%.8X", MyAddress);
+        (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%.8X",(Int64) MyAddress);
     }
     (*pMyDisasm).Argument1.ArgType = CONSTANT_TYPE+RELATIVE_;
     (*pMyDisasm).Argument1.ArgSize = OperandSize;
@@ -2933,13 +2933,13 @@ void __bea_callspec__ jl_(PDISASM pMyDisasm)
     (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "jl ");
     if (!Security(1)) return;
     MyNumber = *((Int8*)(UIntPtr) (EIP_+1));
-    CalculateRelativeAddress(&MyAddress, NB_PREFIX+2+MyNumber);
+    CalculateRelativeAddress(&MyAddress,(Int64) NB_PREFIX+2+MyNumber);
     if (OperandSize == 16) MyAddress = MyAddress & 0xffff;
     if (MyAddress >= 0x100000000LL) {
-        (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%I64X", MyAddress);
+        (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%I64X",(Int64) MyAddress);
     }
     else {
-        (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%.8X", MyAddress);
+        (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%.8X",(Int64) MyAddress);
     }
     (*pMyDisasm).Argument1.ArgType = CONSTANT_TYPE+RELATIVE_;
     (*pMyDisasm).Argument1.ArgSize = OperandSize;
@@ -2969,13 +2969,13 @@ void __bea_callspec__ jnl_(PDISASM pMyDisasm)
     (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "jnl ");
     if (!Security(1)) return;
     MyNumber = *((Int8*)(UIntPtr) (EIP_+1));
-    CalculateRelativeAddress(&MyAddress, NB_PREFIX+2+MyNumber);
+    CalculateRelativeAddress(&MyAddress,(Int64) NB_PREFIX+2+MyNumber);
     if (OperandSize == 16) MyAddress = MyAddress & 0xffff;
     if (MyAddress >= 0x100000000LL) {
-        (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%I64X", MyAddress);
+        (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%I64X",(Int64) MyAddress);
     }
     else {
-        (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%.8X", MyAddress);
+        (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%.8X",(Int64) MyAddress);
     }
     (*pMyDisasm).Argument1.ArgType = CONSTANT_TYPE+RELATIVE_;
     (*pMyDisasm).Argument1.ArgSize = OperandSize;
@@ -3005,13 +3005,13 @@ void __bea_callspec__ jle_(PDISASM pMyDisasm)
     (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "jle ");
     if (!Security(1)) return;
     MyNumber = *((Int8*)(UIntPtr) (EIP_+1));
-    CalculateRelativeAddress(&MyAddress, NB_PREFIX+2+MyNumber);
+    CalculateRelativeAddress(&MyAddress,(Int64) NB_PREFIX+2+MyNumber);
     if (OperandSize == 16) MyAddress = MyAddress & 0xffff;
     if (MyAddress >= 0x100000000LL) {
-        (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%I64X", MyAddress);
+        (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%I64X",(Int64) MyAddress);
     }
     else {
-        (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%.8X", MyAddress);
+        (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%.8X",(Int64) MyAddress);
     }
     (*pMyDisasm).Argument1.ArgType = CONSTANT_TYPE+RELATIVE_;
     (*pMyDisasm).Argument1.ArgSize = OperandSize;
@@ -3041,13 +3041,13 @@ void __bea_callspec__ jnle_(PDISASM pMyDisasm)
     (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "jnle ");
     if (!Security(1)) return;
     MyNumber = *((Int8*)(UIntPtr) (EIP_+1));
-    CalculateRelativeAddress(&MyAddress, NB_PREFIX+2+MyNumber);
+    CalculateRelativeAddress(&MyAddress,(Int64) NB_PREFIX+2+MyNumber);
     if (OperandSize == 16) MyAddress = MyAddress & 0xffff;
     if (MyAddress >= 0x100000000LL) {
-        (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%I64X", MyAddress);
+        (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%I64X",(Int64) MyAddress);
     }
     else {
-        (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%.8X", MyAddress);
+        (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%.8X",(Int64) MyAddress);
     }
     (*pMyDisasm).Argument1.ArgType = CONSTANT_TYPE+RELATIVE_;
     (*pMyDisasm).Argument1.ArgSize = OperandSize;
@@ -3079,12 +3079,12 @@ void __bea_callspec__ jo_near(PDISASM pMyDisasm)
     if (OperandSize >= 32) {
         if (!Security(5)) return;
         MyNumber = *((Int32*)(UIntPtr) (EIP_+1));
-        CalculateRelativeAddress(&MyAddress, NB_PREFIX+6+MyNumber);
+        CalculateRelativeAddress(&MyAddress,(Int64) NB_PREFIX+6+MyNumber);
         if (MyAddress >= 0x100000000LL) {
-            (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%I64X", MyAddress);
+            (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%I64X",(Int64) MyAddress);
         }
         else {
-            (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%.8X", MyAddress);
+            (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%.8X",(Int64) MyAddress);
         }
         (*pMyDisasm).Argument1.ArgType = CONSTANT_TYPE+RELATIVE_;
         (*pMyDisasm).Argument1.ArgSize = OperandSize;
@@ -3096,9 +3096,9 @@ void __bea_callspec__ jo_near(PDISASM pMyDisasm)
     else {
         if (!Security(3)) return;
         MyNumber = *((Int16*)(UIntPtr) (EIP_+1));
-        CalculateRelativeAddress(&MyAddress, NB_PREFIX+4+MyNumber);
+        CalculateRelativeAddress(&MyAddress,(Int64) NB_PREFIX+4+MyNumber);
         MyAddress = MyAddress & 0xffff;
-        (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%.4X", MyAddress);
+        (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%.4X",(Int64) MyAddress);
         (*pMyDisasm).Argument1.ArgType = CONSTANT_TYPE+RELATIVE_;
         (*pMyDisasm).Argument1.ArgSize = OperandSize;
         (*pMyDisasm).Argument1.AccessMode = READ;
@@ -3130,12 +3130,12 @@ void __bea_callspec__ jno_near(PDISASM pMyDisasm)
     if (OperandSize >= 32) {
         if (!Security(5)) return;
         MyNumber = *((Int32*)(UIntPtr) (EIP_+1));
-        CalculateRelativeAddress(&MyAddress, NB_PREFIX+6+MyNumber);
+        CalculateRelativeAddress(&MyAddress,(Int64) NB_PREFIX+6+MyNumber);
         if (MyAddress >= 0x100000000LL) {
-            (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%I64X", MyAddress);
+            (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%I64X",(Int64) MyAddress);
         }
         else {
-            (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%.8X", MyAddress);
+            (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%.8X",(Int64) MyAddress);
         }
         (*pMyDisasm).Argument1.ArgType = CONSTANT_TYPE+RELATIVE_;
         (*pMyDisasm).Argument1.ArgSize = OperandSize;
@@ -3147,9 +3147,9 @@ void __bea_callspec__ jno_near(PDISASM pMyDisasm)
     else {
         if (!Security(3)) return;
         MyNumber = *((Int16*)(UIntPtr) (EIP_+1));
-        CalculateRelativeAddress(&MyAddress, NB_PREFIX+4+MyNumber);
+        CalculateRelativeAddress(&MyAddress,(Int64) NB_PREFIX+4+MyNumber);
         MyAddress = MyAddress & 0xffff;
-        (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%.4X", MyAddress);
+        (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%.4X",(Int64) MyAddress);
         (*pMyDisasm).Argument1.ArgType = CONSTANT_TYPE+RELATIVE_;
         (*pMyDisasm).Argument1.ArgSize = OperandSize;
         (*pMyDisasm).Argument1.AccessMode = READ;
@@ -3181,12 +3181,12 @@ void __bea_callspec__ jc_near(PDISASM pMyDisasm)
     if (OperandSize >= 32) {
         if (!Security(5)) return;
         MyNumber = *((Int32*)(UIntPtr) (EIP_+1));
-        CalculateRelativeAddress(&MyAddress, NB_PREFIX+6+MyNumber);
+        CalculateRelativeAddress(&MyAddress,(Int64) NB_PREFIX+6+MyNumber);
         if (MyAddress >= 0x100000000LL) {
-            (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%I64X", MyAddress);
+            (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%I64X",(Int64) MyAddress);
         }
         else {
-            (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%.8X", MyAddress);
+            (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%.8X",(Int64) MyAddress);
         }
         (*pMyDisasm).Argument1.ArgType = CONSTANT_TYPE+RELATIVE_;
         (*pMyDisasm).Argument1.AccessMode = READ;
@@ -3197,9 +3197,9 @@ void __bea_callspec__ jc_near(PDISASM pMyDisasm)
     else {
         if (!Security(3)) return;
         MyNumber = *((Int16*)(UIntPtr) (EIP_+1));
-        CalculateRelativeAddress(&MyAddress, NB_PREFIX+4+MyNumber);
+        CalculateRelativeAddress(&MyAddress,(Int64) NB_PREFIX+4+MyNumber);
         MyAddress = MyAddress & 0xffff;
-        (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%.4X", MyAddress);
+        (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%.4X",(Int64) MyAddress);
         (*pMyDisasm).Argument1.ArgType = CONSTANT_TYPE+RELATIVE_;
         (*pMyDisasm).Argument1.AccessMode = READ;
         (*pMyDisasm).Instruction.AddrValue = MyAddress;
@@ -3230,12 +3230,12 @@ void __bea_callspec__ jnc_near(PDISASM pMyDisasm)
     if (OperandSize >= 32) {
         if (!Security(5)) return;
         MyNumber = *((Int32*)(UIntPtr) (EIP_+1));
-        CalculateRelativeAddress(&MyAddress, NB_PREFIX+6+MyNumber);
+        CalculateRelativeAddress(&MyAddress,(Int64) NB_PREFIX+6+MyNumber);
         if (MyAddress >= 0x100000000LL) {
-            (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%I64X", MyAddress);
+            (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%I64X",(Int64) MyAddress);
         }
         else {
-            (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%.8X", MyAddress);
+            (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%.8X",(Int64) MyAddress);
         }
         (*pMyDisasm).Argument1.ArgType = CONSTANT_TYPE+RELATIVE_;
         (*pMyDisasm).Argument1.AccessMode = READ;
@@ -3246,9 +3246,9 @@ void __bea_callspec__ jnc_near(PDISASM pMyDisasm)
     else {
         if (!Security(3)) return;
         MyNumber = *((Int16*)(UIntPtr) (EIP_+1));
-        CalculateRelativeAddress(&MyAddress, NB_PREFIX+4+MyNumber);
+        CalculateRelativeAddress(&MyAddress,(Int64) NB_PREFIX+4+MyNumber);
         MyAddress = MyAddress & 0xffff;
-        (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%.4X", MyAddress);
+        (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%.4X",(Int64) MyAddress);
         (*pMyDisasm).Argument1.ArgType = CONSTANT_TYPE+RELATIVE_;
         (*pMyDisasm).Argument1.AccessMode = READ;
         (*pMyDisasm).Instruction.AddrValue = MyAddress;
@@ -3279,12 +3279,12 @@ void __bea_callspec__ je_near(PDISASM pMyDisasm)
     if (OperandSize >= 32) {
         if (!Security(5)) return;
         MyNumber = *((Int32*)(UIntPtr) (EIP_+1));
-        CalculateRelativeAddress(&MyAddress, NB_PREFIX+6+MyNumber);
+        CalculateRelativeAddress(&MyAddress,(Int64) NB_PREFIX+6+MyNumber);
         if (MyAddress >= 0x100000000LL) {
-            (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%I64X", MyAddress);
+            (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%I64X",(Int64) MyAddress);
         }
         else {
-            (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%.8X", MyAddress);
+            (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%.8X",(Int64) MyAddress);
         }
         (*pMyDisasm).Argument1.ArgType = CONSTANT_TYPE+RELATIVE_;
         (*pMyDisasm).Argument1.AccessMode = READ;
@@ -3295,9 +3295,9 @@ void __bea_callspec__ je_near(PDISASM pMyDisasm)
     else {
         if (!Security(3)) return;
         MyNumber = *((Int16*)(UIntPtr) (EIP_+1));
-        CalculateRelativeAddress(&MyAddress, NB_PREFIX+4+MyNumber);
+        CalculateRelativeAddress(&MyAddress,(Int64) NB_PREFIX+4+MyNumber);
         MyAddress = MyAddress & 0xffff;
-        (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%.4X", MyAddress);
+        (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%.4X",(Int64) MyAddress);
         (*pMyDisasm).Argument1.ArgType = CONSTANT_TYPE+RELATIVE_;
         (*pMyDisasm).Argument1.AccessMode = READ;
         (*pMyDisasm).Instruction.AddrValue = MyAddress;
@@ -3328,12 +3328,12 @@ void __bea_callspec__ jne_near(PDISASM pMyDisasm)
     if (OperandSize >= 32) {
         if (!Security(5)) return;
         MyNumber = *((Int32*)(UIntPtr) (EIP_+1));
-        CalculateRelativeAddress(&MyAddress, NB_PREFIX+6+MyNumber);
+        CalculateRelativeAddress(&MyAddress,(Int64) NB_PREFIX+6+MyNumber);
         if (MyAddress >= 0x100000000LL) {
-            (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%I64X", MyAddress);
+            (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%I64X",(Int64) MyAddress);
         }
         else {
-            (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%.8X", MyAddress);
+            (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%.8X",(Int64) MyAddress);
         }
         (*pMyDisasm).Argument1.ArgType = CONSTANT_TYPE+RELATIVE_;
         (*pMyDisasm).Argument1.AccessMode = READ;
@@ -3344,9 +3344,9 @@ void __bea_callspec__ jne_near(PDISASM pMyDisasm)
     else {
         if (!Security(3)) return;
         MyNumber = *((Int16*)(UIntPtr) (EIP_+1));
-        CalculateRelativeAddress(&MyAddress, NB_PREFIX+4+MyNumber);
+        CalculateRelativeAddress(&MyAddress,(Int64) NB_PREFIX+4+MyNumber);
         MyAddress = MyAddress & 0xffff;
-        (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%.4X", MyAddress);
+        (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%.4X",(Int64) MyAddress);
         (*pMyDisasm).Argument1.ArgType = CONSTANT_TYPE+RELATIVE_;
         (*pMyDisasm).Argument1.AccessMode = READ;
         (*pMyDisasm).Instruction.AddrValue = MyAddress;
@@ -3376,12 +3376,12 @@ void __bea_callspec__ jbe_near(PDISASM pMyDisasm)
     if (OperandSize >= 32) {
         if (!Security(5)) return;
         MyNumber = *((Int32*)(UIntPtr) (EIP_+1));
-        CalculateRelativeAddress(&MyAddress, NB_PREFIX+6+MyNumber);
+        CalculateRelativeAddress(&MyAddress,(Int64) NB_PREFIX+6+MyNumber);
         if (MyAddress >= 0x100000000LL) {
-            (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%I64X", MyAddress);
+            (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%I64X",(Int64) MyAddress);
         }
         else {
-            (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%.8X", MyAddress);
+            (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%.8X",(Int64) MyAddress);
         }
         (*pMyDisasm).Argument1.ArgType = CONSTANT_TYPE+RELATIVE_;
         (*pMyDisasm).Argument1.AccessMode = READ;
@@ -3392,9 +3392,9 @@ void __bea_callspec__ jbe_near(PDISASM pMyDisasm)
     else {
         if (!Security(3)) return;
         MyNumber = *((Int16*)(UIntPtr) (EIP_+1));
-        CalculateRelativeAddress(&MyAddress, NB_PREFIX+4+MyNumber);
+        CalculateRelativeAddress(&MyAddress,(Int64) NB_PREFIX+4+MyNumber);
         MyAddress = MyAddress & 0xffff;
-        (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%.4X", MyAddress);
+        (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%.4X",(Int64) MyAddress);
         (*pMyDisasm).Argument1.ArgType = CONSTANT_TYPE+RELATIVE_;
         (*pMyDisasm).Argument1.AccessMode = READ;
         (*pMyDisasm).Instruction.AddrValue = MyAddress;
@@ -3426,12 +3426,12 @@ void __bea_callspec__ ja_near(PDISASM pMyDisasm)
     if (OperandSize >= 32) {
         if (!Security(5)) return;
         MyNumber = *((Int32*)(UIntPtr) (EIP_+1));
-        CalculateRelativeAddress(&MyAddress, NB_PREFIX+6+MyNumber);
+        CalculateRelativeAddress(&MyAddress,(Int64) NB_PREFIX+6+MyNumber);
         if (MyAddress >= 0x100000000LL) {
-            (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%I64X", MyAddress);
+            (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%I64X",(Int64) MyAddress);
         }
         else {
-            (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%.8X", MyAddress);
+            (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%.8X",(Int64) MyAddress);
         }
         (*pMyDisasm).Argument1.ArgType = CONSTANT_TYPE+RELATIVE_;
         (*pMyDisasm).Argument1.AccessMode = READ;
@@ -3442,9 +3442,9 @@ void __bea_callspec__ ja_near(PDISASM pMyDisasm)
     else {
         if (!Security(3)) return;
         MyNumber = *((Int16*)(UIntPtr) (EIP_+1));
-        CalculateRelativeAddress(&MyAddress, NB_PREFIX+4+MyNumber);
+        CalculateRelativeAddress(&MyAddress,(Int64) NB_PREFIX+4+MyNumber);
         MyAddress = MyAddress & 0xffff;
-        (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%.4X", MyAddress);
+        (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%.4X",(Int64) MyAddress);
         (*pMyDisasm).Argument1.ArgType = CONSTANT_TYPE+RELATIVE_;
         (*pMyDisasm).Argument1.AccessMode = READ;
         (*pMyDisasm).Instruction.AddrValue = MyAddress;
@@ -3475,12 +3475,12 @@ void __bea_callspec__ js_near(PDISASM pMyDisasm)
     if (OperandSize >= 32) {
         if (!Security(5)) return;
         MyNumber = *((Int32*)(UIntPtr) (EIP_+1));
-        CalculateRelativeAddress(&MyAddress, NB_PREFIX+6+MyNumber);
+        CalculateRelativeAddress(&MyAddress,(Int64) NB_PREFIX+6+MyNumber);
         if (MyAddress >= 0x100000000LL) {
-            (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%I64X", MyAddress);
+            (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%I64X",(Int64) MyAddress);
         }
         else {
-            (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%.8X", MyAddress);
+            (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%.8X",(Int64) MyAddress);
         }
         (*pMyDisasm).Argument1.ArgType = CONSTANT_TYPE+RELATIVE_;
         (*pMyDisasm).Argument1.AccessMode = READ;
@@ -3491,9 +3491,9 @@ void __bea_callspec__ js_near(PDISASM pMyDisasm)
     else {
         if (!Security(3)) return;
         MyNumber = *((Int16*)(UIntPtr) (EIP_+1));
-        CalculateRelativeAddress(&MyAddress, NB_PREFIX+4+MyNumber);
+        CalculateRelativeAddress(&MyAddress,(Int64) NB_PREFIX+4+MyNumber);
         MyAddress = MyAddress & 0xffff;
-        (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%.4X", MyAddress);
+        (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%.4X",(Int64) MyAddress);
         (*pMyDisasm).Argument1.ArgType = CONSTANT_TYPE+RELATIVE_;
         (*pMyDisasm).Argument1.AccessMode = READ;
         (*pMyDisasm).Instruction.AddrValue = MyAddress;
@@ -3524,12 +3524,12 @@ void __bea_callspec__ jns_near(PDISASM pMyDisasm)
     if (OperandSize >= 32) {
         if (!Security(5)) return;
         MyNumber = *((Int32*)(UIntPtr) (EIP_+1));
-        CalculateRelativeAddress(&MyAddress, NB_PREFIX+6+MyNumber);
+        CalculateRelativeAddress(&MyAddress,(Int64) NB_PREFIX+6+MyNumber);
         if (MyAddress >= 0x100000000LL) {
-            (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%I64X", MyAddress);
+            (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%I64X",(Int64) MyAddress);
         }
         else {
-            (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%.8X", MyAddress);
+            (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%.8X",(Int64) MyAddress);
         }
         (*pMyDisasm).Argument1.ArgType = CONSTANT_TYPE+RELATIVE_;
         (*pMyDisasm).Argument1.AccessMode = READ;
@@ -3540,9 +3540,9 @@ void __bea_callspec__ jns_near(PDISASM pMyDisasm)
     else {
         if (!Security(3)) return;
         MyNumber = *((Int16*)(UIntPtr) (EIP_+1));
-        CalculateRelativeAddress(&MyAddress, NB_PREFIX+4+MyNumber);
+        CalculateRelativeAddress(&MyAddress,(Int64) NB_PREFIX+4+MyNumber);
         MyAddress = MyAddress & 0xffff;
-        (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%.4X", MyAddress);
+        (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%.4X",(Int64) MyAddress);
         (*pMyDisasm).Argument1.ArgType = CONSTANT_TYPE+RELATIVE_;
         (*pMyDisasm).Argument1.AccessMode = READ;
         (*pMyDisasm).Instruction.AddrValue = MyAddress;
@@ -3573,12 +3573,12 @@ void __bea_callspec__ jp_near(PDISASM pMyDisasm)
     if (OperandSize >= 32) {
         if (!Security(5)) return;
         MyNumber = *((Int32*)(UIntPtr) (EIP_+1));
-        CalculateRelativeAddress(&MyAddress, NB_PREFIX+6+MyNumber);
+        CalculateRelativeAddress(&MyAddress,(Int64) NB_PREFIX+6+MyNumber);
         if (MyAddress >= 0x100000000LL) {
-            (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%I64X", MyAddress);
+            (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%I64X",(Int64) MyAddress);
         }
         else {
-            (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%.8X", MyAddress);
+            (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%.8X",(Int64) MyAddress);
         }
         (*pMyDisasm).Argument1.ArgType = CONSTANT_TYPE+RELATIVE_;
         (*pMyDisasm).Argument1.AccessMode = READ;
@@ -3589,9 +3589,9 @@ void __bea_callspec__ jp_near(PDISASM pMyDisasm)
     else {
         if (!Security(3)) return;
         MyNumber = *((Int16*)(UIntPtr) (EIP_+1));
-        CalculateRelativeAddress(&MyAddress, NB_PREFIX+4+MyNumber);
+        CalculateRelativeAddress(&MyAddress,(Int64) NB_PREFIX+4+MyNumber);
         MyAddress = MyAddress & 0xffff;
-        (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%.4X", MyAddress);
+        (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%.4X",(Int64) MyAddress);
         (*pMyDisasm).Argument1.ArgType = CONSTANT_TYPE+RELATIVE_;
         (*pMyDisasm).Argument1.AccessMode = READ;
         (*pMyDisasm).Instruction.AddrValue = MyAddress;
@@ -3622,12 +3622,12 @@ void __bea_callspec__ jnp_near(PDISASM pMyDisasm)
     if (OperandSize >= 32) {
         if (!Security(5)) return;
         MyNumber = *((Int32*)(UIntPtr) (EIP_+1));
-        CalculateRelativeAddress(&MyAddress, NB_PREFIX+6+MyNumber);
+        CalculateRelativeAddress(&MyAddress,(Int64) NB_PREFIX+6+MyNumber);
         if (MyAddress >= 0x100000000LL) {
-            (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%I64X", MyAddress);
+            (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%I64X",(Int64) MyAddress);
         }
         else {
-            (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%.8X", MyAddress);
+            (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%.8X",(Int64) MyAddress);
         }
         (*pMyDisasm).Argument1.ArgType = CONSTANT_TYPE+RELATIVE_;
         (*pMyDisasm).Argument1.AccessMode = READ;
@@ -3638,9 +3638,9 @@ void __bea_callspec__ jnp_near(PDISASM pMyDisasm)
     else {
         if (!Security(3)) return;
         MyNumber = *((Int16*)(UIntPtr) (EIP_+1));
-        CalculateRelativeAddress(&MyAddress, NB_PREFIX+4+MyNumber);
+        CalculateRelativeAddress(&MyAddress,(Int64) NB_PREFIX+4+MyNumber);
         MyAddress = MyAddress & 0xffff;
-        (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%.4X", MyAddress);
+        (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%.4X",(Int64) MyAddress);
         (*pMyDisasm).Argument1.ArgType = CONSTANT_TYPE+RELATIVE_;
         (*pMyDisasm).Argument1.AccessMode = READ;
         (*pMyDisasm).Instruction.AddrValue = MyAddress;
@@ -3671,12 +3671,12 @@ void __bea_callspec__ jl_near(PDISASM pMyDisasm)
     if (OperandSize >= 32) {
         if (!Security(5)) return;
         MyNumber = *((Int32*)(UIntPtr) (EIP_+1));
-        CalculateRelativeAddress(&MyAddress, NB_PREFIX+6+MyNumber);
+        CalculateRelativeAddress(&MyAddress,(Int64) NB_PREFIX+6+MyNumber);
         if (MyAddress >= 0x100000000LL) {
-            (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%I64X", MyAddress);
+            (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%I64X",(Int64) MyAddress);
         }
         else {
-            (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%.8X", MyAddress);
+            (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%.8X",(Int64) MyAddress);
         }
         (*pMyDisasm).Argument1.ArgType = CONSTANT_TYPE+RELATIVE_;
         (*pMyDisasm).Argument1.AccessMode = READ;
@@ -3687,9 +3687,9 @@ void __bea_callspec__ jl_near(PDISASM pMyDisasm)
     else {
         if (!Security(3)) return;
         MyNumber = *((Int16*)(UIntPtr) (EIP_+1));
-        CalculateRelativeAddress(&MyAddress, NB_PREFIX+4+MyNumber);
+        CalculateRelativeAddress(&MyAddress,(Int64) NB_PREFIX+4+MyNumber);
         MyAddress = MyAddress & 0xffff;
-        (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%.4X", MyAddress);
+        (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%.4X",(Int64) MyAddress);
         (*pMyDisasm).Argument1.ArgType = CONSTANT_TYPE+RELATIVE_;
         (*pMyDisasm).Argument1.AccessMode = READ;
         (*pMyDisasm).Instruction.AddrValue = MyAddress;
@@ -3720,12 +3720,12 @@ void __bea_callspec__ jnl_near(PDISASM pMyDisasm)
     if (OperandSize >= 32) {
         if (!Security(5)) return;
         MyNumber = *((Int32*)(UIntPtr) (EIP_+1));
-        CalculateRelativeAddress(&MyAddress, NB_PREFIX+6+MyNumber);
+        CalculateRelativeAddress(&MyAddress,(Int64) NB_PREFIX+6+MyNumber);
         if (MyAddress >= 0x100000000LL) {
-            (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%I64X", MyAddress);
+            (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%I64X",(Int64) MyAddress);
         }
         else {
-            (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%.8X", MyAddress);
+            (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%.8X",(Int64) MyAddress);
         }
         (*pMyDisasm).Argument1.ArgType = CONSTANT_TYPE+RELATIVE_;
         (*pMyDisasm).Argument1.AccessMode = READ;
@@ -3736,9 +3736,9 @@ void __bea_callspec__ jnl_near(PDISASM pMyDisasm)
     else {
         if (!Security(3)) return;
         MyNumber = *((Int16*)(UIntPtr) (EIP_+1));
-        CalculateRelativeAddress(&MyAddress, NB_PREFIX+4+MyNumber);
+        CalculateRelativeAddress(&MyAddress,(Int64) NB_PREFIX+4+MyNumber);
         MyAddress = MyAddress & 0xffff;
-        (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%.4X", MyAddress);
+        (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%.4X",(Int64) MyAddress);
         (*pMyDisasm).Argument1.ArgType = CONSTANT_TYPE+RELATIVE_;
         (*pMyDisasm).Argument1.AccessMode = READ;
         (*pMyDisasm).Instruction.AddrValue = MyAddress;
@@ -3769,12 +3769,12 @@ void __bea_callspec__ jle_near(PDISASM pMyDisasm)
     if (OperandSize >= 32) {
         if (!Security(5)) return;
         MyNumber = *((Int32*)(UIntPtr) (EIP_+1));
-        CalculateRelativeAddress(&MyAddress, NB_PREFIX+6+MyNumber);
+        CalculateRelativeAddress(&MyAddress,(Int64) NB_PREFIX+6+MyNumber);
         if (MyAddress >= 0x100000000LL) {
-            (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%I64X", MyAddress);
+            (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%I64X",(Int64) MyAddress);
         }
         else {
-            (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%.8X", MyAddress);
+            (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%.8X",(Int64) MyAddress);
         }
         (*pMyDisasm).Argument1.ArgType = CONSTANT_TYPE+RELATIVE_;
         (*pMyDisasm).Argument1.AccessMode = READ;
@@ -3785,9 +3785,9 @@ void __bea_callspec__ jle_near(PDISASM pMyDisasm)
     else {
         if (!Security(3)) return;
         MyNumber = *((Int16*)(UIntPtr) (EIP_+1));
-        CalculateRelativeAddress(&MyAddress, NB_PREFIX+4+MyNumber);
+        CalculateRelativeAddress(&MyAddress,(Int64) NB_PREFIX+4+MyNumber);
         MyAddress = MyAddress & 0xffff;
-        (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%.4X", MyAddress);
+        (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%.4X",(Int64) MyAddress);
         (*pMyDisasm).Argument1.ArgType = CONSTANT_TYPE+RELATIVE_;
         (*pMyDisasm).Argument1.AccessMode = READ;
         (*pMyDisasm).Instruction.AddrValue = MyAddress;
@@ -3818,12 +3818,12 @@ void __bea_callspec__ jnle_near(PDISASM pMyDisasm)
     if (OperandSize >= 32) {
         if (!Security(5)) return;
         MyNumber = *((Int32*)(UIntPtr) (EIP_+1));
-        CalculateRelativeAddress(&MyAddress, NB_PREFIX+6+MyNumber);
+        CalculateRelativeAddress(&MyAddress,(Int64) NB_PREFIX+6+MyNumber);
         if (MyAddress >= 0x100000000LL) {
-            (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%I64X", MyAddress);
+            (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%I64X",(Int64) MyAddress);
         }
         else {
-            (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%.8X", MyAddress);
+            (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%.8X",(Int64) MyAddress);
         }
         (*pMyDisasm).Argument1.ArgType = CONSTANT_TYPE+RELATIVE_;
         (*pMyDisasm).Argument1.AccessMode = READ;
@@ -3834,9 +3834,9 @@ void __bea_callspec__ jnle_near(PDISASM pMyDisasm)
     else {
         if (!Security(3)) return;
         MyNumber = *((Int16*)(UIntPtr) (EIP_+1));
-        CalculateRelativeAddress(&MyAddress, NB_PREFIX+4+MyNumber);
+        CalculateRelativeAddress(&MyAddress,(Int64) NB_PREFIX+4+MyNumber);
         MyAddress = MyAddress & 0xffff;
-        (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%.4X", MyAddress);
+        (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%.4X",(Int64) MyAddress);
         (*pMyDisasm).Argument1.ArgType = CONSTANT_TYPE+RELATIVE_;
         (*pMyDisasm).Argument1.AccessMode = READ;
         (*pMyDisasm).Instruction.AddrValue = MyAddress;
@@ -3875,12 +3875,12 @@ void __bea_callspec__ jecxz_(PDISASM pMyDisasm)
     if (OperandSize >= 32) {
         if (!Security(5)) return;
         MyNumber = *((Int8*)(UIntPtr) (EIP_+1));
-        CalculateRelativeAddress(&MyAddress, NB_PREFIX+2+MyNumber);
+        CalculateRelativeAddress(&MyAddress,(Int64) NB_PREFIX+2+MyNumber);
         if (MyAddress >= 0x100000000LL) {
-            (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%I64X", MyAddress);
+            (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%I64X",(Int64) MyAddress);
         }
         else {
-            (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%.8X", MyAddress);
+            (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%.8X",(Int64) MyAddress);
         }
         (*pMyDisasm).Argument1.ArgType = CONSTANT_TYPE+RELATIVE_;
         (*pMyDisasm).Argument1.AccessMode = READ;
@@ -3891,9 +3891,9 @@ void __bea_callspec__ jecxz_(PDISASM pMyDisasm)
     else {
         if (!Security(3)) return;
         MyNumber = *((Int8*)(UIntPtr) (EIP_+1));
-        CalculateRelativeAddress(&MyAddress, NB_PREFIX+2+MyNumber);
+        CalculateRelativeAddress(&MyAddress,(Int64) NB_PREFIX+2+MyNumber);
         MyAddress = MyAddress & 0xffff;
-        (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%.4X", MyAddress);
+        (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%.4X",(Int64) MyAddress);
         (*pMyDisasm).Argument1.ArgType = CONSTANT_TYPE+RELATIVE_;
         (*pMyDisasm).Argument1.AccessMode = READ;
         (*pMyDisasm).Instruction.AddrValue = MyAddress;
@@ -3917,12 +3917,12 @@ void __bea_callspec__ jmp_near(PDISASM pMyDisasm)
     if (OperandSize >= 32) {
         if (!Security(5)) return;
         MyNumber = *((Int32*)(UIntPtr) (EIP_+1));
-        CalculateRelativeAddress(&MyAddress, NB_PREFIX+5+MyNumber);
+        CalculateRelativeAddress(&MyAddress,(Int64) NB_PREFIX+5+MyNumber);
         if (MyAddress >= 0x100000000LL) {
-            (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%I64X", MyAddress);
+            (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%I64X",(Int64) MyAddress);
         }
         else {
-            (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%.8X", MyAddress);
+            (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%.8X",(Int64) MyAddress);
         }
         (*pMyDisasm).Argument1.ArgType = CONSTANT_TYPE+RELATIVE_;
 
@@ -3933,9 +3933,9 @@ void __bea_callspec__ jmp_near(PDISASM pMyDisasm)
     else {
         if (!Security(3)) return;
         MyNumber = *((Int16*)(UIntPtr) (EIP_+1));
-        CalculateRelativeAddress(&MyAddress, NB_PREFIX+3+MyNumber);
+        CalculateRelativeAddress(&MyAddress,(Int64) NB_PREFIX+3+MyNumber);
         MyAddress = MyAddress & 0xffff;
-        (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%.4X", MyAddress);
+        (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%.4X",(Int64) MyAddress);
         (*pMyDisasm).Argument1.ArgType = CONSTANT_TYPE+RELATIVE_;
         (*pMyDisasm).Instruction.AddrValue = MyAddress;
         EIP_+=3;
@@ -3957,13 +3957,13 @@ void __bea_callspec__ jmp_short(PDISASM pMyDisasm)
     (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "jmp ");
     if (!Security(1)) return;
     MyNumber = *((Int8*)(UIntPtr) (EIP_+1));
-    CalculateRelativeAddress(&MyAddress, NB_PREFIX+2+MyNumber);
+    CalculateRelativeAddress(&MyAddress,(Int64) NB_PREFIX+2+MyNumber);
     if (OperandSize == 16) MyAddress = MyAddress & 0xffff;
     if (MyAddress >= 0x100000000LL) {
-        (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%I64X", MyAddress);
+        (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%I64X",(Int64) MyAddress);
     }
     else {
-        (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%.8X", MyAddress);
+        (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%.8X",(Int64) MyAddress);
     }
     (*pMyDisasm).Argument1.ArgType = CONSTANT_TYPE+RELATIVE_;
     (*pMyDisasm).Argument1.AccessMode = READ;
@@ -3998,12 +3998,12 @@ void __bea_callspec__ jmp_far(PDISASM pMyDisasm)
         if (OperandSize ==32) {
             if (!Security(7)) return;
             MyNumber = *((UInt16*)(UIntPtr) (EIP_+5));
-            i += CopyFormattedNumber((char*) &(*pMyDisasm).Argument1.ArgMnemonic+i, "%.4X", MyNumber);
+            i += CopyFormattedNumber((char*) &(*pMyDisasm).Argument1.ArgMnemonic+i, "%.4X",(Int64) MyNumber);
         }
         else {
             if (!Security(5)) return;
             MyNumber = *((UInt16*)(UIntPtr) (EIP_+3));
-            i += CopyFormattedNumber((char*) &(*pMyDisasm).Argument1.ArgMnemonic+i, "%.4X", MyNumber);
+            i += CopyFormattedNumber((char*) &(*pMyDisasm).Argument1.ArgMnemonic+i, "%.4X",(Int64) MyNumber);
         }
         if (SYNTAX_ == ATSyntax) {
             (void) strcpy ((*pMyDisasm).Argument1.ArgMnemonic+i, " , \x24");
@@ -4017,7 +4017,7 @@ void __bea_callspec__ jmp_far(PDISASM pMyDisasm)
         if (OperandSize == 16) {
             MyNumber = MyNumber & 0xffff;
         }
-        i += CopyFormattedNumber((char*) &(*pMyDisasm).Argument1.ArgMnemonic+i, "%.8X", MyNumber);
+        i += CopyFormattedNumber((char*) &(*pMyDisasm).Argument1.ArgMnemonic+i, "%.8X",(Int64) MyNumber);
         if (OperandSize == 32) {
             EIP_+=7;
         }
@@ -4230,12 +4230,12 @@ void __bea_callspec__ loop_(PDISASM pMyDisasm)
     if (!Security(1)) return;
     if (OperandSize >= 32) {
         MyNumber = *((Int8*)(UIntPtr) (EIP_+1));
-        CalculateRelativeAddress(&MyAddress, NB_PREFIX+2+MyNumber);
+        CalculateRelativeAddress(&MyAddress,(Int64) NB_PREFIX+2+MyNumber);
         if (MyAddress >= 0x100000000LL) {
-            (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%I64X", MyAddress);
+            (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%I64X",(Int64) MyAddress);
         }
         else {
-            (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%.8X", MyAddress);
+            (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%.8X",(Int64) MyAddress);
         }
         (*pMyDisasm).Argument1.AccessMode = READ;
         (*pMyDisasm).Argument1.ArgSize = OperandSize;
@@ -4246,9 +4246,9 @@ void __bea_callspec__ loop_(PDISASM pMyDisasm)
     }
     else {
         MyNumber = *((Int8*)(UIntPtr) (EIP_+1));
-        CalculateRelativeAddress(&MyAddress, NB_PREFIX+2+MyNumber);
+        CalculateRelativeAddress(&MyAddress,(Int64) NB_PREFIX+2+MyNumber);
         MyAddress = MyAddress & 0xffff;
-        (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%.4X", MyAddress);
+        (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%.4X",(Int64) MyAddress);
         (*pMyDisasm).Argument1.AccessMode = READ;
         (*pMyDisasm).Argument1.ArgSize = OperandSize;
         (*pMyDisasm).Instruction.ImplicitModifiedRegs = GENERAL_REG+REG1;
@@ -4272,12 +4272,12 @@ void __bea_callspec__ loopne_(PDISASM pMyDisasm)
     if (!Security(1)) return;
     if (OperandSize >= 32) {
         MyNumber = *((Int8*)(UIntPtr) (EIP_+1));
-        CalculateRelativeAddress(&MyAddress, NB_PREFIX+2+MyNumber);
+        CalculateRelativeAddress(&MyAddress,(Int64) NB_PREFIX+2+MyNumber);
         if (MyAddress >= 0x100000000LL) {
-            (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%I64X", MyAddress);
+            (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%I64X",(Int64) MyAddress);
         }
         else {
-            (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%.8X", MyAddress);
+            (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%.8X",(Int64) MyAddress);
         }
         (*pMyDisasm).Argument1.AccessMode = READ;
         (*pMyDisasm).Argument1.ArgSize = OperandSize;
@@ -4288,9 +4288,9 @@ void __bea_callspec__ loopne_(PDISASM pMyDisasm)
     }
     else {
         MyNumber = *((Int8*)(UIntPtr) (EIP_+1));
-        CalculateRelativeAddress(&MyAddress, NB_PREFIX+2+MyNumber);
+        CalculateRelativeAddress(&MyAddress,(Int64) NB_PREFIX+2+MyNumber);
         MyAddress = MyAddress & 0xffff;
-        (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%.4X", MyAddress);
+        (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%.4X",(Int64) MyAddress);
         (*pMyDisasm).Argument1.AccessMode = READ;
         (*pMyDisasm).Argument1.ArgSize = OperandSize;
         (*pMyDisasm).Instruction.ImplicitModifiedRegs = GENERAL_REG+REG1;
@@ -4314,12 +4314,12 @@ void __bea_callspec__ loope_(PDISASM pMyDisasm)
     if (!Security(1)) return;
     if (OperandSize >= 32) {
         MyNumber = *((Int8*)(UIntPtr) (EIP_+1));
-        CalculateRelativeAddress(&MyAddress, NB_PREFIX+2+MyNumber);
+        CalculateRelativeAddress(&MyAddress,(Int64) NB_PREFIX+2+MyNumber);
         if (MyAddress >= 0x100000000LL) {
-            (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%I64X", MyAddress);
+            (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%I64X",(Int64) MyAddress);
         }
         else {
-            (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%.8X", MyAddress);
+            (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%.8X",(Int64) MyAddress);
         }
         (*pMyDisasm).Argument1.AccessMode = READ;
         (*pMyDisasm).Argument1.ArgSize = OperandSize;
@@ -4330,9 +4330,9 @@ void __bea_callspec__ loope_(PDISASM pMyDisasm)
     }
     else {
         MyNumber = *((Int8*)(UIntPtr) (EIP_+1));
-        CalculateRelativeAddress(&MyAddress, NB_PREFIX+2+MyNumber);
+        CalculateRelativeAddress(&MyAddress,(Int64) NB_PREFIX+2+MyNumber);
         MyAddress = MyAddress & 0xffff;
-        (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%.4X", MyAddress);
+        (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%.4X",(Int64) MyAddress);
         (*pMyDisasm).Argument1.AccessMode = READ;
         (*pMyDisasm).Argument1.ArgSize = OperandSize;
         (*pMyDisasm).Instruction.ImplicitModifiedRegs = GENERAL_REG+REG1;
@@ -4523,21 +4523,21 @@ void __bea_callspec__ mov_ALOb(PDISASM pMyDisasm)
     if (AddressSize == 64) {
         if (!Security(9)) return;
         MyAddress = *((UInt64 *)(UIntPtr) (EIP_+1));
-       (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument2.ArgMnemonic, "%I64X", MyAddress);
+       (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument2.ArgMnemonic, "%I64X",(Int64) MyAddress);
        EIP_+=9;
        (*pMyDisasm).Argument2.Memory.Displacement = MyAddress;
     }
     else if (AddressSize == 32) {
         if (!Security(5)) return;
         MyAddress = *((UInt32*)(UIntPtr) (EIP_+1));
-       (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument2.ArgMnemonic, "%.8X", MyAddress);
+       (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument2.ArgMnemonic, "%.8X",(Int64) MyAddress);
        EIP_+=5;
        (*pMyDisasm).Argument2.Memory.Displacement = MyAddress;
     }
     else {
         if (!Security(3)) return;
         MyAddress = *((UInt16*)(UIntPtr) (EIP_+1));
-       (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument2.ArgMnemonic, "%.4X", MyAddress);
+       (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument2.ArgMnemonic, "%.4X",(Int64) MyAddress);
        EIP_+=3;
        (*pMyDisasm).Argument2.Memory.Displacement = MyAddress;
     }
@@ -4564,21 +4564,21 @@ void __bea_callspec__ mov_eAXOv(PDISASM pMyDisasm)
     if (AddressSize == 64) {
         if (!Security(9)) return;
         MyAddress = *((UInt64 *)(UIntPtr) (EIP_+1));
-       (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument2.ArgMnemonic, "%I64X", MyAddress);
+       (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument2.ArgMnemonic, "%I64X",(Int64) MyAddress);
        EIP_+=9;
        (*pMyDisasm).Argument2.Memory.Displacement = MyAddress;
     }
     else if (AddressSize == 32) {
         if (!Security(5)) return;
         MyAddress = *((UInt32*)(UIntPtr) (EIP_+1));
-       (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument2.ArgMnemonic, "%.8X", MyAddress);
+       (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument2.ArgMnemonic, "%.8X",(Int64) MyAddress);
        EIP_+=5;
        (*pMyDisasm).Argument2.Memory.Displacement = MyAddress;
     }
     else {
         if (!Security(3)) return;
         MyAddress = *((UInt16*)(UIntPtr) (EIP_+1));
-       (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument2.ArgMnemonic, "%.4X", MyAddress);
+       (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument2.ArgMnemonic, "%.4X",(Int64) MyAddress);
        EIP_+=3;
        (*pMyDisasm).Argument2.Memory.Displacement = MyAddress;
     }
@@ -4646,21 +4646,21 @@ void __bea_callspec__ mov_ObAL(PDISASM pMyDisasm)
     if (AddressSize == 64) {
         if (!Security(9)) return;
         MyAddress = *((UInt64 *)(UIntPtr) (EIP_+1));
-       (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%I64X", MyAddress);
+       (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%I64X",(Int64) MyAddress);
        EIP_+=9;
        (*pMyDisasm).Argument1.Memory.Displacement = MyAddress;
     }
     else if (AddressSize == 32) {
         if (!Security(5)) return;
         MyAddress = *((UInt32*)(UIntPtr) (EIP_+1));
-       (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%.8X", MyAddress);
+       (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%.8X",(Int64) MyAddress);
        EIP_+=5;
        (*pMyDisasm).Argument1.Memory.Displacement = MyAddress;
     }
     else {
         if (!Security(3)) return;
         MyAddress = *((UInt16*)(UIntPtr) (EIP_+1));
-       (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%.4X", MyAddress);
+       (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%.4X",(Int64) MyAddress);
        EIP_+=3;
        (*pMyDisasm).Argument1.Memory.Displacement = MyAddress;
     }
@@ -4687,21 +4687,21 @@ void __bea_callspec__ mov_OveAX(PDISASM pMyDisasm)
     if (AddressSize == 64) {
         if (!Security(9)) return;
         MyAddress = *((UInt64 *)(UIntPtr) (EIP_+1));
-       (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%I64X", MyAddress);
+       (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%I64X",(Int64) MyAddress);
        EIP_+=9;
        (*pMyDisasm).Argument1.Memory.Displacement = MyAddress;
     }
     else if (AddressSize == 32) {
         if (!Security(5)) return;
         MyAddress = *((UInt32*)(UIntPtr) (EIP_+1));
-       (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%.8X", MyAddress);
+       (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%.8X",(Int64) MyAddress);
        EIP_+=5;
        (*pMyDisasm).Argument1.Memory.Displacement = MyAddress;
     }
     else {
         if (!Security(3)) return;
         MyAddress = *((UInt16*)(UIntPtr) (EIP_+1));
-       (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%.4X", MyAddress);
+       (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%.4X",(Int64) MyAddress);
        EIP_+=3;
        (*pMyDisasm).Argument1.Memory.Displacement = MyAddress;
     }
@@ -4772,7 +4772,7 @@ void __bea_callspec__ mov_CLIb(PDISASM pMyDisasm)
     if (!Security(2)) return;
     ImmediatSize = 8;
     MyNumber = *((UInt8*)(UIntPtr) (EIP_+1));
-    (void) CopyFormattedNumber((char*) &(*pMyDisasm).Argument2.ArgMnemonic,"%.2X", MyNumber);
+    (void) CopyFormattedNumber((char*) &(*pMyDisasm).Argument2.ArgMnemonic,"%.2X",(Int64) MyNumber);
     (*pMyDisasm).Instruction.Immediat = MyNumber;
     (void) strcpy((char*) &(*pMyDisasm).Argument1.ArgMnemonic, Registers8BitsLegacy[1]);
     (*pMyDisasm).Argument1.ArgType = REGISTER_TYPE+GENERAL_REG+REG1;
@@ -4793,7 +4793,7 @@ void __bea_callspec__ mov_DLIb(PDISASM pMyDisasm)
     if (!Security(2)) return;
     ImmediatSize = 8;
     MyNumber = *((UInt8*)(UIntPtr) (EIP_+1));
-    (void) CopyFormattedNumber((char*) &(*pMyDisasm).Argument2.ArgMnemonic,"%.2X", MyNumber);
+    (void) CopyFormattedNumber((char*) &(*pMyDisasm).Argument2.ArgMnemonic,"%.2X",(Int64) MyNumber);
     (*pMyDisasm).Instruction.Immediat = MyNumber;
     (void) strcpy((char*) &(*pMyDisasm).Argument1.ArgMnemonic, Registers8BitsLegacy[2]);
     (*pMyDisasm).Argument1.ArgType = REGISTER_TYPE+GENERAL_REG+REG2;
@@ -4814,7 +4814,7 @@ void __bea_callspec__ mov_BLIb(PDISASM pMyDisasm)
     if (!Security(2)) return;
     ImmediatSize = 8;
     MyNumber = *((UInt8*)(UIntPtr) (EIP_+1));
-    (void) CopyFormattedNumber((char*) &(*pMyDisasm).Argument2.ArgMnemonic,"%.2X", MyNumber);
+    (void) CopyFormattedNumber((char*) &(*pMyDisasm).Argument2.ArgMnemonic,"%.2X",(Int64) MyNumber);
     (*pMyDisasm).Instruction.Immediat = MyNumber;
     (void) strcpy((char*) &(*pMyDisasm).Argument1.ArgMnemonic, Registers8BitsLegacy[3]);
     (*pMyDisasm).Argument1.ArgType = REGISTER_TYPE+GENERAL_REG+REG3;
@@ -4835,7 +4835,7 @@ void __bea_callspec__ mov_AHIb(PDISASM pMyDisasm)
     if (!Security(2)) return;
     ImmediatSize = 8;
     MyNumber = *((UInt8*)(UIntPtr) (EIP_+1));
-    (void) CopyFormattedNumber((char*) &(*pMyDisasm).Argument2.ArgMnemonic,"%.2X", MyNumber);
+    (void) CopyFormattedNumber((char*) &(*pMyDisasm).Argument2.ArgMnemonic,"%.2X",(Int64) MyNumber);
     (*pMyDisasm).Instruction.Immediat = MyNumber;
     (void) strcpy((char*) &(*pMyDisasm).Argument1.ArgMnemonic, Registers8BitsLegacy[4]);
     (*pMyDisasm).Argument1.ArgType = REGISTER_TYPE+GENERAL_REG+REG0;
@@ -4856,7 +4856,7 @@ void __bea_callspec__ mov_CHIb(PDISASM pMyDisasm)
     if (!Security(2)) return;
     ImmediatSize = 8;
     MyNumber = *((UInt8*)(UIntPtr) (EIP_+1));
-    (void) CopyFormattedNumber((char*) &(*pMyDisasm).Argument2.ArgMnemonic,"%.2X", MyNumber);
+    (void) CopyFormattedNumber((char*) &(*pMyDisasm).Argument2.ArgMnemonic,"%.2X",(Int64) MyNumber);
     (*pMyDisasm).Instruction.Immediat = MyNumber;
     (void) strcpy((char*) &(*pMyDisasm).Argument1.ArgMnemonic, Registers8BitsLegacy[5]);
     (*pMyDisasm).Argument1.ArgType = REGISTER_TYPE+GENERAL_REG+REG1;
@@ -4877,7 +4877,7 @@ void __bea_callspec__ mov_DHIb(PDISASM pMyDisasm)
     if (!Security(2)) return;
     ImmediatSize = 8;
     MyNumber = *((UInt8*)(UIntPtr) (EIP_+1));
-    (void) CopyFormattedNumber((char*) &(*pMyDisasm).Argument2.ArgMnemonic,"%.2X", MyNumber);
+    (void) CopyFormattedNumber((char*) &(*pMyDisasm).Argument2.ArgMnemonic,"%.2X",(Int64) MyNumber);
     (*pMyDisasm).Instruction.Immediat = MyNumber;
     (void) strcpy((char*) &(*pMyDisasm).Argument1.ArgMnemonic, Registers8BitsLegacy[6]);
     (*pMyDisasm).Argument1.ArgType = REGISTER_TYPE+GENERAL_REG+REG2;
@@ -4898,7 +4898,7 @@ void __bea_callspec__ mov_BHIb(PDISASM pMyDisasm)
     if (!Security(2)) return;
     ImmediatSize = 8;
     MyNumber = *((UInt8*)(UIntPtr) (EIP_+1));
-    (void) CopyFormattedNumber((char*) &(*pMyDisasm).Argument2.ArgMnemonic,"%.2X", MyNumber);
+    (void) CopyFormattedNumber((char*) &(*pMyDisasm).Argument2.ArgMnemonic,"%.2X",(Int64) MyNumber);
     (*pMyDisasm).Instruction.Immediat = MyNumber;
     (void) strcpy((char*) &(*pMyDisasm).Argument1.ArgMnemonic, Registers8BitsLegacy[7]);
     (*pMyDisasm).Argument1.ArgType = REGISTER_TYPE+GENERAL_REG+REG3;
@@ -5037,7 +5037,7 @@ void __bea_callspec__ mov_EAX(PDISASM pMyDisasm)
     if (OperandSize == 64) {
         if (!Security(9)) return;
         MyAddress = *((UInt64 *)(UIntPtr) (EIP_+1));
-        (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument2.ArgMnemonic, "%I64X", MyAddress);
+        (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument2.ArgMnemonic, "%I64X",(Int64) MyAddress);
         EIP_+=9;
         (*pMyDisasm).Instruction.Immediat = MyAddress;
         (*pMyDisasm).Argument1.ArgSize = 64;
@@ -5046,7 +5046,7 @@ void __bea_callspec__ mov_EAX(PDISASM pMyDisasm)
     else if (OperandSize == 32) {
         if (!Security(5)) return;
         MyAddress = *((UInt32*)(UIntPtr) (EIP_+1));
-       (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument2.ArgMnemonic, "%.8X", MyAddress);
+       (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument2.ArgMnemonic, "%.8X",(Int64) MyAddress);
        EIP_+=5;
        (*pMyDisasm).Instruction.Immediat = MyAddress;
         (*pMyDisasm).Argument1.ArgSize = 32;
@@ -5055,7 +5055,7 @@ void __bea_callspec__ mov_EAX(PDISASM pMyDisasm)
     else {
         if (!Security(3)) return;
         MyAddress = *((UInt16*)(UIntPtr) (EIP_+1));
-       (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument2.ArgMnemonic, "%.4X", MyAddress);
+       (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument2.ArgMnemonic, "%.4X",(Int64) MyAddress);
        EIP_+=3;
        (*pMyDisasm).Instruction.Immediat = MyAddress;
         (*pMyDisasm).Argument1.ArgSize = 16;
@@ -5100,7 +5100,7 @@ void __bea_callspec__ mov_ECX(PDISASM pMyDisasm)
     if (OperandSize == 64) {
         if (!Security(9)) return;
         MyAddress = *((UInt64 *)(UIntPtr) (EIP_+1));
-        (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument2.ArgMnemonic, "%I64X", MyAddress);
+        (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument2.ArgMnemonic, "%I64X",(Int64) MyAddress);
         EIP_+=9;
         (*pMyDisasm).Instruction.Immediat = MyAddress;
         (*pMyDisasm).Argument1.ArgSize = 64;
@@ -5109,7 +5109,7 @@ void __bea_callspec__ mov_ECX(PDISASM pMyDisasm)
     else if (OperandSize == 32) {
         if (!Security(5)) return;
         MyAddress = *((UInt32*)(UIntPtr) (EIP_+1));
-       (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument2.ArgMnemonic, "%.8X", MyAddress);
+       (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument2.ArgMnemonic, "%.8X",(Int64) MyAddress);
        EIP_+=5;
        (*pMyDisasm).Instruction.Immediat = MyAddress;
         (*pMyDisasm).Argument1.ArgSize = 32;
@@ -5118,7 +5118,7 @@ void __bea_callspec__ mov_ECX(PDISASM pMyDisasm)
     else {
         if (!Security(3)) return;
         MyAddress = *((UInt16*)(UIntPtr) (EIP_+1));
-       (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument2.ArgMnemonic, "%.4X", MyAddress);
+       (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument2.ArgMnemonic, "%.4X",(Int64) MyAddress);
        EIP_+=3;
        (*pMyDisasm).Instruction.Immediat = MyAddress;
         (*pMyDisasm).Argument1.ArgSize = 16;
@@ -5163,7 +5163,7 @@ void __bea_callspec__ mov_EDX(PDISASM pMyDisasm)
     if (OperandSize == 64) {
         if (!Security(9)) return;
         MyAddress = *((UInt64 *)(UIntPtr) (EIP_+1));
-       (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument2.ArgMnemonic, "%I64X", MyAddress);
+       (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument2.ArgMnemonic, "%I64X",(Int64) MyAddress);
        EIP_+=9;
        (*pMyDisasm).Instruction.Immediat = MyAddress;
         (*pMyDisasm).Argument1.ArgSize = 64;
@@ -5172,7 +5172,7 @@ void __bea_callspec__ mov_EDX(PDISASM pMyDisasm)
     else if (OperandSize == 32) {
         if (!Security(5)) return;
         MyAddress = *((UInt32*)(UIntPtr) (EIP_+1));
-       (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument2.ArgMnemonic, "%.8X", MyAddress);
+       (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument2.ArgMnemonic, "%.8X",(Int64) MyAddress);
        EIP_+=5;
        (*pMyDisasm).Instruction.Immediat = MyAddress;
         (*pMyDisasm).Argument1.ArgSize = 32;
@@ -5181,7 +5181,7 @@ void __bea_callspec__ mov_EDX(PDISASM pMyDisasm)
     else {
         if (!Security(3)) return;
         MyAddress = *((UInt16*)(UIntPtr) (EIP_+1));
-       (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument2.ArgMnemonic, "%.4X", MyAddress);
+       (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument2.ArgMnemonic, "%.4X",(Int64) MyAddress);
        EIP_+=3;
        (*pMyDisasm).Instruction.Immediat = MyAddress;
         (*pMyDisasm).Argument1.ArgSize = 16;
@@ -5226,7 +5226,7 @@ void __bea_callspec__ mov_EBX(PDISASM pMyDisasm)
     if (OperandSize == 64) {
         if (!Security(9)) return;
         MyAddress = *((UInt64 *)(UIntPtr) (EIP_+1));
-       (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument2.ArgMnemonic, "%I64X", MyAddress);
+       (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument2.ArgMnemonic, "%I64X",(Int64) MyAddress);
        EIP_+=9;
        (*pMyDisasm).Instruction.Immediat = MyAddress;
         (*pMyDisasm).Argument1.ArgSize = 64;
@@ -5235,7 +5235,7 @@ void __bea_callspec__ mov_EBX(PDISASM pMyDisasm)
     else if (OperandSize == 32) {
         if (!Security(5)) return;
         MyAddress = *((UInt32*)(UIntPtr) (EIP_+1));
-       (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument2.ArgMnemonic, "%.8X", MyAddress);
+       (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument2.ArgMnemonic, "%.8X",(Int64) MyAddress);
        EIP_+=5;
        (*pMyDisasm).Instruction.Immediat = MyAddress;
         (*pMyDisasm).Argument1.ArgSize = 32;
@@ -5244,7 +5244,7 @@ void __bea_callspec__ mov_EBX(PDISASM pMyDisasm)
     else {
         if (!Security(3)) return;
         MyAddress = *((UInt16*)(UIntPtr) (EIP_+1));
-       (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument2.ArgMnemonic, "%.4X", MyAddress);
+       (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument2.ArgMnemonic, "%.4X",(Int64) MyAddress);
        EIP_+=3;
        (*pMyDisasm).Instruction.Immediat = MyAddress;
         (*pMyDisasm).Argument1.ArgSize = 16;
@@ -5289,7 +5289,7 @@ void __bea_callspec__ mov_ESP(PDISASM pMyDisasm)
     if (OperandSize == 64) {
         if (!Security(9)) return;
         MyAddress = *((UInt64 *)(UIntPtr) (EIP_+1));
-       (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument2.ArgMnemonic, "%I64X", MyAddress);
+       (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument2.ArgMnemonic, "%I64X",(Int64) MyAddress);
        EIP_+=9;
        (*pMyDisasm).Instruction.Immediat = MyAddress;
         (*pMyDisasm).Argument1.ArgSize = 64;
@@ -5298,7 +5298,7 @@ void __bea_callspec__ mov_ESP(PDISASM pMyDisasm)
     else if (OperandSize == 32) {
         if (!Security(5)) return;
         MyAddress = *((UInt32*)(UIntPtr) (EIP_+1));
-       (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument2.ArgMnemonic, "%.8X", MyAddress);
+       (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument2.ArgMnemonic, "%.8X",(Int64) MyAddress);
        EIP_+=5;
        (*pMyDisasm).Instruction.Immediat = MyAddress;
         (*pMyDisasm).Argument1.ArgSize = 32;
@@ -5307,7 +5307,7 @@ void __bea_callspec__ mov_ESP(PDISASM pMyDisasm)
     else {
         if (!Security(3)) return;
         MyAddress = *((UInt16*)(UIntPtr) (EIP_+1));
-       (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument2.ArgMnemonic, "%.4X", MyAddress);
+       (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument2.ArgMnemonic, "%.4X",(Int64) MyAddress);
        EIP_+=3;
        (*pMyDisasm).Instruction.Immediat = MyAddress;
         (*pMyDisasm).Argument1.ArgSize = 16;
@@ -5352,7 +5352,7 @@ void __bea_callspec__ mov_EBP(PDISASM pMyDisasm)
     if (OperandSize == 64) {
         if (!Security(9)) return;
         MyAddress = *((UInt64 *)(UIntPtr) (EIP_+1));
-       (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument2.ArgMnemonic, "%I64X", MyAddress);
+       (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument2.ArgMnemonic, "%I64X",(Int64) MyAddress);
        EIP_+=9;
        (*pMyDisasm).Instruction.Immediat = MyAddress;
         (*pMyDisasm).Argument1.ArgSize = 64;
@@ -5361,7 +5361,7 @@ void __bea_callspec__ mov_EBP(PDISASM pMyDisasm)
     else if (OperandSize == 32) {
         if (!Security(5)) return;
         MyAddress = *((UInt32*)(UIntPtr) (EIP_+1));
-       (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument2.ArgMnemonic, "%.8X", MyAddress);
+       (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument2.ArgMnemonic, "%.8X",(Int64) MyAddress);
        EIP_+=5;
        (*pMyDisasm).Instruction.Immediat = MyAddress;
         (*pMyDisasm).Argument1.ArgSize = 32;
@@ -5370,7 +5370,7 @@ void __bea_callspec__ mov_EBP(PDISASM pMyDisasm)
     else {
         if (!Security(3)) return;
         MyAddress = *((UInt16*)(UIntPtr) (EIP_+1));
-       (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument2.ArgMnemonic, "%.4X", MyAddress);
+       (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument2.ArgMnemonic, "%.4X",(Int64) MyAddress);
        EIP_+=3;
        (*pMyDisasm).Instruction.Immediat = MyAddress;
         (*pMyDisasm).Argument1.ArgSize = 16;
@@ -5415,7 +5415,7 @@ void __bea_callspec__ mov_ESI(PDISASM pMyDisasm)
     if (OperandSize == 64) {
         if (!Security(9)) return;
         MyAddress = *((UInt64 *)(UIntPtr) (EIP_+1));
-       (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument2.ArgMnemonic, "%I64X", MyAddress);
+       (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument2.ArgMnemonic, "%I64X",(Int64) MyAddress);
        EIP_+=9;
        (*pMyDisasm).Instruction.Immediat = MyAddress;
         (*pMyDisasm).Argument1.ArgSize = 64;
@@ -5424,7 +5424,7 @@ void __bea_callspec__ mov_ESI(PDISASM pMyDisasm)
     else if (OperandSize == 32) {
         if (!Security(5)) return;
         MyAddress = *((UInt32*)(UIntPtr) (EIP_+1));
-       (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument2.ArgMnemonic, "%.8X", MyAddress);
+       (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument2.ArgMnemonic, "%.8X",(Int64) MyAddress);
        EIP_+=5;
        (*pMyDisasm).Instruction.Immediat = MyAddress;
         (*pMyDisasm).Argument1.ArgSize = 32;
@@ -5433,7 +5433,7 @@ void __bea_callspec__ mov_ESI(PDISASM pMyDisasm)
     else {
         if (!Security(3)) return;
         MyAddress = *((UInt16*)(UIntPtr) (EIP_+1));
-       (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument2.ArgMnemonic, "%.4X", MyAddress);
+       (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument2.ArgMnemonic, "%.4X",(Int64) MyAddress);
        EIP_+=3;
        (*pMyDisasm).Instruction.Immediat = MyAddress;
         (*pMyDisasm).Argument1.ArgSize = 16;
@@ -5478,7 +5478,7 @@ void __bea_callspec__ mov_EDI(PDISASM pMyDisasm)
     if (OperandSize == 64) {
         if (!Security(9)) return;
         MyAddress = *((UInt64 *)(UIntPtr) (EIP_+1));
-       (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument2.ArgMnemonic, "%I64X", MyAddress);
+       (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument2.ArgMnemonic, "%I64X",(Int64) MyAddress);
        EIP_+=9;
        (*pMyDisasm).Instruction.Immediat = MyAddress;
         (*pMyDisasm).Argument1.ArgSize = 64;
@@ -5487,7 +5487,7 @@ void __bea_callspec__ mov_EDI(PDISASM pMyDisasm)
     else if (OperandSize == 32) {
         if (!Security(5)) return;
         MyAddress = *((UInt32*)(UIntPtr) (EIP_+1));
-       (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument2.ArgMnemonic, "%.8X", MyAddress);
+       (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument2.ArgMnemonic, "%.8X",(Int64) MyAddress);
        EIP_+=5;
        (*pMyDisasm).Instruction.Immediat = MyAddress;
         (*pMyDisasm).Argument1.ArgSize = 32;
@@ -5496,7 +5496,7 @@ void __bea_callspec__ mov_EDI(PDISASM pMyDisasm)
     else {
         if (!Security(3)) return;
         MyAddress = *((UInt16*)(UIntPtr) (EIP_+1));
-       (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument2.ArgMnemonic, "%.4X", MyAddress);
+       (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument2.ArgMnemonic, "%.4X",(Int64) MyAddress);
        EIP_+=3;
        (*pMyDisasm).Instruction.Immediat = MyAddress;
         (*pMyDisasm).Argument1.ArgSize = 16;
