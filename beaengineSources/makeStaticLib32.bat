@@ -7,10 +7,11 @@ set name=BeaEngine
 
 echo ____________________________________
 echo *
-echo *  COMPILATION with POCC.EXE (Pelles C)
+echo *  		COMPILATION 
 echo *
 echo ____________________________________
 \PellesC\bin\Pocc /Ze /W2  %name%.c
+rem \MinGW\bin\gcc -c %name%.c -std=c99 -pedantic -o  %name%.obj 
 
 echo ____________________________________
 echo *

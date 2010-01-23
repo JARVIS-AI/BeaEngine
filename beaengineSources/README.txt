@@ -23,6 +23,7 @@ For online documentation, visit :
 ==========================================
 
 BeatriX 	- Author (France) : beaengine (at) gmail.com
+Igor Gutnik - Developer (ported the project on linux)
 
 Contributors :
 
