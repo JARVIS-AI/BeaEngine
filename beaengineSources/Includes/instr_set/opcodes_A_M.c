@@ -905,7 +905,7 @@ void __bea_callspec__ call_(PDISASM pMyDisasm)
  * ======================================= */
 void __bea_callspec__ callf_(PDISASM pMyDisasm)
 {
-    long MyNumber;
+    UInt32 MyNumber;
     size_t i = 0;
     if (Architecture == 64) {
         FailDecode(pMyDisasm);
@@ -3978,7 +3978,7 @@ void __bea_callspec__ jmp_short(PDISASM pMyDisasm)
  * ======================================= */
 void __bea_callspec__ jmp_far(PDISASM pMyDisasm)
 {
-    long MyNumber;
+    UInt32 MyNumber;
     size_t i = 0;
     if (Architecture == 64) {
         FailDecode(pMyDisasm);
@@ -4525,21 +4525,21 @@ void __bea_callspec__ mov_ALOb(PDISASM pMyDisasm)
         MyAddress = *((UInt64 *)(UIntPtr) (EIP_+1));
        (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument2.ArgMnemonic, "%I64X",(Int64) MyAddress);
        EIP_+=9;
-       (*pMyDisasm).Argument2.Memory.Displacement = MyAddress;
+       (*pMyDisasm).Argument2.Memory.Displacement = (Int64)MyAddress;
     }
     else if (AddressSize == 32) {
         if (!Security(5)) return;
         MyAddress = *((UInt32*)(UIntPtr) (EIP_+1));
        (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument2.ArgMnemonic, "%.8X",(Int64) MyAddress);
        EIP_+=5;
-       (*pMyDisasm).Argument2.Memory.Displacement = MyAddress;
+       (*pMyDisasm).Argument2.Memory.Displacement = (Int64)MyAddress;
     }
     else {
         if (!Security(3)) return;
         MyAddress = *((UInt16*)(UIntPtr) (EIP_+1));
        (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument2.ArgMnemonic, "%.4X",(Int64) MyAddress);
        EIP_+=3;
-       (*pMyDisasm).Argument2.Memory.Displacement = MyAddress;
+       (*pMyDisasm).Argument2.Memory.Displacement = (Int64)MyAddress;
     }
 
     if (REX.B_ == 0) {
@@ -4566,21 +4566,21 @@ void __bea_callspec__ mov_eAXOv(PDISASM pMyDisasm)
         MyAddress = *((UInt64 *)(UIntPtr) (EIP_+1));
        (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument2.ArgMnemonic, "%I64X",(Int64) MyAddress);
        EIP_+=9;
-       (*pMyDisasm).Argument2.Memory.Displacement = MyAddress;
+       (*pMyDisasm).Argument2.Memory.Displacement = (Int64)MyAddress;
     }
     else if (AddressSize == 32) {
         if (!Security(5)) return;
         MyAddress = *((UInt32*)(UIntPtr) (EIP_+1));
        (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument2.ArgMnemonic, "%.8X",(Int64) MyAddress);
        EIP_+=5;
-       (*pMyDisasm).Argument2.Memory.Displacement = MyAddress;
+       (*pMyDisasm).Argument2.Memory.Displacement = (Int64)MyAddress;
     }
     else {
         if (!Security(3)) return;
         MyAddress = *((UInt16*)(UIntPtr) (EIP_+1));
        (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument2.ArgMnemonic, "%.4X",(Int64) MyAddress);
        EIP_+=3;
-       (*pMyDisasm).Argument2.Memory.Displacement = MyAddress;
+       (*pMyDisasm).Argument2.Memory.Displacement = (Int64)MyAddress;
     }
 
     if (REX.B_ == 0) {
@@ -4648,21 +4648,21 @@ void __bea_callspec__ mov_ObAL(PDISASM pMyDisasm)
         MyAddress = *((UInt64 *)(UIntPtr) (EIP_+1));
        (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%I64X",(Int64) MyAddress);
        EIP_+=9;
-       (*pMyDisasm).Argument1.Memory.Displacement = MyAddress;
+       (*pMyDisasm).Argument1.Memory.Displacement = (Int64)MyAddress;
     }
     else if (AddressSize == 32) {
         if (!Security(5)) return;
         MyAddress = *((UInt32*)(UIntPtr) (EIP_+1));
        (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%.8X",(Int64) MyAddress);
        EIP_+=5;
-       (*pMyDisasm).Argument1.Memory.Displacement = MyAddress;
+       (*pMyDisasm).Argument1.Memory.Displacement = (Int64)MyAddress;
     }
     else {
         if (!Security(3)) return;
         MyAddress = *((UInt16*)(UIntPtr) (EIP_+1));
        (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%.4X",(Int64) MyAddress);
        EIP_+=3;
-       (*pMyDisasm).Argument1.Memory.Displacement = MyAddress;
+       (*pMyDisasm).Argument1.Memory.Displacement = (Int64)MyAddress;
     }
 
     if (REX.B_ == 0) {
@@ -4689,21 +4689,21 @@ void __bea_callspec__ mov_OveAX(PDISASM pMyDisasm)
         MyAddress = *((UInt64 *)(UIntPtr) (EIP_+1));
        (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%I64X",(Int64) MyAddress);
        EIP_+=9;
-       (*pMyDisasm).Argument1.Memory.Displacement = MyAddress;
+       (*pMyDisasm).Argument1.Memory.Displacement = (Int64)MyAddress;
     }
     else if (AddressSize == 32) {
         if (!Security(5)) return;
         MyAddress = *((UInt32*)(UIntPtr) (EIP_+1));
        (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%.8X",(Int64) MyAddress);
        EIP_+=5;
-       (*pMyDisasm).Argument1.Memory.Displacement = MyAddress;
+       (*pMyDisasm).Argument1.Memory.Displacement = (Int64)MyAddress;
     }
     else {
         if (!Security(3)) return;
         MyAddress = *((UInt16*)(UIntPtr) (EIP_+1));
        (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument1.ArgMnemonic, "%.4X",(Int64) MyAddress);
        EIP_+=3;
-       (*pMyDisasm).Argument1.Memory.Displacement = MyAddress;
+       (*pMyDisasm).Argument1.Memory.Displacement = (Int64)MyAddress;
     }
 
     if (REX.B_ == 0) {
@@ -5039,7 +5039,7 @@ void __bea_callspec__ mov_EAX(PDISASM pMyDisasm)
         MyAddress = *((UInt64 *)(UIntPtr) (EIP_+1));
         (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument2.ArgMnemonic, "%I64X",(Int64) MyAddress);
         EIP_+=9;
-        (*pMyDisasm).Instruction.Immediat = MyAddress;
+        (*pMyDisasm).Instruction.Immediat = (Int64)MyAddress;
         (*pMyDisasm).Argument1.ArgSize = 64;
         (*pMyDisasm).Argument2.ArgSize = 64;
     }
@@ -5048,7 +5048,7 @@ void __bea_callspec__ mov_EAX(PDISASM pMyDisasm)
         MyAddress = *((UInt32*)(UIntPtr) (EIP_+1));
        (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument2.ArgMnemonic, "%.8X",(Int64) MyAddress);
        EIP_+=5;
-       (*pMyDisasm).Instruction.Immediat = MyAddress;
+       (*pMyDisasm).Instruction.Immediat = (Int64)MyAddress;
         (*pMyDisasm).Argument1.ArgSize = 32;
         (*pMyDisasm).Argument2.ArgSize = 32;
     }
@@ -5057,7 +5057,7 @@ void __bea_callspec__ mov_EAX(PDISASM pMyDisasm)
         MyAddress = *((UInt16*)(UIntPtr) (EIP_+1));
        (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument2.ArgMnemonic, "%.4X",(Int64) MyAddress);
        EIP_+=3;
-       (*pMyDisasm).Instruction.Immediat = MyAddress;
+       (*pMyDisasm).Instruction.Immediat = (Int64)MyAddress;
         (*pMyDisasm).Argument1.ArgSize = 16;
         (*pMyDisasm).Argument2.ArgSize = 16;
     }
@@ -5102,7 +5102,7 @@ void __bea_callspec__ mov_ECX(PDISASM pMyDisasm)
         MyAddress = *((UInt64 *)(UIntPtr) (EIP_+1));
         (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument2.ArgMnemonic, "%I64X",(Int64) MyAddress);
         EIP_+=9;
-        (*pMyDisasm).Instruction.Immediat = MyAddress;
+        (*pMyDisasm).Instruction.Immediat = (Int64)MyAddress;
         (*pMyDisasm).Argument1.ArgSize = 64;
         (*pMyDisasm).Argument2.ArgSize = 64;
     }
@@ -5111,7 +5111,7 @@ void __bea_callspec__ mov_ECX(PDISASM pMyDisasm)
         MyAddress = *((UInt32*)(UIntPtr) (EIP_+1));
        (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument2.ArgMnemonic, "%.8X",(Int64) MyAddress);
        EIP_+=5;
-       (*pMyDisasm).Instruction.Immediat = MyAddress;
+       (*pMyDisasm).Instruction.Immediat = (Int64)MyAddress;
         (*pMyDisasm).Argument1.ArgSize = 32;
         (*pMyDisasm).Argument2.ArgSize = 32;
     }
@@ -5120,7 +5120,7 @@ void __bea_callspec__ mov_ECX(PDISASM pMyDisasm)
         MyAddress = *((UInt16*)(UIntPtr) (EIP_+1));
        (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument2.ArgMnemonic, "%.4X",(Int64) MyAddress);
        EIP_+=3;
-       (*pMyDisasm).Instruction.Immediat = MyAddress;
+       (*pMyDisasm).Instruction.Immediat = (Int64)MyAddress;
         (*pMyDisasm).Argument1.ArgSize = 16;
         (*pMyDisasm).Argument2.ArgSize = 16;
     }
@@ -5165,7 +5165,7 @@ void __bea_callspec__ mov_EDX(PDISASM pMyDisasm)
         MyAddress = *((UInt64 *)(UIntPtr) (EIP_+1));
        (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument2.ArgMnemonic, "%I64X",(Int64) MyAddress);
        EIP_+=9;
-       (*pMyDisasm).Instruction.Immediat = MyAddress;
+       (*pMyDisasm).Instruction.Immediat = (Int64)MyAddress;
         (*pMyDisasm).Argument1.ArgSize = 64;
         (*pMyDisasm).Argument2.ArgSize = 64;
     }
@@ -5174,7 +5174,7 @@ void __bea_callspec__ mov_EDX(PDISASM pMyDisasm)
         MyAddress = *((UInt32*)(UIntPtr) (EIP_+1));
        (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument2.ArgMnemonic, "%.8X",(Int64) MyAddress);
        EIP_+=5;
-       (*pMyDisasm).Instruction.Immediat = MyAddress;
+       (*pMyDisasm).Instruction.Immediat = (Int64)MyAddress;
         (*pMyDisasm).Argument1.ArgSize = 32;
         (*pMyDisasm).Argument2.ArgSize = 32;
     }
@@ -5183,7 +5183,7 @@ void __bea_callspec__ mov_EDX(PDISASM pMyDisasm)
         MyAddress = *((UInt16*)(UIntPtr) (EIP_+1));
        (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument2.ArgMnemonic, "%.4X",(Int64) MyAddress);
        EIP_+=3;
-       (*pMyDisasm).Instruction.Immediat = MyAddress;
+       (*pMyDisasm).Instruction.Immediat = (Int64)MyAddress;
         (*pMyDisasm).Argument1.ArgSize = 16;
         (*pMyDisasm).Argument2.ArgSize = 16;
     }
@@ -5228,7 +5228,7 @@ void __bea_callspec__ mov_EBX(PDISASM pMyDisasm)
         MyAddress = *((UInt64 *)(UIntPtr) (EIP_+1));
        (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument2.ArgMnemonic, "%I64X",(Int64) MyAddress);
        EIP_+=9;
-       (*pMyDisasm).Instruction.Immediat = MyAddress;
+       (*pMyDisasm).Instruction.Immediat = (Int64)MyAddress;
         (*pMyDisasm).Argument1.ArgSize = 64;
         (*pMyDisasm).Argument2.ArgSize = 64;
     }
@@ -5237,7 +5237,7 @@ void __bea_callspec__ mov_EBX(PDISASM pMyDisasm)
         MyAddress = *((UInt32*)(UIntPtr) (EIP_+1));
        (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument2.ArgMnemonic, "%.8X",(Int64) MyAddress);
        EIP_+=5;
-       (*pMyDisasm).Instruction.Immediat = MyAddress;
+       (*pMyDisasm).Instruction.Immediat = (Int64)MyAddress;
         (*pMyDisasm).Argument1.ArgSize = 32;
         (*pMyDisasm).Argument2.ArgSize = 32;
     }
@@ -5246,7 +5246,7 @@ void __bea_callspec__ mov_EBX(PDISASM pMyDisasm)
         MyAddress = *((UInt16*)(UIntPtr) (EIP_+1));
        (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument2.ArgMnemonic, "%.4X",(Int64) MyAddress);
        EIP_+=3;
-       (*pMyDisasm).Instruction.Immediat = MyAddress;
+       (*pMyDisasm).Instruction.Immediat = (Int64)MyAddress;
         (*pMyDisasm).Argument1.ArgSize = 16;
         (*pMyDisasm).Argument2.ArgSize = 16;
     }
@@ -5291,7 +5291,7 @@ void __bea_callspec__ mov_ESP(PDISASM pMyDisasm)
         MyAddress = *((UInt64 *)(UIntPtr) (EIP_+1));
        (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument2.ArgMnemonic, "%I64X",(Int64) MyAddress);
        EIP_+=9;
-       (*pMyDisasm).Instruction.Immediat = MyAddress;
+       (*pMyDisasm).Instruction.Immediat = (Int64)MyAddress;
         (*pMyDisasm).Argument1.ArgSize = 64;
         (*pMyDisasm).Argument2.ArgSize = 64;
     }
@@ -5300,7 +5300,7 @@ void __bea_callspec__ mov_ESP(PDISASM pMyDisasm)
         MyAddress = *((UInt32*)(UIntPtr) (EIP_+1));
        (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument2.ArgMnemonic, "%.8X",(Int64) MyAddress);
        EIP_+=5;
-       (*pMyDisasm).Instruction.Immediat = MyAddress;
+       (*pMyDisasm).Instruction.Immediat = (Int64)MyAddress;
         (*pMyDisasm).Argument1.ArgSize = 32;
         (*pMyDisasm).Argument2.ArgSize = 32;
     }
@@ -5309,7 +5309,7 @@ void __bea_callspec__ mov_ESP(PDISASM pMyDisasm)
         MyAddress = *((UInt16*)(UIntPtr) (EIP_+1));
        (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument2.ArgMnemonic, "%.4X",(Int64) MyAddress);
        EIP_+=3;
-       (*pMyDisasm).Instruction.Immediat = MyAddress;
+       (*pMyDisasm).Instruction.Immediat = (Int64)MyAddress;
         (*pMyDisasm).Argument1.ArgSize = 16;
         (*pMyDisasm).Argument2.ArgSize = 16;
     }
@@ -5354,7 +5354,7 @@ void __bea_callspec__ mov_EBP(PDISASM pMyDisasm)
         MyAddress = *((UInt64 *)(UIntPtr) (EIP_+1));
        (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument2.ArgMnemonic, "%I64X",(Int64) MyAddress);
        EIP_+=9;
-       (*pMyDisasm).Instruction.Immediat = MyAddress;
+       (*pMyDisasm).Instruction.Immediat = (Int64)MyAddress;
         (*pMyDisasm).Argument1.ArgSize = 64;
         (*pMyDisasm).Argument2.ArgSize = 64;
     }
@@ -5363,7 +5363,7 @@ void __bea_callspec__ mov_EBP(PDISASM pMyDisasm)
         MyAddress = *((UInt32*)(UIntPtr) (EIP_+1));
        (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument2.ArgMnemonic, "%.8X",(Int64) MyAddress);
        EIP_+=5;
-       (*pMyDisasm).Instruction.Immediat = MyAddress;
+       (*pMyDisasm).Instruction.Immediat = (Int64)MyAddress;
         (*pMyDisasm).Argument1.ArgSize = 32;
         (*pMyDisasm).Argument2.ArgSize = 32;
     }
@@ -5372,7 +5372,7 @@ void __bea_callspec__ mov_EBP(PDISASM pMyDisasm)
         MyAddress = *((UInt16*)(UIntPtr) (EIP_+1));
        (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument2.ArgMnemonic, "%.4X",(Int64) MyAddress);
        EIP_+=3;
-       (*pMyDisasm).Instruction.Immediat = MyAddress;
+       (*pMyDisasm).Instruction.Immediat = (Int64)MyAddress;
         (*pMyDisasm).Argument1.ArgSize = 16;
         (*pMyDisasm).Argument2.ArgSize = 16;
     }
@@ -5417,7 +5417,7 @@ void __bea_callspec__ mov_ESI(PDISASM pMyDisasm)
         MyAddress = *((UInt64 *)(UIntPtr) (EIP_+1));
        (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument2.ArgMnemonic, "%I64X",(Int64) MyAddress);
        EIP_+=9;
-       (*pMyDisasm).Instruction.Immediat = MyAddress;
+       (*pMyDisasm).Instruction.Immediat = (Int64)MyAddress;
         (*pMyDisasm).Argument1.ArgSize = 64;
         (*pMyDisasm).Argument2.ArgSize = 64;
     }
@@ -5426,7 +5426,7 @@ void __bea_callspec__ mov_ESI(PDISASM pMyDisasm)
         MyAddress = *((UInt32*)(UIntPtr) (EIP_+1));
        (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument2.ArgMnemonic, "%.8X",(Int64) MyAddress);
        EIP_+=5;
-       (*pMyDisasm).Instruction.Immediat = MyAddress;
+       (*pMyDisasm).Instruction.Immediat = (Int64)MyAddress;
         (*pMyDisasm).Argument1.ArgSize = 32;
         (*pMyDisasm).Argument2.ArgSize = 32;
     }
@@ -5435,7 +5435,7 @@ void __bea_callspec__ mov_ESI(PDISASM pMyDisasm)
         MyAddress = *((UInt16*)(UIntPtr) (EIP_+1));
        (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument2.ArgMnemonic, "%.4X",(Int64) MyAddress);
        EIP_+=3;
-       (*pMyDisasm).Instruction.Immediat = MyAddress;
+       (*pMyDisasm).Instruction.Immediat = (Int64)MyAddress;
         (*pMyDisasm).Argument1.ArgSize = 16;
         (*pMyDisasm).Argument2.ArgSize = 16;
     }
@@ -5480,7 +5480,7 @@ void __bea_callspec__ mov_EDI(PDISASM pMyDisasm)
         MyAddress = *((UInt64 *)(UIntPtr) (EIP_+1));
        (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument2.ArgMnemonic, "%I64X",(Int64) MyAddress);
        EIP_+=9;
-       (*pMyDisasm).Instruction.Immediat = MyAddress;
+       (*pMyDisasm).Instruction.Immediat = (Int64)MyAddress;
         (*pMyDisasm).Argument1.ArgSize = 64;
         (*pMyDisasm).Argument2.ArgSize = 64;
     }
@@ -5489,7 +5489,7 @@ void __bea_callspec__ mov_EDI(PDISASM pMyDisasm)
         MyAddress = *((UInt32*)(UIntPtr) (EIP_+1));
        (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument2.ArgMnemonic, "%.8X",(Int64) MyAddress);
        EIP_+=5;
-       (*pMyDisasm).Instruction.Immediat = MyAddress;
+       (*pMyDisasm).Instruction.Immediat = (Int64)MyAddress;
         (*pMyDisasm).Argument1.ArgSize = 32;
         (*pMyDisasm).Argument2.ArgSize = 32;
     }
@@ -5498,7 +5498,7 @@ void __bea_callspec__ mov_EDI(PDISASM pMyDisasm)
         MyAddress = *((UInt16*)(UIntPtr) (EIP_+1));
        (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument2.ArgMnemonic, "%.4X",(Int64) MyAddress);
        EIP_+=3;
-       (*pMyDisasm).Instruction.Immediat = MyAddress;
+       (*pMyDisasm).Instruction.Immediat = (Int64) MyAddress;
         (*pMyDisasm).Argument1.ArgSize = 16;
         (*pMyDisasm).Argument2.ArgSize = 16;
     }

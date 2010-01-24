@@ -484,10 +484,10 @@ void __bea_callspec__ CalculateRelativeAddress(UInt64 * pMyAddress, Int64 MyNumb
 {
     RelativeAddress = 1;
     if (EIP_VA != 0) {
-        *pMyAddress = EIP_VA+(Int64) MyNumber;
+        *pMyAddress = (UInt64) (EIP_VA+(Int64) MyNumber);
     }
     else {
-        *pMyAddress = EIP_REAL+(Int64) MyNumber;
+        *pMyAddress = (UInt64) (EIP_REAL+(Int64) MyNumber);
     }
 }
 

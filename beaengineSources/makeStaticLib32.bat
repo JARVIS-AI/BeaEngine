@@ -11,8 +11,8 @@ echo *  		COMPILATION
 echo *
 echo ____________________________________
 rem \PellesC\bin\Pocc /Ze /W2  %name%.c
-\MinGW\bin\gcc -c %name%.c   -o  %name%.obj 
-rem -std=c99 -Wall -W -Wextra -Wconversion -Wno-long-long -Wshadow -Wpointer-arith -Wcast-qual  -Wcast-align -Wwrite-strings -pedantic -ansi -pipe -fno-common -fshort-enums
+\MinGW\bin\gcc -c %name%.c -std=c99  -Wall -W -Wextra -Wconversion -Wno-long-long -Wshadow -Wpointer-arith -Wcast-qual  -Wcast-align -Wwrite-strings -pedantic -ansi -pipe -fno-common -fshort-enums  -o  %name%.obj 
+rem -std=c99  -Wall -W -Wextra -Wconversion -Wno-long-long -Wshadow -Wpointer-arith -Wcast-qual  -Wcast-align -Wwrite-strings -pedantic -ansi -pipe -fno-common -fshort-enums
 echo ____________________________________
 echo *
 echo *   CREATE LIB with POLIB.EXE (Pelles C)

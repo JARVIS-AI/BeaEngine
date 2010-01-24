@@ -72,9 +72,9 @@ typedef struct  {
    char Mnemonic[16];
    long BranchType;
    EFLStruct Flags;
-   Int64 AddrValue;
+   UInt64 AddrValue;
    Int64 Immediat;
-   long ImplicitModifiedRegs;
+   unsigned long ImplicitModifiedRegs;
 } INSTRTYPE;
 #pragma pack()
 
@@ -83,9 +83,9 @@ typedef struct  {
    char ArgMnemonic[32];
    long ArgType;
    long ArgSize;
-   long AccessMode;
+   unsigned long AccessMode;
    MEMORYTYPE Memory;
-   long SegmentReg;
+   unsigned long SegmentReg;
 } ARGTYPE;
 #pragma pack()
 
@@ -95,10 +95,10 @@ typedef struct  {
 typedef struct _Disasm {
    Int64 EIP;
    Int64 VirtualAddr;
-   long SecurityBlock;
+   unsigned long SecurityBlock;
    char CompleteInstr[INSTRUCT_LENGTH];
-   long Archi;
-   long Options;
+   unsigned long Archi;
+   unsigned long Options;
    INSTRTYPE Instruction;
    ARGTYPE Argument1;
    ARGTYPE Argument2;
