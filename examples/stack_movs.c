@@ -22,7 +22,7 @@ void DisassembleCode(char *StartCodeSection, char *EndCodeSection, int (*Virtual
 	/* ============================= Init EIP */
 	MyDisasm.EIP = (int) StartCodeSection;
 	/* ============================= Init VirtualAddr */
-	MyDisasm.VirtualAddr = (__int64) Virtual_Address;
+	MyDisasm.VirtualAddr = (Int64) Virtual_Address;
 
 	/* ============================= set IA-32 architecture */
 	MyDisasm.Archi = 0;
