@@ -1,8 +1,8 @@
 #ifndef _BEA_ENGINE_
 #define _BEA_ENGINE_
 
-#include "Includes/export.h"
-#include "Includes/basic_types.h"
+#include "beaengine/export.h"
+#include "beaengine/basic_types.h"
 
 
 #define INSTRUCT_LENGTH 64
