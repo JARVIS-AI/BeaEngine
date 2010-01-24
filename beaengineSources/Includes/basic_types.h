@@ -43,7 +43,7 @@
 		typedef unsigned __int64   UIntPtr;
 	#else
 		typedef signed long        IntPtr;
-		typedef unsigned long      UIntPtr;
+		typedef size_t             UIntPtr;
 	#endif
 	#define BEA_HAVE_INT64 1
 #elif defined(__GNUC__)
@@ -177,9 +177,10 @@
 	typedef unsigned short         UInt16;
 	typedef signed int             Int32;
 	typedef unsigned int           UInt32;
-        typedef unsigned __int64       Int64;
-        typedef signed __int64         UInt64;
-        #define BEA_HAVE_INT64 1
+    typedef unsigned __int64       Int64;
+    typedef signed __int64         UInt64;
+	typedef unsigned long          UIntPtr;
+    #define BEA_HAVE_INT64 1
 #elif defined(__WATCOMC__)
        /*
 	* Watcom C/C++
@@ -216,6 +217,13 @@
 	#endif
 	#define BEA_HAVE_INT64 1
 #endif
+
+#if defined(_MSC_VER) || defined(__BORLANDC__)
+	#define W64LIT(x) x##ui64
+#else
+	#define W64LIT(x) x##ULL
+#endif 
+
 
 #ifndef C_STATIC_ASSERT
 #define C_STATIC_ASSERT(tag_name, x)            \

@@ -90,6 +90,7 @@ endif ()
 if (BEA_COMPILER STREQUAL suncc)
   set (CMAKE_C_COMPILER   cc)
   set (CMAKE_CXX_COMPILER CC)
+  
 endif ()
 # =========================================
 # Visual Studio configuration
@@ -99,6 +100,15 @@ if (BEA_COMPILER STREQUAL msvc)
   set (CMAKE_CXX_COMPILER cl)
   if (optBUILD_STDCALL)
     set (BEA_DEFINITIONS "/DBEA_USE_STDCALL")
+  endif ()
+  set (BEA_WARNINGS /W3 /Wp64)
+  if (optHAS_SYMBOLS)
+    list (APPEND BEA_FLAGS /ZI)
+	list (APPEND BEA_DEFINITIONS "/D_DEBUG=1")
+  endif ()
+  if (optHAS_OPTIMIZED)
+    list (APPEND BEA_FLAGS /O2)
+	list (APPEND BEA_DEFINITIONS "/DNDEBUG")
   endif ()
 endif ()
 # =========================================

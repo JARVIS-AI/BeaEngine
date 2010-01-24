@@ -22,11 +22,11 @@
 
 
 
-
+/*
 #if defined(_WIN32) || defined (_WIN64)
 #include <windows.h>
 #endif
-
+*/
 #include <stdio.h>
 #include <string.h>
 #include "BeaEngine.h"
