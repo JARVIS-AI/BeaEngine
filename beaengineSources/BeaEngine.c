@@ -29,7 +29,7 @@
 */
 #include <stdio.h>
 #include <string.h>
-#include "beaengine/BeaEngine.h"
+#include "BeaEngine.h"
 #include "Includes/protos.h"
 #include "Includes/internal_datas.h"
 #include "Includes/instr_set/Data_opcode.h"
