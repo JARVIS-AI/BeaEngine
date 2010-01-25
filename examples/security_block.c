@@ -8,7 +8,6 @@ int main(int argc, char* argv[])
 {
 	/* ============================= Init datas */
 	DISASM MyDisasm;
-	int false = 0, true = 1;
 	int len;
 	int Error = 0;
 	int EndCodeSection = 0x401020;

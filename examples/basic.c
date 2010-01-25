@@ -7,7 +7,6 @@ int main(int argc, char* argv [])
 {
 	/* ============================= Init datas */
 	DISASM MyDisasm;
-	int false = 0, true = 1;
 	int len, i = 0;
 	int Error = 0;
 
