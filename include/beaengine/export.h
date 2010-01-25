@@ -47,7 +47,7 @@
 #  else
 #   define bea__api_export__		__declspec(export)
 #  endif
-# elif defined(PREDEF_OS_WINDOWS)
+# elif defined(_WIN32) || defined(_WIN64)
 #  ifdef __BORLANDC__
 #    define bea__api_export__ 
 #    define bea__api_import__ 	__declspec(dllimport)

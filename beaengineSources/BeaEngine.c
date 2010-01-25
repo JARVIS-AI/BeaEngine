@@ -19,17 +19,10 @@
  *    You should have received a copy of the GNU Lesser General Public License
  *    along with BeaEngine.  If not, see <http://www.gnu.org/licenses/>. */
 
-
-
-
-/*
-#if defined(_WIN32) || defined (_WIN64)
-#include <windows.h>
-#endif
-*/
 #include <stdio.h>
 #include <string.h>
-#include "../include/beaengine/BeaEngine.h"
+
+#include "beaengine/BeaEngine.h"
 #include "Includes/protos.h"
 #include "Includes/internal_datas.h"
 #include "Includes/instr_set/Data_opcode.h"

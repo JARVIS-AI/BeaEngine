@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <string.h>
-#include "beaengine/BeaEngine.h"
+
+#include <beaengine/BeaEngine.h>
 
 int main(int argc, char* argv [])
 {

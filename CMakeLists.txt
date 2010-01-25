@@ -179,7 +179,7 @@ if (BEA_COMPILER STREQUAL watcom)
 endif ()
 
 # =========================================
-# Watcom C configuration
+# Pelles C configuration
 # =========================================
 if (BEA_COMPILER STREQUAL pelles)
   set (CMAKE_C_COMPILER   pocc)

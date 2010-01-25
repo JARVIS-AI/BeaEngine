@@ -1,35 +1,40 @@
 #include <stdio.h>
 #include <string.h>
-#include "beaengine/BeaEngine.h"
+#include <stdlib.h>
+
+#include <beaengine/BeaEngine.h>
 /* ============================= Init datas */
 DISASM MyDisasm;
 int len;
 int Error = 0;
 void *pBuffer;
-int  (*pSourceCode) (void); 	/* function pointer */
+
+typedef int  (*MainPtr) (int, char*[]);
+MainPtr pSourceCode;
+
 
 /* ================================================================================= */
-/*																									*/
+/*																					*/
 /*						Disassemble code in the specified buffer using the correct VA					*/
 /*																									*/
 /*==================================================================================*/
 
-void DisassembleCode(char *StartCodeSection, char *EndCodeSection, int (*Virtual_Address)(void))
+void DisassembleCode(char *StartCodeSection, char *EndCodeSection, MainPtr Virtual_Address)
 {
 
 	Error = 0;
 
 	/* ============================= Init EIP */
-	MyDisasm.EIP = (int) StartCodeSection;
+	MyDisasm.EIP = (UIntPtr) StartCodeSection;
 	/* ============================= Init VirtualAddr */
-	MyDisasm.VirtualAddr = (Int64) Virtual_Address;
+	MyDisasm.VirtualAddr = (UIntPtr) Virtual_Address;
 
 	/* ============================= set IA-32 architecture */
 	MyDisasm.Archi = 0;
 	/* ============================= Loop for Disasm */
 	while ( !Error){
 		/* ============================= Fix SecurityBlock */
-		MyDisasm.SecurityBlock = (long) EndCodeSection - MyDisasm.EIP;
+		MyDisasm.SecurityBlock = (UIntPtr)EndCodeSection - (UIntPtr)MyDisasm.EIP;
 
 		len = Disasm(&MyDisasm);
 		if (len == OUT_OF_BLOCK) {

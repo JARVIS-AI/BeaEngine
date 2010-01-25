@@ -1,9 +1,14 @@
 #ifndef _BEA_ENGINE_
 #define _BEA_ENGINE_
 
-#include "export.h"
-#include "basic_types.h"
+#include <beaengine/export.h>
+#include <beaengine/basic_types.h>
 
+#if defined(BUILD_BEA_ENGINE_DLL)
+#define BEA_API bea__api_export__
+#else
+#define BEA_API bea__api_import__
+#endif
 
 #define INSTRUCT_LENGTH 64
 
@@ -290,6 +295,7 @@ enum SPECIAL_INFO
 #ifdef __cplusplus
 extern "C"
 #endif
-int __bea_callspec__ Disasm(LPDISASM pDisAsm);
+
+BEA_API int __bea_callspec__ Disasm (LPDISASM pDisAsm);
 
 #endif

@@ -1,12 +1,17 @@
 #include <stdio.h>
 #include <string.h>
-#include "beaengine/BeaEngine.h"
+#include <stdlib.h>
+
+#include <beaengine/BeaEngine.h>
 /* ============================= Init datas */
 DISASM MyDisasm;
 int len;
 int Error = 0;
 void *pBuffer;
-int  (*pSourceCode) (void); 	/* function pointer */
+
+typedef int  (*MainPtr) (int, char*[]);
+MainPtr pSourceCode;
+
 
 /* ================================================================================= */
 /*																									*/
@@ -14,7 +19,7 @@ int  (*pSourceCode) (void); 	/* function pointer */
 /*																									*/
 /*==================================================================================*/
 
-void DisassembleCode(char *StartCodeSection, char *EndCodeSection, int (*Virtual_Address)(void))
+void DisassembleCode(char *StartCodeSection, char *EndCodeSection, MainPtr Virtual_Address)
 {
 
 	Error = 0;
@@ -22,7 +27,7 @@ void DisassembleCode(char *StartCodeSection, char *EndCodeSection, int (*Virtual
 	/* ============================= Init EIP */
 	MyDisasm.EIP = (int) StartCodeSection;
 	/* ============================= Init VirtualAddr */
-	MyDisasm.VirtualAddr = (Int64) Virtual_Address;
+	MyDisasm.VirtualAddr = (UIntPtr) Virtual_Address;
 
 	/* ============================= set IA-32 architecture */
 	MyDisasm.Archi = 0;
