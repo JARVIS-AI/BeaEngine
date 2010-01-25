@@ -193,6 +193,7 @@
 	typedef unsigned int           UInt32;
         typedef unsigned __int64       Int64;
         typedef signed __int64         UInt64;
+		typedef size_t             UIntPtr;
         #define BEA_HAVE_INT64 1
 #elif defined(__sgi) 
 	/*
