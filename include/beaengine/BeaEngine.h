@@ -4,11 +4,16 @@
 #include <beaengine/export.h>
 #include <beaengine/basic_types.h>
 
-#if defined(BUILD_BEA_ENGINE_DLL)
-#define BEA_API bea__api_export__
+#if !defined(BEA_ENGINE_STATIC)
+	#if defined(BUILD_BEA_ENGINE_DLL)
+		#define BEA_API bea__api_export__
+	#else
+		#define BEA_API bea__api_import__
+	#endif
 #else
-#define BEA_API bea__api_import__
+	#define BEA_API
 #endif
+
 
 #define INSTRUCT_LENGTH 64
 
