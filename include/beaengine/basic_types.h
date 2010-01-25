@@ -56,6 +56,8 @@
 	typedef unsigned short         UInt16;
 	typedef signed int             Int32;
 	typedef unsigned int           UInt32;
+	typedef signed long            IntPtr;
+	typedef unsigned long          UIntPtr;
 	#if defined(__LP64__)
 		#define BEA_PTR_IS_64_BIT 1
 		#define BEA_LONG_IS_64_BIT 1
@@ -65,18 +67,10 @@
              #if defined (__INTEL_COMPILER) || defined (__ICC) || defined (_ICC)
 		typedef __int64           Int64;
 		typedef unsigned __int64  UInt64;
-                  
              #else
 		typedef signed long long   Int64;
 		typedef unsigned long long UInt64;
              #endif
-        #if defined(__LP64__)
-          typedef Int32  IntPtr;
-          typedef UInt32 UIntPtr;
-        #else
-          typedef Int64  IntPtr;
-          typedef UInt64 UIntPtr; 
-        #endif 
 	#endif
 	#define BEA_HAVE_INT64 1
 #elif defined(__DECCXX)
@@ -199,7 +193,6 @@
 	typedef unsigned int           UInt32;
         typedef unsigned __int64       Int64;
         typedef signed __int64         UInt64;
-		typedef size_t             UIntPtr;
         #define BEA_HAVE_INT64 1
 #elif defined(__sgi) 
 	/*
