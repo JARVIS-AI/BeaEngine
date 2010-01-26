@@ -20,7 +20,7 @@
 static Int64 EIP_, EIP_VA, EIP_REAL;
 static Int32 OriginalOperandSize;        /* keep original OperandSize value if it is used as a mandatory prefix */
 static Int32 OperandSize;
-static Int32 OpSize;
+static Int32 MemDecoration;
 static Int32 AddressSize;
 static Int32 MOD_, RM_, INDEX_, SCALE_, BASE_, MMX_, SSE_, CR_, DR_, SEG_, REGOPCODE;
 static Int32 DECALAGE_EIP;
@@ -202,14 +202,14 @@ char SegmentRegs[7][4] = {
  * AT&T Suffixes
  * ===================================================== */
 char ATSuffixes[8][4] = {
-    "b ",     /* OpSize == 1 */
-    "w ",     /* OpSize == 2 */
-    "l ",     /* OpSize == 3 */
-    "q ",     /* OpSize == 4 */
-    " ",      /* OpSize == 5 (multibytes) */
-    "t ",     /* OpSize == 6 */
-    " ",      /* OpSize == 7 (fword) */
-    " ",      /* OpSize == 8 (dqword) */
+    "b ",     /* MemDecoration == 1 */
+    "w ",     /* MemDecoration == 2 */
+    "l ",     /* MemDecoration == 3 */
+    "q ",     /* MemDecoration == 4 */
+    " ",      /* MemDecoration == 5 (multibytes) */
+    "t ",     /* MemDecoration == 6 */
+    " ",      /* MemDecoration == 7 (fword) */
+    " ",      /* MemDecoration == 8 (dqword) */
 };
 
 /* =====================================================
@@ -217,28 +217,28 @@ char ATSuffixes[8][4] = {
  * ===================================================== */
 
 char MasmPrefixes[8][16] = {
-    "byte ptr ",        /* OpSize == 1 */
-    "word ptr ",        /* OpSize == 2 */
-    "dword ptr ",       /* OpSize == 3 */
-    "qword ptr ",       /* OpSize == 4 */
-    " ",                /* OpSize == 5 (multibytes) */
-    "tbyte ptr ",       /* OpSize == 6 */
-    "fword ptr ",       /* OpSize == 7 (fword) */
-    "dqword ptr ",      /* OpSize == 8 (dqword) */
+    "byte ptr ",        /* MemDecoration == 1 */
+    "word ptr ",        /* MemDecoration == 2 */
+    "dword ptr ",       /* MemDecoration == 3 */
+    "qword ptr ",       /* MemDecoration == 4 */
+    " ",                /* MemDecoration == 5 (multibytes) */
+    "tbyte ptr ",       /* MemDecoration == 6 */
+    "fword ptr ",       /* MemDecoration == 7 (fword) */
+    "dqword ptr ",      /* MemDecoration == 8 (dqword) */
 };
 
 /* =====================================================
  * NASM Prefixes for MemoryType
  * ===================================================== */
 char NasmPrefixes[8][8] = {
-    "byte ",      /* OpSize == 1 */
-    "word ",      /* OpSize == 2 */
-    "dword ",     /* OpSize == 3 */
-    "qword ",     /* OpSize == 4 */
-    " ",          /* OpSize == 5 (multibytes) */
-    "tword ",     /* OpSize == 6 */
-    " ",          /* OpSize == 7 (fword) */
-    " ",          /* OpSize == 8 (dqword) */
+    "byte ",      /* MemDecoration == 1 */
+    "word ",      /* MemDecoration == 2 */
+    "dword ",     /* MemDecoration == 3 */
+    "qword ",     /* MemDecoration == 4 */
+    " ",          /* MemDecoration == 5 (multibytes) */
+    "tword ",     /* MemDecoration == 6 */
+    " ",          /* MemDecoration == 7 (fword) */
+    " ",          /* MemDecoration == 8 (dqword) */
 };
 
 
@@ -247,14 +247,14 @@ char NasmPrefixes[8][8] = {
  * GOASM Prefixes for MemoryType
  * ===================================================== */
 char GoAsmPrefixes[8][4] = {
-    "b ",     /* OpSize == 1 */
-    "w ",     /* OpSize == 2 */
-    "d ",     /* OpSize == 3 */
-    "q ",     /* OpSize == 4 */
-    " ",      /* OpSize == 5 (multibytes) */
-    "t ",     /* OpSize == 6 */
-    " ",      /* OpSize == 7 (fword) */
-    " ",      /* OpSize == 8 (dqword) */
+    "b ",     /* MemDecoration == 1 */
+    "w ",     /* MemDecoration == 2 */
+    "d ",     /* MemDecoration == 3 */
+    "q ",     /* MemDecoration == 4 */
+    " ",      /* MemDecoration == 5 (multibytes) */
+    "t ",     /* MemDecoration == 6 */
+    " ",      /* MemDecoration == 7 (fword) */
+    " ",      /* MemDecoration == 8 (dqword) */
 };
 
 

@@ -54,7 +54,7 @@ void __bea_callspec__ G3_Eb(PDISASM pMyDisasm)
     else if (REGOPCODE == 4) {
         (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+ARITHMETIC_INSTRUCTION;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "mul ");
-        OpSize = 101;
+        MemDecoration = 101;
         OperandSize = 8;
         MOD_RM(&(*pMyDisasm).Argument2);
         OperandSize = 32;
@@ -66,7 +66,7 @@ void __bea_callspec__ G3_Eb(PDISASM pMyDisasm)
     else if (REGOPCODE == 5) {
         (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+ARITHMETIC_INSTRUCTION;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "imul ");
-        OpSize = 101;
+        MemDecoration = 101;
         OperandSize = 8;
         MOD_RM(&(*pMyDisasm).Argument2);
         OperandSize = 32;
@@ -78,7 +78,7 @@ void __bea_callspec__ G3_Eb(PDISASM pMyDisasm)
     else if (REGOPCODE == 6) {
         (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+ARITHMETIC_INSTRUCTION;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "div ");
-        OpSize = 101;
+        MemDecoration = 101;
         OperandSize = 8;
         MOD_RM(&(*pMyDisasm).Argument2);
         OperandSize = 32;
@@ -90,7 +90,7 @@ void __bea_callspec__ G3_Eb(PDISASM pMyDisasm)
     else if (REGOPCODE == 7) {
         (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+ARITHMETIC_INSTRUCTION;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "idiv ");
-        OpSize = 101;
+        MemDecoration = 101;
         OperandSize = 8;
         MOD_RM(&(*pMyDisasm).Argument2);
         OperandSize = 32;
@@ -140,13 +140,13 @@ void __bea_callspec__ G3_Ev(PDISASM pMyDisasm)
         (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+ARITHMETIC_INSTRUCTION;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "mul ");
         if (OperandSize == 64) {
-            OpSize = 104;
+            MemDecoration = 104;
         }
         else if (OperandSize == 32) {
-            OpSize = 103;
+            MemDecoration = 103;
         }
         else {
-            OpSize = 102;
+            MemDecoration = 102;
         }
         MOD_RM(&(*pMyDisasm).Argument2);
         EIP_ += DECALAGE_EIP+2;
@@ -158,13 +158,13 @@ void __bea_callspec__ G3_Ev(PDISASM pMyDisasm)
         (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+ARITHMETIC_INSTRUCTION;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "imul ");
         if (OperandSize == 64) {
-            OpSize = 104;
+            MemDecoration = 104;
         }
         else if (OperandSize == 32) {
-            OpSize = 103;
+            MemDecoration = 103;
         }
         else {
-            OpSize = 102;
+            MemDecoration = 102;
         }
         MOD_RM(&(*pMyDisasm).Argument2);
         EIP_ += DECALAGE_EIP+2;
@@ -176,13 +176,13 @@ void __bea_callspec__ G3_Ev(PDISASM pMyDisasm)
         (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+ARITHMETIC_INSTRUCTION;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "div ");
         if (OperandSize == 64) {
-            OpSize = 104;
+            MemDecoration = 104;
         }
         else if (OperandSize == 32) {
-            OpSize = 103;
+            MemDecoration = 103;
         }
         else {
-            OpSize = 102;
+            MemDecoration = 102;
         }
         MOD_RM(&(*pMyDisasm).Argument2);
         EIP_ += DECALAGE_EIP+2;
@@ -194,13 +194,13 @@ void __bea_callspec__ G3_Ev(PDISASM pMyDisasm)
         (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+ARITHMETIC_INSTRUCTION;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "idiv ");
         if (OperandSize == 64) {
-            OpSize = 104;
+            MemDecoration = 104;
         }
         else if (OperandSize == 32) {
-            OpSize = 103;
+            MemDecoration = 103;
         }
         else {
-            OpSize = 102;
+            MemDecoration = 102;
         }
         MOD_RM(&(*pMyDisasm).Argument2);
         EIP_ += DECALAGE_EIP+2;

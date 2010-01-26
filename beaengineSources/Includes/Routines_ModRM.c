@@ -1495,7 +1495,7 @@ void __bea_callspec__ Addr_EDI_disp32(ARGTYPE* pMyArgument)
 void __bea_callspec__ _rEAX(ARGTYPE* pMyArgument)
 {
     int i = 0;
-    OpSize = 0;
+    MemDecoration = 0;
     if (MMX_ == 1) {
         (void) strcpy ((char*) (*pMyArgument).ArgMnemonic+i, RegistersMMX[0]);
         (*pMyArgument).ArgType = REGISTER_TYPE+MMX_REG+REGS[0];
@@ -1580,7 +1580,7 @@ void __bea_callspec__ _rEAX(ARGTYPE* pMyArgument)
 void __bea_callspec__ _rECX(ARGTYPE* pMyArgument)
 {
     int i = 0;
-    OpSize = 0;
+    MemDecoration = 0;
     if (MMX_ == 1) {
         (void) strcpy ((char*) (*pMyArgument).ArgMnemonic+i, RegistersMMX[1]);
         (*pMyArgument).ArgType = REGISTER_TYPE+MMX_REG+REGS[1];
@@ -1666,7 +1666,7 @@ void __bea_callspec__ _rECX(ARGTYPE* pMyArgument)
 void __bea_callspec__ _rEDX(ARGTYPE* pMyArgument)
 {
     int i = 0;
-    OpSize = 0;
+    MemDecoration = 0;
     if (MMX_ == 1) {
         (void) strcpy ((char*) (*pMyArgument).ArgMnemonic+i, RegistersMMX[2+0]);
         (*pMyArgument).ArgType = REGISTER_TYPE+MMX_REG+REGS[2+0];
@@ -1752,7 +1752,7 @@ void __bea_callspec__ _rEDX(ARGTYPE* pMyArgument)
 void __bea_callspec__ _rEBX(ARGTYPE* pMyArgument)
 {
     int i = 0;
-    OpSize = 0;
+    MemDecoration = 0;
     if (MMX_ == 1) {
         (void) strcpy ((char*) (*pMyArgument).ArgMnemonic+i, RegistersMMX[3+0]);
         (*pMyArgument).ArgType = REGISTER_TYPE+MMX_REG+REGS[3+0];
@@ -1838,7 +1838,7 @@ void __bea_callspec__ _rEBX(ARGTYPE* pMyArgument)
 void __bea_callspec__ _rESP(ARGTYPE* pMyArgument)
 {
     int i = 0;
-    OpSize = 0;
+    MemDecoration = 0;
     if (MMX_ == 1) {
         (void) strcpy ((char*) (*pMyArgument).ArgMnemonic+i, RegistersMMX[4+0]);
         (*pMyArgument).ArgType = REGISTER_TYPE+MMX_REG+REGS[4+0];
@@ -1924,7 +1924,7 @@ void __bea_callspec__ _rESP(ARGTYPE* pMyArgument)
 void __bea_callspec__ _rEBP(ARGTYPE* pMyArgument)
 {
     int i = 0;
-    OpSize = 0;
+    MemDecoration = 0;
     if (MMX_ == 1) {
         (void) strcpy ((char*) (*pMyArgument).ArgMnemonic+i, RegistersMMX[5+0]);
         (*pMyArgument).ArgType = REGISTER_TYPE+MMX_REG+REGS[5+0];
@@ -2010,7 +2010,7 @@ void __bea_callspec__ _rEBP(ARGTYPE* pMyArgument)
 void __bea_callspec__ _rESI(ARGTYPE* pMyArgument)
 {
     int i = 0;
-    OpSize = 0;
+    MemDecoration = 0;
     if (MMX_ == 1) {
         (void) strcpy ((char*) (*pMyArgument).ArgMnemonic+i, RegistersMMX[6+0]);
         (*pMyArgument).ArgType = REGISTER_TYPE+MMX_REG+REGS[6+0];
@@ -2096,7 +2096,7 @@ void __bea_callspec__ _rESI(ARGTYPE* pMyArgument)
 void __bea_callspec__ _rEDI(ARGTYPE* pMyArgument)
 {
     int i = 0;
-    OpSize = 0;
+    MemDecoration = 0;
     if (MMX_ == 1) {
         (void) strcpy ((char*) (*pMyArgument).ArgMnemonic+i, RegistersMMX[7+0]);
         (*pMyArgument).ArgType = REGISTER_TYPE+MMX_REG+REGS[7+0];

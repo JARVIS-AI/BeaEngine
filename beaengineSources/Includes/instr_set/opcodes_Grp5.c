@@ -48,13 +48,13 @@ void __bea_callspec__ G5_Ev(PDISASM pMyDisasm)
             OperandSize = 64;
         }
         if (OperandSize == 64) {
-            OpSize = 4;
+            MemDecoration = 4;
         }
         else if (OperandSize == 32) {
-            OpSize = 3;
+            MemDecoration = 3;
         }
         else {
-            OpSize = 2;
+            MemDecoration = 2;
         }
         MOD_RM(&(*pMyDisasm).Argument1);
         EIP_ += DECALAGE_EIP+2;
@@ -69,7 +69,7 @@ void __bea_callspec__ G5_Ev(PDISASM pMyDisasm)
         else {
             (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "call far ");
         }
-        OpSize = 7;
+        MemDecoration = 7;
         MOD_RM(&(*pMyDisasm).Argument1);
         EIP_ += DECALAGE_EIP+2;
         (*pMyDisasm).Instruction.ImplicitModifiedRegs = GENERAL_REG+REG4;
@@ -82,13 +82,13 @@ void __bea_callspec__ G5_Ev(PDISASM pMyDisasm)
             OperandSize = 64;
         }
         if (OperandSize == 64) {
-            OpSize = 4;
+            MemDecoration = 4;
         }
         else if (OperandSize == 32) {
-            OpSize = 3;
+            MemDecoration = 3;
         }
         else {
-            OpSize = 2;
+            MemDecoration = 2;
         }
         MOD_RM(&(*pMyDisasm).Argument1);
         EIP_ += DECALAGE_EIP+2;
@@ -102,7 +102,7 @@ void __bea_callspec__ G5_Ev(PDISASM pMyDisasm)
         else {
             (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "jmp far ");
         }
-        OpSize = 7;
+        MemDecoration = 7;
         MOD_RM(&(*pMyDisasm).Argument1);
         EIP_ += DECALAGE_EIP+2;
     }
@@ -113,13 +113,13 @@ void __bea_callspec__ G5_Ev(PDISASM pMyDisasm)
             OperandSize = 64;
         }
         if (OperandSize == 64) {
-            OpSize = 104;
+            MemDecoration = 104;
         }
         else if (OperandSize == 32) {
-            OpSize = 103;
+            MemDecoration = 103;
         }
         else {
-            OpSize = 102;
+            MemDecoration = 102;
         }
         MOD_RM(&(*pMyDisasm).Argument2);
         EIP_ += DECALAGE_EIP+2;

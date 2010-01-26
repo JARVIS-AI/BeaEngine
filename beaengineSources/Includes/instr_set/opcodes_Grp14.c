@@ -27,7 +27,7 @@ void __bea_callspec__ G14_(PDISASM pMyDisasm)
     if (REGOPCODE == 2) {
         if (OperandSize == 16) {
             (*pMyDisasm).Instruction.Category = SSE_INSTRUCTION+SHIFT_ROTATE;
-            OpSize = 8;
+            MemDecoration = 8;
             SSE_ = 1;
             MOD_RM(&(*pMyDisasm).Argument1);
             SSE_ = 0;
@@ -48,7 +48,7 @@ void __bea_callspec__ G14_(PDISASM pMyDisasm)
         }
         else {
             (*pMyDisasm).Instruction.Category = MMX_INSTRUCTION+SHIFT_ROTATE;
-            OpSize = 4;
+            MemDecoration = 4;
             MMX_ = 1;
             MOD_RM(&(*pMyDisasm).Argument1);
             MMX_ = 0;
@@ -71,7 +71,7 @@ void __bea_callspec__ G14_(PDISASM pMyDisasm)
     else if (REGOPCODE == 3) {
         if (OperandSize == 16) {
             (*pMyDisasm).Instruction.Category = SSE_INSTRUCTION+SHIFT_ROTATE;
-            OpSize = 8;
+            MemDecoration = 8;
             SSE_ = 1;
             MOD_RM(&(*pMyDisasm).Argument1);
             SSE_ = 0;
@@ -98,7 +98,7 @@ void __bea_callspec__ G14_(PDISASM pMyDisasm)
     else if (REGOPCODE == 6) {
         if (OperandSize == 16) {
             (*pMyDisasm).Instruction.Category = SSE_INSTRUCTION+SHIFT_ROTATE;
-            OpSize = 8;
+            MemDecoration = 8;
             SSE_ = 1;
             MOD_RM(&(*pMyDisasm).Argument1);
             SSE_ = 0;
@@ -119,7 +119,7 @@ void __bea_callspec__ G14_(PDISASM pMyDisasm)
         }
         else {
             (*pMyDisasm).Instruction.Category = MMX_INSTRUCTION+SHIFT_ROTATE;
-            OpSize = 4;
+            MemDecoration = 4;
             MMX_ = 1;
             MOD_RM(&(*pMyDisasm).Argument1);
             MMX_ = 0;
@@ -142,7 +142,7 @@ void __bea_callspec__ G14_(PDISASM pMyDisasm)
     else if (REGOPCODE == 7) {
         if (OperandSize == 16) {
             (*pMyDisasm).Instruction.Category = SSE_INSTRUCTION+SHIFT_ROTATE;
-            OpSize = 8;
+            MemDecoration = 8;
             SSE_ = 1;
             MOD_RM(&(*pMyDisasm).Argument1);
             SSE_ = 0;

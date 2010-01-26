@@ -24,7 +24,7 @@ void __bea_callspec__ pclmulqdq_(PDISASM pMyDisasm)
     /* ========== 0x66 */
     if (OperandSize == 16) {
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
-        OpSize = 0;
+        MemDecoration = 0;
         (*pMyDisasm).Instruction.Category = CLMUL_INSTRUCTION;
 
         SSE_ = 1;

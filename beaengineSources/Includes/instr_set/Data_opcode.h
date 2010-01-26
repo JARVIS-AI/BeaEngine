@@ -31,7 +31,7 @@ void (__bea_callspec__ * opcode_map1[])(PDISASM) = {
     xor_EbGb  , xor_EvGv  , xor_GbEb  , xor_GvEv  , xor_ALIb  , xor_eAX_Iv, PrefSEGSS , aaa_      , cmp_EbGb  , cmp_EvGv  , cmp_GbEb  , cmp_GvEv  , cmp_ALIb  , cmp_eAX_Iv, PrefSEGDS , aas_      ,
     inc_eax   , inc_ecx   , inc_edx   , inc_ebx   , inc_esp   , inc_ebp   , inc_esi   , inc_edi   , dec_eax   , dec_ecx   , dec_edx   , dec_ebx   , dec_esp   , dec_ebp   , dec_esi   , dec_edi   ,
     push_eax  , push_ecx  , push_edx  , push_ebx  , push_esp  , push_ebp  , push_esi  , push_edi  , pop_eax   , pop_ecx   , pop_edx   , pop_ebx   , pop_esp   , pop_ebp   , pop_esi   , pop_edi   ,
-    pushad_   , popad_    , bound_    , arpl_     , PrefSEGFS , PrefSEGGS , PrefOpSize, PrefAdSize, push_Iv   ,imul_GvEvIv, push_Ib   ,imul_GvEvIb, insb_     , ins_      , outsb_    , outsw_    ,
+    pushad_   , popad_    , bound_    , arpl_     , PrefSEGFS , PrefSEGGS , PrefMemDecoration, PrefAdSize, push_Iv   ,imul_GvEvIv, push_Ib   ,imul_GvEvIb, insb_     , ins_      , outsb_    , outsw_    ,
     jo_       , jno_      , jc_       , jnc_      , je_       , jne_      , jbe_      , jnbe_     , js_       , jns_      , jp_       , jnp_      , jl_       , jnl_      , jle_      , jnle_     ,
     G1_EbIb   , G1_EvIv   , G1_EbIb2  , G1_EvIb   , test_EbGb , test_EvGv , xchg_EbGb , xchg_EvGv , mov_EbGb  , mov_EvGv  , mov_GbEb  , mov_GvEv  , mov_EwSreg, lea_GvM   , mov_SregEw, pop_Ev    ,
     nop_      , xchg_ecx  , xchg_edx  , xchg_ebx  , xchg_esp  , xchg_ebp  , xchg_esi  , xchg_edi  , cwde_     , cdq_      , callf_    , wait_     , pushfd_   , popfd_    , sahf_     , lahf_     ,

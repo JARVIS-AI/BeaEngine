@@ -52,7 +52,7 @@ void __bea_callspec__ G7_(PDISASM pMyDisasm)
             }
         }
         else {
-            OpSize = 7;
+            MemDecoration = 7;
             MOD_RM(&(*pMyDisasm).Argument1);
             (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "sgdt ");
             (*pMyDisasm).Argument2.ArgType = REGISTER_TYPE+MEMORY_MANAGEMENT_REG+REG0;
@@ -77,7 +77,7 @@ void __bea_callspec__ G7_(PDISASM pMyDisasm)
             }
         }
         else {
-            OpSize = 7;
+            MemDecoration = 7;
             MOD_RM(&(*pMyDisasm).Argument1);
             (*pMyDisasm).Instruction.Category = SYSTEM_INSTRUCTION;
             (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "sidt ");
@@ -103,7 +103,7 @@ void __bea_callspec__ G7_(PDISASM pMyDisasm)
             }
         }
         else {
-            OpSize = 107;
+            MemDecoration = 107;
             MOD_RM(&(*pMyDisasm).Argument2);
             (*pMyDisasm).Instruction.Category = SYSTEM_INSTRUCTION;
             (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "lgdt ");
@@ -159,7 +159,7 @@ void __bea_callspec__ G7_(PDISASM pMyDisasm)
             }
         }
         else {
-            OpSize = 107;
+            MemDecoration = 107;
             MOD_RM(&(*pMyDisasm).Argument2);
             (*pMyDisasm).Instruction.Category = SYSTEM_INSTRUCTION;
             (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "lidt ");
@@ -170,7 +170,7 @@ void __bea_callspec__ G7_(PDISASM pMyDisasm)
     }
 
     else if (REGOPCODE == 4) {
-        OpSize = 102;
+        MemDecoration = 102;
         MOD_RM(&(*pMyDisasm).Argument2);
         (*pMyDisasm).Instruction.Category = SYSTEM_INSTRUCTION;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "smsw ");
@@ -180,7 +180,7 @@ void __bea_callspec__ G7_(PDISASM pMyDisasm)
     }
 
     else if (REGOPCODE == 6) {
-        OpSize = 2;
+        MemDecoration = 2;
         MOD_RM(&(*pMyDisasm).Argument1);
         (*pMyDisasm).Instruction.Category = SYSTEM_INSTRUCTION;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "lmsw ");
@@ -212,7 +212,7 @@ void __bea_callspec__ G7_(PDISASM pMyDisasm)
             }
         }
         else {
-            OpSize = 101;
+            MemDecoration = 101;
             MOD_RM(&(*pMyDisasm).Argument2);
             (*pMyDisasm).Instruction.Category = SYSTEM_INSTRUCTION;
             (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "invlpg ");

@@ -152,7 +152,7 @@ void __bea_callspec__ PrefSEGSS(PDISASM pMyDisasm)
 /* ====================================================================
  *      Legacy Prefix 66h-Group 3
  * ==================================================================== */
-void __bea_callspec__ PrefOpSize(PDISASM pMyDisasm)
+void __bea_callspec__ PrefMemDecoration(PDISASM pMyDisasm)
 {
     if (!Security(0)) return;
     (*pMyDisasm).Prefix.OperandSize = InUsePrefix;
