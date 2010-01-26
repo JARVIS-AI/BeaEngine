@@ -4057,6 +4057,8 @@ void __bea_callspec__ lar_GvEw(PDISASM pMyDisasm)
  * ======================================= */
 void __bea_callspec__ lds_GvM(PDISASM pMyDisasm)
 {
+    /* if MOD == 11b, invalid instruction */
+    /* or VEX Prefix - implemented in next release (AVX) */
 
     if (Architecture == 64) {
         FailDecode(pMyDisasm);
@@ -4098,6 +4100,10 @@ void __bea_callspec__ leave_(PDISASM pMyDisasm)
  * ======================================= */
 void __bea_callspec__ lea_GvM(PDISASM pMyDisasm)
 {
+
+    /* if MOD == 11b, invalid instruction */
+    /* or VEX Prefix - implemented in next release (AVX) */
+
     (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+MISCELLANEOUS_INSTRUCTION;
     (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "lea ");
     if (OperandSize >= 32) {
