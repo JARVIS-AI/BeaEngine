@@ -99,7 +99,7 @@ void __bea_callspec__ PrefSEGES(PDISASM);
 void __bea_callspec__ PrefSEGFS(PDISASM);
 void __bea_callspec__ PrefSEGGS(PDISASM);
 void __bea_callspec__ PrefSEGSS(PDISASM);
-void __bea_callspec__ PrefMemDecoration(PDISASM);
+void __bea_callspec__ PrefOpSize(PDISASM);
 void __bea_callspec__ PrefAdSize(PDISASM);
 void __bea_callspec__ Esc_2byte(PDISASM);
 void __bea_callspec__ Esc_tableA4(PDISASM);
