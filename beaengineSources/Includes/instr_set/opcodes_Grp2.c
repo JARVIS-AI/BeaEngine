@@ -121,7 +121,7 @@ void __bea_callspec__ G2_EvIb(PDISASM pMyDisasm)
 void __bea_callspec__ G2_Eb1(PDISASM pMyDisasm)
 {
     REGOPCODE = ((*((UInt8*)(UIntPtr) (EIP_+1))) >> 3) & 0x7;
-    MemDecoration = 1;
+    MemDecoration = Arg1byte;
     OperandSize = 8;
     MOD_RM(&(*pMyDisasm).Argument1);
     OperandSize = 32;
@@ -180,13 +180,13 @@ void __bea_callspec__ G2_Ev1(PDISASM pMyDisasm)
 {
     REGOPCODE = ((*((UInt8*)(UIntPtr) (EIP_+1))) >> 3) & 0x7;
     if (OperandSize == 64) {
-        MemDecoration = 4;
+        MemDecoration = Arg1qword;
     }
     else if (OperandSize == 32) {
-        MemDecoration = 3;
+        MemDecoration = Arg1dword;
     }
     else {
-        MemDecoration = 2;
+        MemDecoration = Arg1word;
     }
     MOD_RM(&(*pMyDisasm).Argument1);
     (void) strcpy ((*pMyDisasm).Argument2.ArgMnemonic, "1 ");
@@ -243,7 +243,7 @@ void __bea_callspec__ G2_Ev1(PDISASM pMyDisasm)
 void __bea_callspec__ G2_EbCL(PDISASM pMyDisasm)
 {
     REGOPCODE = ((*((UInt8*)(UIntPtr) (EIP_+1))) >> 3) & 0x7;
-    MemDecoration = 1;
+    MemDecoration = Arg1byte;
     OperandSize = 8;
     MOD_RM(&(*pMyDisasm).Argument1);
     OperandSize = 32;
@@ -301,13 +301,13 @@ void __bea_callspec__ G2_EvCL(PDISASM pMyDisasm)
 {
     REGOPCODE = ((*((UInt8*)(UIntPtr) (EIP_+1))) >> 3) & 0x7;
     if (OperandSize == 64) {
-        MemDecoration = 4;
+        MemDecoration = Arg1qword;
     }
     else if (OperandSize == 32) {
-        MemDecoration = 3;
+        MemDecoration = Arg1dword;
     }
     else {
-        MemDecoration = 2;
+        MemDecoration = Arg1word;
     }
     MOD_RM(&(*pMyDisasm).Argument1);
     (void) strcpy ((*pMyDisasm).Argument2.ArgMnemonic, Registers8Bits[1]);

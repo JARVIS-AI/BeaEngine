@@ -57,13 +57,13 @@ void __bea_callspec__ nop_Ev(PDISASM pMyDisasm)
     (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+MISCELLANEOUS_INSTRUCTION;
     (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "nop ");
     if (OperandSize == 64) {
-        MemDecoration = 104;
+        MemDecoration = Arg2qword;
     }
     else if (OperandSize == 32) {
-        MemDecoration = 103;
+        MemDecoration = Arg2dword;
     }
     else {
-        MemDecoration = 102;
+        MemDecoration = Arg2word;
     }
     MOD_RM(&(*pMyDisasm).Argument2);
     EIP_ += DECALAGE_EIP+2;
@@ -77,13 +77,13 @@ void __bea_callspec__ hint_nop(PDISASM pMyDisasm)
     (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+MISCELLANEOUS_INSTRUCTION;
     (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "hint_nop ");
     if (OperandSize == 64) {
-        MemDecoration = 104;
+        MemDecoration = Arg2qword;
     }
     else if (OperandSize == 32) {
-        MemDecoration = 103;
+        MemDecoration = Arg2dword;
     }
     else {
-        MemDecoration = 102;
+        MemDecoration = Arg2word;
     }
     MOD_RM(&(*pMyDisasm).Argument2);
     EIP_ += DECALAGE_EIP+2;
@@ -332,7 +332,7 @@ void __bea_callspec__ pop_Ev(PDISASM pMyDisasm)
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "pop ");
         if (Architecture == 64) {
             OperandSize = 64;
-            MemDecoration = 4;
+            MemDecoration = Arg1qword;
             MOD_RM(&(*pMyDisasm).Argument1);
             EIP_ += DECALAGE_EIP+2;
             (*pMyDisasm).Argument2.ArgType = MEMORY_TYPE;
@@ -341,7 +341,7 @@ void __bea_callspec__ pop_Ev(PDISASM pMyDisasm)
             (*pMyDisasm).Instruction.ImplicitModifiedRegs = REGISTER_TYPE+GENERAL_REG+REG4;
         }
         else if (OperandSize == 32) {
-            MemDecoration = 3;
+            MemDecoration = Arg1dword;
             MOD_RM(&(*pMyDisasm).Argument1);
             EIP_ += DECALAGE_EIP+2;
             (*pMyDisasm).Argument2.ArgType = MEMORY_TYPE;
@@ -350,7 +350,7 @@ void __bea_callspec__ pop_Ev(PDISASM pMyDisasm)
             (*pMyDisasm).Instruction.ImplicitModifiedRegs = REGISTER_TYPE+GENERAL_REG+REG4;
         }
         else {
-            MemDecoration = 2;
+            MemDecoration = Arg1word;
             MOD_RM(&(*pMyDisasm).Argument1);
             EIP_ += DECALAGE_EIP+2;
             (*pMyDisasm).Argument2.ArgType = MEMORY_TYPE;
@@ -1932,7 +1932,7 @@ void __bea_callspec__ seto_(PDISASM pMyDisasm)
 {
     (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+BIT_UInt8;
     (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "seto ");
-    MemDecoration = 101;
+    MemDecoration = Arg2byte;
     OperandSize = 8;
     MOD_RM(&(*pMyDisasm).Argument2);
     OperandSize = 32;
@@ -1947,7 +1947,7 @@ void __bea_callspec__ setno_(PDISASM pMyDisasm)
 {
     (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+BIT_UInt8;
     (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "setno ");
-    MemDecoration = 101;
+    MemDecoration = Arg2byte;
     OperandSize = 8;
     MOD_RM(&(*pMyDisasm).Argument2);
     OperandSize = 32;
@@ -1962,7 +1962,7 @@ void __bea_callspec__ setb_(PDISASM pMyDisasm)
 {
     (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+BIT_UInt8;
     (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "setb ");
-    MemDecoration = 101;
+    MemDecoration = Arg2byte;
     OperandSize = 8;
     MOD_RM(&(*pMyDisasm).Argument2);
     OperandSize = 32;
@@ -1977,7 +1977,7 @@ void __bea_callspec__ setnb_(PDISASM pMyDisasm)
 {
     (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+BIT_UInt8;
     (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "setnb ");
-    MemDecoration = 101;
+    MemDecoration = Arg2byte;
     OperandSize = 8;
     MOD_RM(&(*pMyDisasm).Argument2);
     OperandSize = 32;
@@ -1992,7 +1992,7 @@ void __bea_callspec__ sete_(PDISASM pMyDisasm)
 {
     (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+BIT_UInt8;
     (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "sete ");
-    MemDecoration = 101;
+    MemDecoration = Arg2byte;
     OperandSize = 8;
     MOD_RM(&(*pMyDisasm).Argument2);
     OperandSize = 32;
@@ -2007,7 +2007,7 @@ void __bea_callspec__ setne_(PDISASM pMyDisasm)
 {
     (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+BIT_UInt8;
     (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "setne ");
-    MemDecoration = 101;
+    MemDecoration = Arg2byte;
     OperandSize = 8;
     MOD_RM(&(*pMyDisasm).Argument2);
     OperandSize = 32;
@@ -2022,7 +2022,7 @@ void __bea_callspec__ setbe_(PDISASM pMyDisasm)
 {
     (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+BIT_UInt8;
     (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "setbe ");
-    MemDecoration = 101;
+    MemDecoration = Arg2byte;
     OperandSize = 8;
     MOD_RM(&(*pMyDisasm).Argument2);
     OperandSize = 32;
@@ -2037,7 +2037,7 @@ void __bea_callspec__ setnbe_(PDISASM pMyDisasm)
 {
     (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+BIT_UInt8;
     (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "setnbe ");
-    MemDecoration = 101;
+    MemDecoration = Arg2byte;
     OperandSize = 8;
     MOD_RM(&(*pMyDisasm).Argument2);
     OperandSize = 32;
@@ -2052,7 +2052,7 @@ void __bea_callspec__ sets_(PDISASM pMyDisasm)
 {
     (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+BIT_UInt8;
     (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "sets ");
-    MemDecoration = 101;
+    MemDecoration = Arg2byte;
     OperandSize = 8;
     MOD_RM(&(*pMyDisasm).Argument2);
     OperandSize = 32;
@@ -2067,7 +2067,7 @@ void __bea_callspec__ setns_(PDISASM pMyDisasm)
 {
     (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+BIT_UInt8;
     (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "setns ");
-    MemDecoration = 101;
+    MemDecoration = Arg2byte;
     OperandSize = 8;
     MOD_RM(&(*pMyDisasm).Argument2);
     OperandSize = 32;
@@ -2082,7 +2082,7 @@ void __bea_callspec__ setp_(PDISASM pMyDisasm)
 {
     (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+BIT_UInt8;
     (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "setp ");
-    MemDecoration = 101;
+    MemDecoration = Arg2byte;
     OperandSize = 8;
     MOD_RM(&(*pMyDisasm).Argument2);
     OperandSize = 32;
@@ -2097,7 +2097,7 @@ void __bea_callspec__ setnp_(PDISASM pMyDisasm)
 {
     (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+BIT_UInt8;
     (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "setnp ");
-    MemDecoration = 101;
+    MemDecoration = Arg2byte;
     OperandSize = 8;
     MOD_RM(&(*pMyDisasm).Argument2);
     OperandSize = 32;
@@ -2112,7 +2112,7 @@ void __bea_callspec__ setge_(PDISASM pMyDisasm)
 {
     (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+BIT_UInt8;
     (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "setnl ");
-    MemDecoration = 101;
+    MemDecoration = Arg2byte;
     OperandSize = 8;
     MOD_RM(&(*pMyDisasm).Argument2);
     OperandSize = 32;
@@ -2127,7 +2127,7 @@ void __bea_callspec__ setnge_(PDISASM pMyDisasm)
 {
     (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+BIT_UInt8;
     (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "setl ");
-    MemDecoration = 101;
+    MemDecoration = Arg2byte;
     OperandSize = 8;
     MOD_RM(&(*pMyDisasm).Argument2);
     OperandSize = 32;
@@ -2142,7 +2142,7 @@ void __bea_callspec__ setle_(PDISASM pMyDisasm)
 {
     (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+BIT_UInt8;
     (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "setle ");
-    MemDecoration = 101;
+    MemDecoration = Arg2byte;
     OperandSize = 8;
     MOD_RM(&(*pMyDisasm).Argument2);
     OperandSize = 32;
@@ -2157,7 +2157,7 @@ void __bea_callspec__ setnle_(PDISASM pMyDisasm)
 {
     (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+BIT_UInt8;
     (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "setnle ");
-    MemDecoration = 101;
+    MemDecoration = Arg2byte;
     OperandSize = 8;
     MOD_RM(&(*pMyDisasm).Argument2);
     OperandSize = 32;

@@ -32,7 +32,7 @@ void __bea_callspec__ movd_EP(PDISASM pMyDisasm)
     /* ========= 0xf3 */
     if (PrefRepe == 1) {
         (*pMyDisasm).Prefix.RepPrefix = MandatoryPrefix;
-        MemDecoration = 104;
+        MemDecoration = Arg2qword;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "movq ");
         SSE_ = 1;
         MOD_RM(&(*pMyDisasm).Argument2);
@@ -45,7 +45,7 @@ void __bea_callspec__ movd_EP(PDISASM pMyDisasm)
         OperandSize = OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         if (REX.W_ == 1) {
-            MemDecoration = 4;
+            MemDecoration = Arg1qword;
             (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "movq ");
             MOD_RM(&(*pMyDisasm).Argument1);
             SSE_ = 1;
@@ -54,7 +54,7 @@ void __bea_callspec__ movd_EP(PDISASM pMyDisasm)
             EIP_+= DECALAGE_EIP+2;
         }
         else {
-            MemDecoration = 3;
+            MemDecoration = Arg1dword;
             (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "movd ");
             MOD_RM(&(*pMyDisasm).Argument1);
             SSE_ = 1;
@@ -65,7 +65,7 @@ void __bea_callspec__ movd_EP(PDISASM pMyDisasm)
     }
     else {
         if (REX.W_ == 1) {
-            MemDecoration = 4;
+            MemDecoration = Arg1qword;
             (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "movq ");
             MOD_RM(&(*pMyDisasm).Argument1);
             MMX_ = 1;
@@ -74,7 +74,7 @@ void __bea_callspec__ movd_EP(PDISASM pMyDisasm)
             EIP_+= DECALAGE_EIP+2;
         }
         else {
-            MemDecoration = 3;
+            MemDecoration = Arg1dword;
             (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "movd ");
             MOD_RM(&(*pMyDisasm).Argument1);
             MMX_ = 1;
@@ -97,7 +97,7 @@ void __bea_callspec__ movd_PE(PDISASM pMyDisasm)
         OperandSize = OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         if (REX.W_ == 1) {
-            MemDecoration = 104;
+            MemDecoration = Arg2qword;
             (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "movq ");
             MOD_RM(&(*pMyDisasm).Argument2);
             SSE_ = 1;
@@ -106,7 +106,7 @@ void __bea_callspec__ movd_PE(PDISASM pMyDisasm)
             EIP_+= DECALAGE_EIP+2;
         }
         else {
-            MemDecoration = 103;
+            MemDecoration = Arg2dword;
             (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "movd ");
             MOD_RM(&(*pMyDisasm).Argument2);
             SSE_ = 1;
@@ -117,7 +117,7 @@ void __bea_callspec__ movd_PE(PDISASM pMyDisasm)
     }
     else {
         if (REX.W_ == 1) {
-            MemDecoration = 104;
+            MemDecoration = Arg2qword;
             (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "movq ");
             MOD_RM(&(*pMyDisasm).Argument2);
             MMX_ = 1;
@@ -126,7 +126,7 @@ void __bea_callspec__ movd_PE(PDISASM pMyDisasm)
             EIP_+= DECALAGE_EIP+2;
         }
         else {
-            MemDecoration = 103;
+            MemDecoration = Arg2dword;
             (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "movd ");
             MOD_RM(&(*pMyDisasm).Argument2);
             MMX_ = 1;
@@ -148,7 +148,7 @@ void __bea_callspec__ movq_PQ(PDISASM pMyDisasm)
     /* ========= 0xf3 */
     if (PrefRepe == 1) {
         (*pMyDisasm).Prefix.RepPrefix = MandatoryPrefix;
-        MemDecoration = 108;
+        MemDecoration = Arg2dqword;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "movdqu ");
         SSE_ = 1;
         GxEx(pMyDisasm);
@@ -158,14 +158,14 @@ void __bea_callspec__ movq_PQ(PDISASM pMyDisasm)
     else if (OperandSize == 16) {
         OperandSize = OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
-        MemDecoration = 108;
+        MemDecoration = Arg2dqword;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "movdqa ");
         SSE_ = 1;
         GxEx(pMyDisasm);
         SSE_ = 0;
     }
     else {
-        MemDecoration = 104;
+        MemDecoration = Arg2qword;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "movq ");
         MMX_ = 1;
         GxEx(pMyDisasm);
@@ -183,7 +183,7 @@ void __bea_callspec__ movq_QP(PDISASM pMyDisasm)
     /* ========= 0xf3 */
     if (PrefRepe == 1) {
         (*pMyDisasm).Prefix.RepPrefix = MandatoryPrefix;
-        MemDecoration = 8;
+        MemDecoration = Arg1dqword;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "movdqu ");
         SSE_ = 1;
         ExGx(pMyDisasm);
@@ -193,14 +193,14 @@ void __bea_callspec__ movq_QP(PDISASM pMyDisasm)
     else if (OperandSize == 16) {
         OperandSize = OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
-        MemDecoration = 8;
+        MemDecoration = Arg1dqword;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "movdqa ");
         SSE_ = 1;
         ExGx(pMyDisasm);
         SSE_ = 0;
     }
     else {
-        MemDecoration = 4;
+        MemDecoration = Arg1qword;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "movq ");
         MMX_ = 1;
         ExGx(pMyDisasm);
@@ -217,7 +217,7 @@ void __bea_callspec__ movq_WV(PDISASM pMyDisasm)
     /* ========= 0xf2 */
     if (PrefRepne == 1) {
         (*pMyDisasm).Prefix.RepnePrefix = MandatoryPrefix;
-        MemDecoration = 108;
+        MemDecoration = Arg2dqword;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "movdq2q ");
         MMX_ = 1;
         Reg_Opcode(&(*pMyDisasm).Argument1);
@@ -231,7 +231,7 @@ void __bea_callspec__ movq_WV(PDISASM pMyDisasm)
     /* ========= 0xf3 */
     else if (PrefRepe == 1) {
         (*pMyDisasm).Prefix.RepPrefix = MandatoryPrefix;
-        MemDecoration = 104;
+        MemDecoration = Arg2qword;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "movq2dq ");
         MMX_ = 1;
         Reg_Opcode(&(*pMyDisasm).Argument1);
@@ -245,7 +245,7 @@ void __bea_callspec__ movq_WV(PDISASM pMyDisasm)
     else if (OperandSize == 16) {
         OperandSize = OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
-        MemDecoration = 4;
+        MemDecoration = Arg1qword;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "movq ");
         SSE_ = 1;
         ExGx(pMyDisasm);
@@ -267,14 +267,14 @@ void __bea_callspec__ pabsb_(PDISASM pMyDisasm)
     if (OperandSize == 16) {
         OperandSize = OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
-        MemDecoration = 108;
+        MemDecoration = Arg2dqword;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "pabsb ");
         SSE_ = 1;
         GxEx(pMyDisasm);
         SSE_ = 0;
     }
     else {
-        MemDecoration = 104;
+        MemDecoration = Arg2qword;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "pabsb ");
         MMX_ = 1;
         GxEx(pMyDisasm);
@@ -292,14 +292,14 @@ void __bea_callspec__ pabsd_(PDISASM pMyDisasm)
     if (OperandSize == 16) {
         OperandSize = OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
-        MemDecoration = 108;
+        MemDecoration = Arg2dqword;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "pabsd ");
         SSE_ = 1;
         GxEx(pMyDisasm);
         SSE_ = 0;
     }
     else {
-        MemDecoration = 104;
+        MemDecoration = Arg2qword;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "pabsd ");
         MMX_ = 1;
         GxEx(pMyDisasm);
@@ -317,14 +317,14 @@ void __bea_callspec__ pabsw_(PDISASM pMyDisasm)
     if (OperandSize == 16) {
         OperandSize = OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
-        MemDecoration = 108;
+        MemDecoration = Arg2dqword;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "pabsw ");
         SSE_ = 1;
         GxEx(pMyDisasm);
         SSE_ = 0;
     }
     else {
-        MemDecoration = 104;
+        MemDecoration = Arg2qword;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "pabsw ");
         MMX_ = 1;
         GxEx(pMyDisasm);
@@ -342,14 +342,14 @@ void __bea_callspec__ packsswb_(PDISASM pMyDisasm)
     if (OperandSize == 16) {
         OperandSize = OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
-        MemDecoration = 108;
+        MemDecoration = Arg2dqword;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "packsswb ");
         SSE_ = 1;
         GxEx(pMyDisasm);
         SSE_ = 0;
     }
     else {
-        MemDecoration = 104;
+        MemDecoration = Arg2qword;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "packsswb ");
         MMX_ = 1;
         GxEx(pMyDisasm);
@@ -367,14 +367,14 @@ void __bea_callspec__ packssdw_(PDISASM pMyDisasm)
     if (OperandSize == 16) {
         OperandSize = OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
-        MemDecoration = 108;
+        MemDecoration = Arg2dqword;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "packssdw ");
         SSE_ = 1;
         GxEx(pMyDisasm);
         SSE_ = 0;
     }
     else {
-        MemDecoration = 104;
+        MemDecoration = Arg2qword;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "packssdw ");
         MMX_ = 1;
         GxEx(pMyDisasm);
@@ -392,14 +392,14 @@ void __bea_callspec__ packuswb_(PDISASM pMyDisasm)
     if (OperandSize == 16) {
         OperandSize = OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
-        MemDecoration = 108;
+        MemDecoration = Arg2dqword;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "packuswb ");
         SSE_ = 1;
         GxEx(pMyDisasm);
         SSE_ = 0;
     }
     else {
-        MemDecoration = 104;
+        MemDecoration = Arg2qword;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "packuswb ");
         MMX_ = 1;
         GxEx(pMyDisasm);
@@ -417,14 +417,14 @@ void __bea_callspec__ paddb_(PDISASM pMyDisasm)
     if (OperandSize == 16) {
         OperandSize = OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
-        MemDecoration = 108;
+        MemDecoration = Arg2dqword;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "paddb ");
         SSE_ = 1;
         GxEx(pMyDisasm);
         SSE_ = 0;
     }
     else {
-        MemDecoration = 104;
+        MemDecoration = Arg2qword;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "paddb ");
         MMX_ = 1;
         GxEx(pMyDisasm);
@@ -442,14 +442,14 @@ void __bea_callspec__ paddw_(PDISASM pMyDisasm)
     if (OperandSize == 16) {
         OperandSize = OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
-        MemDecoration = 108;
+        MemDecoration = Arg2dqword;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "paddw ");
         SSE_ = 1;
         GxEx(pMyDisasm);
         SSE_ = 0;
     }
     else {
-        MemDecoration = 104;
+        MemDecoration = Arg2qword;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "paddw ");
         MMX_ = 1;
         GxEx(pMyDisasm);
@@ -467,14 +467,14 @@ void __bea_callspec__ paddd_(PDISASM pMyDisasm)
     if (OperandSize == 16) {
         OperandSize = OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
-        MemDecoration = 108;
+        MemDecoration = Arg2dqword;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "paddd ");
         SSE_ = 1;
         GxEx(pMyDisasm);
         SSE_ = 0;
     }
     else {
-        MemDecoration = 104;
+        MemDecoration = Arg2qword;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "paddd ");
         MMX_ = 1;
         GxEx(pMyDisasm);
@@ -492,14 +492,14 @@ void __bea_callspec__ paddsb_(PDISASM pMyDisasm)
     if (OperandSize == 16) {
         OperandSize = OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
-        MemDecoration = 108;
+        MemDecoration = Arg2dqword;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "paddsb ");
         SSE_ = 1;
         GxEx(pMyDisasm);
         SSE_ = 0;
     }
     else {
-        MemDecoration = 104;
+        MemDecoration = Arg2qword;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "paddsb ");
         MMX_ = 1;
         GxEx(pMyDisasm);
@@ -517,14 +517,14 @@ void __bea_callspec__ paddsw_(PDISASM pMyDisasm)
     if (OperandSize == 16) {
         OperandSize = OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
-        MemDecoration = 108;
+        MemDecoration = Arg2dqword;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "paddsw ");
         SSE_ = 1;
         GxEx(pMyDisasm);
         SSE_ = 0;
     }
     else {
-        MemDecoration = 104;
+        MemDecoration = Arg2qword;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "paddsw ");
         MMX_ = 1;
         GxEx(pMyDisasm);
@@ -542,14 +542,14 @@ void __bea_callspec__ paddusb_(PDISASM pMyDisasm)
     if (OperandSize == 16) {
         OperandSize = OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
-        MemDecoration = 108;
+        MemDecoration = Arg2dqword;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "paddusb ");
         SSE_ = 1;
         GxEx(pMyDisasm);
         SSE_ = 0;
     }
     else {
-        MemDecoration = 104;
+        MemDecoration = Arg2qword;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "paddusb ");
         MMX_ = 1;
         GxEx(pMyDisasm);
@@ -567,14 +567,14 @@ void __bea_callspec__ paddusw_(PDISASM pMyDisasm)
     if (OperandSize == 16) {
         OperandSize = OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
-        MemDecoration = 108;
+        MemDecoration = Arg2dqword;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "paddusw ");
         SSE_ = 1;
         GxEx(pMyDisasm);
         SSE_ = 0;
     }
     else {
-        MemDecoration = 104;
+        MemDecoration = Arg2qword;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "paddusw ");
         MMX_ = 1;
         GxEx(pMyDisasm);
@@ -592,14 +592,14 @@ void __bea_callspec__ pand_(PDISASM pMyDisasm)
     if (OperandSize == 16) {
         OperandSize = OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
-        MemDecoration = 108;
+        MemDecoration = Arg2dqword;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "pand ");
         SSE_ = 1;
         GxEx(pMyDisasm);
         SSE_ = 0;
     }
     else {
-        MemDecoration = 104;
+        MemDecoration = Arg2qword;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "pand ");
         MMX_ = 1;
         GxEx(pMyDisasm);
@@ -616,14 +616,14 @@ void __bea_callspec__ pandn_(PDISASM pMyDisasm)
     if (OperandSize == 16) {
         OperandSize = OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
-        MemDecoration = 108;
+        MemDecoration = Arg2dqword;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "pandn ");
         SSE_ = 1;
         GxEx(pMyDisasm);
         SSE_ = 0;
     }
     else {
-        MemDecoration = 104;
+        MemDecoration = Arg2qword;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "pandn ");
         MMX_ = 1;
         GxEx(pMyDisasm);
@@ -641,7 +641,7 @@ void __bea_callspec__ pcmpeqb_(PDISASM pMyDisasm)
     if (OperandSize == 16) {
         OperandSize = OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
-        MemDecoration = 108;
+        MemDecoration = Arg2dqword;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "pcmpeqb ");
         (*pMyDisasm).Argument1.AccessMode = READ;
         SSE_ = 1;
@@ -649,7 +649,7 @@ void __bea_callspec__ pcmpeqb_(PDISASM pMyDisasm)
         SSE_ = 0;
     }
     else {
-        MemDecoration = 104;
+        MemDecoration = Arg2qword;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "pcmpeqb ");
         (*pMyDisasm).Argument1.AccessMode = READ;
         MMX_ = 1;
@@ -668,7 +668,7 @@ void __bea_callspec__ pcmpeqw_(PDISASM pMyDisasm)
     if (OperandSize == 16) {
         OperandSize = OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
-        MemDecoration = 108;
+        MemDecoration = Arg2dqword;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "pcmpeqw ");
         (*pMyDisasm).Argument1.AccessMode = READ;
         SSE_ = 1;
@@ -676,7 +676,7 @@ void __bea_callspec__ pcmpeqw_(PDISASM pMyDisasm)
         SSE_ = 0;
     }
     else {
-        MemDecoration = 104;
+        MemDecoration = Arg2qword;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "pcmpeqw ");
         (*pMyDisasm).Argument1.AccessMode = READ;
         MMX_ = 1;
@@ -695,7 +695,7 @@ void __bea_callspec__ pcmpeqd_(PDISASM pMyDisasm)
     if (OperandSize == 16) {
         OperandSize = OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
-        MemDecoration = 108;
+        MemDecoration = Arg2dqword;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "pcmpeqd ");
         (*pMyDisasm).Argument1.AccessMode = READ;
         SSE_ = 1;
@@ -703,7 +703,7 @@ void __bea_callspec__ pcmpeqd_(PDISASM pMyDisasm)
         SSE_ = 0;
     }
     else {
-        MemDecoration = 104;
+        MemDecoration = Arg2qword;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "pcmpeqd ");
         (*pMyDisasm).Argument1.AccessMode = READ;
         MMX_ = 1;
@@ -722,7 +722,7 @@ void __bea_callspec__ pcmpgtb_(PDISASM pMyDisasm)
     if (OperandSize == 16) {
         OperandSize = OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
-        MemDecoration = 108;
+        MemDecoration = Arg2dqword;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "pcmpgtb ");
         (*pMyDisasm).Argument1.AccessMode = READ;
         SSE_ = 1;
@@ -730,7 +730,7 @@ void __bea_callspec__ pcmpgtb_(PDISASM pMyDisasm)
         SSE_ = 0;
     }
     else {
-        MemDecoration = 104;
+        MemDecoration = Arg2qword;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "pcmpgtb ");
         (*pMyDisasm).Argument1.AccessMode = READ;
         MMX_ = 1;
@@ -749,7 +749,7 @@ void __bea_callspec__ pcmpgtw_(PDISASM pMyDisasm)
     if (OperandSize == 16) {
         OperandSize = OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
-        MemDecoration = 108;
+        MemDecoration = Arg2dqword;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "pcmpgtw ");
         (*pMyDisasm).Argument1.AccessMode = READ;
         SSE_ = 1;
@@ -757,7 +757,7 @@ void __bea_callspec__ pcmpgtw_(PDISASM pMyDisasm)
         SSE_ = 0;
     }
     else {
-        MemDecoration = 104;
+        MemDecoration = Arg2qword;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "pcmpgtw ");
         (*pMyDisasm).Argument1.AccessMode = READ;
         MMX_ = 1;
@@ -776,7 +776,7 @@ void __bea_callspec__ pcmpgtd_(PDISASM pMyDisasm)
     if (OperandSize == 16) {
         OperandSize = OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
-        MemDecoration = 108;
+        MemDecoration = Arg2dqword;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "pcmpgtd ");
         (*pMyDisasm).Argument1.AccessMode = READ;
         SSE_ = 1;
@@ -784,7 +784,7 @@ void __bea_callspec__ pcmpgtd_(PDISASM pMyDisasm)
         SSE_ = 0;
     }
     else {
-        MemDecoration = 104;
+        MemDecoration = Arg2qword;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "pcmpgtd ");
         (*pMyDisasm).Argument1.AccessMode = READ;
         MMX_ = 1;
@@ -803,7 +803,7 @@ void __bea_callspec__ pmulhw_(PDISASM pMyDisasm)
     if (OperandSize == 16) {
         OperandSize = OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
-        MemDecoration = 108;
+        MemDecoration = Arg2dqword;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "pmulhw ");
         (*pMyDisasm).Argument1.AccessMode = READ;
         SSE_ = 1;
@@ -811,7 +811,7 @@ void __bea_callspec__ pmulhw_(PDISASM pMyDisasm)
         SSE_ = 0;
     }
     else {
-        MemDecoration = 104;
+        MemDecoration = Arg2qword;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "pmulhw ");
         (*pMyDisasm).Argument1.AccessMode = READ;
         MMX_ = 1;
@@ -830,7 +830,7 @@ void __bea_callspec__ pmullw_(PDISASM pMyDisasm)
     if (OperandSize == 16) {
         OperandSize = OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
-        MemDecoration = 108;
+        MemDecoration = Arg2dqword;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "pmullw ");
         (*pMyDisasm).Argument1.AccessMode = READ;
         SSE_ = 1;
@@ -838,7 +838,7 @@ void __bea_callspec__ pmullw_(PDISASM pMyDisasm)
         SSE_ = 0;
     }
     else {
-        MemDecoration = 104;
+        MemDecoration = Arg2qword;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "pmullw ");
         (*pMyDisasm).Argument1.AccessMode = READ;
         MMX_ = 1;
@@ -857,7 +857,7 @@ void __bea_callspec__ pmaddwd_(PDISASM pMyDisasm)
     if (OperandSize == 16) {
         OperandSize = OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
-        MemDecoration = 108;
+        MemDecoration = Arg2dqword;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "pmaddwd ");
         (*pMyDisasm).Argument1.AccessMode = READ;
         SSE_ = 1;
@@ -865,7 +865,7 @@ void __bea_callspec__ pmaddwd_(PDISASM pMyDisasm)
         SSE_ = 0;
     }
     else {
-        MemDecoration = 104;
+        MemDecoration = Arg2qword;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "pmaddwd ");
         (*pMyDisasm).Argument1.AccessMode = READ;
         MMX_ = 1;
@@ -884,7 +884,7 @@ void __bea_callspec__ por_(PDISASM pMyDisasm)
     if (OperandSize == 16) {
         OperandSize = OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
-        MemDecoration = 108;
+        MemDecoration = Arg2dqword;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "por ");
         (*pMyDisasm).Argument1.AccessMode = READ;
         SSE_ = 1;
@@ -892,7 +892,7 @@ void __bea_callspec__ por_(PDISASM pMyDisasm)
         SSE_ = 0;
     }
     else {
-        MemDecoration = 104;
+        MemDecoration = Arg2qword;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "por ");
         (*pMyDisasm).Argument1.AccessMode = READ;
         MMX_ = 1;
@@ -911,7 +911,7 @@ void __bea_callspec__ psllw_(PDISASM pMyDisasm)
     if (OperandSize == 16) {
         OperandSize = OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
-        MemDecoration = 108;
+        MemDecoration = Arg2dqword;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "psllw ");
         (*pMyDisasm).Argument1.AccessMode = READ;
         SSE_ = 1;
@@ -919,7 +919,7 @@ void __bea_callspec__ psllw_(PDISASM pMyDisasm)
         SSE_ = 0;
     }
     else {
-        MemDecoration = 104;
+        MemDecoration = Arg2qword;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "psllw ");
         (*pMyDisasm).Argument1.AccessMode = READ;
         MMX_ = 1;
@@ -938,7 +938,7 @@ void __bea_callspec__ pslld_(PDISASM pMyDisasm)
     if (OperandSize == 16) {
         OperandSize = OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
-        MemDecoration = 108;
+        MemDecoration = Arg2dqword;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "pslld ");
         (*pMyDisasm).Argument1.AccessMode = READ;
         SSE_ = 1;
@@ -946,7 +946,7 @@ void __bea_callspec__ pslld_(PDISASM pMyDisasm)
         SSE_ = 0;
     }
     else {
-        MemDecoration = 104;
+        MemDecoration = Arg2qword;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "pslld ");
         (*pMyDisasm).Argument1.AccessMode = READ;
         MMX_ = 1;
@@ -965,7 +965,7 @@ void __bea_callspec__ psllq_(PDISASM pMyDisasm)
     if (OperandSize == 16) {
         OperandSize = OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
-        MemDecoration = 108;
+        MemDecoration = Arg2dqword;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "psllq ");
         (*pMyDisasm).Argument1.AccessMode = READ;
         SSE_ = 1;
@@ -973,7 +973,7 @@ void __bea_callspec__ psllq_(PDISASM pMyDisasm)
         SSE_ = 0;
     }
     else {
-        MemDecoration = 104;
+        MemDecoration = Arg2qword;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "psllq ");
         (*pMyDisasm).Argument1.AccessMode = READ;
         MMX_ = 1;
@@ -992,7 +992,7 @@ void __bea_callspec__ psrlw_(PDISASM pMyDisasm)
     if (OperandSize == 16) {
         OperandSize = OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
-        MemDecoration = 108;
+        MemDecoration = Arg2dqword;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "psrlw ");
         (*pMyDisasm).Argument1.AccessMode = READ;
         SSE_ = 1;
@@ -1000,7 +1000,7 @@ void __bea_callspec__ psrlw_(PDISASM pMyDisasm)
         SSE_ = 0;
     }
     else {
-        MemDecoration = 104;
+        MemDecoration = Arg2qword;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "psrlw ");
         (*pMyDisasm).Argument1.AccessMode = READ;
         MMX_ = 1;
@@ -1019,7 +1019,7 @@ void __bea_callspec__ psrld_(PDISASM pMyDisasm)
     if (OperandSize == 16) {
         OperandSize = OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
-        MemDecoration = 108;
+        MemDecoration = Arg2dqword;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "psrld ");
         (*pMyDisasm).Argument1.AccessMode = READ;
         SSE_ = 1;
@@ -1027,7 +1027,7 @@ void __bea_callspec__ psrld_(PDISASM pMyDisasm)
         SSE_ = 0;
     }
     else {
-        MemDecoration = 104;
+        MemDecoration = Arg2qword;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "psrld ");
         (*pMyDisasm).Argument1.AccessMode = READ;
         MMX_ = 1;
@@ -1046,7 +1046,7 @@ void __bea_callspec__ psrlq_(PDISASM pMyDisasm)
     if (OperandSize == 16) {
         OperandSize = OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
-        MemDecoration = 108;
+        MemDecoration = Arg2dqword;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "psrlq ");
         (*pMyDisasm).Argument1.AccessMode = READ;
         SSE_ = 1;
@@ -1054,7 +1054,7 @@ void __bea_callspec__ psrlq_(PDISASM pMyDisasm)
         SSE_ = 0;
     }
     else {
-        MemDecoration = 104;
+        MemDecoration = Arg2qword;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "psrlq ");
         (*pMyDisasm).Argument1.AccessMode = READ;
         MMX_ = 1;
@@ -1073,7 +1073,7 @@ void __bea_callspec__ psraw_(PDISASM pMyDisasm)
     if (OperandSize == 16) {
         OperandSize = OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
-        MemDecoration = 108;
+        MemDecoration = Arg2dqword;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "psraw ");
         (*pMyDisasm).Argument1.AccessMode = READ;
         SSE_ = 1;
@@ -1081,7 +1081,7 @@ void __bea_callspec__ psraw_(PDISASM pMyDisasm)
         SSE_ = 0;
     }
     else {
-        MemDecoration = 104;
+        MemDecoration = Arg2qword;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "psraw ");
         (*pMyDisasm).Argument1.AccessMode = READ;
         MMX_ = 1;
@@ -1100,7 +1100,7 @@ void __bea_callspec__ psrad_(PDISASM pMyDisasm)
     if (OperandSize == 16) {
         OperandSize = OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
-        MemDecoration = 108;
+        MemDecoration = Arg2dqword;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "psrad ");
         (*pMyDisasm).Argument1.AccessMode = READ;
         SSE_ = 1;
@@ -1108,7 +1108,7 @@ void __bea_callspec__ psrad_(PDISASM pMyDisasm)
         SSE_ = 0;
     }
     else {
-        MemDecoration = 104;
+        MemDecoration = Arg2qword;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "psrad ");
         (*pMyDisasm).Argument1.AccessMode = READ;
         MMX_ = 1;
@@ -1127,7 +1127,7 @@ void __bea_callspec__ psubb_(PDISASM pMyDisasm)
     if (OperandSize == 16) {
         OperandSize = OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
-        MemDecoration = 108;
+        MemDecoration = Arg2dqword;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "psubb ");
         (*pMyDisasm).Argument1.AccessMode = READ;
         SSE_ = 1;
@@ -1135,7 +1135,7 @@ void __bea_callspec__ psubb_(PDISASM pMyDisasm)
         SSE_ = 0;
     }
     else {
-        MemDecoration = 104;
+        MemDecoration = Arg2qword;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "psubb ");
         (*pMyDisasm).Argument1.AccessMode = READ;
         MMX_ = 1;
@@ -1154,7 +1154,7 @@ void __bea_callspec__ psubw_(PDISASM pMyDisasm)
     if (OperandSize == 16) {
         OperandSize = OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
-        MemDecoration = 108;
+        MemDecoration = Arg2dqword;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "psubw ");
         (*pMyDisasm).Argument1.AccessMode = READ;
         SSE_ = 1;
@@ -1162,7 +1162,7 @@ void __bea_callspec__ psubw_(PDISASM pMyDisasm)
         SSE_ = 0;
     }
     else {
-        MemDecoration = 104;
+        MemDecoration = Arg2qword;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "psubw ");
         (*pMyDisasm).Argument1.AccessMode = READ;
         MMX_ = 1;
@@ -1181,7 +1181,7 @@ void __bea_callspec__ psubd_(PDISASM pMyDisasm)
     if (OperandSize == 16) {
         OperandSize = OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
-        MemDecoration = 108;
+        MemDecoration = Arg2dqword;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "psubd ");
         (*pMyDisasm).Argument1.AccessMode = READ;
         SSE_ = 1;
@@ -1189,7 +1189,7 @@ void __bea_callspec__ psubd_(PDISASM pMyDisasm)
         SSE_ = 0;
     }
     else {
-        MemDecoration = 104;
+        MemDecoration = Arg2qword;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "psubd ");
         (*pMyDisasm).Argument1.AccessMode = READ;
         MMX_ = 1;
@@ -1208,7 +1208,7 @@ void __bea_callspec__ psubsb_(PDISASM pMyDisasm)
     if (OperandSize == 16) {
         OperandSize = OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
-        MemDecoration = 108;
+        MemDecoration = Arg2dqword;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "psubsb ");
         (*pMyDisasm).Argument1.AccessMode = READ;
         SSE_ = 1;
@@ -1216,7 +1216,7 @@ void __bea_callspec__ psubsb_(PDISASM pMyDisasm)
         SSE_ = 0;
     }
     else {
-        MemDecoration = 104;
+        MemDecoration = Arg2qword;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "psubsb ");
         (*pMyDisasm).Argument1.AccessMode = READ;
         MMX_ = 1;
@@ -1235,7 +1235,7 @@ void __bea_callspec__ psubsw_(PDISASM pMyDisasm)
     if (OperandSize == 16) {
         OperandSize = OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
-        MemDecoration = 108;
+        MemDecoration = Arg2dqword;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "psubsw ");
         (*pMyDisasm).Argument1.AccessMode = READ;
         SSE_ = 1;
@@ -1243,7 +1243,7 @@ void __bea_callspec__ psubsw_(PDISASM pMyDisasm)
         SSE_ = 0;
     }
     else {
-        MemDecoration = 104;
+        MemDecoration = Arg2qword;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "psubsw ");
         (*pMyDisasm).Argument1.AccessMode = READ;
         MMX_ = 1;
@@ -1262,7 +1262,7 @@ void __bea_callspec__ psubusb_(PDISASM pMyDisasm)
     if (OperandSize == 16) {
         OperandSize = OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
-        MemDecoration = 108;
+        MemDecoration = Arg2dqword;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "psubusb ");
         (*pMyDisasm).Argument1.AccessMode = READ;
         SSE_ = 1;
@@ -1270,7 +1270,7 @@ void __bea_callspec__ psubusb_(PDISASM pMyDisasm)
         SSE_ = 0;
     }
     else {
-        MemDecoration = 104;
+        MemDecoration = Arg2qword;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "psubusb ");
         (*pMyDisasm).Argument1.AccessMode = READ;
         MMX_ = 1;
@@ -1289,7 +1289,7 @@ void __bea_callspec__ psubusw_(PDISASM pMyDisasm)
     if (OperandSize == 16) {
         OperandSize = OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
-        MemDecoration = 108;
+        MemDecoration = Arg2dqword;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "psubusw ");
         (*pMyDisasm).Argument1.AccessMode = READ;
         SSE_ = 1;
@@ -1297,7 +1297,7 @@ void __bea_callspec__ psubusw_(PDISASM pMyDisasm)
         SSE_ = 0;
     }
     else {
-        MemDecoration = 104;
+        MemDecoration = Arg2qword;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "psubusw ");
         (*pMyDisasm).Argument1.AccessMode = READ;
         MMX_ = 1;
@@ -1316,7 +1316,7 @@ void __bea_callspec__ punpckhbw_(PDISASM pMyDisasm)
     if (OperandSize == 16) {
         OperandSize = OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
-        MemDecoration = 108;
+        MemDecoration = Arg2dqword;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "punpckhbw ");
         (*pMyDisasm).Argument1.AccessMode = READ;
         SSE_ = 1;
@@ -1324,7 +1324,7 @@ void __bea_callspec__ punpckhbw_(PDISASM pMyDisasm)
         SSE_ = 0;
     }
     else {
-        MemDecoration = 104;
+        MemDecoration = Arg2qword;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "punpckhbw ");
         (*pMyDisasm).Argument1.AccessMode = READ;
         MMX_ = 1;
@@ -1343,7 +1343,7 @@ void __bea_callspec__ punpckhwd_(PDISASM pMyDisasm)
     if (OperandSize == 16) {
         OperandSize = OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
-        MemDecoration = 108;
+        MemDecoration = Arg2dqword;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "punpckhwd ");
         (*pMyDisasm).Argument1.AccessMode = READ;
         SSE_ = 1;
@@ -1351,7 +1351,7 @@ void __bea_callspec__ punpckhwd_(PDISASM pMyDisasm)
         SSE_ = 0;
     }
     else {
-        MemDecoration = 104;
+        MemDecoration = Arg2qword;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "punpckhwd ");
         (*pMyDisasm).Argument1.AccessMode = READ;
         MMX_ = 1;
@@ -1370,7 +1370,7 @@ void __bea_callspec__ punpckhdq_(PDISASM pMyDisasm)
     if (OperandSize == 16) {
         OperandSize = OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
-        MemDecoration = 108;
+        MemDecoration = Arg2dqword;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "punpckhdq ");
         (*pMyDisasm).Argument1.AccessMode = READ;
         SSE_ = 1;
@@ -1378,7 +1378,7 @@ void __bea_callspec__ punpckhdq_(PDISASM pMyDisasm)
         SSE_ = 0;
     }
     else {
-        MemDecoration = 104;
+        MemDecoration = Arg2qword;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "punpckhdq ");
         (*pMyDisasm).Argument1.AccessMode = READ;
         MMX_ = 1;
@@ -1397,7 +1397,7 @@ void __bea_callspec__ punpcklbw_(PDISASM pMyDisasm)
     if (OperandSize == 16) {
         OperandSize = OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
-        MemDecoration = 108;
+        MemDecoration = Arg2dqword;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "punpcklbw ");
         (*pMyDisasm).Argument1.AccessMode = READ;
         SSE_ = 1;
@@ -1405,7 +1405,7 @@ void __bea_callspec__ punpcklbw_(PDISASM pMyDisasm)
         SSE_ = 0;
     }
     else {
-        MemDecoration = 104;
+        MemDecoration = Arg2qword;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "punpcklbw ");
         (*pMyDisasm).Argument1.AccessMode = READ;
         MMX_ = 1;
@@ -1424,7 +1424,7 @@ void __bea_callspec__ punpcklwd_(PDISASM pMyDisasm)
     if (OperandSize == 16) {
         OperandSize = OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
-        MemDecoration = 108;
+        MemDecoration = Arg2dqword;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "punpcklwd ");
         (*pMyDisasm).Argument1.AccessMode = READ;
         SSE_ = 1;
@@ -1432,7 +1432,7 @@ void __bea_callspec__ punpcklwd_(PDISASM pMyDisasm)
         SSE_ = 0;
     }
     else {
-        MemDecoration = 104;
+        MemDecoration = Arg2qword;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "punpcklwd ");
         (*pMyDisasm).Argument1.AccessMode = READ;
         MMX_ = 1;
@@ -1451,7 +1451,7 @@ void __bea_callspec__ punpckldq_(PDISASM pMyDisasm)
     if (OperandSize == 16) {
         OperandSize = OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
-        MemDecoration = 108;
+        MemDecoration = Arg2dqword;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "punpckldq ");
         (*pMyDisasm).Argument1.AccessMode = READ;
         SSE_ = 1;
@@ -1459,7 +1459,7 @@ void __bea_callspec__ punpckldq_(PDISASM pMyDisasm)
         SSE_ = 0;
     }
     else {
-        MemDecoration = 104;
+        MemDecoration = Arg2qword;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "punpckldq ");
         (*pMyDisasm).Argument1.AccessMode = READ;
         MMX_ = 1;
@@ -1478,7 +1478,7 @@ void __bea_callspec__ pxor_(PDISASM pMyDisasm)
     if (OperandSize == 16) {
         OperandSize = OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
-        MemDecoration = 108;
+        MemDecoration = Arg2dqword;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "pxor ");
         (*pMyDisasm).Argument1.AccessMode = READ;
         SSE_ = 1;
@@ -1486,7 +1486,7 @@ void __bea_callspec__ pxor_(PDISASM pMyDisasm)
         SSE_ = 0;
     }
     else {
-        MemDecoration = 104;
+        MemDecoration = Arg2qword;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "pxor ");
         (*pMyDisasm).Argument1.AccessMode = READ;
         MMX_ = 1;

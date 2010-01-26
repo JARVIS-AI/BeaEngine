@@ -23,7 +23,7 @@
 void __bea_callspec__ G9_(PDISASM pMyDisasm)
 {
     REGOPCODE = ((*((UInt8*)(UIntPtr) (EIP_+1))) >> 3) & 0x7;
-    MemDecoration = 104;
+    MemDecoration = Arg2qword;
     MOD_RM(&(*pMyDisasm).Argument2);
     if (REGOPCODE == 1) {
         (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+DATA_TRANSFER;

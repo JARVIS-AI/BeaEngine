@@ -48,13 +48,13 @@ void __bea_callspec__ G5_Ev(PDISASM pMyDisasm)
             OperandSize = 64;
         }
         if (OperandSize == 64) {
-            MemDecoration = 4;
+            MemDecoration = Arg1qword;
         }
         else if (OperandSize == 32) {
-            MemDecoration = 3;
+            MemDecoration = Arg1dword;
         }
         else {
-            MemDecoration = 2;
+            MemDecoration = Arg1word;
         }
         MOD_RM(&(*pMyDisasm).Argument1);
         EIP_ += DECALAGE_EIP+2;
@@ -69,7 +69,7 @@ void __bea_callspec__ G5_Ev(PDISASM pMyDisasm)
         else {
             (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "call far ");
         }
-        MemDecoration = 7;
+        MemDecoration = Arg1fword;
         MOD_RM(&(*pMyDisasm).Argument1);
         EIP_ += DECALAGE_EIP+2;
         (*pMyDisasm).Instruction.ImplicitModifiedRegs = GENERAL_REG+REG4;
@@ -82,13 +82,13 @@ void __bea_callspec__ G5_Ev(PDISASM pMyDisasm)
             OperandSize = 64;
         }
         if (OperandSize == 64) {
-            MemDecoration = 4;
+            MemDecoration = Arg1qword;
         }
         else if (OperandSize == 32) {
-            MemDecoration = 3;
+            MemDecoration = Arg1dword;
         }
         else {
-            MemDecoration = 2;
+            MemDecoration = Arg1word;
         }
         MOD_RM(&(*pMyDisasm).Argument1);
         EIP_ += DECALAGE_EIP+2;
@@ -102,7 +102,7 @@ void __bea_callspec__ G5_Ev(PDISASM pMyDisasm)
         else {
             (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "jmp far ");
         }
-        MemDecoration = 7;
+        MemDecoration = Arg1fword;
         MOD_RM(&(*pMyDisasm).Argument1);
         EIP_ += DECALAGE_EIP+2;
     }
@@ -113,13 +113,13 @@ void __bea_callspec__ G5_Ev(PDISASM pMyDisasm)
             OperandSize = 64;
         }
         if (OperandSize == 64) {
-            MemDecoration = 104;
+            MemDecoration = Arg2qword;
         }
         else if (OperandSize == 32) {
-            MemDecoration = 103;
+            MemDecoration = Arg2dword;
         }
         else {
-            MemDecoration = 102;
+            MemDecoration = Arg2word;
         }
         MOD_RM(&(*pMyDisasm).Argument2);
         EIP_ += DECALAGE_EIP+2;

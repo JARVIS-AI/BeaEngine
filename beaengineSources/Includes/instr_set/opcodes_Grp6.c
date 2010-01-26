@@ -34,7 +34,7 @@ void __bea_callspec__ G6_(PDISASM pMyDisasm)
             OperandSize = OperandSizeOld;
         }
         else {
-            MemDecoration = 2;
+            MemDecoration = Arg1word;
         }
         MOD_RM(&(*pMyDisasm).Argument1);
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "sldt ");
@@ -48,7 +48,7 @@ void __bea_callspec__ G6_(PDISASM pMyDisasm)
             OperandSize = OperandSizeOld;
         }
         else {
-            MemDecoration = 2;
+            MemDecoration = Arg1word;
         }
         MOD_RM(&(*pMyDisasm).Argument1);
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "str ");
@@ -58,7 +58,7 @@ void __bea_callspec__ G6_(PDISASM pMyDisasm)
         EIP_+= DECALAGE_EIP+2;
     }
     else if (REGOPCODE == 2) {
-        MemDecoration = 102;
+        MemDecoration = Arg2word;
         MOD_RM(&(*pMyDisasm).Argument2);
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "lldt ");
         (*pMyDisasm).Argument1.ArgType = REGISTER_TYPE+MEMORY_MANAGEMENT_REG+REG1;
@@ -67,7 +67,7 @@ void __bea_callspec__ G6_(PDISASM pMyDisasm)
         EIP_+= DECALAGE_EIP+2;
     }
     else if (REGOPCODE == 3) {
-        MemDecoration = 102;
+        MemDecoration = Arg2word;
         MOD_RM(&(*pMyDisasm).Argument2);
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "ltr ");
         (*pMyDisasm).Argument1.ArgType = REGISTER_TYPE+MEMORY_MANAGEMENT_REG+REG3;
@@ -76,7 +76,7 @@ void __bea_callspec__ G6_(PDISASM pMyDisasm)
         EIP_+= DECALAGE_EIP+2;
     }
     else if (REGOPCODE == 4) {
-        MemDecoration = 2;
+        MemDecoration = Arg1word;
         MOD_RM(&(*pMyDisasm).Argument1);
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "verr ");
         (*pMyDisasm).Argument2.ArgType = REGISTER_TYPE+SPECIAL_REG+REG0;
@@ -85,7 +85,7 @@ void __bea_callspec__ G6_(PDISASM pMyDisasm)
         EIP_+= DECALAGE_EIP+2;
     }
     else if (REGOPCODE == 5) {
-        MemDecoration = 2;
+        MemDecoration = Arg1word;
         MOD_RM(&(*pMyDisasm).Argument1);
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "verw ");
         (*pMyDisasm).Argument2.ArgType = REGISTER_TYPE+SPECIAL_REG+REG0;

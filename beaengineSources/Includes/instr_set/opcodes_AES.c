@@ -25,7 +25,7 @@ void __bea_callspec__ aesimc(PDISASM pMyDisasm)
     if (OperandSize == 16) {
         OperandSize = OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
-        MemDecoration = 108;
+        MemDecoration = Arg2dqword;
         (*pMyDisasm).Instruction.Category = AES_INSTRUCTION;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "aesimc ");
         SSE_ = 1;
@@ -46,7 +46,7 @@ void __bea_callspec__ aesenc(PDISASM pMyDisasm)
     if (OperandSize == 16) {
         OperandSize = OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
-        MemDecoration = 108;
+        MemDecoration = Arg2dqword;
         (*pMyDisasm).Instruction.Category = AES_INSTRUCTION;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "aesenc ");
         SSE_ = 1;
@@ -67,7 +67,7 @@ void __bea_callspec__ aesenclast(PDISASM pMyDisasm)
     if (OperandSize == 16) {
         OperandSize = OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
-        MemDecoration = 108;
+        MemDecoration = Arg2dqword;
         (*pMyDisasm).Instruction.Category = AES_INSTRUCTION;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "aesenclast ");
         SSE_ = 1;
@@ -88,7 +88,7 @@ void __bea_callspec__ aesdec(PDISASM pMyDisasm)
     if (OperandSize == 16) {
         OperandSize = OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
-        MemDecoration = 108;
+        MemDecoration = Arg2dqword;
         (*pMyDisasm).Instruction.Category = AES_INSTRUCTION;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "aesdec ");
         SSE_ = 1;
@@ -109,7 +109,7 @@ void __bea_callspec__ aesdeclast(PDISASM pMyDisasm)
     if (OperandSize == 16) {
         OperandSize = OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
-        MemDecoration = 108;
+        MemDecoration = Arg2dqword;
         (*pMyDisasm).Instruction.Category = AES_INSTRUCTION;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "aesdeclast ");
         SSE_ = 1;
@@ -130,7 +130,7 @@ void __bea_callspec__ aeskeygen(PDISASM pMyDisasm)
     if (OperandSize == 16) {
         OperandSize = OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
-        MemDecoration = 108;
+        MemDecoration = Arg2dqword;
         (*pMyDisasm).Instruction.Category = AES_INSTRUCTION;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "aeskeygen-assist ");
         SSE_ = 1;

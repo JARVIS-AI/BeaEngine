@@ -393,7 +393,7 @@ void __bea_callspec__ bound_(PDISASM pMyDisasm)
         (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+CONTROL_TRANSFER;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "bound ");
         GvEv(pMyDisasm);
-        MemDecoration = 103;
+        MemDecoration = Arg2dword;
         (*pMyDisasm).Argument1.AccessMode = READ;
         FillFlags(pMyDisasm,8);
     }
@@ -2394,10 +2394,10 @@ void __bea_callspec__ imul_GvEvIv(PDISASM pMyDisasm)
     (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "imul ");
     if (OperandSize >= 32) {
         if (OperandSize == 64) {
-            MemDecoration = 104;
+            MemDecoration = Arg2qword;
         }
         else {
-            MemDecoration = 103;
+            MemDecoration = Arg2dword;
         }
         MOD_RM(&(*pMyDisasm).Argument2);
         Reg_Opcode(&(*pMyDisasm).Argument1);
@@ -2412,7 +2412,7 @@ void __bea_callspec__ imul_GvEvIv(PDISASM pMyDisasm)
         FillFlags(pMyDisasm, 38);
     }
     else {
-        MemDecoration = 102;
+        MemDecoration = Arg2word;
         MOD_RM(&(*pMyDisasm).Argument2);
         Reg_Opcode(&(*pMyDisasm).Argument1);
         EIP_+= DECALAGE_EIP+4;
@@ -2436,10 +2436,10 @@ void __bea_callspec__ imul_GvEvIb(PDISASM pMyDisasm)
     (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "imul ");
     if (OperandSize >= 32) {
         if (OperandSize == 64) {
-            MemDecoration = 104;
+            MemDecoration = Arg2qword;
         }
         else {
-            MemDecoration = 103;
+            MemDecoration = Arg2dword;
         }
         MOD_RM(&(*pMyDisasm).Argument2);
         Reg_Opcode(&(*pMyDisasm).Argument1);
@@ -2454,7 +2454,7 @@ void __bea_callspec__ imul_GvEvIb(PDISASM pMyDisasm)
         FillFlags(pMyDisasm, 38);
     }
     else {
-        MemDecoration = 102;
+        MemDecoration = Arg2word;
         MOD_RM(&(*pMyDisasm).Argument2);
         Reg_Opcode(&(*pMyDisasm).Argument1);
         EIP_+= DECALAGE_EIP+3;
@@ -4065,13 +4065,13 @@ void __bea_callspec__ lds_GvM(PDISASM pMyDisasm)
         (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+SEGMENT_REGISTER;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "lds ");
         if (OperandSize == 32) {
-            MemDecoration = 107;
+            MemDecoration = Arg2fword;
             MOD_RM(&(*pMyDisasm).Argument2);
             Reg_Opcode(&(*pMyDisasm).Argument1);
             EIP_+= DECALAGE_EIP+2;
         }
         else {
-            MemDecoration = 103;
+            MemDecoration = Arg2dword;
             MOD_RM(&(*pMyDisasm).Argument2);
             Reg_Opcode(&(*pMyDisasm).Argument1);
             EIP_+= DECALAGE_EIP+2;
@@ -4102,17 +4102,17 @@ void __bea_callspec__ lea_GvM(PDISASM pMyDisasm)
     (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "lea ");
     if (OperandSize >= 32) {
         if (OperandSize == 64) {
-            MemDecoration = 104;
+            MemDecoration = Arg2qword;
         }
         else {
-            MemDecoration = 103;
+            MemDecoration = Arg2dword;
         }
         MOD_RM(&(*pMyDisasm).Argument2);
         Reg_Opcode(&(*pMyDisasm).Argument1);
         EIP_+= DECALAGE_EIP+2;
     }
     else {
-        MemDecoration = 102;
+        MemDecoration = Arg2word;
         MOD_RM(&(*pMyDisasm).Argument2);
         Reg_Opcode(&(*pMyDisasm).Argument1);
         EIP_+= DECALAGE_EIP+2;
@@ -4133,13 +4133,13 @@ void __bea_callspec__ les_GvM(PDISASM pMyDisasm)
         (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+SEGMENT_REGISTER;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "les ");
         if (OperandSize == 32) {
-            MemDecoration = 107;
+            MemDecoration = Arg2fword;
             MOD_RM(&(*pMyDisasm).Argument2);
             Reg_Opcode(&(*pMyDisasm).Argument1);
             EIP_+= DECALAGE_EIP+2;
         }
         else {
-            MemDecoration = 103;
+            MemDecoration = Arg2dword;
             MOD_RM(&(*pMyDisasm).Argument2);
             Reg_Opcode(&(*pMyDisasm).Argument1);
             EIP_+= DECALAGE_EIP+2;
@@ -4513,7 +4513,7 @@ void __bea_callspec__ mov_ALOb(PDISASM pMyDisasm)
     UInt64 MyAddress;
     (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+DATA_TRANSFER;
     (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "mov ");
-    MemDecoration = 101;
+    MemDecoration = Arg2byte;
     RM_ = 5;
     MOD_ = 0;
     (*pMyDisasm).Argument1.ArgType = REGISTER_TYPE+GENERAL_REG+REG0;
@@ -4585,29 +4585,29 @@ void __bea_callspec__ mov_eAXOv(PDISASM pMyDisasm)
 
     if (REX.B_ == 0) {
         if (OperandSize == 64) {
-            MemDecoration = 104;
+            MemDecoration = Arg2qword;
             (void) strcpy ((char*) (*pMyDisasm).Argument1.ArgMnemonic, Registers64Bits[0]);
         }
         else if (OperandSize == 32) {
-            MemDecoration = 103;
+            MemDecoration = Arg2dword;
             (void) strcpy ((char*) (*pMyDisasm).Argument1.ArgMnemonic, Registers32Bits[0]);
         }
         else {
-            MemDecoration = 102;
+            MemDecoration = Arg2word;
             (void) strcpy ((char*) (*pMyDisasm).Argument1.ArgMnemonic, Registers16Bits[0]);
         }
     }
     else {
         if (OperandSize == 64) {
-            MemDecoration = 104;
+            MemDecoration = Arg2qword;
             (void) strcpy ((char*) (*pMyDisasm).Argument1.ArgMnemonic, Registers64Bits[0+8]);
         }
         else if (OperandSize == 32) {
-            MemDecoration = 103;
+            MemDecoration = Arg2dword;
             (void) strcpy ((char*) (*pMyDisasm).Argument1.ArgMnemonic, Registers32Bits[0+8]);
         }
         else {
-            MemDecoration = 102;
+            MemDecoration = Arg2word;
             (void) strcpy ((char*) (*pMyDisasm).Argument1.ArgMnemonic, Registers16Bits[0+8]);
         }
     }
@@ -4636,7 +4636,7 @@ void __bea_callspec__ mov_ObAL(PDISASM pMyDisasm)
     UInt64 MyAddress;
     (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+DATA_TRANSFER;
     (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "mov ");
-    MemDecoration = 1;
+    MemDecoration = Arg1byte;
     RM_ = 5;
     MOD_ = 0;
     (*pMyDisasm).Argument2.ArgType = REGISTER_TYPE+GENERAL_REG+REG0;
@@ -4708,29 +4708,29 @@ void __bea_callspec__ mov_OveAX(PDISASM pMyDisasm)
 
     if (REX.B_ == 0) {
         if (OperandSize == 64) {
-            MemDecoration = 4;
+            MemDecoration = Arg1qword;
             (void) strcpy ((char*) (*pMyDisasm).Argument2.ArgMnemonic, Registers64Bits[0]);
         }
         else if (OperandSize == 32) {
-            MemDecoration = 3;
+            MemDecoration = Arg1dword;
             (void) strcpy ((char*) (*pMyDisasm).Argument2.ArgMnemonic, Registers32Bits[0]);
         }
         else {
-            MemDecoration = 2;
+            MemDecoration = Arg1word;
             (void) strcpy ((char*) (*pMyDisasm).Argument2.ArgMnemonic, Registers16Bits[0]);
         }
     }
     else {
         if (OperandSize == 64) {
-            MemDecoration = 4;
+            MemDecoration = Arg1qword;
             (void) strcpy ((char*) (*pMyDisasm).Argument2.ArgMnemonic, Registers64Bits[0+8]);
         }
         else if (OperandSize == 32) {
-            MemDecoration = 3;
+            MemDecoration = Arg1dword;
             (void) strcpy ((char*) (*pMyDisasm).Argument2.ArgMnemonic, Registers32Bits[0+8]);
         }
         else {
-            MemDecoration = 2;
+            MemDecoration = Arg1word;
             (void) strcpy ((char*) (*pMyDisasm).Argument2.ArgMnemonic, Registers16Bits[0+8]);
         }
     }
@@ -5566,7 +5566,7 @@ void __bea_callspec__ mov_EwSreg(PDISASM pMyDisasm)
 {
     (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+DATA_TRANSFER;
     (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "mov ");
-    MemDecoration = 2;
+    MemDecoration = Arg1word;
     OperandSize = 16;
     MOD_RM(&(*pMyDisasm).Argument1);
     OperandSize = 32;
@@ -5583,7 +5583,7 @@ void __bea_callspec__ mov_SregEw(PDISASM pMyDisasm)
 {
     (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+DATA_TRANSFER;
     (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "mov ");
-    MemDecoration = 102;
+    MemDecoration = Arg2word;
     OperandSize = 16;
     MOD_RM(&(*pMyDisasm).Argument2);
     OperandSize = 32;

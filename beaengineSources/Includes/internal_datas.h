@@ -37,6 +37,25 @@ static Int32 third_arg;
 static Int32 TAB_;
 static Int32 ERROR_OPCODE;
 
+/* Define constants to identify the position and type of decoration used in case of memory argument */
+
+#define     Arg1byte        1
+#define     Arg1word        2
+#define     Arg1dword       3
+#define     Arg1qword       4
+#define     Arg1multibytes  5
+#define     Arg1tbyte       6
+#define     Arg1fword       7
+#define     Arg1dqword      8
+
+#define     Arg2byte        101
+#define     Arg2word        102
+#define     Arg2dword       103
+#define     Arg2qword       104
+#define     Arg2multibytes  105
+#define     Arg2tbyte       106
+#define     Arg2fword       107
+#define     Arg2dqword      108
 
 EFLStruct EFLAGS_TABLE[] = {
     {UN_, UN_, UN_, MO_, UN_, MO_, 0  , 0  , 0  , 0  , 0, 0},  /* 0-AAA */
