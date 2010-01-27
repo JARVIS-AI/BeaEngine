@@ -7,7 +7,7 @@ Copyright 2006-2009, BeatriX
 This file is part of BeaEngine.
  
 BeaEngine is free software: you can redistribute it and/or modify
- it under the terms of the GNU Lesser General Public License as published by
+it under the terms of the GNU Lesser General Public License as published by
 the Free Software Foundation, either version 3 of the License, or
 (at your option) any later version.
 
@@ -29,30 +29,30 @@ import os
 import time
 import PyLookInside
 import VersionInfos
-import wx.animate as ani
+#import wx.animate as ani
 
 #---------------------------------------------------------------------------
 
-class BoutonAnime(wx.Window):
-    def __init__(self, parent, image):
-        wx.Window.__init__(self, parent, -1, style=wx.BORDER_NONE)
+#class BoutonAnime(wx.Window):
+#    def __init__(self, parent, image):
+#        wx.Window.__init__(self, parent, -1, style=wx.BORDER_NONE)
         
-        self.image = image
-        animation = ani.Animation(self.image)
-        self.ctrl = ani.AnimationCtrl(self, -1, animation)
-        self.ctrl.Play()
+#        self.image = image
+#        animation = ani.Animation(self.image)
+#        self.ctrl = ani.AnimationCtrl(self, -1, animation)
+#        self.ctrl.Play()
 
-        # Bind the size event to an events handler
-        self.Bind(wx.EVT_SIZE, self.OnSize)
+#        # Bind the size event to an events handler
+#        self.Bind(wx.EVT_SIZE, self.OnSize)
 
         
-    def OnSize(self, event):
-        w, h = self.ctrl.GetSizeTuple()
-        taille = wx.Size(w, h)
-        taille = wx.Size(w+1, h+1)
-        self.SetSize(taille)
-        self.SetPosition((436, 3))
-        self.ctrl.CentreOnParent()
+#    def OnSize(self, event):
+#        w, h = self.ctrl.GetSizeTuple()
+#        taille = wx.Size(w, h)
+#        taille = wx.Size(w+1, h+1)
+#        self.SetSize(taille)
+#        self.SetPosition((436, 3))
+#        self.ctrl.CentreOnParent()
         
 #---------------------------------------------------------------------------
 
@@ -67,7 +67,7 @@ class My_SplashScreen(wx.Frame):
         self.hasShaped = False
 
         self.bmp = wx.Bitmap("Bitmaps/splashScreen.png", wx.BITMAP_TYPE_PNG)
-        self.btn = BoutonAnime(self, "Bitmaps/loading.ani")
+#        self.btn = BoutonAnime(self, "Bitmaps/loading.ani")
         
         self.SetClientSize((self.bmp.GetWidth(), self.bmp.GetHeight()))
 
@@ -129,8 +129,8 @@ class My_SplashScreen(wx.Frame):
 
         # wx.Font(pointSize, family, style, weight, underline, faceName)
         if wx.Platform == "__WXMAC__":
-            self.normalBoldFont = wx.Font(fontSize-3, wx.DEFAULT, wx.NORMAL, wx.BOLD, False, "")
-            self.normalFont = wx.Font(fontSize-3, wx.DEFAULT, wx.NORMAL, wx.NORMAL, False, "")
+            self.normalBoldFont = wx.Font(fontSize-5, wx.DEFAULT, wx.NORMAL, wx.BOLD, False, "")
+            self.normalFont = wx.Font(fontSize-5, wx.DEFAULT, wx.NORMAL, wx.NORMAL, False, "")
             
         elif wx.Platform == "__WXGTK__":
             self.normalBoldFont = wx.Font(fontSize+0, wx.DEFAULT, wx.NORMAL, wx.BOLD, False, "")
@@ -155,13 +155,14 @@ class My_SplashScreen(wx.Frame):
         dc.DrawText(u"%s" % VersionInfos.COPYRIGHT_STRING, 50, 215)
         dc.DrawText(u"%s" % VersionInfos.LICENSE2_STRING, 50, 230)
         dc.DrawText(u"PyLookInside was built using Python "
-                    + sys.version.split()[0] + "," +
+                    + sys.version.split()[0] +
                     " and wxPython "
                     + wx.VERSION_STRING +
                     u" unicode", 50, 245)
         dc.DrawText(u"%s" % VersionInfos.OS_STRING
                     + sys.platform + u"/"
-                    + os.name + "." , 50, 260)
+                    + os.name + "." , 50, 275)
+        dc.DrawText(u"Python %s" % sys.version, 50, 290)
         
     #-----------------------------------------------------------------------
         

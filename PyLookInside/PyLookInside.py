@@ -8,7 +8,7 @@ Copyright 2006-2009, BeatriX
 This file is part of BeaEngine.
  
 BeaEngine is free software: you can redistribute it and/or modify
- it under the terms of the GNU Lesser General Public License as published by
+it under the terms of the GNU Lesser General Public License as published by
 the Free Software Foundation, either version 3 of the License, or
 (at your option) any later version.
 
@@ -25,11 +25,11 @@ along with BeaEngine.  If not, see <http://www.gnu.org/licenses/>.
 #########################################################################
 # Name      :  PyLookInside.py                                          #
 # Version   :  4.0                                                      #
-# Authors   :  Sigman                                                   #
+# Authors   :  BeatriX & Sigma                                          #
 # Created   :  December 2009                                            #
 # Copyright :  © Copyright 2009-2010  |  BeatriX                        #
 # License   :  wxWindows License                                        #
-# About     :  PyTemplateDataBase was built using Python 2.6.4,         #
+# About     :  PyLookInside was built using Python 2.6.4,               #
 #              wxPython 2.8.10.1 unicode, and wxWindows                 #
 #########################################################################
 
@@ -40,7 +40,6 @@ import wxversion
 wxversion.select("2.8-unicode")  # Launch the script only from wx.Python 2.8
 
 import sys
-#import os
 
 try:
     import wx                        # This module uses the new wx namespace
@@ -49,16 +48,19 @@ except ImportError:
 
 import VersionInfos
 import SplashScreen
+import MenuBar
 import ToolBar
 import StatusBar
 import TaskBarIcon
 import Splitter
 import ListCtrlVirtual
-import StaticBoxOne
-import StaticBoxTwo
-import StaticBoxThree
-import StaticBoxFour
-import StaticBoxFive
+import Instructions
+import ArgumentOne
+import ArgumentTwo
+import ArgumentThree
+import ArgumentFour
+import ArgumentFive
+import Eflags
 import AboutNotebook
 import MementoProvider
 import FileDialog
@@ -76,7 +78,7 @@ class My_Frame(wx.Frame):
                           title=u"PyLookInside %s"
                           % VersionInfos.VERSION_STRING,
                           pos=wx.DefaultPosition,
-                          size=(830, 673),
+                          size=(900, 700),
                           style=wx.DEFAULT_FRAME_STYLE |
                           wx.NO_FULL_REPAINT_ON_RESIZE |
                           wx.TAB_TRAVERSAL)
@@ -86,10 +88,12 @@ class My_Frame(wx.Frame):
 
         #-------------------------------------------------------------------
 
-        # self.SetBackgroundColour(wx.NamedColour("LIGHTGREY"))
-        self.SetBackgroundColour("LIGHTGREY")    
+        self.panel = wx.Panel(self)
+        self.panel.SetBackgroundColour("LIGHTGRAY")
+
         #-------------------------------------------------------------------
         
+        # Simplified init method
         self.createMenuBar()
         self.createToolBar()
         self.createStatusBar()
@@ -106,156 +110,27 @@ class My_Frame(wx.Frame):
     #-----------------------------------------------------------------------
 
     def createMenuBar(self):
-        menuBar = wx.MenuBar()
+        self.menu = MenuBar.My_MenuBar(self)
+        self.SetMenuBar(self.menu)
 
-        #-------------------------------------------------------------------
+        # Bind some menus events to an events handler
+        self.Bind(wx.EVT_MENU, self.OnFileOpen, id=20)
+        self.Bind(wx.EVT_MENU, self.OnDisassemble, id=21)
+        self.Bind(wx.EVT_MENU, self.OnScreenShot, id=22)
+        self.Bind(wx.EVT_MENU, self.OnAbout, id=23)
+        self.Bind(wx.EVT_MENU, self.OnMemento, id=24)
+        self.Bind(wx.EVT_MENU, self.OnlineHelp, id=25)
+        self.Bind(wx.EVT_MENU, self.OnClose, id=26)
+        self.Bind(wx.EVT_MENU, self.OnRoll, id=27)
+        self.Bind(wx.EVT_MENU, self.OnUnRoll, id=28)
         
-        menuFile = wx.Menu(style=wx.MENU_TEAROFF)
-
-        #-------------------------------------------------------------------
-
-        bmp = wx.Bitmap("Bitmaps/item_Open.png", wx.BITMAP_TYPE_PNG)
-        
-        item = wx.MenuItem(menuFile, -1,
-                           text=u"&Open\tCtrl+O",
-                           help=u"Display the open file dialog.")
-        item.SetBitmap(bmp)
-        menuFile.AppendItem(item)
-
-        # Bind the menu event to an events handler
-        self.Bind(wx.EVT_MENU, self.OnFileOpen, item)
-
-        #-------------------------------------------------------------------
-
-        bmp = wx.Bitmap("Bitmaps/item_Disassemble.png", wx.BITMAP_TYPE_PNG)
-        
-        item = wx.MenuItem(menuFile, -1,
-                           text=u"&Disassemble\tCtrl+D",
-                           help=u"Launch the disassembling.")
-        item.SetBitmap(bmp)
-        menuFile.AppendItem(item)
-        menuFile.AppendSeparator()
-        
-        # Bind the menu event to an events handler
-        self.Bind(wx.EVT_MENU, self.OnDisassemble, item)
-
-        #-------------------------------------------------------------------
-
-        bmp = wx.Bitmap("Bitmaps/item_Print.png", wx.BITMAP_TYPE_PNG)
-        
-        item = wx.MenuItem(menuFile, -1,
-                           text=u"&Screen Shot\tCtrl+P",
-                           help=u"Frame screen shot.")
-        item.SetBitmap(bmp)
-        menuFile.AppendItem(item)
-        menuFile.AppendSeparator()
-        
-        # Bind the menu event to an events handler
-        self.Bind(wx.EVT_MENU, self.OnScreenShot, item)
-
-        #-------------------------------------------------------------------
-
-        bmp = wx.Bitmap("Bitmaps/item_Exit.png", wx.BITMAP_TYPE_PNG)
-        
-        item = wx.MenuItem(menuFile, -1,
-                           text=u"&Quit\tCtrl+Q",
-                           help=u"Quit the application.")
-        item.SetBitmap(bmp)
-        menuFile.AppendItem(item)
-
-        # Bind the menu event to an events handler
-        self.Bind(wx.EVT_MENU, self.OnClose, item)
-
-        #-------------------------------------------------------------------
-
-        menuView = wx.Menu(style=wx.MENU_TEAROFF)
-
-        #-------------------------------------------------------------------
-
-        bmp = wx.Bitmap("Bitmaps/item_RollUp.png", wx.BITMAP_TYPE_PNG)
-                        
-        item = wx.MenuItem(menuView, -1,
-                           text=u"&Roll\tF3",
-                           help=u"Minimize the application to this titleBar.")
-        item.SetBitmap(bmp)
-        menuView.AppendItem(item)
-
-        # Bind the menu event to an events handler
-        self.Bind(wx.EVT_MENU, self.OnRoll, item)
-
-        #-------------------------------------------------------------------
-
-        bmp = wx.Bitmap("Bitmaps/item_Unroll.png", wx.BITMAP_TYPE_PNG)
-                        
-        item = wx.MenuItem(menuView, -1,
-                           text=u"&UnRoll\tF4",
-                           help=u"Restore the application to this initial size.")
-        item.SetBitmap(bmp)
-        menuView.AppendItem(item)
-
-        # Bind the menu event to an events handler
-        self.Bind(wx.EVT_MENU, self.OnUnRoll, item)
-        
-        #-------------------------------------------------------------------
-        
-        menuHelp = wx.Menu(style=wx.MENU_TEAROFF)
-
-        #-------------------------------------------------------------------
-
-        bmp = wx.Bitmap("Bitmaps/item_About.png", wx.BITMAP_TYPE_PNG)
-        
-        item = wx.MenuItem(menuHelp, -1,
-                           text=u"&About...\tCtrl+A",
-                           help=u"About this application.")
-        item.SetBitmap(bmp)
-        menuHelp.AppendItem(item)
-
-        # Bind the menu event to an events handler
-        self.Bind(wx.EVT_MENU, self.OnAbout, item)
-
-        #-------------------------------------------------------------------
-
-        bmp = wx.Bitmap("Bitmaps/item_Note.png", wx.BITMAP_TYPE_PNG)
-        
-        item = wx.MenuItem(menuHelp, -1,
-                           text=u"Me&mento\tCtrl+M",
-                           help=u"Little reminder.")
-        item.SetBitmap(bmp)
-        menuHelp.AppendItem(item)
-
-        # Bind the menu event to an events handler
-        self.Bind(wx.EVT_MENU, self.OnMemento, item)
-
-        #-------------------------------------------------------------------
-
-        bmp = wx.Bitmap("Bitmaps/item_Help.png", wx.BITMAP_TYPE_PNG)
-        
-        item = wx.MenuItem(menuHelp, -1,
-                           text=u"Online &help\tCtrl+H",
-                           help=u"Online help.")
-        item.SetBitmap(bmp)
-        menuHelp.AppendItem(item)
-
-        # Bind the menu event to an events handler
-        self.Bind(wx.EVT_MENU, self.OnlineHelp, item)
-
-        #-------------------------------------------------------------------
-        
-        menuBar.Append(menuFile, title=u"&File")
-        menuBar.Append(menuView, title=u"&View")
-        menuBar.Append(menuHelp, title=u"&?")
-        
-        #-------------------------------------------------------------------
-        
-        self.SetMenuBar(menuBar)
-
     #----------------------------------------------------------------------- 
 
     def createToolBar(self):        
         self.tb = ToolBar.My_Toolbar(self)
         self.SetToolBar(self.tb)
 
-        # Bind some events to an events handler
+        # Bind some tools events to an events handler
         self.Bind(wx.EVT_TOOL, self.OnFileOpen, id=20)
         self.Bind(wx.EVT_TOOL, self.OnDisassemble, id=21)
         self.Bind(wx.EVT_TOOL, self.OnScreenShot, id=22)
@@ -279,13 +154,17 @@ class My_Frame(wx.Frame):
     #-----------------------------------------------------------------------
 
     def createSplitter(self):
-        self.sp1 = Splitter.My_Splitter(self)
+        self.sp1 = Splitter.My_Splitter(self.panel)
+     
+        self.leftpanel = wx.Panel(self.sp1,
+                                  style=wx.BORDER_SIMPLE | wx.TAB_TRAVERSAL)
         
-        self.leftpanel = wx.Panel (self.sp1,
+        self.rightpanel = wx.Panel(self.sp1,
                                    style=wx.BORDER_SIMPLE | wx.TAB_TRAVERSAL)
-        self.rightpanel = wx.Panel (self.sp1,
-                                    style=wx.BORDER_SIMPLE | wx.TAB_TRAVERSAL)
-
+        
+        self.sp1.SplitVertically(self.leftpanel, self.rightpanel)
+        self.sp1.SetSashPosition(310, True)
+        
     #-----------------------------------------------------------------------
        
     def createListCtrl(self):
@@ -295,11 +174,13 @@ class My_Frame(wx.Frame):
     #-----------------------------------------------------------------------
 
     def createStaticBox(self):
-        self.stbx1 = StaticBoxOne.My_StaticBox(self.rightpanel)
-        self.stbx2 = StaticBoxTwo.My_StaticBox(self.rightpanel)
-        self.stbx3 = StaticBoxThree.My_StaticBox(self.rightpanel)
-        self.stbx4 = StaticBoxFour.My_StaticBox(self.rightpanel)
-        self.stbx5 = StaticBoxFive.My_StaticBox(self.rightpanel)
+        self.stbx1 = Instructions.My_StaticBox(self.rightpanel)
+        self.stbx2 = ArgumentOne.My_StaticBox(self.rightpanel)
+        self.stbx3 = ArgumentTwo.My_StaticBox(self.rightpanel)
+        self.stbx4 = ArgumentThree.My_StaticBox(self.rightpanel)
+        self.stbx5 = ArgumentFour.My_StaticBox(self.rightpanel)
+        self.stbx6 = ArgumentFive.My_StaticBox(self.rightpanel)
+        self.stbx7 = Eflags.My_StaticBox(self.rightpanel)
         
     #-----------------------------------------------------------------------
         
@@ -314,14 +195,15 @@ class My_Frame(wx.Frame):
         sizer2 = wx.BoxSizer(wx.HORIZONTAL)
         sizer3 = wx.BoxSizer(wx.HORIZONTAL)
         sizer4 = wx.BoxSizer(wx.HORIZONTAL)
-        sizer5 = wx.BoxSizer(wx.HORIZONTAL)
         
         sizer1.Add(self.stbx1, 1, wx.EXPAND | wx.ALL, 0)
         sizer2.Add(self.stbx2, 1, wx.EXPAND | wx.ALL, 0)
-        sizer3.Add(self.stbx3, 1, wx.EXPAND | wx.ALL, 0)
-        sizer4.Add(self.stbx4, 1, wx.EXPAND | wx.ALL, 0)
-        sizer5.Add(self.stbx5, 1, wx.EXPAND | wx.ALL, 0)
-
+        sizer2.Add(self.stbx3, 1, wx.EXPAND | wx.ALL, 0)
+        sizer3.Add(self.stbx4, 1, wx.EXPAND | wx.ALL, 0)
+        sizer3.Add(self.stbx5, 1, wx.EXPAND | wx.ALL, 0)
+        sizer4.Add(self.stbx6, 1, wx.EXPAND | wx.ALL, 0)
+        sizer4.Add(self.stbx7, 1, wx.EXPAND | wx.ALL, 0)
+        
         #----------
         
         topSizer = wx.BoxSizer(wx.VERTICAL)
@@ -330,12 +212,7 @@ class My_Frame(wx.Frame):
         topSizer.Add(sizer2, 0, wx.EXPAND | wx.ALL, 3)
         topSizer.Add(sizer3, 0, wx.EXPAND | wx.ALL, 3)
         topSizer.Add(sizer4, 0, wx.EXPAND | wx.ALL, 3)
-        topSizer.Add(sizer5, 0, wx.EXPAND | wx.ALL, 3)
-
-        #----------
-       
-        self.sp1.SplitVertically(self.leftpanel, self.rightpanel)
-
+        
         #----------
 
         self.leftpanel.SetAutoLayout(True)
@@ -351,10 +228,22 @@ class My_Frame(wx.Frame):
         topSizer.Fit(self.rightpanel)
         listSizer.Fit(self.leftpanel)
 
+        #----------
+
+        sizer = wx.BoxSizer(wx.VERTICAL)
+        sizer.Add(self.sp1, 1, wx.EXPAND)
+
+        #----------
+
+        # self.panel.SetAutoLayout(True)        
+        self.panel.SetSizer(sizer)
+        sizer.Fit(self.panel)
+        self.Layout()
+
+
     #-----------------------------------------------------------------------      
 
     def OnFileOpen(self, event):
-
         self.fileOpen = FileDialog.My_FileDialog(self)
 
     #-----------------------------------------------------------------------
@@ -379,10 +268,7 @@ class My_Frame(wx.Frame):
 
     #-----------------------------------------------------------------------
 
-#def capture_screenshot(event):
-        
-    def OnScreenShot(self, event):
-     
+    def OnScreenShot(self, event):     
         #Works on Windows XP and Linux.
         event.Skip()
         rect = self.GetRect()

@@ -7,7 +7,7 @@ Copyright 2006-2009, BeatriX
 This file is part of BeaEngine.
  
 BeaEngine is free software: you can redistribute it and/or modify
- it under the terms of the GNU Lesser General Public License as published by
+it under the terms of the GNU Lesser General Public License as published by
 the Free Software Foundation, either version 3 of the License, or
 (at your option) any later version.
 
@@ -34,7 +34,7 @@ class My_Splitter(wx.SplitterWindow):
                                    wx.SP_LIVE_UPDATE | wx.TAB_TRAVERSAL)
 
         #-------------------------------------------------------------------
-        
+      
         self.parent = parent
         
         #-------------------------------------------------------------------
@@ -73,12 +73,12 @@ class My_Splitter(wx.SplitterWindow):
 
     def ResetSash(self):
         # self.SetSashPosition(self.GetExpectedSashPosition())
-        self.SetSashPosition(350, True)
+        self.SetSashPosition(310, True)
 
 
     def OnDoubleClick(self, event):
         size = self.GetSize()
-        self.SetSashPosition(350, True)
+        self.SetSashPosition(310, True)
 
 
     def OnSashChanged(self, event):

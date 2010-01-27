@@ -7,7 +7,7 @@ Copyright 2006-2009, BeatriX
 This file is part of BeaEngine.
  
 BeaEngine is free software: you can redistribute it and/or modify
- it under the terms of the GNU Lesser General Public License as published by
+it under the terms of the GNU Lesser General Public License as published by
 the Free Software Foundation, either version 3 of the License, or
 (at your option) any later version.
 
@@ -40,20 +40,20 @@ class My_ListCtrl(wx.ListCtrl,
         
         listmix.ListCtrlAutoWidthMixin.__init__(self)
         listmix.ColumnSorterMixin.__init__(self, 2)
-
+        
         #-------------------------------------------------------------------
         
         fontSize = self.GetFont().GetPointSize()
 
         # wx.Font(pointSize, family, style, weight, underline, faceName)
         if wx.Platform == "__WXMAC__":
-            self.normalFont = wx.Font(fontSize+0, wx.DEFAULT, wx.NORMAL, wx.NORMAL, False, "")
+            self.normalFont = wx.Font(fontSize-2, wx.DEFAULT, wx.NORMAL, wx.NORMAL, False, "")
             
         elif wx.Platform == "__WXGTK__":
-            self.normalFont = wx.Font(fontSize+0, wx.DEFAULT, wx.NORMAL, wx.NORMAL, False, "")
+            self.normalFont = wx.Font(fontSize-1, wx.DEFAULT, wx.NORMAL, wx.NORMAL, False, "")
             
         else:
-            self.normalFont = wx.Font(fontSize+0, wx.DEFAULT, wx.NORMAL, wx.NORMAL, False, "")
+            self.normalFont = wx.Font(fontSize-1, wx.DEFAULT, wx.NORMAL, wx.NORMAL, False, "")
 
         self.SetFont(self.normalFont)
 
@@ -74,8 +74,8 @@ class My_ListCtrl(wx.ListCtrl,
         
         #-------------------------------------------------------------------
 
-        self.InsertColumn(0, u"Offset", wx.LIST_FORMAT_LEFT, width=130)
-        self.InsertColumn(1, u"Value", wx.LIST_FORMAT_LEFT)
+        self.InsertColumn(0, u"Offset", wx.LIST_FORMAT_LEFT, width=90)
+        self.InsertColumn(1, u"Value", wx.LIST_FORMAT_LEFT, width=wx.LIST_AUTOSIZE)
 
         #-------------------------------------------------------------------
 
@@ -86,7 +86,7 @@ class My_ListCtrl(wx.ListCtrl,
         self.SetForegroundColour("#6a6a66")
         
         self.attributeColor = wx.ListItemAttr()
-        self.attributeColor.SetBackgroundColour(wx.Colour(237, 241, 243))  
+        self.attributeColor.SetBackgroundColour(wx.Colour(220, 225, 228))  
 
         #-------------------------------------------------------------------
 

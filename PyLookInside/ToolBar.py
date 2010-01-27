@@ -7,7 +7,7 @@ Copyright 2006-2009, BeatriX
 This file is part of BeaEngine.
  
 BeaEngine is free software: you can redistribute it and/or modify
- it under the terms of the GNU Lesser General Public License as published by
+it under the terms of the GNU Lesser General Public License as published by
 the Free Software Foundation, either version 3 of the License, or
 (at your option) any later version.
 
@@ -37,7 +37,7 @@ class My_Toolbar(wx.ToolBar):
         toolSize = (24, 24)
         self.SetToolBitmapSize(toolSize)
 
-        self.AddLabelTool(20, u"Open",
+        self.AddLabelTool(20, u" Open ",
                           wx.Bitmap("Bitmaps/tb_Open.png", wx.BITMAP_TYPE_PNG),
                           shortHelp=u"",
                           longHelp=u"Display the open file dialog.")
@@ -72,10 +72,8 @@ class My_Toolbar(wx.ToolBar):
                           shortHelp=u"",
                           longHelp=u"Quit the application.")
         self.AddSeparator()
-        self.AddSeparator()
         searchCtrl = SearchCtrl.My_SearchCtrl(self, size=(200, -1))
-        self.AddControl(searchCtrl)
-        self.AddSeparator()        
+        self.AddControl(searchCtrl)      
         self.AddSeparator()
         
         self.Realize()

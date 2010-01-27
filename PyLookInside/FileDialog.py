@@ -7,7 +7,7 @@ Copyright 2006-2009, BeatriX
 This file is part of BeaEngine.
  
 BeaEngine is free software: you can redistribute it and/or modify
- it under the terms of the GNU Lesser General Public License as published by
+it under the terms of the GNU Lesser General Public License as published by
 the Free Software Foundation, either version 3 of the License, or
 (at your option) any later version.
 
@@ -33,7 +33,7 @@ from WilcardList import *
 class My_FileDialog(wx.FileDialog):
     def __init__(self, parent,):
         wx.FileDialog.__init__(self, parent,
-                               message=u"Chosse a file",
+                               message=u"Choose a file",
                                defaultDir=os.getcwd(),
                                defaultFile=u"",
                                wildcard=wildcard,

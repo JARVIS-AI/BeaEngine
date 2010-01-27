@@ -7,7 +7,7 @@ Copyright 2006-2009, BeatriX
 This file is part of BeaEngine.
  
 BeaEngine is free software: you can redistribute it and/or modify
- it under the terms of the GNU Lesser General Public License as published by
+it under the terms of the GNU Lesser General Public License as published by
 the Free Software Foundation, either version 3 of the License, or
 (at your option) any later version.
 
@@ -23,8 +23,8 @@ along with BeaEngine.  If not, see <http://www.gnu.org/licenses/>.
 
 # Import packages
 
-import wx                            # This module uses the new wx namespace
 import os.path
+import wx                            # This module uses the new wx namespace
 
 #---------------------------------------------------------------------------
 
@@ -92,8 +92,8 @@ class My_Memento(wx.Dialog):
         #-------------------------------------------------------------------
         
         self.field = wx.TextCtrl(self, -1, value=u"", size=(100, 165),
-                                 style=wx.TE_LEFT | wx.BORDER_THEME |
-                                 wx.TE_MULTILINE)
+                                 style=wx.TE_LEFT | wx.TE_MULTILINE |
+                                 wx.BORDER_THEME)
 
         self.field.SetFont(self.normalFont)
         self.field.SetSize(self.field.GetBestSize())
@@ -101,6 +101,10 @@ class My_Memento(wx.Dialog):
         filename = open(os.path.join(self.dirname, self.filename), "r")
         text_in = filename.read()
         filename.close()
+
+#        if wx.Platform == "__WXMSW__":
+#            text_in = text_in.replace('\n', '\r\n')
+
         hello_in = text_in.decode("utf-8", "ignore")
         self.field.SetValue(hello_in)
 
@@ -158,7 +162,6 @@ class My_Memento(wx.Dialog):
         self.Centre(wx.BOTH)
 
         self.btnClose = self.ShowModal()
-        self.Close()
 
     #-----------------------------------------------------------------------
         

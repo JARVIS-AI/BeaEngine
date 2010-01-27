@@ -7,7 +7,7 @@ Copyright 2006-2009, BeatriX
 This file is part of BeaEngine.
  
 BeaEngine is free software: you can redistribute it and/or modify
- it under the terms of the GNU Lesser General Public License as published by
+it under the terms of the GNU Lesser General Public License as published by
 the Free Software Foundation, either version 3 of the License, or
 (at your option) any later version.
 
@@ -23,6 +23,7 @@ along with BeaEngine.  If not, see <http://www.gnu.org/licenses/>.
 
 # Import packages
 
+import os.path
 import wx                            # This module uses the new wx namespace
 import wx.html
 import VersionInfos
@@ -45,7 +46,7 @@ text = u"""<html><body><div align="center">
 
 class HtmlWindow(wx.html.HtmlWindow):
     def __init__(self, parent):
-        wx.html.HtmlWindow.__init__(self, parent)
+        wx.html.HtmlWindow.__init__(self, parent, style=wx.BORDER_THEME)
 
         if "gtk2" in wx.PlatformInfo:
             self.SetStandardFonts()
@@ -82,6 +83,11 @@ class PageLicence(wx.Panel):
 
         #-------------------------------------------------------------------
         
+        self.filename = u"License/lgpl.txt"
+        self.dirname = u"."
+
+        #-------------------------------------------------------------------
+        
         fontSize = self.GetFont().GetPointSize()
 
         # wx.Font(pointSize, family, style, weight, underline, faceName)
@@ -98,24 +104,33 @@ class PageLicence(wx.Panel):
 
         #-------------------------------------------------------------------
 
-        f = open(u"License/lgpl.txt", "r")
-        msg = f.read()
-        f.close()
-
-        self.field = wx.TextCtrl(self, -1, value=msg,
-                                 style=wx.TE_MULTILINE | wx.TE_READONLY |
-                                 wx.TE_LEFT | wx.TE_DONTWRAP)
+#        f = open(u"License/lgpl.txt", "r")
+#        msg = f.read()
+#        f.close()
+            
+        self.field = wx.TextCtrl(self, -1, value=u"", size=(100, 165),
+                                 style=wx.TE_LEFT | wx.TE_MULTILINE |
+                                 wx.BORDER_THEME)
 
         self.field.SetFont(self.normalFont)
         self.field.SetSize(self.field.GetBestSize())
-        self.field.SetForegroundColour(wx.BLACK)
-    
+     
+        filename = open(os.path.join(self.dirname, self.filename), "r")
+        text_in = filename.read()
+        filename.close()
+
+#        if wx.Platform == "__WXMSW__":
+#            text_in = text_in.replace('\n', '\r\n')
+
+        hello_in = text_in.decode("utf-8", "ignore")
+        self.field.SetValue(hello_in)
+        
         sizer = wx.BoxSizer(wx.HORIZONTAL)
         sizer.Add(self.field, 1, wx.EXPAND, 0)
 
         self.SetSizer(sizer)
         sizer.Fit(self)
-
+        
 #---------------------------------------------------------------------------
 
 class PageDevelopers(wx.Panel):
@@ -130,7 +145,7 @@ class PageDevelopers(wx.Panel):
         <br>
         <br><b>● Igor Gutnik</b> <i>(Linux & portable plateforms developer)</i>
         <br>
-        <br><b>● Sigman</b> <i>(PyLookInside developer)</i>
+        <br><b>● Sigma</b> <i>(PyLookInside developer)</i>
         <p></div></body></html>''')
         
         sizer = wx.BoxSizer(wx.HORIZONTAL)
@@ -173,14 +188,15 @@ class My_Notebook(wx.Dialog):
         wx.Dialog.__init__(self, parent, -1,
                            title=u"About...", size=(500, 400))
 
+        # Bind the close event to an events handler
         self.Bind(wx.EVT_CLOSE, self.OnCloseWindow)
         
         #-------------------------------------------------------------------
 
         bmp = wx.Bitmap("Bitmaps/copyright_Header.png", wx.BITMAP_TYPE_PNG)
-        img = wx.StaticBitmap(self)
+        img = wx.StaticBitmap(self, -1)
         img.SetBitmap(bmp)
-
+        
         #-------------------------------------------------------------------
 
         notebook = wx.Notebook(self)
@@ -205,16 +221,22 @@ class My_Notebook(wx.Dialog):
 
         #-------------------------------------------------------------------
 
-        notebookSizer = wx.BoxSizer(wx.HORIZONTAL)
-        btnSizer = wx.BoxSizer(wx.HORIZONTAL)
+        imgSizer = wx.BoxSizer(wx.VERTICAL)
+        imgSizer.Add(img, 0, wx.EXPAND | wx.TOP |
+                     wx.ALIGN_CENTER_HORIZONTAL)
+
+        #------------
         
-        notebookSizer.Add(notebook, 1, wx.TOP | wx.EXPAND, 78)
+        notebookSizer = wx.BoxSizer(wx.VERTICAL)
+        btnSizer = wx.BoxSizer(wx.VERTICAL)
+        
+        notebookSizer.Add(notebook, 1, wx.TOP | wx.EXPAND, 15)
         btnSizer.Add(btnOK, 0, wx.TOP | wx.BOTTOM | wx.RIGHT, 10)
 
         #------------
         
         topSizer = wx.BoxSizer(wx.VERTICAL)
-        
+        topSizer.Add(imgSizer, 0, wx.EXPAND, 0)        
         topSizer.Add(notebookSizer, 1, wx.EXPAND, 0)
         topSizer.Add(btnSizer, 0, wx.ALIGN_RIGHT)
          
@@ -226,11 +248,8 @@ class My_Notebook(wx.Dialog):
         #-------------------------------------------------------------------
         
         self.CenterOnParent(wx.BOTH)
-        
-        #-------------------------------------------------------------------
 
         btnOK = self.ShowModal()
-        self.Destroy()
 
     #-----------------------------------------------------------------------
         
