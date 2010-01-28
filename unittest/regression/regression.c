@@ -153,7 +153,7 @@ int main ()
 {
 	xml_begin ();
 	
-	#include "code.inc"
+	#include "codes.inc"
 	
 	xml_end ();
 	return 0;

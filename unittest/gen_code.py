@@ -4,6 +4,10 @@ p = re.compile('\s+');
 
 f = open ("table.dasm")
 k = 0;
+
+fc = open ("codes.inc", "w");
+fo = open ("opcodes.inc", "w");
+
 for line in f.readlines ():
     inp = p.sub (' ', string.strip (line));
     k = k + 1;
@@ -21,9 +25,9 @@ for line in f.readlines ():
         if i < n - 1:
             ccode = ccode + ",";
     ccode = ccode + "};";
-    xx = "unsigned char bytes_" + str (k) + " [] = " + ccode;
+    xx = "unsigned char bytes_" + str (k) + " [] = " + ccode + "\n";
     yy = "bytes_" + str (k);
-    print xx
-    zz = "DASM (" + yy + ", \"" +string.strip (txt) + "\");";
-    print zz;
+    fo.write (xx);
+    zz = "DASM (" + yy + ", \"" +string.strip (txt) + "\");\n";
+    fc.write (zz);
     
