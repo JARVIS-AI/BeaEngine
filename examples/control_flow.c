@@ -49,11 +49,11 @@ void DisassembleCode(char *StartCodeSection, char *EndCodeSection, MainPtr Virtu
 			/* ============================= Make a filter on Instruction */
 			if (MyDisasm.Instruction.BranchType != 0) {
 				(void) printf("Branch-Instruction : ");
-				(void) printf("%.8X %s\n",(int) MyDisasm.VirtualAddr, &MyDisasm.CompleteInstr);
+				(void) printf("%.8X %s\n",(int) MyDisasm.VirtualAddr, (char*)&MyDisasm.CompleteInstr);
 			}
 			else if ((MyDisasm.Argument1.AccessMode == READ) && (MyDisasm.Argument2.AccessMode == READ)) {
 				(void) printf("CompareInstruction : ");
-				(void) printf("%.8X %s\n",(int) MyDisasm.VirtualAddr, &MyDisasm.CompleteInstr);
+				(void) printf("%.8X %s\n",(int) MyDisasm.VirtualAddr, (char*)&MyDisasm.CompleteInstr);
 			}
 			MyDisasm.EIP = MyDisasm.EIP + len;
 			MyDisasm.VirtualAddr = MyDisasm.VirtualAddr + len;
@@ -73,12 +73,13 @@ void DisassembleCode(char *StartCodeSection, char *EndCodeSection, MainPtr Virtu
 /*==================================================================================*/
 int main(int argc, char* argv[])
 {
-
+	BEA_UNUSED_ARG (argc);
+	BEA_UNUSED_ARG (argv);
 	/* ============================= Init the Disasm structure (important !)*/
 	(void) memset (&MyDisasm, 0, sizeof(DISASM));
 
 
-	pSourceCode =  &main;
+	pSourceCode =  main;
 	pBuffer = malloc(0x600);
 	/* ============================= Let's NOP the buffer */
 	(void) memset (pBuffer, 0x90, 0x600);

@@ -191,9 +191,10 @@
 	typedef unsigned short         UInt16;
 	typedef signed int             Int32;
 	typedef unsigned int           UInt32;
-        typedef unsigned __int64       Int64;
-        typedef signed __int64         UInt64;
-        #define BEA_HAVE_INT64 1
+    typedef unsigned __int64       Int64;
+    typedef signed __int64         UInt64;
+    #define BEA_HAVE_INT64 1
+	typedef size_t                 UIntPtr;
 #elif defined(__sgi) 
 	/*
 	* MIPSpro C++

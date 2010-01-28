@@ -12,6 +12,8 @@ int main(int argc, char* argv[])
 	int Error = 0;
 	int EndCodeSection = 0x401020;
 
+	BEA_UNUSED_ARG (argc);
+	BEA_UNUSED_ARG (argv);	
 	/* ============================= Init the Disasm structure (important !)*/
 	(void) memset (&MyDisasm, 0, sizeof(DISASM));
 
@@ -21,7 +23,7 @@ int main(int argc, char* argv[])
 	/* ============================= Loop for Disasm */
 	while (!Error){
 		/* ============================= Fix SecurityBlock */
-		MyDisasm.SecurityBlock = EndCodeSection - MyDisasm.EIP;
+		MyDisasm.SecurityBlock = (UIntPtr)EndCodeSection - (UIntPtr)MyDisasm.EIP;
 
 		len = Disasm(&MyDisasm);
 		if (len == OUT_OF_BLOCK) {

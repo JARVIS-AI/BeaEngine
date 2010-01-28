@@ -34,7 +34,7 @@ void DisassembleCode(char *StartCodeSection, char *EndCodeSection, MainPtr Virtu
 	/* ============================= Loop for Disasm */
 	while ( !Error){
 		/* ============================= Fix SecurityBlock */
-		MyDisasm.SecurityBlock = (long) EndCodeSection - MyDisasm.EIP;
+		MyDisasm.SecurityBlock = (UIntPtr) EndCodeSection - (UIntPtr)MyDisasm.EIP;
 
 		len = Disasm(&MyDisasm);
 		if (len == OUT_OF_BLOCK) {
@@ -50,15 +50,15 @@ void DisassembleCode(char *StartCodeSection, char *EndCodeSection, MainPtr Virtu
 			if ((MyDisasm.Argument1.AccessMode == WRITE)
                 && (MyDisasm.Argument1.ArgType & GENERAL_REG)
                 && (MyDisasm.Argument1.ArgType & REG0))  {
-                    (void) printf("%.8X %s\n",(int) MyDisasm.VirtualAddr, &MyDisasm.CompleteInstr);
+                    (void) printf("%.8X %s\n",(int) MyDisasm.VirtualAddr, (char*)&MyDisasm.CompleteInstr);
 			}
 			else if ((MyDisasm.Argument2.AccessMode == WRITE)
                     && (MyDisasm.Argument2.ArgType & GENERAL_REG)
                     && (MyDisasm.Argument2.ArgType & REG0))  {
-                        (void) printf("%.8X %s\n",(int) MyDisasm.VirtualAddr, &MyDisasm.CompleteInstr);
+                        (void) printf("%.8X %s\n",(int) MyDisasm.VirtualAddr, (char*)&MyDisasm.CompleteInstr);
 			}
 			else if (MyDisasm.Instruction.ImplicitModifiedRegs & REG0) {
-				(void) printf("%.8X %s\n",(int) MyDisasm.VirtualAddr, &MyDisasm.CompleteInstr);
+				(void) printf("%.8X %s\n",(int) MyDisasm.VirtualAddr, (char*)&MyDisasm.CompleteInstr);
 		}
 			MyDisasm.EIP = MyDisasm.EIP + len;
 			MyDisasm.VirtualAddr = MyDisasm.VirtualAddr + len;
@@ -78,12 +78,13 @@ void DisassembleCode(char *StartCodeSection, char *EndCodeSection, MainPtr Virtu
 /*==================================================================================*/
 int main(int argc, char* argv[])
 {
-
+	BEA_UNUSED_ARG (argc);
+	BEA_UNUSED_ARG (argv);
 	/* ============================= Init the Disasm structure (important !)*/
 	(void) memset (&MyDisasm, 0, sizeof(DISASM));
 
 
-	pSourceCode =  &main;
+	pSourceCode =  main;
 	pBuffer = malloc(0x600);
 	/* ============================= Let's NOP the buffer */
 	(void) memset (pBuffer, 0x90, 0x600);

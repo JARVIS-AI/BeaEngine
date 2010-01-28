@@ -19,7 +19,7 @@ MainPtr pSourceCode;
 /*==================================================================================*/
 void DisassembleCode(char *StartCodeSection, char *EndCodeSection, MainPtr Virtual_Address)
 {
-
+	
 	/* ============================= Init the Disasm structure (important !)*/
 	(void) memset (&MyDisasm, 0, sizeof(DISASM));
 
@@ -33,7 +33,7 @@ void DisassembleCode(char *StartCodeSection, char *EndCodeSection, MainPtr Virtu
 	/* ============================= Loop for Disasm */
 	while (!Error){
 		/* ============================= Fix SecurityBlock */
-		MyDisasm.SecurityBlock = (int) EndCodeSection - MyDisasm.EIP;
+		MyDisasm.SecurityBlock = (UIntPtr) EndCodeSection - (UIntPtr)MyDisasm.EIP;
 
 		len = Disasm(&MyDisasm);
 		if (len == OUT_OF_BLOCK) {
@@ -64,7 +64,10 @@ void DisassembleCode(char *StartCodeSection, char *EndCodeSection, MainPtr Virtu
 /*==================================================================================*/
 int main(int argc, char* argv [])
 {
-	pSourceCode =  &main;
+	BEA_UNUSED_ARG (argc);
+	BEA_UNUSED_ARG (argv);
+	
+	pSourceCode =  main;
 
 	pBuffer = malloc(100);
 	/* ============================= Let's NOP the buffer */

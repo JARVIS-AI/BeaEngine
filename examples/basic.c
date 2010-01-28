@@ -5,11 +5,14 @@
 
 int main(int argc, char* argv [])
 {
+	
 	/* ============================= Init datas */
 	DISASM MyDisasm;
 	int len, i = 0;
 	int Error = 0;
 
+	BEA_UNUSED_ARG (argc);
+	BEA_UNUSED_ARG (argv);
 	/* ============================= Init the Disasm structure (important !)*/
 	(void) memset (&MyDisasm, 0, sizeof(DISASM));
 

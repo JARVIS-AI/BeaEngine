@@ -33,7 +33,7 @@ void DisassembleCode(char *StartCodeSection, char *EndCodeSection, MainPtr Virtu
 	/* ============================= Loop for Disasm */
 	while ( !Error){
 		/* ============================= Fix SecurityBlock */
-		MyDisasm.SecurityBlock = (long) EndCodeSection - MyDisasm.EIP;
+		MyDisasm.SecurityBlock = (UIntPtr) EndCodeSection - (UIntPtr)MyDisasm.EIP;
 
 		len = Disasm(&MyDisasm);
 		if (len == OUT_OF_BLOCK) {
@@ -47,11 +47,11 @@ void DisassembleCode(char *StartCodeSection, char *EndCodeSection, MainPtr Virtu
 		else {
 			/* ============================= Make a filter on Instruction */
 			if ((MyDisasm.Argument1.AccessMode == WRITE) && (MyDisasm.Argument1.ArgType & MEMORY_TYPE) && (MyDisasm.Argument1.Memory.BaseRegister != REG4))  {
-				(void) printf("%-12.8X",MyDisasm.VirtualAddr);
+				(void) printf("%-12.8X",(int)MyDisasm.VirtualAddr);
 				(void) puts(MyDisasm.CompleteInstr);
 			}
 			else if ((MyDisasm.Argument2.AccessMode == WRITE) && (MyDisasm.Argument2.ArgType & MEMORY_TYPE) && (MyDisasm.Argument2.Memory.BaseRegister != REG4))  {
-				(void) printf("%-12.8X",MyDisasm.VirtualAddr);
+				(void) printf("%-12.8X",(int)MyDisasm.VirtualAddr);
 				(void) puts(MyDisasm.CompleteInstr);
 			}
 			MyDisasm.EIP = MyDisasm.EIP + len;
@@ -72,12 +72,13 @@ void DisassembleCode(char *StartCodeSection, char *EndCodeSection, MainPtr Virtu
 /*==================================================================================*/
 int main(int argc, char* argv[])
 {
-
+	BEA_UNUSED_ARG (argc);
+	BEA_UNUSED_ARG (argv);
 	/* ============================= Init the Disasm structure (important !)*/
 	(void) memset (&MyDisasm, 0, sizeof(DISASM));
 
 
-	pSourceCode =  &main;
+	pSourceCode =  main;
 	pBuffer = malloc(0x600);
 	/* ============================= Let's NOP the buffer */
 	(void) memset (pBuffer, 0x90, 0x600);

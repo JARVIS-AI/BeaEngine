@@ -33,7 +33,7 @@ void DisassembleCode(char *StartCodeSection, char *EndCodeSection, MainPtr Virtu
 	/* ============================= Loop for Disasm */
 	while ( !Error){
 		/* ============================= Fix SecurityBlock */
-		MyDisasm.SecurityBlock = (long) EndCodeSection - MyDisasm.EIP;
+		MyDisasm.SecurityBlock = (UIntPtr) EndCodeSection - (UIntPtr)MyDisasm.EIP;
 
 		len = Disasm(&MyDisasm);
 		if (len == OUT_OF_BLOCK) {
@@ -67,7 +67,8 @@ void DisassembleCode(char *StartCodeSection, char *EndCodeSection, MainPtr Virtu
 /*==================================================================================*/
 int main(int argc, char* argv[])
 {
-
+	BEA_UNUSED_ARG (argc);
+	BEA_UNUSED_ARG (argv);
 	/* ============================= Init the Disasm structure (important !)*/
 	(void) memset (&MyDisasm, 0, sizeof(DISASM));
 
