@@ -464,7 +464,7 @@ void __bea_callspec__ eAX_Iv(PDISASM pMyDisasm)
  * ==================================================================== */
 int __bea_callspec__ Security(int len)
 {
-    if ((EndOfBlock != 0) && (EIP_+len > EndOfBlock)) {
+    if ((EndOfBlock != 0) && (EIP_+(UInt64)len > EndOfBlock)) {
         return 0;
     }
     return 1;
@@ -484,10 +484,10 @@ void __bea_callspec__ CalculateRelativeAddress(UInt64 * pMyAddress, Int64 MyNumb
 {
     RelativeAddress = 1;
     if (EIP_VA != 0) {
-        *pMyAddress = (UInt64) (EIP_VA+(Int64) MyNumber);
+        *pMyAddress = (UInt64) (EIP_VA+(UInt64) MyNumber);
     }
     else {
-        *pMyAddress = (UInt64) (EIP_REAL+(Int64) MyNumber);
+        *pMyAddress = (UInt64) (EIP_REAL+(UInt64) MyNumber);
     }
 }
 

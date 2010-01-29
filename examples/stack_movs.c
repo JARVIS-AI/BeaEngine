@@ -24,7 +24,7 @@ void DisassembleCode(char *StartCodeSection, char *EndCodeSection, MainPtr Virtu
 	Error = 0;
 
 	/* ============================= Init EIP */
-	MyDisasm.EIP = (int) StartCodeSection;
+	MyDisasm.EIP = (UInt64) StartCodeSection;
 	/* ============================= Init VirtualAddr */
 	MyDisasm.VirtualAddr = (UIntPtr) Virtual_Address;
 
@@ -49,9 +49,9 @@ void DisassembleCode(char *StartCodeSection, char *EndCodeSection, MainPtr Virtu
 			if ((MyDisasm.Instruction.ImplicitModifiedRegs & REG4) || ((MyDisasm.Argument1.ArgType & REG4) && (MyDisasm.Argument1.AccessMode == WRITE)) || ((MyDisasm.Argument2.ArgType & REG4) && (MyDisasm.Argument2.AccessMode == WRITE))) {
 				(void) puts(MyDisasm.CompleteInstr);
 			}
-			MyDisasm.EIP = MyDisasm.EIP + len;
-			MyDisasm.VirtualAddr = MyDisasm.VirtualAddr + len;
-			if (MyDisasm.EIP >= (int) EndCodeSection) {
+			MyDisasm.EIP = MyDisasm.EIP + (UInt64)len;
+			MyDisasm.VirtualAddr = MyDisasm.VirtualAddr + (UInt64)len;
+			if (MyDisasm.EIP >= (UInt64) EndCodeSection) {
 				(void) printf("End of buffer reached ! \n");
 				Error = 1;
 			}
@@ -77,7 +77,7 @@ int main(int argc, char* argv[])
 	/* ============================= Let's NOP the buffer */
 	(void) memset (pBuffer, 0x90, 100);
 	/* ============================= Copy 100 bytes in it */
-	(void) memcpy (pBuffer,(void*)(int) pSourceCode, 100);
+	(void) memcpy (pBuffer,(void*)(UInt64) pSourceCode, 100);
 
 	(void) printf("******************************************************* \n");
 	(void) printf("Display only instructions modifying ESP explicitly or implicitly. \n");

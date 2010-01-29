@@ -10,7 +10,7 @@ int main(int argc, char* argv[])
 	DISASM MyDisasm;
 	int len;
 	int Error = 0;
-	int EndCodeSection = 0x401020;
+	UInt64 EndCodeSection = 0x401020;
 
 	BEA_UNUSED_ARG (argc);
 	BEA_UNUSED_ARG (argv);	
@@ -36,7 +36,7 @@ int main(int argc, char* argv[])
 		}
 		else {
 			(void) puts(MyDisasm.CompleteInstr);
-			MyDisasm.EIP = MyDisasm.EIP + len;
+			MyDisasm.EIP = MyDisasm.EIP + (UInt64)len;
 			if (MyDisasm.EIP >= EndCodeSection) {
 				(void) printf("End of buffer reached ! \n");
 				Error = 1;

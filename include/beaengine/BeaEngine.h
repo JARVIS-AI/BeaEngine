@@ -104,12 +104,12 @@ typedef struct  {
 
 #pragma pack(1)
 typedef struct _Disasm {
-   Int64 EIP;
-   Int64 VirtualAddr;
-   unsigned long SecurityBlock;
+   UInt64 EIP;
+   UInt64 VirtualAddr;
+   UInt64 SecurityBlock;
    char CompleteInstr[INSTRUCT_LENGTH];
-   unsigned long Archi;
-   unsigned long Options;
+   UInt32 Archi;
+   UInt64 Options;
    INSTRTYPE Instruction;
    ARGTYPE Argument1;
    ARGTYPE Argument2;

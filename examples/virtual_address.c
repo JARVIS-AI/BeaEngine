@@ -46,9 +46,9 @@ void DisassembleCode(char *StartCodeSection, char *EndCodeSection, MainPtr Virtu
 		}
 		else {
             (void) printf("%.8X %s\n",(int) MyDisasm.VirtualAddr, (char*) &MyDisasm.CompleteInstr);
-			MyDisasm.EIP = MyDisasm.EIP + len;
-			MyDisasm.VirtualAddr = MyDisasm.VirtualAddr + len;
-			if (MyDisasm.EIP >= (int) EndCodeSection) {
+	    MyDisasm.EIP = MyDisasm.EIP + (UInt64)len;
+	    MyDisasm.VirtualAddr = MyDisasm.VirtualAddr + (UInt64)len;
+			if (MyDisasm.EIP >= (UIntPtr) EndCodeSection) {
 				(void) printf("End of buffer reached ! \n");
 				Error = 1;
 			}
@@ -62,7 +62,7 @@ void DisassembleCode(char *StartCodeSection, char *EndCodeSection, MainPtr Virtu
 /*												MAIN												*/
 /*																									*/
 /*==================================================================================*/
-int main(int argc, char* argv [])
+int main(int argc, char* argv[])
 {
 	BEA_UNUSED_ARG (argc);
 	BEA_UNUSED_ARG (argv);
@@ -74,7 +74,7 @@ int main(int argc, char* argv [])
 	(void) memset (pBuffer, 0x90, 100);
 
 	/* ============================= Copy 100 bytes in it */
-	(void) memcpy (pBuffer,(void*)(int) pSourceCode, 100);
+	(void) memcpy (pBuffer,(void*)(UIntPtr)pSourceCode, 100);
 
 	/* ============================= Disassemble code located in that buffer */
 	DisassembleCode (pBuffer, (char*) pBuffer + 100, pSourceCode);

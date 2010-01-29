@@ -21,7 +21,7 @@
  * ==================================================================== */
 void __bea_callspec__ G6_(PDISASM pMyDisasm)
 {
-    long OperandSizeOld = 0;
+    Int32 OperandSizeOld = 0;
 
     (*pMyDisasm).Instruction.Category = SYSTEM_INSTRUCTION;
     OperandSizeOld = OperandSize;

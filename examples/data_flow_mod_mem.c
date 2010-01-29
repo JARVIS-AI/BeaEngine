@@ -24,7 +24,7 @@ void DisassembleCode(char *StartCodeSection, char *EndCodeSection, MainPtr Virtu
 	Error = 0;
 
 	/* ============================= Init EIP */
-	MyDisasm.EIP = (int) StartCodeSection;
+	MyDisasm.EIP = (UIntPtr) StartCodeSection;
 	/* ============================= Init VirtualAddr */
 	MyDisasm.VirtualAddr = (UIntPtr) Virtual_Address;
 
@@ -54,9 +54,9 @@ void DisassembleCode(char *StartCodeSection, char *EndCodeSection, MainPtr Virtu
 				(void) printf("%-12.8X",(int)MyDisasm.VirtualAddr);
 				(void) puts(MyDisasm.CompleteInstr);
 			}
-			MyDisasm.EIP = MyDisasm.EIP + len;
-			MyDisasm.VirtualAddr = MyDisasm.VirtualAddr + len;
-			if (MyDisasm.EIP >= (long) EndCodeSection) {
+			MyDisasm.EIP = MyDisasm.EIP + (UInt64)len;
+			MyDisasm.VirtualAddr = MyDisasm.VirtualAddr + (UInt64)len;
+			if (MyDisasm.EIP >= (UInt64) EndCodeSection) {
 				(void) printf("End of buffer reached ! \n");
 				Error = 1;
 			}
@@ -83,7 +83,7 @@ int main(int argc, char* argv[])
 	/* ============================= Let's NOP the buffer */
 	(void) memset (pBuffer, 0x90, 0x600);
 	/* ============================= Copy 100 bytes in it */
-	(void) memcpy (pBuffer,(void*)(int) pSourceCode, 0x600);
+	(void) memcpy (pBuffer,(void*)(UIntPtr) pSourceCode, 0x600);
 
 	(void) printf("******************************************************* \n");
 	(void) printf("Display only Instructions modifying memory. \ndon't display stack modifications. \n");

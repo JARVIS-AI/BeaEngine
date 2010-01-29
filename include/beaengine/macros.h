@@ -9,7 +9,9 @@
  ============================================================================
  */
 
-#if defined (ghs) || defined (__GNUC__) || defined (__hpux) || defined (__sgi) || defined (__DECCXX) || defined (__rational__) || defined (__USLC__) || defined (BEA__RM544) || defined (__DCC__) || defined (__PGI) || defined (__TANDEM) || defined(__BORLANDC__)
+# if defined (__GNUC__) && ((__GNUC__ > 4 || (__GNUC__ == 4 && __GNUC_MINOR__ >= 2)))
+#   define BEA_UNUSED_ARG(a) (void) (a)
+#elif defined (ghs) || defined (__GNUC__) || defined (__hpux) || defined (__sgi) || defined (__DECCXX) || defined (__rational__) || defined (__USLC__) || defined (BEA__RM544) || defined (__DCC__) || defined (__PGI) || defined (__TANDEM) || defined(__BORLANDC__)
 /*
  Some compilers complain about "statement with no effect" with (a).
  This eliminates the warnings, and no code is generated for the null

@@ -283,6 +283,7 @@ set (CMAKE_RUNTIME_OUTPUT_DIRECTORY ${myBIN_OUTPUT})
 set (build_modules 
   beaengineSources
   examples
+unittest/regression	
 )
 
 

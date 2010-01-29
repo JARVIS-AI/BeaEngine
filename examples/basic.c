@@ -24,7 +24,7 @@ int main(int argc, char* argv [])
 		len = Disasm(&MyDisasm);
 		if (len != UNKNOWN_OPCODE) {
 			(void) puts(MyDisasm.CompleteInstr);
-			MyDisasm.EIP = MyDisasm.EIP + len;
+			MyDisasm.EIP = MyDisasm.EIP + (UInt64)len;
             i++;
 		}
 		else {
