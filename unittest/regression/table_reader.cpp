@@ -160,20 +160,20 @@ table_item_c::table_item_c (const char* table_line, size_t line_num)
 
   for (size_t i = 0; i<m_length; i++)
     {
-      const char a = table_line [start_of_opcode + 2*i];
-      const char b = table_line [start_of_opcode + 2*i + 1];
+      const char a = table_line [start_of_opcode + (2*i)];
+      const char b = table_line [start_of_opcode + (2*i) + 1];
       if (!isxdigit (a))
 	{
 	  std::ostringstream os;
 	  os << "not a hex digit in opcode ("
-	     << line_num << ":" << start_of_opcode + 2*i << ")";
+	     << line_num << ":" << (start_of_opcode + (2*i)) << ")";
 	  throw std::runtime_error (os.str ());
 	}
       if (!isxdigit (b))
 	{
 	  std::ostringstream os;
 	  os << "not a hex digit in opcode ("
-	     << line_num << ":" << start_of_opcode + 2*i + 1 << ")";
+	     << line_num << ":" << (start_of_opcode + (2*i) + 1) << ")";
 	  throw std::runtime_error (os.str ());
 	}
       char abval [] = {a, b, 0};

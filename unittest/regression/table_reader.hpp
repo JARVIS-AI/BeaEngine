@@ -17,6 +17,7 @@ class table_item_c
 {
   friend class table_reader_c;
 public:
+table_item_c ();
   /**
    * copy constructor
    */

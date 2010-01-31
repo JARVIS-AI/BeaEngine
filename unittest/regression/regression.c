@@ -106,11 +106,12 @@ void print_prefix_info (PREFIXINFO* e)
 int do_disasm (unsigned char* code, size_t length, const char* exp)
 {
 	DISASM MyDisasm;
+	int len;
 	(void)printf ("\t<asm>\n");
 	(void)printf ("\t\t<expected val=\"%s\">\n", exp);
 	memset (&MyDisasm, 0, sizeof(DISASM));
 	MyDisasm.EIP = (long)code;	
-	int len = Disasm (&MyDisasm);
+	len = Disasm (&MyDisasm);
 	(void)printf ("\t\t</opcode val=\"");
 	print_bytes	(code, length);
 	(void)printf ("\">\n");
