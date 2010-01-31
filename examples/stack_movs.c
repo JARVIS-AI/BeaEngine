@@ -10,18 +10,19 @@ int Error = 0;
 void *pBuffer;
 
 typedef int  (*MainPtr) (int, char*[]);
-MainPtr pSourceCode;
 
+MainPtr pSourceCode;
+void DisassembleCode(char *StartCodeSection, char *EndCodeSection, MainPtr Virtual_Address);
 /* ================================================================================= */
-/*																									*/
-/*						Disassemble code in the specified buffer using the correct VA					*/
-/*																									*/
-/*==================================================================================*/
+/*										     */
+/*Disassemble code in the specified buffer using the correct VA			     */
+/*										     */
+/*================================================================================== */
 
 void DisassembleCode(char *StartCodeSection, char *EndCodeSection, MainPtr Virtual_Address)
 {
 
-	Error = 0;
+  Error = 0;
 
 	/* ============================= Init EIP */
 	MyDisasm.EIP = (UInt64) StartCodeSection;
@@ -69,8 +70,8 @@ int main(int argc, char* argv[])
 {
 	BEA_UNUSED_ARG (argc);
 	BEA_UNUSED_ARG (argv);
-	/* ============================= Init the Disasm structure (important !)*/
-	(void) memset (&MyDisasm, 0, sizeof(DISASM));
+  /* ============================= Init the Disasm structure (important !)*/
+  (void) memset (&MyDisasm, 0, sizeof(DISASM));
 
 	pSourceCode =  &main;
 	pBuffer = malloc(100);
@@ -79,14 +80,14 @@ int main(int argc, char* argv[])
 	/* ============================= Copy 100 bytes in it */
 	(void) memcpy (pBuffer,(void*)(UInt64) pSourceCode, 100);
 
-	(void) printf("******************************************************* \n");
-	(void) printf("Display only instructions modifying ESP explicitly or implicitly. \n");
-	(void) printf("******************************************************* \n");
+  (void) printf("******************************************************* \n");
+  (void) printf("Display only instructions modifying ESP explicitly or implicitly. \n");
+  (void) printf("******************************************************* \n");
 
-	/* ============================= Select Display Option */
-	MyDisasm.Options = Tabulation + MasmSyntax;
-	/* ============================= Disassemble code located in that buffer */
-	DisassembleCode (pBuffer, (char*) pBuffer + 100, pSourceCode);
+  /* ============================= Select Display Option */
+  MyDisasm.Options = Tabulation + MasmSyntax;
+  /* ============================= Disassemble code located in that buffer */
+  DisassembleCode (pBuffer, (char*) pBuffer + 100, pSourceCode);
 
-	return 0;
+  return 0;
 }

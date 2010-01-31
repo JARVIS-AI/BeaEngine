@@ -258,7 +258,7 @@ endif ()
 set (BEA_INCLUDE_PATH ${CMAKE_SOURCE_DIR}/include)
 set (BEA_SRC_ROOT ${CMAKE_SOURCE_DIR}/beaengineSources)
 
-include_directories (${BEA_SRC_ROOT} ${BEA_INCLUDE_PATH})
+include_directories (${BEA_SRC_ROOT} ${BEA_INCLUDE_PATH} ${CMAKE_SOURCE_DIR})
 link_directories    (${BEA_LIBS_PATH})
 
 # ======================================
