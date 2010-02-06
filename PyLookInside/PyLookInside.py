@@ -52,8 +52,9 @@ import MenuBar
 import ToolBar
 import StatusBar
 import TaskBarIcon
-import Splitter
+import wx.aui
 import ListCtrlVirtual
+import SearchCtrl
 import Instructions
 import ArgumentOne
 import ArgumentTwo
@@ -61,11 +62,11 @@ import ArgumentThree
 import ArgumentFour
 import ArgumentFive
 import Eflags
+import FileDialog
 import AboutNotebook
 import MementoProvider
-import FileDialog
 import webbrowser
-
+import Palette
 
 # System Constants
 
@@ -78,7 +79,7 @@ class My_Frame(wx.Frame):
                           title=u"PyLookInside %s"
                           % VersionInfos.VERSION_STRING,
                           pos=wx.DefaultPosition,
-                          size=(900, 700),
+                          size=(910, 700),
                           style=wx.DEFAULT_FRAME_STYLE |
                           wx.NO_FULL_REPAINT_ON_RESIZE |
                           wx.TAB_TRAVERSAL)
@@ -88,9 +89,9 @@ class My_Frame(wx.Frame):
 
         #-------------------------------------------------------------------
 
-        self.panel = wx.Panel(self)
-        self.panel.SetBackgroundColour("LIGHTGRAY")
-
+        self.pnl = wx.Panel(self, -1)
+        self.SetBackgroundColour("#f0f0f0")
+        
         #-------------------------------------------------------------------
         
         # Simplified init method
@@ -98,7 +99,8 @@ class My_Frame(wx.Frame):
         self.createToolBar()
         self.createStatusBar()
         self.createTaskBarIcon()
-        self.createSplitter()
+        self.createAuiManager()
+        self.createSearchCtrl()
         self.createListCtrl()
         self.createStaticBox()
         self.doLayout()
@@ -123,6 +125,7 @@ class My_Frame(wx.Frame):
         self.Bind(wx.EVT_MENU, self.OnClose, id=26)
         self.Bind(wx.EVT_MENU, self.OnRoll, id=27)
         self.Bind(wx.EVT_MENU, self.OnUnRoll, id=28)
+        self.Bind(wx.EVT_MENU, self.OnToolsPalette, id=29)
         
     #----------------------------------------------------------------------- 
 
@@ -153,94 +156,107 @@ class My_Frame(wx.Frame):
 
     #-----------------------------------------------------------------------
 
-    def createSplitter(self):
-        self.sp1 = Splitter.My_Splitter(self.panel)
-     
-        self.leftpanel = wx.Panel(self.sp1,
-                                  style=wx.BORDER_SIMPLE | wx.TAB_TRAVERSAL)
+    def createAuiManager(self):
+        self.mgr = wx.aui.AuiManager()
+        self.mgr.SetManagedWindow(self.pnl)
         
-        self.rightpanel = wx.Panel(self.sp1,
-                                   style=wx.BORDER_SIMPLE | wx.TAB_TRAVERSAL)
+        self.leftPanel = wx.Panel(self.pnl, -1, size = (200, 150),
+                                  style=wx.TAB_TRAVERSAL | wx.CLIP_CHILDREN)
+        self.rightPanel = wx.Panel(self.pnl, -1, size = (200, 150),
+                                   style=wx.TAB_TRAVERSAL | wx.CLIP_CHILDREN)
+
+        self.mgr.AddPane(self.rightPanel, wx.aui.AuiPaneInfo().
+                         Center().
+                         Caption("Instructions & Arguments").
+                         CloseButton(False))
         
-        self.sp1.SplitVertically(self.leftpanel, self.rightpanel)
-        self.sp1.SetSashPosition(310, True)
-        
+        self.mgr.AddPane(self.leftPanel, wx.aui.AuiPaneInfo().
+                         Left().Layer(1).BestSize((300, -1)).
+                         MinSize((300, -1)).
+                         FloatingSize((300, 160)).
+                         Caption("Search & ListCtrl").
+                         CloseButton(False))
+                    
+        self.mgr.Update()
+
+        #self.mgr.SetFlags(self.mgr.GetFlags() ^ wx.aui.AUI_MGR_TRANSPARENT_DRAG)
+
     #-----------------------------------------------------------------------
+
+    def createSearchCtrl(self):
+        self.search = SearchCtrl.My_SearchCtrl(self.leftPanel)
+
+    #-----------------------------------------------------------------------        
        
     def createListCtrl(self):
-        self.list = ListCtrlVirtual.My_ListCtrl(self.leftpanel)        
+        self.list = ListCtrlVirtual.My_ListCtrl(self.leftPanel)        
         self.list.SetFocus()
         
     #-----------------------------------------------------------------------
 
     def createStaticBox(self):
-        self.stbx1 = Instructions.My_StaticBox(self.rightpanel)
-        self.stbx2 = ArgumentOne.My_StaticBox(self.rightpanel)
-        self.stbx3 = ArgumentTwo.My_StaticBox(self.rightpanel)
-        self.stbx4 = ArgumentThree.My_StaticBox(self.rightpanel)
-        self.stbx5 = ArgumentFour.My_StaticBox(self.rightpanel)
-        self.stbx6 = ArgumentFive.My_StaticBox(self.rightpanel)
-        self.stbx7 = Eflags.My_StaticBox(self.rightpanel)
+        self.stbx1 = Instructions.My_StaticBox(self.rightPanel)
+        self.stbx2 = ArgumentOne.My_StaticBox(self.rightPanel)
+        self.stbx3 = ArgumentTwo.My_StaticBox(self.rightPanel)
+        self.stbx4 = ArgumentThree.My_StaticBox(self.rightPanel)
+        self.stbx5 = ArgumentFour.My_StaticBox(self.rightPanel)
+        self.stbx6 = ArgumentFive.My_StaticBox(self.rightPanel)
+        self.stbx7 = Eflags.My_StaticBox(self.rightPanel)
         
     #-----------------------------------------------------------------------
         
     def doLayout(self):        
         listSizer = wx.BoxSizer(wx.VERTICAL)
 
-        listSizer.Add(self.list, 1, wx.EXPAND)
+        listSizer.Add(self.search, 0, wx.EXPAND | wx.ALL, 0)
+        listSizer.Add(self.list, 1, wx.EXPAND | wx.ALL, 0)
 
         #----------
-
-        sizer1 = wx.BoxSizer(wx.HORIZONTAL)
-        sizer2 = wx.BoxSizer(wx.HORIZONTAL)
-        sizer3 = wx.BoxSizer(wx.HORIZONTAL)
-        sizer4 = wx.BoxSizer(wx.HORIZONTAL)
-        
-        sizer1.Add(self.stbx1, 1, wx.EXPAND | wx.ALL, 0)
-        sizer2.Add(self.stbx2, 1, wx.EXPAND | wx.ALL, 0)
-        sizer2.Add(self.stbx3, 1, wx.EXPAND | wx.ALL, 0)
-        sizer3.Add(self.stbx4, 1, wx.EXPAND | wx.ALL, 0)
-        sizer3.Add(self.stbx5, 1, wx.EXPAND | wx.ALL, 0)
-        sizer4.Add(self.stbx6, 1, wx.EXPAND | wx.ALL, 0)
-        sizer4.Add(self.stbx7, 1, wx.EXPAND | wx.ALL, 0)
-        
         #----------
         
-        topSizer = wx.BoxSizer(wx.VERTICAL)
-
-        topSizer.Add(sizer1, 0, wx.EXPAND | wx.ALL, 3)
-        topSizer.Add(sizer2, 0, wx.EXPAND | wx.ALL, 3)
-        topSizer.Add(sizer3, 0, wx.EXPAND | wx.ALL, 3)
-        topSizer.Add(sizer4, 0, wx.EXPAND | wx.ALL, 3)
+        stbx1Sizer = wx.BoxSizer(wx.HORIZONTAL)
+        stbx2Sizer = wx.BoxSizer(wx.HORIZONTAL)
+        stbx3Sizer = wx.BoxSizer(wx.HORIZONTAL)
+        stbx4Sizer = wx.BoxSizer(wx.HORIZONTAL)
+        
+        stbx1Sizer.Add(self.stbx1, 1, wx.EXPAND | wx.ALL, 0)
+        stbx2Sizer.Add(self.stbx2, 1, wx.EXPAND | wx.ALL, 0)
+        stbx2Sizer.Add(self.stbx3, 1, wx.EXPAND | wx.ALL, 0)
+        stbx3Sizer.Add(self.stbx4, 1, wx.EXPAND | wx.ALL, 0)
+        stbx3Sizer.Add(self.stbx5, 1, wx.EXPAND | wx.ALL, 0)
+        stbx4Sizer.Add(self.stbx6, 1, wx.EXPAND | wx.ALL, 0)
+        stbx4Sizer.Add(self.stbx7, 1, wx.EXPAND | wx.ALL, 0)
         
         #----------
+        
+        stbxSizer = wx.BoxSizer(wx.VERTICAL)
 
-        self.leftpanel.SetAutoLayout(True)
-        self.rightpanel.SetAutoLayout(True)
-
+        stbxSizer.Add(stbx1Sizer, 0, wx.EXPAND | wx.ALL, 3)
+        stbxSizer.Add(stbx2Sizer, 0, wx.EXPAND | wx.ALL, 3)
+        stbxSizer.Add(stbx3Sizer, 0, wx.EXPAND | wx.ALL, 3)
+        stbxSizer.Add(stbx4Sizer, 0, wx.EXPAND | wx.ALL, 3)
+        
+        #----------
         #----------
         
-        self.leftpanel.SetSizer(listSizer)
-        self.rightpanel.SetSizer(topSizer)
+        self.leftPanel.SetAutoLayout(True)
+        self.rightPanel.SetAutoLayout(True)
+        
+        #----------
+        
+        self.leftPanel.SetSizer(listSizer)
+        self.rightPanel.SetSizer(stbxSizer)
 
         #----------
 
-        topSizer.Fit(self.rightpanel)
-        listSizer.Fit(self.leftpanel)
+        listSizer.Fit(self.leftPanel)
+        stbxSizer.Fit(self.rightPanel)
 
         #----------
 
-        sizer = wx.BoxSizer(wx.VERTICAL)
-        sizer.Add(self.sp1, 1, wx.EXPAND)
-
-        #----------
-
-        # self.panel.SetAutoLayout(True)        
-        self.panel.SetSizer(sizer)
-        sizer.Fit(self.panel)
-        self.Layout()
-
-
+        self.pnl.SetAutoLayout(True)       
+        self.pnl.Fit()
+        
     #-----------------------------------------------------------------------      
 
     def OnFileOpen(self, event):
@@ -269,29 +285,110 @@ class My_Frame(wx.Frame):
     #-----------------------------------------------------------------------
 
     def OnScreenShot(self, event):     
-        #Works on Windows XP and Linux.
-        event.Skip()
-        rect = self.GetRect()
-        if sys.platform == "linux2":
-        #On linux, GetRect() returns size of client, not size of window.
-        #Compensate for this
-            client_x, client_y = self.ClientToScreen((0, 0))
-            border_width = client_x - rect.x
-            title_bar_height = client_y - rect.y
-            #If the window has a menu bar, remove it from the title bar height.
-            if self.GetMenuBar():
-                title_bar_height /= 2
-            rect.width += (border_width * 2)
-            rect.height += title_bar_height + border_width
-        self.Raise()
-        viewer_dc = wx.ScreenDC()
-        bitmap = wx.EmptyBitmap(rect.width, rect.height)
-        memory_dc = wx.MemoryDC()
-        memory_dc.SelectObject(bitmap)
-        memory_dc.Blit(0, 0, rect.width, rect.height, viewer_dc, rect.x, rect.y)
-        memory_dc.SelectObject(wx.NullBitmap)
-        image = bitmap.ConvertToImage()
-        image.SaveFile("ScreenShots/Capture.png", wx.BITMAP_TYPE_PNG)
+        """ Takes a screenshot of the screen at give pos & size (rect). """
+
+        if wx.Platform == "__WXMAC__":
+            w, h = self.GetClientSize()
+            # see http://aspn.activestate.com/ASPN/Mail/Message/wxpython-users/3575899
+
+            # created by Andrea Gavana
+            #Create a DC for the whole screen area
+            dcScreen = wx.ScreenDC()
+
+            #Create a Bitmap that will hold the screenshot image later on
+            #Note that the Bitmap must have a size big enough to hold the screenshot
+            #-1 means using the current default colour depth
+            bmp = wx.EmptyBitmap(w, h)
+
+            #Create a memory DC that will be used for actually taking the screenshot
+            memDC = wx.MemoryDC()
+
+            #Tell the memory DC to use our Bitmap
+            #all drawing action on the memory DC will go to the Bitmap now
+            memDC.SelectObject(bmp)
+
+            #Blit (in this case copy) the actual screen on the memory DC
+            #and thus the Bitmap
+            memDC.Blit( 0, #Copy to this X coordinate
+                        0, #Copy to this Y coordinate
+                        w, #Copy this width
+                        h, #Copy this height dcScreen, #From where do we copy?
+                        dcScreen, #From where do we copy?
+                        x, #What's the X offset in the original DC?
+                        y  #What's the Y offset in the original DC?
+                        )
+
+            #Select the Bitmap out of the memory DC by selecting a new
+            #uninitialized Bitmap
+            memDC.SelectObject(wx.NullBitmap)
+
+            img = bmp.ConvertToImage()
+            fileName = "myImage.png"
+            img.SaveFile(fileName, wx.BITMAP_TYPE_PNG)
+           
+        elif wx.Platform == "__WXGTK__":
+            #Works on Windows XP and Linux.
+            rect = self.GetRect()
+            if sys.platform == "linux2":
+                #On linux, GetRect() returns size of client, not size of window.
+                #Compensate for this
+                client_x, client_y = self.ClientToScreen((0, 0))
+                border_width = client_x - rect.x
+                title_bar_height = client_y - rect.y
+                #If the window has a menu bar, remove it from the title bar height.
+                if self.GetMenuBar():
+                    title_bar_height /= 2
+                rect.width += (border_width * 2)
+                rect.height += title_bar_height + border_width
+            self.Raise()
+            viewer_dc = wx.ScreenDC()
+            bitmap = wx.EmptyBitmap(rect.width, rect.height)
+            memory_dc = wx.MemoryDC()
+            memory_dc.SelectObject(bitmap)
+            memory_dc.Blit(0, 0, rect.width, rect.height, viewer_dc, rect.x, rect.y)
+            memory_dc.SelectObject(wx.NullBitmap)
+            image = bitmap.ConvertToImage()
+            image.SaveFile("ScreenShots/Capture.png", wx.BITMAP_TYPE_PNG)
+            
+        else:
+            rect = self.GetRect()
+            # see http://aspn.activestate.com/ASPN/Mail/Message/wxpython-users/3575899
+
+            # created by Andrea Gavana
+            #Create a DC for the whole screen area
+            dcScreen = wx.ScreenDC()
+
+            #Create a Bitmap that will hold the screenshot image later on
+            #Note that the Bitmap must have a size big enough to hold the screenshot
+            #-1 means using the current default colour depth
+            bmp = wx.EmptyBitmap(rect.width, rect.height)
+
+            #Create a memory DC that will be used for actually taking the screenshot
+            memDC = wx.MemoryDC()
+
+            #Tell the memory DC to use our Bitmap
+            #all drawing action on the memory DC will go to the Bitmap now
+            memDC.SelectObject(bmp)
+
+            #Blit (in this case copy) the actual screen on the memory DC
+            #and thus the Bitmap
+            memDC.Blit( 0, #Copy to this X coordinate
+                        0, #Copy to this Y coordinate
+                        rect.width, #Copy this width
+                        rect.height, #Copy this height
+                        dcScreen, #From where do we copy?
+                        rect.x, #What's the X offset in the original DC?
+                        rect.y  #What's the Y offset in the original DC?
+                        )
+
+            #Select the Bitmap out of the memory DC by selecting a new
+            #uninitialized Bitmap
+            memDC.SelectObject(wx.NullBitmap)
+
+            img = bmp.ConvertToImage()
+            fileName = "ScreenShots/Capture.png"
+            img.SaveFile(fileName, wx.BITMAP_TYPE_PNG)
+            
 
     #-----------------------------------------------------------------------
         
@@ -312,7 +409,7 @@ class My_Frame(wx.Frame):
             self.SetSize((-1, 22))
            
         elif wx.Platform == "__WXGTK__":
-            self.SetSize((-1, 0))
+            self.SetSize((-1, 22))
             
         else:
             self.SetSize((-1, 0))
@@ -333,6 +430,11 @@ class My_Frame(wx.Frame):
         else:
             self.SetSize(self.size1)
      
+    #-----------------------------------------------------------------------     
+
+    def OnToolsPalette(self, event):
+        self.palette = Palette.My_MiniFrame(self, title="Palette")
+
     #-----------------------------------------------------------------------
         
     def OnClose(self, event):
@@ -365,13 +467,7 @@ class My_App(wx.App):
         # Create and show the splash screen.  It will then create 
         # and show the main frame when it is time to do so
         wx.SystemOptions.SetOptionInt("mac.window-plain-transition", 1)
-
-        # Normally when using a SplashScreen you would create it, show
-        # it and then continue on with the applicaiton's
-        # initialization, finally creating and showing the main
-        # application window(s).  In this case we have nothing else to
-        # do so we'll delay showing the main frame until later (see
-        # ShowMain above) so the users can see the SplashScreen effect        
+        
         self.splash = SplashScreen.My_SplashScreen()
         self.splash.Show()
 

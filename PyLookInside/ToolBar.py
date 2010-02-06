@@ -24,7 +24,7 @@ along with BeaEngine.  If not, see <http://www.gnu.org/licenses/>.
 # Import packages
 
 import wx                            # This module uses the new wx namespace
-import SearchCtrl
+#import SearchCtrl
 
 #---------------------------------------------------------------------------
 
@@ -72,9 +72,9 @@ class My_Toolbar(wx.ToolBar):
                           shortHelp=u"",
                           longHelp=u"Quit the application.")
         self.AddSeparator()
-        searchCtrl = SearchCtrl.My_SearchCtrl(self, size=(200, -1))
-        self.AddControl(searchCtrl)      
-        self.AddSeparator()
+#        searchCtrl = SearchCtrl.My_SearchCtrl(self, size=(200, -1))
+#        self.AddControl(searchCtrl)      
+#        self.AddSeparator()
         
         self.Realize()
 

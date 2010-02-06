@@ -108,6 +108,21 @@ class My_MenuBar(wx.MenuBar):
         item.SetBitmap(bmp)
         menuView.AppendItem(item)
 
+        #-------------------------------------------------------------------
+        #-------------------------------------------------------------------
+
+        menuWindow = wx.Menu(style=wx.MENU_TEAROFF)
+
+        #-------------------------------------------------------------------
+
+        bmp = wx.Bitmap("Bitmaps/item_Empty.png", wx.BITMAP_TYPE_PNG)
+                        
+        item = wx.MenuItem(menuWindow, 29,
+                           text=u"Pale&tte\tF5",
+                           help=u"Display a tools palette.")
+        item.SetBitmap(bmp)
+        menuWindow.AppendItem(item)
+
         #-------------------------------------------------------------------        
         #-------------------------------------------------------------------
         
@@ -148,6 +163,7 @@ class My_MenuBar(wx.MenuBar):
         
         self.Append(menuFile, title=u"&File")
         self.Append(menuView, title=u"&View")
+        self.Append(menuWindow, title=u"&Window")
         self.Append(menuHelp, title=u"&?")
 
 

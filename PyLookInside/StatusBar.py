@@ -64,7 +64,7 @@ class My_CustomStatusBar(wx.StatusBar):
     def Notify(self):
         """ Timer event """
         locale.setlocale(locale.LC_ALL,'')
-        temp = time.strftime('Le %a %d %b %Y - %Hh%M')
+        temp = time.strftime('%a %d %b %Y - %Hh%M')
 
         self.SetStatusText(temp, 1)
 

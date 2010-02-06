@@ -41,10 +41,10 @@ class My_StaticBox(wx.Panel):
 
         # wx.Font(pointSize, family, style, weight, underline, faceName)
         if wx.Platform == "__WXMAC__":
-            self.normalFont = wx.Font(fontSize-3, wx.DEFAULT, wx.NORMAL, wx.NORMAL, False, "")
+            self.normalFont = wx.Font(fontSize-4, wx.DEFAULT, wx.NORMAL, wx.NORMAL, False, "")
 
         elif wx.Platform == "__WXGTK__":
-            self.normalFont = wx.Font(fontSize+0, wx.DEFAULT, wx.NORMAL, wx.NORMAL, False, "")
+            self.normalFont = wx.Font(fontSize-2, wx.DEFAULT, wx.NORMAL, wx.NORMAL, False, "")
               
         else:
             self.normalFont = wx.Font(fontSize+0, wx.DEFAULT, wx.NORMAL, wx.NORMAL, False, "")
@@ -140,28 +140,28 @@ class My_StaticBox(wx.Panel):
         #-------------------------------------------------------------------
 
         sizer1 = wx.BoxSizer(wx.HORIZONTAL)
-        sizer1.Add(bsizer1, 1, wx.EXPAND | wx.ALL, 0)
+        sizer1.Add(bsizer1, 1, wx.EXPAND | wx.TOP, 3)
 
         #----------
         
         sizer2 = wx.BoxSizer(wx.HORIZONTAL)
-        sizer2.Add(bsizer2, 1, wx.EXPAND | wx.ALL, 0)
-        sizer2.Add(bsizer3, 1, wx.EXPAND | wx.ALL, 0)
-        sizer2.Add(bsizer4, 1, wx.EXPAND | wx.ALL, 0)
+        sizer2.Add(bsizer2, 1, wx.EXPAND | wx.TOP, 3)
+        sizer2.Add(bsizer3, 1, wx.EXPAND | wx.TOP, 3)
+        sizer2.Add(bsizer4, 1, wx.EXPAND | wx.TOP, 3)
 
         #----------
         
         sizer3 = wx.BoxSizer(wx.HORIZONTAL)
-        sizer3.Add(bsizer5, 1, wx.EXPAND | wx.ALL, 0)
-        sizer3.Add(bsizer6, 1, wx.EXPAND | wx.ALL, 0)
-        sizer3.Add(bsizer7, 1, wx.EXPAND | wx.ALL, 0)
+        sizer3.Add(bsizer5, 1, wx.EXPAND | wx.TOP, 3)
+        sizer3.Add(bsizer6, 1, wx.EXPAND | wx.TOP, 3)
+        sizer3.Add(bsizer7, 1, wx.EXPAND | wx.TOP, 3)
 
         #----------
         
         topSizer = wx.BoxSizer(wx.VERTICAL)
-        topSizer.Add(sizer1, 0, wx.EXPAND | wx.ALL, 0)
-        topSizer.Add(sizer2, 0, wx.EXPAND | wx.ALL, 0)
-        topSizer.Add(sizer3, 0, wx.EXPAND | wx.ALL, 0)
+        topSizer.Add(sizer1, 0, wx.EXPAND | wx.TOP, 3)
+        topSizer.Add(sizer2, 0, wx.EXPAND | wx.TOP, 3)
+        topSizer.Add(sizer3, 0, wx.EXPAND | wx.TOP, 3)
 
         #----------
         

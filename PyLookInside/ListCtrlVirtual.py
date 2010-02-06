@@ -23,7 +23,7 @@ along with BeaEngine.  If not, see <http://www.gnu.org/licenses/>.
 
 # Import packages
 
-import wx                            # This module uses the new wx namespac
+import wx                            # This module uses the new wx namespace
 import wx.lib.mixins.listctrl  as  listmix
 
 #---------------------------------------------------------------------------
@@ -40,7 +40,7 @@ class My_ListCtrl(wx.ListCtrl,
         
         listmix.ListCtrlAutoWidthMixin.__init__(self)
         listmix.ColumnSorterMixin.__init__(self, 2)
-        
+       
         #-------------------------------------------------------------------
         
         fontSize = self.GetFont().GetPointSize()

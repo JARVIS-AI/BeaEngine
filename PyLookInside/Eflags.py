@@ -34,17 +34,17 @@ class My_StaticBox(wx.Panel):
         #-------------------------------------------------------------------
    
         self.parent = parent
-        
+   
         #-------------------------------------------------------------------
         
         fontSize = self.GetFont().GetPointSize()
 
         # wx.Font(pointSize, family, style, weight, underline, faceName)
         if wx.Platform == "__WXMAC__":
-            self.normalFont = wx.Font(fontSize-3, wx.DEFAULT, wx.NORMAL, wx.NORMAL, False, "")
+            self.normalFont = wx.Font(fontSize-4, wx.DEFAULT, wx.NORMAL, wx.NORMAL, False, "")
 
         elif wx.Platform == "__WXGTK__":
-            self.normalFont = wx.Font(fontSize+0, wx.DEFAULT, wx.NORMAL, wx.NORMAL, False, "")
+            self.normalFont = wx.Font(fontSize-2, wx.DEFAULT, wx.NORMAL, wx.NORMAL, False, "")
               
         else:
             self.normalFont = wx.Font(fontSize+0, wx.DEFAULT, wx.NORMAL, wx.NORMAL, False, "")
