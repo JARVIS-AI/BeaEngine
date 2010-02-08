@@ -1,13 +1,38 @@
 #include <stdexcept>
-#include <sstream>
-#include <iomanip>
 #include <memory>
 
+#include <stdio.h>
 #include <string.h>
 #include <stdio.h>
 #include <ctype.h>
 
 #include "unittest/regression/table_reader.hpp"
+
+static std::runtime_error raise (const char* text, int line)
+{
+  const size_t BUFF_LEN = 1024;
+  char buff [BUFF_LEN];
+  const char* format = "%s [line %d]";
+#if !defined(BEA_LACKS_SNPRINTF)
+  snprintf (buff, BUFF_LEN, format, text, line);
+#else
+  _snprintf (buff, BUFF_LEN, format, text, line);
+#endif
+  return std::runtime_error (std::string (buff));
+}
+
+static std::runtime_error raise (const char* text, const char* text2)
+{
+  const size_t BUFF_LEN = 1024;
+  char buff [BUFF_LEN];
+  const char* format = "%s %s";
+#if !defined(BEA_LACKS_SNPRINTF)
+  snprintf (buff, BUFF_LEN, format, text, text2);
+#else
+  _snprintf (buff, BUFF_LEN, format, text, text2);
+#endif
+  return std::runtime_error (std::string (buff));
+}
 
 // ==================================================
 // table_item_c
@@ -71,9 +96,7 @@ table_item_c::table_item_c (const char* table_line, size_t line_num)
 {
   if (!table_line)
     {
-      std::ostringstream os;
-      os << "Can not parse empty line (" << line_num << ")";
-      throw std::runtime_error (os.str ());
+      throw raise ("Can not parse empty line", line_num);
     }
   size_t len = strlen (table_line);
   
@@ -95,7 +118,8 @@ table_item_c::table_item_c (const char* table_line, size_t line_num)
   size_t end_of_opcode   = 0;
   size_t start_of_mnem   = 0;
   int state = 0;
-  for (size_t i=0; i<len; i++)
+  size_t i;
+  for (i=0; i<len; i++)
     {
       char ch = table_line [i];
       switch (state)
@@ -140,49 +164,96 @@ table_item_c::table_item_c (const char* table_line, size_t line_num)
     }
   if (state != 4)
     {
-      std::ostringstream os;
-      os << "mnemonics missing  (" << line_num << ")";
-      throw std::runtime_error (os.str ());
+      throw raise ("mnemonics missing", line_num);
     }
   // opcode always consists of even number of hexdigits
-  m_length = end_of_opcode - start_of_opcode + 1;
+  m_length = end_of_opcode - start_of_opcode;
   if (m_length % 2 == 1)
     {
-      std::ostringstream os;
-      os << "opcode always consists of even number of hexdigits  (" << line_num << ")";
-      throw std::runtime_error (os.str ());
+      throw raise ("opcode always consists of even number of hexdigits",
+		   line_num);
     }
-  m_mnemonics.assign (table_line + start_of_mnem, table_line + len);
+  m_mnemonics = std::string (table_line + start_of_mnem, len - start_of_mnem);
   m_length = m_length / 2;
   m_opcode = new unsigned char [m_length];
 
   std::auto_ptr <unsigned char> opcode_guard (m_opcode);
 
-  for (size_t i = 0; i<m_length; i++)
+  for (i = 0; i<m_length; i++)
     {
       const char a = table_line [start_of_opcode + (2*i)];
       const char b = table_line [start_of_opcode + (2*i) + 1];
-      if (!isxdigit (a))
+      if (!isxdigit (a) || !isxdigit (b))
 	{
-	  std::ostringstream os;
-	  os << "not a hex digit in opcode ("
-	     << line_num << ":" << (start_of_opcode + (2*i)) << ")";
-	  throw std::runtime_error (os.str ());
+	  throw raise ("not a hex digit in opcode", line_num);
 	}
-      if (!isxdigit (b))
-	{
-	  std::ostringstream os;
-	  os << "not a hex digit in opcode ("
-	     << line_num << ":" << (start_of_opcode + (2*i) + 1) << ")";
-	  throw std::runtime_error (os.str ());
-	}
+
       char abval [] = {a, b, 0};
+      unsigned int val = 0;
+      sscanf (abval, "%x", &val);
       
-      std::stringstream ss;
-      ss << std::setbase (16) << abval;
-      unsigned int val;
-      ss >> val;
       m_opcode [i] = (unsigned char)(val & 0xFF);
     }
   opcode_guard.release ();
 }
+
+// =============================================================
+// table_reader_c
+// =============================================================
+struct auto_closer_s
+{
+  auto_closer_s (FILE* f)
+    : m_file (f)
+  {
+  }
+  ~auto_closer_s ()
+  {
+    fclose (m_file);
+  }
+  FILE* m_file;
+};
+
+table_reader_c::table_reader_c (const char* table_file)
+{
+  FILE* f = fopen (table_file, "rb");
+  if (f == NULL)
+    {
+      throw raise ("Can not open file for read:", table_file);
+    }
+  auto_closer_s auto_closer (f);
+  std::string line;
+  unsigned int line_num = 1;
+  int state = 0;
+
+  while (!feof (f))
+    {
+      char ch;
+      fread (&ch, 1, 1, f);
+      if (ch == '\n' || ch == '\r')
+	{
+	  if (state == 1)
+	    {
+	      m_table.push_back (table_item_c (line.c_str (), line_num));
+	      state = 0;
+	      line = "";
+	      line_num++;
+	    }
+	}
+      else
+	{
+	  state = 1;
+	  line = line + ch;
+	}
+    }
+}
+// -------------------------------------------------------------
+size_t table_reader_c::items ()
+{
+  return m_table.size ();
+}
+// -------------------------------------------------------------
+const table_item_c& table_reader_c::at (size_t i)
+{
+  return m_table.at (i);
+}
+

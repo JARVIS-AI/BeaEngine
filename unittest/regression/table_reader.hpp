@@ -17,7 +17,9 @@ class table_item_c
 {
   friend class table_reader_c;
 public:
-table_item_c ();
+#if defined(BEA_STL_CONTAINER_REQUIRES_DEFAULT_CTOR)
+  table_item_c () {}
+#endif
   /**
    * copy constructor
    */

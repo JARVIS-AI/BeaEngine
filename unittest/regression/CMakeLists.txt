@@ -1,7 +1,7 @@
 set (target regression)
 
-set (src regression.c table_reader.cpp)
-set (hdr table_reader.hpp)
+set (src main.cpp table_reader.cpp dasm_xml.cpp)
+set (hdr table_reader.hpp dasm_xml.hpp)
 
 add_executable (${target} ${src} ${hdr})
 
