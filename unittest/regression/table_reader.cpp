@@ -92,7 +92,13 @@ std::string table_item_c::mnemonics () const
   return m_mnemonics;
 }
 // ----------------------------------------------------------------------
-table_item_c::table_item_c (const char* table_line, size_t line_num)
+unsigned int table_item_c::line_number () const
+{
+  return m_line_num;
+}
+// ----------------------------------------------------------------------
+table_item_c::table_item_c (const char* table_line, unsigned int line_num)
+  : m_line_num (line_num)
 {
   if (!table_line)
     {

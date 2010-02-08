@@ -1,13 +1,9 @@
 #include <sstream>
 #include "unittest/regression/dasm_xml.hpp"
 
-static std::ostream& print_bytes (std::ostream& os, unsigned char* code, size_t length)
+static std::string print_bytes (unsigned char* code, size_t length)
 {
-  std::ios_base::fmtflags old_flags = os.flags ();
-  std::streamsize         old_width = os.width ();
-  char                    old_fill  = os.fill  ();
-  
-  
+  std::ostringstream os;
   size_t i;
   for (i=0; i<length; i++)
     {
@@ -22,10 +18,7 @@ static std::ostream& print_bytes (std::ostream& os, unsigned char* code, size_t 
 	  os << " ";
 	}
     }
-  os.flags (old_flags);
-  os.width (old_width);
-  os.fill  (old_fill);
-  return os;
+  return os.str ();
 }
 // ---------------------------------------------------------------------
 template <typename T>
@@ -61,15 +54,6 @@ static std::string elem (const std::string& name, const unsigned char& v)
   return os.str ();
 }
 // ---------------------------------------------------------------------
-static std::string elem (const std::string& name, const char& v)
-{
-  std::ostringstream os;
-  os << "</" << name << " val=\"0x" << std::hex << ((int)v & 0xFF) << "\">" << std::dec
-     << std::endl;
-  return os.str ();
-}
-
-// ---------------------------------------------------------------------
 static std::string elem (const std::string& name, const char* v)
 {
   std::ostringstream os;
@@ -91,7 +75,7 @@ static std::ostream& print_memory_info (std::ostream& os, const MEMORYTYPE* m)
   return os;
 }
 // ---------------------------------------------------------------------
-static std::ostream& print_arg_type (std::ostream& os, const ARGTYPE* a, char* name)
+static std::ostream& print_arg_type (std::ostream& os, const ARGTYPE* a, const char* name)
 {
   const std::string ident1 ("\t\t");
   const std::string ident2 = ident1 + '\t';
@@ -190,8 +174,8 @@ void dasm_to_xml (std::ostream& os, const DISASM& dasm, int dasm_len, const tabl
   const std::string ident2 = ident1 + '\t';
   os << ident1 << "<asm>" << std::endl
      << ident2 << elem ( "expected", expected.mnemonics ().c_str ())
-     << ident2 << "</opcode val=\"";
-  print_bytes (os, expected.bytes (), expected.length ()) << "\"/>" << std::endl;
+     << ident2 << "</opcode val=\"" << print_bytes (expected.bytes (), expected.length ()) << "\"/>" 
+     << std::endl;
      
   if (dasm_len == UNKNOWN_OPCODE)
     {

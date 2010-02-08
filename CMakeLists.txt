@@ -1,6 +1,8 @@
 cmake_minimum_required (VERSION 2.6)
 project                (BeaEngine)
 
+FIND_PACKAGE (ZLIB) 
+
 set (CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake")
 
 option (optHAS_OPTIMIZED "Turn Optimizations ON"    OFF)
@@ -98,8 +100,10 @@ endif ()
 if (BEA_COMPILER STREQUAL msvc)
   set (CMAKE_C_COMPILER   cl)
   set (CMAKE_CXX_COMPILER cl)
+  set (BEA_DEFINITIONS "/DBEA_LACKS_SNPRINTF")
+  
   if (optBUILD_STDCALL)
-    set (BEA_DEFINITIONS "/DBEA_USE_STDCALL")
+    set (BEA_DEFINITIONS "${BEA_DEFINITIONS} /DBEA_USE_STDCALL")
   endif ()
   if (MSVC60)
 	set (BEA_WARNINGS /W3)
@@ -112,7 +116,22 @@ if (BEA_COMPILER STREQUAL msvc)
   endif ()
   if (optHAS_OPTIMIZED)
     list (APPEND BEA_FLAGS /O2)
-	list (APPEND BEA_DEFINITIONS "/DNDEBUG")
+    list (APPEND BEA_DEFINITIONS "/DNDEBUG")
+  endif ()
+
+  # determine code generation model
+  if (optHAS_OPTIMIZED)
+    if (optBUILD_DLL)
+      list (APPEND BEA_FLAGS /MD)
+    else ()
+      list (APPEND BEA_FLAGS /MT)
+    endif ()
+  else ()
+    if (optBUILD_DLL)
+      list (APPEND BEA_FLAGS /MDd)
+    else ()
+      list (APPEND BEA_FLAGS /MTd)
+    endif ()
   endif ()
 endif ()
 # =========================================
@@ -165,7 +184,7 @@ endif ()
 if (BEA_COMPILER STREQUAL watcom)
   set (CMAKE_C_COMPILER   wcl386)
   set (CMAKE_CXX_COMPILER wcl386)
-  
+  set (BEA_DEFINITIONS "-DBEA_STL_CONTAINER_REQUIRES_DEFAULT_CTOR")
   set (BEA_WARNINGS -w2)
   set (BEA_FLAGS    -q)
   if (optHAS_SYMBOLS)
@@ -177,9 +196,11 @@ if (BEA_COMPILER STREQUAL watcom)
   if (optBUILD_64BIT)
 #    list (APPEND BEA_FLAGS -m64)
   endif ()
+  
   if (optBUILD_STDCALL)
-    set (BEA_DEFINITIONS "-DBEA_USE_STDCALL")
+    set (BEA_DEFINITIONS "${BEA_DEFINITIONS} -DBEA_USE_STDCALL")
   endif ()
+  
 endif ()
 
 # =========================================
@@ -211,10 +232,6 @@ set (myC_FLAGS "")
 set (myCXX_FLAGS "")
 
 foreach (flag ${BEA_FLAGS})
-  set (myC_FLAGS "${myC_FLAGS} ${flag}")
-endforeach ()
-
-foreach (flag ${BEA_DEFINITIONS})
   set (myC_FLAGS "${myC_FLAGS} ${flag}")
 endforeach ()
 
@@ -258,8 +275,7 @@ endif ()
 set (BEA_INCLUDE_PATH ${CMAKE_SOURCE_DIR}/include)
 set (BEA_SRC_ROOT ${CMAKE_SOURCE_DIR}/beaengineSources)
 
-include_directories (${BEA_SRC_ROOT} ${BEA_INCLUDE_PATH} ${CMAKE_SOURCE_DIR})
-link_directories    (${BEA_LIBS_PATH})
+
 
 # ======================================
 # set output dirs
@@ -283,8 +299,24 @@ set (CMAKE_RUNTIME_OUTPUT_DIRECTORY ${myBIN_OUTPUT})
 set (build_modules 
   beaengineSources
   examples
-unittest/regression	
+  unittest/regression	
 )
+
+if (NOT ZLIB_FOUND)
+  list (APPEND build_modules thirdparty/zlib)
+endif ()
+
+if (NOT ZLIB_FOUND)
+  set (ZLIB_INCLUDE_DIR thirdparty/zlib)
+else ()
+  list (APPEND BEA_LIBS_PATH ${ZLIB_LIBRARIES})
+endif ()
+  
+
+add_definitions     (${BEA_DEFINITIONS})
+include_directories (${BEA_SRC_ROOT}  ${BEA_INCLUDE_PATH} 
+                     ${CMAKE_SOURCE_DIR} ${ZLIB_INCLUDE_DIR})
+link_directories    (${BEA_LIBS_PATH})
 
 
 set (BEA_TARGET "BeaEngine")

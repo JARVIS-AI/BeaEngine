@@ -17,9 +17,8 @@ class table_item_c
 {
   friend class table_reader_c;
 public:
-#if defined(BEA_STL_CONTAINER_REQUIRES_DEFAULT_CTOR)
   table_item_c () {}
-#endif
+
   /**
    * copy constructor
    */
@@ -49,15 +48,20 @@ public:
    * returns the mnemonics of the opcode
    */
   std::string mnemonics () const;
+  /**
+   * returns the number of line in table file of this instruction
+   */
+  unsigned int line_number () const;
 private:
   /**
    * this constructor parses the raw input line.
    */
-  table_item_c (const char* table_line, size_t line_num);
+  table_item_c (const char* table_line, unsigned int line_num);
 private:
   unsigned char* m_opcode;	/**< opcode bytes */
   size_t         m_length;	/**< length of the opcode bytes */
   std::string    m_mnemonics;	/**< mnemonics */
+  unsigned int   m_line_num;
 };
 
 /**
