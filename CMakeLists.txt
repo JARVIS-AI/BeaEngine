@@ -1,9 +1,9 @@
+project (BeaEngine)
 cmake_minimum_required (VERSION 2.6)
-project                (BeaEngine)
-
-FIND_PACKAGE (ZLIB) 
 
 set (CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake")
+
+#set (CMAKE_VERBOSE_MAKEFILE ON)
 
 option (optHAS_OPTIMIZED "Turn Optimizations ON"    OFF)
 option (optHAS_SYMBOLS   "Build with debug Symbols" ON)
@@ -187,13 +187,13 @@ if (BEA_COMPILER STREQUAL watcom)
   set (CMAKE_C_COMPILER   wcl386)
   set (CMAKE_CXX_COMPILER wcl386)
   set (BEA_DEFINITIONS "-DBEA_STL_CONTAINER_REQUIRES_DEFAULT_CTOR")
-  set (BEA_WARNINGS -w2)
-  set (BEA_FLAGS    -q)
+  set (BEA_WARNINGS -w2 -wx )
+  set (BEA_FLAGS    -q -fpi -fpi87 "-bt=nt" -zq -6r -mf)
   if (optHAS_SYMBOLS)
     list (APPEND BEA_FLAGS -db -d2 )
   endif ()
   if (optHAS_OPTIMIZED)
-    list (APPEND BEA_FLAGS -ox )
+    list (APPEND BEA_FLAGS -ox -s -ors )
   endif ()
   if (optBUILD_64BIT)
 #    list (APPEND BEA_FLAGS -m64)
@@ -202,7 +202,10 @@ if (BEA_COMPILER STREQUAL watcom)
   if (optBUILD_STDCALL)
     set (BEA_DEFINITIONS "${BEA_DEFINITIONS} -DBEA_USE_STDCALL")
   endif ()
+  set (CMAKE_EXE_LINKER_FLAGS "-l=nt")
+  set (CMAKE_SHARED_LINKER_FLAGS "-l=nt")
   
+
 endif ()
 
 # =========================================
@@ -227,6 +230,10 @@ if (BEA_COMPILER STREQUAL pelles)
     set (BEA_DEFINITIONS "/DBEA_USE_STDCALL")
   endif ()
 endif ()
+
+
+
+
 # ============================================
 # construct compiler flags
 # ============================================
@@ -298,6 +305,11 @@ set (CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${myLIB_OUTPUT})
 set (CMAKE_LIBRARY_OUTPUT_DIRECTORY ${myLIB_OUTPUT})
 set (CMAKE_RUNTIME_OUTPUT_DIRECTORY ${myBIN_OUTPUT})
 
+
+
+FIND_PACKAGE (ZLIB)
+
+
 set (build_modules 
   beaengineSources
   examples
@@ -337,7 +349,7 @@ if (optBUILD_64BIT)
   set (BEA_TARGET "${BEA_TARGET}_64")
 endif ()
 
-
+ 
 
 foreach (mdl ${build_modules})
   set (MDL_SRC "${mdl}")

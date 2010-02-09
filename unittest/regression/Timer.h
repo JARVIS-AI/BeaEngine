@@ -16,7 +16,11 @@
 #define TIMER_H_DEF
 
 #if defined(WIN32) || defined(__MINGW32__)  // Windows system specific
+#if !defined(__WATCOMC__)
 #include <windows.h>
+#else
+#include <nt/windows.h>
+#endif
 #else          // Unix based system specific
 #include <sys/time.h>
 #endif

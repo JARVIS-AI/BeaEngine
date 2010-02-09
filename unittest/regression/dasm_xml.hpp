@@ -3,9 +3,10 @@
 
 #include <iostream>
 #include <beaengine/BeaEngine.h>
-#include "unittest/regression/table_reader.hpp"
+#include "unittest/regression/dasm_result.hpp"
 
-void dasm_to_xml (std::ostream& os, const DISASM& dasm, int dasm_len, const table_item_c& expected);
+void dasm_to_xml (std::ostream& os, const results_list_t& rl);
+void dasm_to_sexp (std::ostream& os, const results_list_t& rl);
 
 
 #endif

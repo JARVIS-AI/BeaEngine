@@ -8,48 +8,10 @@
 
 #include "unittest/regression/table_reader.hpp"
 #include "unittest/regression/dasm_xml.hpp"
+#include "unittest/regression/dasm_result.hpp"
 #include "unittest/regression/Timer.h"
 
-struct dasm_result_s
-{
-  dasm_result_s ()
-    : m_dasm     (0),
-      m_dasm_len (-1)
-  {
-  }
-  
-  dasm_result_s (DISASM* dasm, const table_item_c& ti, int dasm_len)
-    : m_dasm     (0),
-      m_input    (ti),
-      m_dasm_len (dasm_len)
-  {
-     m_dasm = new DISASM;
-     memcpy (m_dasm, dasm, sizeof (DISASM));
-  }
 
-  dasm_result_s (const dasm_result_s& obj)
-     : m_input    (obj.m_input),
-       m_dasm_len (obj.m_dasm_len)
-     {
-	m_dasm = new DISASM;
-	memcpy (m_dasm, obj.m_dasm, sizeof (DISASM));
-     }
-   
-   
-  ~dasm_result_s ()
-  {
-    if (m_dasm)
-      {
-	delete m_dasm;
-      }
-  }
-  
-  DISASM*            m_dasm;
-  table_item_c       m_input;
-  const int          m_dasm_len;
-};
-
-typedef std::list <dasm_result_s> results_list_t;
 
 // ===================================================================
 void do_disasm_test (const char* table_file, results_list_t& results)
@@ -91,6 +53,7 @@ int main (int argc, char* argv [])
     {
       results_list_t dasm_results;
       do_disasm_test (table_file, dasm_results);
+      dasm_to_sexp (std::cout, dasm_results);
       return 0;
     }
   catch (std::exception& e)

@@ -68,9 +68,9 @@ typedef struct {
 
 #pragma pack(4)
 typedef struct {
-   long BaseRegister;
-   long IndexRegister;
-   long Scale;
+   Int32 BaseRegister;
+   Int32 IndexRegister;
+   Int32 Scale;
    Int64 Displacement;
 } MEMORYTYPE ;
 #pragma pack()
@@ -78,25 +78,25 @@ typedef struct {
 
 #pragma pack(1)
 typedef struct  {
-   long Category;
-   long Opcode;
+   Int32 Category;
+   Int32 Opcode;
    char Mnemonic[16];
-   long BranchType;
+   Int32 BranchType;
    EFLStruct Flags;
    UInt64 AddrValue;
    Int64 Immediat;
-   unsigned long ImplicitModifiedRegs;
+   UInt32 ImplicitModifiedRegs;
 } INSTRTYPE;
 #pragma pack()
 
 #pragma pack(1)
 typedef struct  {
    char ArgMnemonic[32];
-   long ArgType;
-   long ArgSize;
-   unsigned long AccessMode;
+   Int32 ArgType;
+   Int32 ArgSize;
+   UInt32 AccessMode;
    MEMORYTYPE Memory;
-   unsigned long SegmentReg;
+   UInt32 SegmentReg;
 } ARGTYPE;
 #pragma pack()
 

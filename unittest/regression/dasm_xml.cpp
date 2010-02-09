@@ -1,200 +1,411 @@
-#include <sstream>
+#include <iostream>
+#include <string>
+#include <stdio.h>
+#include <list>
 #include "unittest/regression/dasm_xml.hpp"
 
+#if !defined(BEA_LACKS_SNPRINTF)
+  #define my_snprintf snprintf 
+#else
+  #define my_snprintf 
+#endif
+
+#if defined(__WATCOMC__)
+#define OS_STR(V) V.c_str ()
+#else
+#define OS_STR(V) V
+#endif
+
+class item_c
+{
+public:
+  virtual ~item_c ();
+  bool is_list () const
+  {
+    return m_is_list;
+  }
+  virtual const std::string& name () const = 0;
+protected:
+  item_c (bool lst)
+    : m_is_list (lst)
+  {
+  }
+private:
+  bool m_is_list;
+};
+
+item_c::~item_c ()
+{
+}
+// ====================================================================
+class name_value_c : public item_c
+{
+public:
+  name_value_c (const char* name, Int8 v);
+  name_value_c (const char* name, UInt8 v);
+  name_value_c (const char* name, Int16 v);
+  name_value_c (const char* name, UInt16 v);
+  name_value_c (const char* name, Int32 v);
+  name_value_c (const char* name, UInt32 v);
+  name_value_c (const char* name, Int64 v);
+  name_value_c (const char* name, UInt64 v);
+  name_value_c (const char* name, const char* v);
+
+  const std::string& name () const;
+  const std::string& value () const;
+private:
+  std::string m_name;
+  std::string m_value;
+};
+
+#define BEA_NV_INIT(FMT, V)			\
+  static const size_t BUFF_LEN = 64;		\
+  static char BUFF [BUFF_LEN];			\
+  my_snprintf (BUFF, BUFF_LEN, FMT, V);		\
+  m_value = BUFF
+
+// -----------------------------------------------------------------------
+name_value_c::name_value_c (const char* name, Int8 v)
+  : item_c (false),
+    m_name (name)
+{
+  BEA_NV_INIT ("0x%X", (int)v & 0xFF);
+}
+// ------------------------------------------------------------
+name_value_c::name_value_c (const char* name, UInt8 v)
+  : item_c (false),
+    m_name (name)
+{
+  BEA_NV_INIT ("0x%X", (int)v & 0xFF);
+}
+// ------------------------------------------------------------
+name_value_c::name_value_c (const char* name, Int16 v)
+  : item_c (false),
+    m_name (name)
+{
+  BEA_NV_INIT ("0x%X", v);
+}
+// ------------------------------------------------------------
+name_value_c::name_value_c (const char* name, UInt16 v)
+  : item_c (false),
+    m_name (name)
+{
+  BEA_NV_INIT ("0x%X", v);
+}
+// ------------------------------------------------------------
+name_value_c::name_value_c (const char* name, Int32 v)
+  : item_c (false),
+    m_name (name)
+{
+  BEA_NV_INIT ("0x%X", v);
+}
+// ------------------------------------------------------------
+name_value_c::name_value_c (const char* name, UInt32 v)
+  : item_c (false),
+    m_name (name)
+{
+  BEA_NV_INIT ("0x%X", v);
+}
+// ------------------------------------------------------------
+name_value_c::name_value_c (const char* name, Int64 v)
+  : item_c (false),
+    m_name (name)
+{
+  BEA_NV_INIT ("0x%X", v);
+}
+// ------------------------------------------------------------
+name_value_c::name_value_c (const char* name, UInt64 v)
+  : item_c (false),
+    m_name (name)
+{
+  BEA_NV_INIT ("0x%I64X", v);
+}
+// ------------------------------------------------------------
+name_value_c::name_value_c (const char* name, const char* v)
+  : item_c  (false),
+    m_name  (name),
+    m_value (v)
+{
+}
+// ------------------------------------------------------------
+const std::string& name_value_c::name () const
+{
+  return m_name;
+}
+// -----------------------------------------------------------
+const std::string& name_value_c::value () const
+{
+  return m_value;
+}
+// ============================================================
+class item_list_c : public item_c
+{
+public:
+  typedef std::list <const item_c*>   item_list_t;
+  typedef item_list_t::const_iterator iterator_t;
+public:
+  item_list_c (const char* name);
+  ~item_list_c ();
+
+  item_list_c* append (const item_c* item);
+
+  iterator_t begin () const;
+  iterator_t end () const;
+  const std::string& name () const;
+  
+private:
+  std::string m_name;
+  item_list_t m_list;
+};
+// ---------------------------------------------------------------------
+item_list_c::item_list_c (const char* name)
+  : item_c (true),
+    m_name (name)
+{
+}
+// ---------------------------------------------------------------------
+item_list_c::~item_list_c ()
+{
+  for (item_list_t::iterator i = m_list.begin (); i!=m_list.end (); i++)
+    {
+      delete *i;
+    }
+}
+// ---------------------------------------------------------------------
+item_list_c* item_list_c::append (const item_c* item)
+{
+  m_list.push_back (item);
+  return this;
+}
+// ---------------------------------------------------------------------
+item_list_c::iterator_t item_list_c::begin () const
+{
+  return m_list.begin ();
+}
+// ---------------------------------------------------------------------
+item_list_c::iterator_t item_list_c::end () const
+{
+  return m_list.end ();
+}
+// ---------------------------------------------------------------------
+const std::string& item_list_c::name () const
+{
+  return m_name;
+}
+// =====================================================================
 static std::string print_bytes (unsigned char* code, size_t length)
 {
-  std::ostringstream os;
+  char bytes [6];
+  std::string result;
   size_t i;
   for (i=0; i<length; i++)
     {
-      os << "0x";
-      os.width (2);
-      os.fill  ('0');
-      os.flags  (std::ios::hex);
       unsigned int x = (code [i] & 0xFF);
-      os << x;
+      my_snprintf (bytes, 6, "0x%02X", x);
+      result = result + (const char*)bytes;
       if (i < length - 1)
 	{
-	  os << " ";
+	  result = result + " ";
 	}
     }
-  return os.str ();
+  return result;
 }
 // ---------------------------------------------------------------------
 template <typename T>
-static std::string elem (const std::string& name, const T& v)
+static name_value_c* elem (const char* name, const T& v)
 {
-  std::ostringstream os;
-  os << "</" << name << " val=\"0x" << std::hex << v << "\">" << std::dec
-     << std::endl;
-  return os.str ();
+  return new name_value_c (name, v);
 }
 // ---------------------------------------------------------------------
-static std::string elem (const std::string& name, const UInt64& v)
+static item_list_c* print_memory_info (const MEMORYTYPE* m)
 {
-  std::ostringstream os;
-  os << "</" << name << " val=\"0x" << std::hex << (unsigned long)v << "\">" << std::dec
-     << std::endl;
-  return os.str ();
-}
-// ---------------------------------------------------------------------
-static std::string elem (const std::string& name, const Int64& v)
-{
-  std::ostringstream os;
-  os << "</" << name << " val=\"0x" << std::hex << (long)v << "\">" << std::dec
-     << std::endl;
-  return os.str ();
-}
+  item_list_c* elt = new item_list_c ("Memory");
 
-static std::string elem (const std::string& name, const unsigned char& v)
-{
-  std::ostringstream os;
-  os << "</" << name << " val=\"0x" << std::hex << ((unsigned int)v & 0xFF) << "\">" << std::dec
-     << std::endl;
-  return os.str ();
+  elt->append (elem ("BaseRegister" , m->BaseRegister))
+    ->append  (elem ("IndexRegister", m->IndexRegister))
+    ->append  (elem ("Scale"        , m->Scale))
+    ->append  (elem ("Displacement" , m->Displacement));
+  return elt;
 }
 // ---------------------------------------------------------------------
-static std::string elem (const std::string& name, const char* v)
+static item_list_c* print_arg_type (const ARGTYPE* a, const char* name)
 {
-  std::ostringstream os;
-  os << "</" << name << " val=\"" << v << "\">" << std::dec
-     << std::endl;
-  return os.str ();
+  item_list_c* elt = new item_list_c (name);
+  elt->append ( elem ( "ArgMnemonic", a->ArgMnemonic))
+    ->append  ( elem ( "ArgType"    , a->ArgType))
+    ->append  ( elem ( "ArgSize"    , a->ArgSize))
+    ->append  ( elem ( "AccessMode" , a->AccessMode))
+    ->append  ( elem ( "SegmentReg" , a->SegmentReg))
+    ->append  ( print_memory_info (&a->Memory));
+  return elt;
 }
 // ---------------------------------------------------------------------
-static std::ostream& print_memory_info (std::ostream& os, const MEMORYTYPE* m)
+static item_list_c* print_efl_struct (const EFLStruct* e)
 {
-  const std::string ident1 ("\t\t\t");
-  const std::string ident2 = ident1 + '\t';
-  os << ident1 << "<Memory>" << std::endl
-     << ident2 << elem ( "BaseRegister" , m->BaseRegister)
-     << ident2 << elem ( "IndexRegister", m->IndexRegister)
-     << ident2 << elem ( "Scale"        , m->Scale)
-     << ident2 << elem ( "Displacement" , m->Displacement)
-     << ident1 << "</Memory>" << std::endl;
-  return os;
+  item_list_c* elt = new item_list_c ("efl");
+  elt->append ( elem ( "OF_", e->OF_))
+    ->append ( elem ( "SF_", e->SF_))
+    ->append ( elem ( "ZF_", e->ZF_))
+    ->append ( elem ( "AF_", e->AF_))
+    ->append ( elem ( "PF_", e->PF_))
+    ->append ( elem ( "CF_", e->CF_))
+    ->append ( elem ( "TF_", e->TF_))
+    ->append ( elem ( "IF_", e->IF_))
+    ->append ( elem ( "DF_", e->DF_))
+    ->append ( elem ( "NT_", e->NT_))
+    ->append ( elem ( "RF_", e->RF_))
+    ->append ( elem ( "alignment", e->alignment));
+  return elt;
 }
 // ---------------------------------------------------------------------
-static std::ostream& print_arg_type (std::ostream& os, const ARGTYPE* a, const char* name)
+static item_list_c* print_instr_type (const INSTRTYPE* i)
 {
-  const std::string ident1 ("\t\t");
-  const std::string ident2 = ident1 + '\t';
-  os << ident1 << "<" << name << ">" << std::endl
-     << ident2 << elem ( "ArgMnemonic", a->ArgMnemonic)
-     << ident2 << elem ( "ArgType"    , a->ArgType)
-     << ident2 << elem ( "ArgSize"    , a->ArgSize)
-     << ident2 << elem ( "AccessMode" , a->AccessMode)
-     << ident2 << elem ( "SegmentReg" , a->SegmentReg);
-  print_memory_info (os, &a->Memory)
-    << ident1 << "</" << name << ">" << std::endl;
-  return os;
+  item_list_c* elt = new item_list_c ("Instruction");
+
+  elt->append ( elem ( "Category"            , i->Category))
+    ->append  ( elem ( "Opcode"              , i->Opcode))
+    ->append  ( elem ( "Mnemonic"            , i->Mnemonic))
+    ->append  ( elem ( "BranchType"          , i->BranchType))
+    ->append  ( elem ( "AddrValue"           , i->AddrValue))
+    ->append  ( elem ( "Immediat"            , i->Immediat))
+    ->append  ( elem ( "ImplicitModifiedRegs", i->ImplicitModifiedRegs))
+    ->append  ( print_efl_struct (&i->Flags)); 
+  return elt;
 }
 // ---------------------------------------------------------------------
-static std::ostream& print_efl_struct (std::ostream& os, const EFLStruct* e)
+static item_list_c* print_rex (const REX_Struct* e)
 {
-  const std::string ident1 ("\t\t\t");
-  const std::string ident2 = ident1 + '\t';
-  
-  os << ident1 << "<efl>" << std::endl
-     << ident2 << elem ( "OF_", e->OF_)
-     << ident2 << elem ( "SF_", e->SF_)
-     << ident2 << elem ( "ZF_", e->ZF_)
-     << ident2 << elem ( "AF_", e->AF_)
-     << ident2 << elem ( "PF_", e->PF_)
-     << ident2 << elem ( "CF_", e->CF_)
-     << ident2 << elem ( "TF_", e->TF_)
-     << ident2 << elem ( "IF_", e->IF_)
-     << ident2 << elem ( "DF_", e->DF_)
-     << ident2 << elem ( "NT_", e->NT_)
-     << ident2 << elem ( "RF_", e->RF_)
-     << ident2 << elem ( "alignment", e->alignment)
-     << ident1 << "</efl>" << std::endl;
-  return os;
+  item_list_c* elt = new item_list_c ("REX");
+  elt->append ( elem ( "W_", e->W_))
+    ->append ( elem ( "R_", e->R_))
+    ->append ( elem ( "X_", e->X_))
+    ->append ( elem ( "B_", e->B_))
+    ->append ( elem ( "state", e->state));
+
+  return elt;
 }
 // ---------------------------------------------------------------------
-static std::ostream& print_instr_type (std::ostream& os, const INSTRTYPE* i)
+static item_list_c* print_prefix_info (const PREFIXINFO* e)
 {
-  const std::string ident1 ("\t\t");
-  const std::string ident2 = ident1 + "\t";
-  os << ident1 << "<Instruction>" << std::endl
-     << ident2 << elem ( "Category"            , i->Category)
-     << ident2 << elem ( "Opcode"              , i->Opcode)
-     << ident2 << elem ( "Mnemonic"            , i->Mnemonic)
-     << ident2 << elem ( "BranchType"          , i->BranchType)
-     << ident2 << elem ( "AddrValue"           , i->AddrValue)
-     << ident2 << elem ( "Immediat"            , i->Immediat)
-     << ident2 << elem ( "ImplicitModifiedRegs", i->ImplicitModifiedRegs);
-  print_efl_struct (os, &i->Flags) 
-    << ident1 << "</Instruction>" << std::endl;
-  return os;
+  item_list_c* elt = new item_list_c ("Prefix");
+  elt
+    ->append ( elem ( "Number"        , e->Number))
+    ->append ( elem ( "NbUndefined"   , e->NbUndefined))
+    ->append ( elem ( "LockPrefix"    , e->LockPrefix))
+    ->append ( elem ( "OperandSize"   , e->OperandSize))
+    ->append ( elem ( "AddressSize"   , e->AddressSize))
+    ->append ( elem ( "RepnePrefix"   , e->RepnePrefix))
+    ->append ( elem ( "RepPrefix"     , e->RepPrefix))
+    ->append ( elem ( "FSPrefix"      , e->FSPrefix))
+    ->append ( elem ( "SSPrefix"      , e->SSPrefix))
+    ->append ( elem ( "GSPrefix"      , e->GSPrefix))
+    ->append ( elem ( "ESPrefix"      , e->ESPrefix))
+    ->append ( elem ( "CSPrefix"      , e->CSPrefix))
+    ->append ( elem ( "DSPrefix"      , e->DSPrefix))
+    ->append ( elem ( "BranchTaken"   , e->BranchTaken))
+    ->append ( elem ( "BranchNotTaken", e->BranchNotTaken))
+    ->append (print_rex (&e->REX));
+  return elt;
 }
 // ---------------------------------------------------------------------
-static std::ostream& print_rex (std::ostream& os, const REX_Struct* e)
+static item_list_c* dump_dasm (const DISASM& dasm, int dasm_len, const table_item_c& expected)
 {
-  const std::string ident1 ("\t\t\t");
-  const std::string ident2 = ident1 + "\t";
-  os << ident1 << "<REX>" << std::endl
-     << ident2 << elem ( "W_", e->W_)
-     << ident2 << elem ( "R_", e->R_)
-     << ident2 << elem ( "X_", e->X_)
-     << ident2 << elem ( "B_", e->B_)
-     << ident2 << elem ( "state", e->state)
-     << ident1 << "</REX>" << std::endl;
-  return os;
-}
-// ---------------------------------------------------------------------
-static std::ostream& print_prefix_info (std::ostream& os, const PREFIXINFO* e)
-{
-  const std::string ident1 ("\t\t");
-  const std::string ident2 = ident1 + '\t';
-  os << ident1 << "<Prefix>" << std::endl
-     << ident2 << elem ( "Number"        , e->Number)
-     << ident2 << elem ( "NbUndefined"   , e->NbUndefined)
-     << ident2 << elem ( "LockPrefix"    , e->LockPrefix)
-     << ident2 << elem ( "OperandSize"   , e->OperandSize)
-     << ident2 << elem ( "AddressSize"   , e->AddressSize)
-     << ident2 << elem ( "RepnePrefix"   , e->RepnePrefix)
-     << ident2 << elem ( "RepPrefix"     , e->RepPrefix)
-     << ident2 << elem ( "FSPrefix"      , e->FSPrefix)
-     << ident2 << elem ( "SSPrefix"      , e->SSPrefix)
-     << ident2 << elem ( "GSPrefix"      , e->GSPrefix)
-     << ident2 << elem ( "ESPrefix"      , e->ESPrefix)
-     << ident2 << elem ( "CSPrefix"      , e->CSPrefix)
-     << ident2 << elem ( "DSPrefix"      , e->DSPrefix)
-     << ident2 << elem ( "BranchTaken"   , e->BranchTaken)
-     << ident2 << elem ( "BranchNotTaken", e->BranchNotTaken);
-  print_rex (os, &e->REX)
-     << ident1 << "</Prefix>" << std::endl;
-  return os;
-}
-// ---------------------------------------------------------------------
-void dasm_to_xml (std::ostream& os, const DISASM& dasm, int dasm_len, const table_item_c& expected)
-{
-  const std::string ident1 ("\t");
-  const std::string ident2 = ident1 + '\t';
-  os << ident1 << "<asm>" << std::endl
-     << ident2 << elem ( "expected", expected.mnemonics ().c_str ())
-     << ident2 << "</opcode val=\"" << print_bytes (expected.bytes (), expected.length ()) << "\"/>" 
-     << std::endl;
+  item_list_c* elt = new item_list_c ("asm");
+  elt->append (elem ("expected", expected.mnemonics ().c_str ()))
+    ->append (elem ("opcode", print_bytes (expected.bytes (), expected.length ()).c_str ()));
      
   if (dasm_len == UNKNOWN_OPCODE)
     {
-      os << ident2 << elem ( "status", "failed")
-	 << ident1 << "</asm>" << std::endl;
-      return;
+      elt->append ( elem ( "status", "failed"));
+      return elt;
     }
   if ((size_t) dasm_len != expected.length ())
     {
-      os << ident2 << elem ( "status", "failed")
-	 << ident2 << elem ( "mnemonics", (const char*) dasm.CompleteInstr)
-	 << ident1 << "</asm>" << std::endl;
-      return;
+      elt ->append ( elem ( "status", "failed"))
+	->append ( elem ( "mnemonics", (const char*) dasm.CompleteInstr));
+      return elt;
     }
-  os << ident2 << elem ( "options", dasm.Options);
-  print_instr_type  (os, &dasm.Instruction);
-  print_arg_type    (os, &dasm.Argument1, "Argument1");
-  print_arg_type    (os, &dasm.Argument2, "Argument2");
-  print_arg_type    (os, &dasm.Argument3, "Argument3");
-  print_prefix_info (os, &dasm.Prefix)
-    << ident1 << "</asm>" << std::endl;
+  elt ->append ( elem ( "options", dasm.Options))
+    ->append (print_instr_type  (&dasm.Instruction))
+    ->append (print_arg_type    (&dasm.Argument1, "Argument1"))
+    ->append (print_arg_type    (&dasm.Argument2, "Argument2"))
+    ->append (print_arg_type    (&dasm.Argument3, "Argument3"))
+    ->append (print_prefix_info (&dasm.Prefix));
+  return elt;
+}
+// ---------------------------------------------------------------------
+static void dasm_to_xml_helper (std::ostream& os, const item_c* item, unsigned int level)
+{
+  std::string ident;
+  for (unsigned int i = 0; i<level; i++)
+    {
+      ident = ident + '\t';
+    }
+  if (item->is_list ())
+    {
+      os << OS_STR (ident)
+	 << "<" << OS_STR (item->name ()) << ">" << std::endl;
+      const item_list_c* lst = (const item_list_c*) item;
+      for (item_list_c::iterator_t itr = lst->begin (); itr != lst->end (); itr++)
+	{
+	  const item_c* itm = *itr;
+	  dasm_to_xml_helper (os, itm, level + 1);
+	}
+      os << OS_STR (ident) << "</" << OS_STR (item->name ()) << ">" << std::endl;
+    }
+  else
+    {
+      const name_value_c* v = (const name_value_c*) item;
+      os << OS_STR (ident) << "</" << OS_STR (v->name ()) 
+	 << " val=\"" << OS_STR (v->value ()) << "\">" << std::endl;
+    }
+}
+// ---------------------------------------------------------------------
+static void dasm_to_sexp_helper (std::ostream& os, const item_c* item, unsigned int level)
+{
+  std::string ident;
+  for (unsigned int i = 0; i<level; i++)
+    {
+      ident = ident + '\t';
+    }
+  if (item->is_list ())
+    {
+      os << OS_STR (ident) << "('" << OS_STR (item->name ()) << std::endl;
+      const item_list_c* lst = (const item_list_c*) item;
+      for (item_list_c::iterator_t itr = lst->begin (); itr != lst->end (); itr++)
+	{
+	  const item_c* itm = *itr;
+	  dasm_to_sexp_helper (os, itm, level + 1);
+	}
+      os << OS_STR (ident) << ")" << std::endl;
+    }
+  else
+    {
+      const name_value_c* v = (const name_value_c*) item;
+      os << OS_STR (ident) << "('" << OS_STR (v->name ()) 
+	 << " \"" << OS_STR (v->value ()) << "\")" << std::endl;
+    }
+}
+// ---------------------------------------------------------------------
+void dasm_to_xml (std::ostream& os, const results_list_t& rl)
+{
+  item_list_c* elt = new item_list_c ("disasm");
+  for (results_list_t::const_iterator i = rl.begin (); i!=rl.end (); i++)
+    {
+      elt->append (dump_dasm (*i->m_dasm, i->m_dasm_len, i->m_input));
+    }
+  dasm_to_xml_helper (os, elt, 0);
+  delete elt;
+}
+
+// ---------------------------------------------------------------------
+void dasm_to_sexp (std::ostream& os, const results_list_t& rl)
+{
+  item_list_c* elt = new item_list_c ("disasm");
+  for (results_list_t::const_iterator i = rl.begin (); i!=rl.end (); i++)
+    {
+      elt->append (dump_dasm (*i->m_dasm, i->m_dasm_len, i->m_input));
+    }
+  dasm_to_sexp_helper (os, elt, 0);
+  delete elt;
 }

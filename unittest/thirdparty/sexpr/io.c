@@ -38,8 +38,10 @@ LA-CC-04-094
 #ifndef WIN32
 # include <unistd.h>
 #else
-# define ssize_t int
 # include <io.h>
+#if !defined(__WATCOMC__)
+# define ssize_t int
+#endif
 # include <sys/types.h>
 #endif
 #include <stdio.h>
