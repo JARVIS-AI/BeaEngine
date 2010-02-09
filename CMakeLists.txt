@@ -172,8 +172,10 @@ if (BEA_COMPILER STREQUAL borland)
     list (APPEND BEA_FLAGS -O2)
   endif ()
   if (optBUILD_64BIT)
-#    list (APPEND BEA_FLAGS -m64)
-  endif ()
+	set (BEA_DEFINITIONS "-D_WIN64")
+  else ()
+	set (BEA_DEFINITIONS "-D_WIN32")
+  endif ()	
   if (optBUILD_STDCALL)
     set (BEA_DEFINITIONS "-DBEA_USE_STDCALL")
   endif ()
@@ -299,12 +301,10 @@ set (CMAKE_RUNTIME_OUTPUT_DIRECTORY ${myBIN_OUTPUT})
 set (build_modules 
   beaengineSources
   examples
-  unittest/regression	
+  unittest
 )
 
-if (NOT ZLIB_FOUND)
-  list (APPEND build_modules thirdparty/zlib)
-endif ()
+
 
 if (NOT ZLIB_FOUND)
   set (ZLIB_INCLUDE_DIR thirdparty/zlib)

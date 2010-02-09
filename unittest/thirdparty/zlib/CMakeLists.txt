@@ -22,5 +22,3 @@ if (ZLIB_DEFS)
   set_target_properties (z PROPERTIES COMPILE_FLAGS ${ZLIB_DEFS}) 
 endif ()
 
-add_executable (zpipe zpipe.c)
-target_link_libraries (zpipe z)
