@@ -19,12 +19,23 @@ struct dasm_result_s
   }
   
   dasm_result_s (DISASM* dasm, const table_item_c& ti, int dasm_len)
-    : m_dasm     (dasm),
+    : m_dasm     (0),
       m_input    (ti),
       m_dasm_len (dasm_len)
   {
+     m_dasm = new DISASM;
+     memcpy (m_dasm, dasm, sizeof (DISASM));
   }
 
+  dasm_result_s (const dasm_result_s& obj)
+     : m_input    (obj.m_input),
+       m_dasm_len (obj.m_dasm_len)
+     {
+	m_dasm = new DISASM;
+	memcpy (m_dasm, obj.m_dasm, sizeof (DISASM));
+     }
+   
+   
   ~dasm_result_s ()
   {
     if (m_dasm)
@@ -61,6 +72,7 @@ void do_disasm_test (const char* table_file, results_list_t& results)
       double e = timer.getElapsedTimeInMicroSec ();
       total_time = total_time + e;
       results.push_back (dasm_result_s (dasm, ti, len));
+      delete dasm; 
     }
   double items = reader.items ();
   std::cout << "Total disassembly time: " << total_time << " micro-secs" << std::endl
