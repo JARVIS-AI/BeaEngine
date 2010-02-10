@@ -59,19 +59,28 @@ class My_Memento(wx.Dialog):
 
         # wx.Font(pointSize, family, style, weight, underline, faceName)
         if wx.Platform == "__WXMAC__":
-            self.btnFont = wx.Font(fontSize-1, wx.DEFAULT, wx.NORMAL, wx.NORMAL, False, "")
-            self.normalFont = wx.Font(fontSize+0, wx.DEFAULT, wx.NORMAL, wx.NORMAL, False, "")
-            self.boldFont = wx.Font(fontSize+2, wx.DEFAULT, wx.NORMAL, wx.BOLD, False, "")
+            self.btnFont = wx.Font(fontSize-1,
+                                   wx.DEFAULT, wx.NORMAL, wx.NORMAL, False, "")
+            self.normalFont = wx.Font(fontSize+0,
+                                      wx.DEFAULT, wx.NORMAL, wx.NORMAL, False, "")
+            self.boldFont = wx.Font(fontSize+2,
+                                    wx.DEFAULT, wx.NORMAL, wx.BOLD, False, "")
 
         elif wx.Platform == "__WXGTK__":
-            self.btnFont = wx.Font(fontSize+0, wx.DEFAULT, wx.NORMAL, wx.NORMAL, False, "")
-            self.normalFont = wx.Font(fontSize+2, wx.DEFAULT, wx.NORMAL, wx.NORMAL, False, "")
-            self.boldFont = wx.Font(fontSize+5, wx.DEFAULT, wx.NORMAL, wx.BOLD, False, "")
+            self.btnFont = wx.Font(fontSize+0,
+                                   wx.DEFAULT, wx.NORMAL, wx.NORMAL, False, "")
+            self.normalFont = wx.Font(fontSize+2,
+                                      wx.DEFAULT, wx.NORMAL, wx.NORMAL, False, "")
+            self.boldFont = wx.Font(fontSize+5,
+                                    wx.DEFAULT, wx.NORMAL, wx.BOLD, False, "")
             
         else:
-            self.btnFont = wx.Font(fontSize+0, wx.DEFAULT, wx.NORMAL, wx.NORMAL, False, "")
-            self.normalFont = wx.Font(fontSize+2, wx.DEFAULT, wx.NORMAL, wx.NORMAL, False, "")
-            self.boldFont = wx.Font(fontSize+5, wx.DEFAULT, wx.NORMAL, wx.BOLD, False, "")
+            self.btnFont = wx.Font(fontSize+0,
+                                   wx.DEFAULT, wx.NORMAL, wx.NORMAL, False, "")
+            self.normalFont = wx.Font(fontSize+2,
+                                      wx.DEFAULT, wx.NORMAL, wx.NORMAL, False, "")
+            self.boldFont = wx.Font(fontSize+5,
+                                    wx.DEFAULT, wx.NORMAL, wx.BOLD, False, "")
 
         self.SetFont(self.btnFont)
         self.SetFont(self.boldFont)
@@ -101,10 +110,7 @@ class My_Memento(wx.Dialog):
         filename = open(os.path.join(self.dirname, self.filename), "r")
         text_in = filename.read()
         filename.close()
-
-#        if wx.Platform == "__WXMSW__":
-#            text_in = text_in.replace('\n', '\r\n')
-
+        
         hello_in = text_in.decode("utf-8", "ignore")
         self.field.SetValue(hello_in)
 
@@ -128,7 +134,7 @@ class My_Memento(wx.Dialog):
         self.btnClose.SetSize(self.btnClose.GetBestSize())
         self.btnClose.SetFocus()
         
-      # Bind the button event to an events handler
+        # Bind the button event to an events handler
         self.Bind(wx.EVT_BUTTON, self.OnClose, self.btnClose)
 
         #-------------------------------------------------------------------

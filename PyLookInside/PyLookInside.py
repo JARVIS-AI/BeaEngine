@@ -22,17 +22,16 @@ along with BeaEngine.  If not, see <http://www.gnu.org/licenses/>.
 
 """
 
-#########################################################################
-# Name      :  PyLookInside.py                                          #
-# Version   :  4.0                                                      #
-# Authors   :  BeatriX & Sigma                                          #
-# Created   :  December 2009                                            #
-# Copyright :  © Copyright 2009-2010  |  BeatriX                        #
-# License   :  wxWindows License                                        #
-# About     :  PyLookInside was built using Python 2.6.4,               #
-#              wxPython 2.8.10.1 unicode, and wxWindows                 #
-#########################################################################
-
+#############################################################################
+# Name      :  PyLookInside.py                                              #
+# Version   :  4.0                                                          #
+# Authors   :  BeatriX & Sigma                                              #
+# Created   :  December 2009                                                #
+# Copyright :  © Copyright 2009-2010  |  BeatriX                            #
+# License   :  wxWindows License                                            #
+# About     :  PyLookInside was built using Python 2.6.4,                   #
+#              wxPython 2.8.10.1 unicode, and wxWindows                     #
+#############################################################################
 
 # Import packages
 
@@ -55,20 +54,12 @@ import TaskBarIcon
 import wx.aui
 import ListCtrlVirtual
 import SearchCtrl
-import Instructions
-import ArgumentOne
-import ArgumentTwo
-import ArgumentThree
-import ArgumentFour
-import ArgumentFive
-import Eflags
+import Notebook
 import FileDialog
 import AboutNotebook
 import MementoProvider
 import webbrowser
 import Palette
-
-# System Constants
 
 #---------------------------------------------------------------------------
 
@@ -84,11 +75,11 @@ class My_Frame(wx.Frame):
                           wx.NO_FULL_REPAINT_ON_RESIZE |
                           wx.TAB_TRAVERSAL)
         
-        # Bind the event close to an events handler
+        # Bind the close event to an events handler
         self.Bind(wx.EVT_CLOSE, self.OnCloseWindow)
-
+        
         #-------------------------------------------------------------------
-
+        
         self.pnl = wx.Panel(self, -1)
         self.SetBackgroundColour("#f0f0f0")
         
@@ -99,22 +90,22 @@ class My_Frame(wx.Frame):
         self.createToolBar()
         self.createStatusBar()
         self.createTaskBarIcon()
+        self.createNotebook()
         self.createAuiManager()
         self.createSearchCtrl()
         self.createListCtrl()
-        self.createStaticBox()
         self.doLayout()
         
         #-------------------------------------------------------------------
-
+        
         self.CenterOnScreen()
-
+        
     #-----------------------------------------------------------------------
-
+        
     def createMenuBar(self):
         self.menu = MenuBar.My_MenuBar(self)
         self.SetMenuBar(self.menu)
-
+        
         # Bind some menus events to an events handler
         self.Bind(wx.EVT_MENU, self.OnFileOpen, id=20)
         self.Bind(wx.EVT_MENU, self.OnDisassemble, id=21)
@@ -127,12 +118,12 @@ class My_Frame(wx.Frame):
         self.Bind(wx.EVT_MENU, self.OnUnRoll, id=28)
         self.Bind(wx.EVT_MENU, self.OnToolsPalette, id=29)
         
-    #----------------------------------------------------------------------- 
-
+    #-----------------------------------------------------------------------
+        
     def createToolBar(self):        
         self.tb = ToolBar.My_Toolbar(self)
         self.SetToolBar(self.tb)
-
+        
         # Bind some tools events to an events handler
         self.Bind(wx.EVT_TOOL, self.OnFileOpen, id=20)
         self.Bind(wx.EVT_TOOL, self.OnDisassemble, id=21)
@@ -143,170 +134,126 @@ class My_Frame(wx.Frame):
         self.Bind(wx.EVT_TOOL, self.OnClose, id=26)
         
     #-----------------------------------------------------------------------
-
+        
     def createStatusBar(self):
         self.sb = StatusBar.My_CustomStatusBar(self)
         self.SetStatusBar(self.sb)
         self.SetStatusText(u"Welcome to PyLookInside !", 0)
         
     #-----------------------------------------------------------------------
-
+        
     def createTaskBarIcon(self):        
         self.tskic = TaskBarIcon.My_TaskBarIcon(self)
-
+        
     #-----------------------------------------------------------------------
-
+        
+    def createNotebook(self):
+        self.nb = Notebook.My_Notebook(self.pnl, 1)
+        
+    #-----------------------------------------------------------------------
+        
     def createAuiManager(self):
         self.mgr = wx.aui.AuiManager()
         self.mgr.SetManagedWindow(self.pnl)
         
         self.leftPanel = wx.Panel(self.pnl, -1, size = (200, 150),
                                   style=wx.TAB_TRAVERSAL | wx.CLIP_CHILDREN)
-        self.rightPanel = wx.Panel(self.pnl, -1, size = (200, 150),
-                                   style=wx.TAB_TRAVERSAL | wx.CLIP_CHILDREN)
-
-        self.mgr.AddPane(self.rightPanel, wx.aui.AuiPaneInfo().
-                         Center().
-                         Caption("Instructions & Arguments").
-                         CloseButton(False))
         
-        self.mgr.AddPane(self.leftPanel, wx.aui.AuiPaneInfo().
+        self.mgr.AddPane(self.nb, wx.aui.AuiPaneInfo().CenterPane().Name("Notebook"))
+        
+        self.mgr.AddPane(self.leftPanel,
+                         wx.aui.AuiPaneInfo().
                          Left().Layer(1).BestSize((300, -1)).
                          MinSize((300, -1)).
                          FloatingSize((300, 160)).
                          Caption("Search & ListCtrl").
-                         CloseButton(False))
-                    
+                         CloseButton(False).
+                         Name("ListCtrl"))
+        
         self.mgr.Update()
-
-        #self.mgr.SetFlags(self.mgr.GetFlags() ^ wx.aui.AUI_MGR_TRANSPARENT_DRAG)
-
+        
+        # self.mgr.SetFlags(self.mgr.GetFlags() ^ wx.aui.AUI_MGR_TRANSPARENT_DRAG)
+        
     #-----------------------------------------------------------------------
-
+        
     def createSearchCtrl(self):
         self.search = SearchCtrl.My_SearchCtrl(self.leftPanel)
-
-    #-----------------------------------------------------------------------        
+        
+    #-----------------------------------------------------------------------
        
     def createListCtrl(self):
-        self.list = ListCtrlVirtual.My_ListCtrl(self.leftPanel)        
+        self.list = ListCtrlVirtual.My_ListCtrl(self.leftPanel)
         self.list.SetFocus()
         
     #-----------------------------------------------------------------------
-
-    def createStaticBox(self):
-        self.stbx1 = Instructions.My_StaticBox(self.rightPanel)
-        self.stbx2 = ArgumentOne.My_StaticBox(self.rightPanel)
-        self.stbx3 = ArgumentTwo.My_StaticBox(self.rightPanel)
-        self.stbx4 = ArgumentThree.My_StaticBox(self.rightPanel)
-        self.stbx5 = ArgumentFour.My_StaticBox(self.rightPanel)
-        self.stbx6 = ArgumentFive.My_StaticBox(self.rightPanel)
-        self.stbx7 = Eflags.My_StaticBox(self.rightPanel)
         
-    #-----------------------------------------------------------------------
-        
-    def doLayout(self):        
+    def doLayout(self):
         listSizer = wx.BoxSizer(wx.VERTICAL)
-
+        
         listSizer.Add(self.search, 0, wx.EXPAND | wx.ALL, 0)
         listSizer.Add(self.list, 1, wx.EXPAND | wx.ALL, 0)
-
-        #----------
-        #----------
         
-        stbx1Sizer = wx.BoxSizer(wx.HORIZONTAL)
-        stbx2Sizer = wx.BoxSizer(wx.HORIZONTAL)
-        stbx3Sizer = wx.BoxSizer(wx.HORIZONTAL)
-        stbx4Sizer = wx.BoxSizer(wx.HORIZONTAL)
-        
-        stbx1Sizer.Add(self.stbx1, 1, wx.EXPAND | wx.ALL, 0)
-        stbx2Sizer.Add(self.stbx2, 1, wx.EXPAND | wx.ALL, 0)
-        stbx2Sizer.Add(self.stbx3, 1, wx.EXPAND | wx.ALL, 0)
-        stbx3Sizer.Add(self.stbx4, 1, wx.EXPAND | wx.ALL, 0)
-        stbx3Sizer.Add(self.stbx5, 1, wx.EXPAND | wx.ALL, 0)
-        stbx4Sizer.Add(self.stbx6, 1, wx.EXPAND | wx.ALL, 0)
-        stbx4Sizer.Add(self.stbx7, 1, wx.EXPAND | wx.ALL, 0)
-        
-        #----------
-        
-        stbxSizer = wx.BoxSizer(wx.VERTICAL)
-
-        stbxSizer.Add(stbx1Sizer, 0, wx.EXPAND | wx.ALL, 3)
-        stbxSizer.Add(stbx2Sizer, 0, wx.EXPAND | wx.ALL, 3)
-        stbxSizer.Add(stbx3Sizer, 0, wx.EXPAND | wx.ALL, 3)
-        stbxSizer.Add(stbx4Sizer, 0, wx.EXPAND | wx.ALL, 3)
-        
-        #----------
         #----------
         
         self.leftPanel.SetAutoLayout(True)
-        self.rightPanel.SetAutoLayout(True)
-        
-        #----------
-        
         self.leftPanel.SetSizer(listSizer)
-        self.rightPanel.SetSizer(stbxSizer)
-
-        #----------
-
         listSizer.Fit(self.leftPanel)
-        stbxSizer.Fit(self.rightPanel)
-
+        
         #----------
-
-        self.pnl.SetAutoLayout(True)       
+        
+        self.pnl.SetAutoLayout(True)
         self.pnl.Fit()
         
-    #-----------------------------------------------------------------------      
-
+    #-----------------------------------------------------------------------
+        
     def OnFileOpen(self, event):
         self.fileOpen = FileDialog.My_FileDialog(self)
-
+        
     #-----------------------------------------------------------------------
         
     def OnDisassemble(self, event):
         pass
     
-    #-----------------------------------------------------------------------     
-
+    #-----------------------------------------------------------------------
+    
     def OnAbout(self, event):
-        self.notebook = AboutNotebook.My_Notebook(self)
-
+        self.notebook = AboutNotebook.My_AboutNotebook(self)
+        
     #-----------------------------------------------------------------------   
         
     def OnMemento(self, event):
         self.memento = MementoProvider.My_Memento(self)
-
+        
     #-----------------------------------------------------------------------
         
     def OnlineHelp(self, event):
         webbrowser.open_new("http://www.beaengine.org")
-
+        
     #-----------------------------------------------------------------------
-
+        
     def OnScreenShot(self, event):     
         """ Takes a screenshot of the screen at give pos & size (rect). """
-
+        
         if wx.Platform == "__WXMAC__":
             w, h = self.GetClientSize()
             # see http://aspn.activestate.com/ASPN/Mail/Message/wxpython-users/3575899
-
+            
             # created by Andrea Gavana
             #Create a DC for the whole screen area
             dcScreen = wx.ScreenDC()
-
+            
             #Create a Bitmap that will hold the screenshot image later on
             #Note that the Bitmap must have a size big enough to hold the screenshot
             #-1 means using the current default colour depth
             bmp = wx.EmptyBitmap(w, h)
-
+            
             #Create a memory DC that will be used for actually taking the screenshot
             memDC = wx.MemoryDC()
-
+            
             #Tell the memory DC to use our Bitmap
             #all drawing action on the memory DC will go to the Bitmap now
             memDC.SelectObject(bmp)
-
+            
             #Blit (in this case copy) the actual screen on the memory DC
             #and thus the Bitmap
             memDC.Blit( 0, #Copy to this X coordinate
@@ -317,11 +264,11 @@ class My_Frame(wx.Frame):
                         x, #What's the X offset in the original DC?
                         y  #What's the Y offset in the original DC?
                         )
-
+            
             #Select the Bitmap out of the memory DC by selecting a new
             #uninitialized Bitmap
             memDC.SelectObject(wx.NullBitmap)
-
+            
             img = bmp.ConvertToImage()
             fileName = "myImage.png"
             img.SaveFile(fileName, wx.BITMAP_TYPE_PNG)
@@ -353,23 +300,23 @@ class My_Frame(wx.Frame):
         else:
             rect = self.GetRect()
             # see http://aspn.activestate.com/ASPN/Mail/Message/wxpython-users/3575899
-
+            
             # created by Andrea Gavana
             #Create a DC for the whole screen area
             dcScreen = wx.ScreenDC()
-
+            
             #Create a Bitmap that will hold the screenshot image later on
             #Note that the Bitmap must have a size big enough to hold the screenshot
             #-1 means using the current default colour depth
             bmp = wx.EmptyBitmap(rect.width, rect.height)
-
+            
             #Create a memory DC that will be used for actually taking the screenshot
             memDC = wx.MemoryDC()
-
+            
             #Tell the memory DC to use our Bitmap
             #all drawing action on the memory DC will go to the Bitmap now
             memDC.SelectObject(bmp)
-
+            
             #Blit (in this case copy) the actual screen on the memory DC
             #and thus the Bitmap
             memDC.Blit( 0, #Copy to this X coordinate
@@ -380,44 +327,44 @@ class My_Frame(wx.Frame):
                         rect.x, #What's the X offset in the original DC?
                         rect.y  #What's the Y offset in the original DC?
                         )
-
+            
             #Select the Bitmap out of the memory DC by selecting a new
             #uninitialized Bitmap
             memDC.SelectObject(wx.NullBitmap)
-
+            
             img = bmp.ConvertToImage()
             fileName = "ScreenShots/Capture.png"
             img.SaveFile(fileName, wx.BITMAP_TYPE_PNG)
             
-
+            
     #-----------------------------------------------------------------------
         
     def OnPass(self, event):
         pass
     
     #-----------------------------------------------------------------------
-
+    
     def OnRoll(self, event):
         if self.isRolled == 1:
             return
         self.isRolled = 1
-
+        
         self.pos1 = self.GetPosition()
         self.size1 = self.GetSize()
         
         if wx.Platform == "__WXMAC__":
-            self.SetSize((-1, 22))
+            self.SetSize((-1, 23))
            
         elif wx.Platform == "__WXGTK__":
-            self.SetSize((-1, 22))
+            self.SetSize((-1, 23))
             
         else:
             self.SetSize((-1, 0))
 
-
+            
     def OnUnRoll(self, event):
         self.isRolled = 0
-
+        
         self.pos2 = self.GetPosition()
         self.size2 = self.GetSize()
         
@@ -430,25 +377,23 @@ class My_Frame(wx.Frame):
         else:
             self.SetSize(self.size1)
      
-    #-----------------------------------------------------------------------     
-
+    #-----------------------------------------------------------------------
+            
     def OnToolsPalette(self, event):
         self.palette = Palette.My_MiniFrame(self, title="Palette")
-
+        
     #-----------------------------------------------------------------------
         
     def OnClose(self, event):
-        # Triggers wx.EVT_CLOSE event and hence onCloseWindow()
         self.Close(True)
-
+        
         
     def OnCloseWindow(self, event):
-        # Dialog to verify exit 
         dlg = wx.MessageDialog(self,
                                message=u"Do you really want to close this application ?",
                                caption=u"Confirm Exit",
                                style=wx.YES_NO | wx.ICON_QUESTION)
-
+        
         if dlg.ShowModal() == wx.ID_YES:
             if self.tskic is not None:
                 self.tskic.Destroy()
@@ -456,9 +401,9 @@ class My_Frame(wx.Frame):
             self.sb.timer.Stop()
             del self.sb.timer
             self.Destroy()
-
+            
         dlg.Destroy()
-
+        
 #---------------------------------------------------------------------------
       
 class My_App(wx.App):
@@ -470,19 +415,19 @@ class My_App(wx.App):
         
         self.splash = SplashScreen.My_SplashScreen()
         self.splash.Show()
-
+        
         return True   
         
 #---------------------------------------------------------------------------
-
+    
 def main():
     app = My_App(redirect=False)
     app.MainLoop()
-
+    
 #----------------------------------------------------------------------------
-
+    
 if __name__ == '__main__':
     __name__ = 'Main'
     main()
 
-
+    

@@ -129,16 +129,22 @@ class My_SplashScreen(wx.Frame):
 
         # wx.Font(pointSize, family, style, weight, underline, faceName)
         if wx.Platform == "__WXMAC__":
-            self.normalBoldFont = wx.Font(fontSize-5, wx.DEFAULT, wx.NORMAL, wx.BOLD, False, "")
-            self.normalFont = wx.Font(fontSize-5, wx.DEFAULT, wx.NORMAL, wx.NORMAL, False, "")
+            self.normalBoldFont = wx.Font(fontSize-5,
+                                          wx.DEFAULT, wx.NORMAL, wx.BOLD, False, "")
+            self.normalFont = wx.Font(fontSize-5, wx.
+                                      DEFAULT, wx.NORMAL, wx.NORMAL, False, "")
             
         elif wx.Platform == "__WXGTK__":
-            self.normalBoldFont = wx.Font(fontSize+0, wx.DEFAULT, wx.NORMAL, wx.BOLD, False, "")
-            self.normalFont = wx.Font(fontSize+0, wx.DEFAULT, wx.NORMAL, wx.NORMAL, False, "")
+            self.normalBoldFont = wx.Font(fontSize+0,
+                                          wx.DEFAULT, wx.NORMAL, wx.BOLD, False, "")
+            self.normalFont = wx.Font(fontSize+0,
+                                      wx.DEFAULT, wx.NORMAL, wx.NORMAL, False, "")
               
         else:
-            self.normalBoldFont = wx.Font(fontSize+0, wx.DEFAULT, wx.NORMAL, wx.BOLD, False, "")
-            self.normalFont = wx.Font(fontSize+0, wx.DEFAULT, wx.NORMAL, wx.NORMAL, False, "")
+            self.normalBoldFont = wx.Font(fontSize+0,
+                                          wx.DEFAULT, wx.NORMAL, wx.BOLD, False, "")
+            self.normalFont = wx.Font(fontSize+0, wx.
+                                      DEFAULT, wx.NORMAL, wx.NORMAL, False, "")
        
         dc.SetFont(self.normalFont)
         dc.SetFont(self.normalBoldFont)

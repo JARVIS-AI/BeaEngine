@@ -92,22 +92,21 @@ class PageLicence(wx.Panel):
 
         # wx.Font(pointSize, family, style, weight, underline, faceName)
         if wx.Platform == "__WXMAC__":   
-            self.normalFont = wx.Font(fontSize+0, wx.DEFAULT, wx.NORMAL, wx.NORMAL, False, "")
+            self.normalFont = wx.Font(fontSize+0,
+                                      wx.DEFAULT, wx.NORMAL, wx.NORMAL, False, "")
         
         elif wx.Platform == "__WXGTK__":
-            self.normalFont = wx.Font(fontSize+2, wx.DEFAULT, wx.NORMAL, wx.NORMAL, False, "")
+            self.normalFont = wx.Font(fontSize+2,
+                                      wx.DEFAULT, wx.NORMAL, wx.NORMAL, False, "")
         
         else:
-            self.normalFont = wx.Font(fontSize+2, wx.DEFAULT, wx.NORMAL, wx.NORMAL, False, "")
+            self.normalFont = wx.Font(fontSize+2,
+                                      wx.DEFAULT, wx.NORMAL, wx.NORMAL, False, "")
         
         self.SetFont(self.normalFont)
-
+        
         #-------------------------------------------------------------------
-
-#        f = open(u"License/lgpl.txt", "r")
-#        msg = f.read()
-#        f.close()
-            
+        
         self.field = wx.TextCtrl(self, -1, value=u"", size=(100, 165),
                                  style=wx.TE_LEFT | wx.TE_MULTILINE |
                                  wx.BORDER_THEME)
@@ -118,10 +117,7 @@ class PageLicence(wx.Panel):
         filename = open(os.path.join(self.dirname, self.filename), "r")
         text_in = filename.read()
         filename.close()
-
-#        if wx.Platform == "__WXMSW__":
-#            text_in = text_in.replace('\n', '\r\n')
-
+        
         hello_in = text_in.decode("utf-8", "ignore")
         self.field.SetValue(hello_in)
         
@@ -183,7 +179,7 @@ class PageContributors(wx.Panel):
         
 #---------------------------------------------------------------------------
         
-class My_Notebook(wx.Dialog):
+class My_AboutNotebook(wx.Dialog):
     def __init__(self, parent):
         wx.Dialog.__init__(self, parent, -1,
                            title=u"About...", size=(500, 400))

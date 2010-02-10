@@ -24,7 +24,6 @@ along with BeaEngine.  If not, see <http://www.gnu.org/licenses/>.
 # Import packages
 
 import wx                            # This module uses the new wx namespace
-#import SearchCtrl
 
 #---------------------------------------------------------------------------
 
@@ -36,7 +35,7 @@ class My_Toolbar(wx.ToolBar):
         
         toolSize = (24, 24)
         self.SetToolBitmapSize(toolSize)
-
+        
         self.AddLabelTool(20, u" Open ",
                           wx.Bitmap("Bitmaps/tb_Open.png", wx.BITMAP_TYPE_PNG),
                           shortHelp=u"",
@@ -72,9 +71,6 @@ class My_Toolbar(wx.ToolBar):
                           shortHelp=u"",
                           longHelp=u"Quit the application.")
         self.AddSeparator()
-#        searchCtrl = SearchCtrl.My_SearchCtrl(self, size=(200, -1))
-#        self.AddControl(searchCtrl)      
-#        self.AddSeparator()
         
         self.Realize()
 

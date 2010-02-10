@@ -32,7 +32,7 @@ import locale
 class My_CustomStatusBar(wx.StatusBar):
     def __init__(self, parent):
         wx.StatusBar.__init__(self, parent, -1)
-
+        
         #-------------------------------------------------------------------
         
         self.parent = parent
@@ -41,34 +41,34 @@ class My_CustomStatusBar(wx.StatusBar):
         
         self.SetFieldsCount(2)
         self.SetStatusWidths([-7, -3])
-
+        
         #-------------------------------------------------------------------
         
         self.sizeChanged = False
-
+        
         # Bind some events to an events handler
         self.Bind(wx.EVT_SIZE, self.OnSize)
         self.Bind(wx.EVT_IDLE, self.OnIdle)
-
+        
         #-------------------------------------------------------------------
         
         self.timer = wx.PyTimer(self.Notify)
         # Update every 1000 milliseconds
         self.timer.Start(1000)
         self.Notify()
-
+        
     #-----------------------------------------------------------------------
 
     # Handles events from the timer we started in __init__().
-    # We're using it to drive a 'clock' in field 2 (the third field).
+    # We're using it to drive a 'clock' in field 2.
     def Notify(self):
-        """ Timer event """
+        """ Timer event. """
         locale.setlocale(locale.LC_ALL,'')
-        temp = time.strftime('%a %d %b %Y - %Hh%M')
+        tm = time.strftime('%a %d %b %Y - %Hh%M')
+        
+        self.SetStatusText(tm, 1)
 
-        self.SetStatusText(temp, 1)
-
-
+        
     def OnSize(self, evt):
         self.Reposition()  # For normal size events
 
@@ -77,12 +77,12 @@ class My_CustomStatusBar(wx.StatusBar):
         # accurate during the EVT_SIZE resulting from a frame maximize.
         self.sizeChanged = True
 
-
+        
     def OnIdle(self, evt):
         if self.sizeChanged:
             self.Reposition()
 
-
+            
     def Reposition(self):
         self.sizeChanged = False
 

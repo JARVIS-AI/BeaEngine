@@ -41,13 +41,16 @@ class My_StaticBox(wx.Panel):
 
         # wx.Font(pointSize, family, style, weight, underline, faceName)
         if wx.Platform == "__WXMAC__":
-            self.normalFont = wx.Font(fontSize-4, wx.DEFAULT, wx.NORMAL, wx.NORMAL, False, "")
+            self.normalFont = wx.Font(fontSize-4,
+                                      wx.DEFAULT, wx.NORMAL, wx.NORMAL, False, "")
 
         elif wx.Platform == "__WXGTK__":
-            self.normalFont = wx.Font(fontSize-2, wx.DEFAULT, wx.NORMAL, wx.NORMAL, False, "")
+            self.normalFont = wx.Font(fontSize+0,
+                                      wx.DEFAULT, wx.NORMAL, wx.NORMAL, False, "")
               
         else:
-            self.normalFont = wx.Font(fontSize+0, wx.DEFAULT, wx.NORMAL, wx.NORMAL, False, "")
+            self.normalFont = wx.Font(fontSize+0,
+                                      wx.DEFAULT, wx.NORMAL, wx.NORMAL, False, "")
          
         self.SetFont(self.normalFont)
 
@@ -69,7 +72,7 @@ class My_StaticBox(wx.Panel):
         basicText.SetInsertionPoint(0)
         bsizer1.Add(basicText, 1, wx.ALL|wx.EXPAND, 0)
 
-        #-------
+        #----------
 
         box = wx.StaticBox(self, -1, "", style=wx.BORDER_NONE)
         bsizer2 = wx.StaticBoxSizer(box, wx.VERTICAL)
@@ -87,7 +90,7 @@ class My_StaticBox(wx.Panel):
         basicText.SetInsertionPoint(0)
         bsizer2.Add(basicText, 1, wx.ALL|wx.EXPAND, 0)
 
-        #-------
+        #----------
 
         box = wx.StaticBox(self, -1, "", style=wx.BORDER_NONE)
         bsizer3 = wx.StaticBoxSizer(box, wx.VERTICAL)
@@ -105,7 +108,7 @@ class My_StaticBox(wx.Panel):
         basicText.SetInsertionPoint(0)
         bsizer3.Add(basicText, 1, wx.ALL|wx.EXPAND, 0)
         
-        #-------
+        #----------
 
         box = wx.StaticBox(self, -1, "", style=wx.BORDER_NONE)
         bsizer4 = wx.StaticBoxSizer(box, wx.VERTICAL)
@@ -123,7 +126,7 @@ class My_StaticBox(wx.Panel):
         basicText.SetInsertionPoint(0)
         bsizer4.Add(basicText, 1, wx.ALL|wx.EXPAND, 0)
         
-        #-------
+        #----------
         
         box = wx.StaticBox(self, -1, "", style=wx.BORDER_NONE)
         bsizer5 = wx.StaticBoxSizer(box, wx.VERTICAL)
@@ -141,7 +144,7 @@ class My_StaticBox(wx.Panel):
         basicText.SetInsertionPoint(0)
         bsizer5.Add(basicText, 1, wx.ALL|wx.EXPAND, 0)
         
-        #-------
+        #----------
 
         box = wx.StaticBox(self, -1, "", style=wx.BORDER_NONE)
         bsizer6 = wx.StaticBoxSizer(box, wx.VERTICAL)
@@ -159,7 +162,7 @@ class My_StaticBox(wx.Panel):
         basicText.SetInsertionPoint(0)
         bsizer6.Add(basicText, 1, wx.ALL|wx.EXPAND, 0)
 
-        #-------
+        #----------
 
         box = wx.StaticBox(self, -1, "", style=wx.BORDER_NONE)
         bsizer7 = wx.StaticBoxSizer(box, wx.VERTICAL)
@@ -177,7 +180,7 @@ class My_StaticBox(wx.Panel):
         basicText.SetInsertionPoint(0)
         bsizer7.Add(basicText, 1, wx.ALL|wx.EXPAND, 0)
         
-        #-------
+        #----------
 
         box = wx.StaticBox(self, -1, "", style=wx.BORDER_NONE)
         bsizer8 = wx.StaticBoxSizer(box, wx.VERTICAL)
@@ -195,7 +198,7 @@ class My_StaticBox(wx.Panel):
         basicText.SetInsertionPoint(0)
         bsizer8.Add(basicText, 1, wx.ALL|wx.EXPAND, 0)
         
-        #-------
+        #----------
 
         box = wx.StaticBox(self, -1, "", style=wx.BORDER_NONE)
         bsizer9 = wx.StaticBoxSizer(box, wx.VERTICAL)
@@ -213,7 +216,7 @@ class My_StaticBox(wx.Panel):
         basicText.SetInsertionPoint(0)
         bsizer9.Add(basicText, 1, wx.ALL|wx.EXPAND, 0)
         
-        #-------
+        #----------
 
         box = wx.StaticBox(self, -1, "", style=wx.BORDER_NONE)
         bsizer10 = wx.StaticBoxSizer(box, wx.VERTICAL)
@@ -231,7 +234,7 @@ class My_StaticBox(wx.Panel):
         basicText.SetInsertionPoint(0)
         bsizer10.Add(basicText, 1, wx.ALL|wx.EXPAND, 0)
         
-        #-------
+        #----------
 
         box = wx.StaticBox(self, -1, "", style=wx.BORDER_NONE)
         bsizer11 = wx.StaticBoxSizer(box, wx.VERTICAL)
@@ -265,7 +268,7 @@ class My_StaticBox(wx.Panel):
         sizer.Add(bsizer10, 1, wx.EXPAND | wx.ALL, 0)
         sizer.Add(bsizer11, 1, wx.EXPAND | wx.ALL, 0)
 
-        #-------
+        #----------
 
         box = wx.StaticBox(self, -1, "Eflags :", style=wx.BORDER_NONE)
         box.SetForegroundColour("#0074ff")

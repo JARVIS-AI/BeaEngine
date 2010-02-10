@@ -47,13 +47,16 @@ class My_ListCtrl(wx.ListCtrl,
 
         # wx.Font(pointSize, family, style, weight, underline, faceName)
         if wx.Platform == "__WXMAC__":
-            self.normalFont = wx.Font(fontSize-2, wx.DEFAULT, wx.NORMAL, wx.NORMAL, False, "")
+            self.normalFont = wx.Font(fontSize-2,
+                                      wx.DEFAULT, wx.NORMAL, wx.NORMAL, False, "")
             
         elif wx.Platform == "__WXGTK__":
-            self.normalFont = wx.Font(fontSize-1, wx.DEFAULT, wx.NORMAL, wx.NORMAL, False, "")
+            self.normalFont = wx.Font(fontSize-1,
+                                      wx.DEFAULT, wx.NORMAL, wx.NORMAL, False, "")
             
         else:
-            self.normalFont = wx.Font(fontSize-1, wx.DEFAULT, wx.NORMAL, wx.NORMAL, False, "")
+            self.normalFont = wx.Font(fontSize-1,
+                                      wx.DEFAULT, wx.NORMAL, wx.NORMAL, False, "")
 
         self.SetFont(self.normalFont)
 
