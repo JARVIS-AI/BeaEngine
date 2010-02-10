@@ -111,7 +111,7 @@ name_value_c::name_value_c (const char* name, Int64 v)
   : item_c (false),
     m_name (name)
 {
-  BEA_NV_INIT ("0x%X", v);
+  BEA_NV_INIT ("0x%I64X", v);
 }
 // ------------------------------------------------------------
 name_value_c::name_value_c (const char* name, UInt64 v)

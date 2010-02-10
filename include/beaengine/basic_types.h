@@ -123,7 +123,7 @@
 		typedef unsigned long long UInt64;
 	#endif
 	#define BEA_HAVE_INT64 1
-#elif defined(__SUNPRO_CC)
+#elif defined(__SUNPRO_CC) || defined(__SUNPRO_C)
 	/*
 	* SUN Forte C++
 	*/
