@@ -8,7 +8,7 @@
 */
 
 #include <stdlib.h>
-
+#if defined(WIN32) || defined(_Windows) || defined(_WIN32) || defined(_WIN64)
 #include "zlib.h"
 #include "ioapi.h"
 #include "iowin32.h"
@@ -268,3 +268,4 @@ void fill_win32_filefunc (pzlib_filefunc_def)
     pzlib_filefunc_def->zerror_file = win32_error_file_func;
     pzlib_filefunc_def->opaque=NULL;
 }
+#endif
