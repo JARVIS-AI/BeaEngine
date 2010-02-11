@@ -9,7 +9,5 @@ faststack.h  sexp_errors.h  sexp_ops.h
 )
 
 add_library (sexpr STATIC ${sources} ${headers})
-add_executable (sexp_demo sexp_demo/main.cpp)
-target_link_libraries (sexp_demo sexpr)
 
 

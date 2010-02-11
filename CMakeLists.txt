@@ -319,7 +319,7 @@ set (build_modules
 
 
 if (NOT ZLIB_FOUND)
-  set (ZLIB_INCLUDE_DIR thirdparty/zlib)
+  set (ZLIB_INCLUDE_DIR unittest/thirdparty/zlib)
 else ()
   list (APPEND BEA_LIBS_PATH ${ZLIB_LIBRARIES})
 endif ()

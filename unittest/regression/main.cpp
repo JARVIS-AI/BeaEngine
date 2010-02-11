@@ -3,7 +3,6 @@
 #include <stdexcept>
 #include <list>
 #include <string.h>
-#include <stdint.h>
 
 #include <beaengine/BeaEngine.h>
 
