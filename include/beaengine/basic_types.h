@@ -25,6 +25,10 @@
 
 #include <stddef.h>
 
+#if defined(__GNUC__) || defined (__INTEL_COMPILER)
+#include <stdint.h>
+#endif
+
 #if defined(_MSC_VER)
 	/*
 	* Windows/Visual C++
@@ -56,8 +60,8 @@
 	typedef unsigned short         UInt16;
 	typedef signed int             Int32;
 	typedef unsigned int           UInt32;
-	typedef signed long            IntPtr;
-	typedef unsigned long          UIntPtr;
+	typedef intptr_t               IntPtr;
+	typedef uintptr_t              UIntPtr;
 	#if defined(__LP64__)
 		#define BEA_PTR_IS_64_BIT 1
 		#define BEA_LONG_IS_64_BIT 1

@@ -73,10 +73,10 @@ void __bea_callspec__ InitVariables (PDISASM pMyDisasm) {
     (*pMyDisasm).Argument2.AccessMode = READ;
     (*pMyDisasm).Argument3.AccessMode = READ;
     (void) memset (&(*pMyDisasm).Instruction, 0, sizeof (INSTRTYPE));
-    TAB_ = (*pMyDisasm).Options & 0xff;
-    SYNTAX_ = (*pMyDisasm).Options & 0xff00;
-    FORMATNUMBER = (*pMyDisasm).Options & 0xff0000;
-    SEGMENTREGS = (*pMyDisasm).Options & 0xff000000;
+    TAB_ = (Int32)(*pMyDisasm).Options & 0xff;
+    SYNTAX_ = (Int32)(*pMyDisasm).Options & 0xff00;
+    FORMATNUMBER = (Int32)(*pMyDisasm).Options & 0xff0000;
+    SEGMENTREGS = (Int32)(*pMyDisasm).Options & 0xff000000;
 
 }
 /* ====================================================================

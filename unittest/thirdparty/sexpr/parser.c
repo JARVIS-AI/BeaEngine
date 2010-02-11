@@ -230,7 +230,7 @@ void sexp_cleanup(void) {
 /**
  * allocation
  */
-parse_data_t *
+static parse_data_t *
 pd_allocate(void) {
   parse_data_t *p;
   stack_lvl_t *l;
@@ -278,7 +278,7 @@ pd_allocate(void) {
 /**
  * de-allocation
  */
-void
+static void
 pd_deallocate(parse_data_t *p) {
   if (pd_cache == NULL) {
     pd_cache = make_stack();
@@ -485,6 +485,7 @@ iparse_sexp (char *s, size_t len, pcont_t *cc) {
 
 /* TEMPORARY -- THIS WILL GO AWAY WHEN eparse_sexp GETS ROLLED BACK INTO
  * cparse_sexp */
+
 pcont_t *eparse_sexp (char *str, size_t len, pcont_t *lc);
 
 /**
@@ -1417,15 +1418,15 @@ cparse_sexp (char *str, size_t len, pcont_t *lc)
             state = 15;
             vcur[0] = '\0';
 
-            binexpected = atoi(val);
+            binexpected = (size_t)atoi(val);
 
-	    if (binexpected < 0) {
+	    if ((int)binexpected < 0) {
 	      SAVE_CONT_STATE(SEXP_ERR_BADCONTENT, NULL);
 	      return cc;
 	    }
 
             binread = 0;
-	    if (binexpected > 0) {
+	    if ((int)binexpected > 0) {
 #ifdef __cplusplus
 	      bindata = (char *)sexp_malloc(sizeof(char)*binexpected);
 #else

@@ -12,71 +12,65 @@ void *pBuffer;
 typedef int  (*MainPtr) (int, char*[]);
 MainPtr pSourceCode;
 
-/* ================================================================================= */
-/*																									*/
-/*						Disassemble code in the specified buffer using the correct VA					*/
-/*																									*/
-/*==================================================================================*/
-void DisassembleCode(char *StartCodeSection, char *EndCodeSection, MainPtr Virtual_Address)
+/**
+   Disassemble code in the specified buffer using the correct VA
+*/
+static void DisassembleCode(char *StartCodeSection, char *EndCodeSection, MainPtr Virtual_Address)
 {
 	
-	/* ============================= Init the Disasm structure (important !)*/
-	(void) memset (&MyDisasm, 0, sizeof(DISASM));
+  /* ============================= Init the Disasm structure (important !)*/
+  (void) memset (&MyDisasm, 0, sizeof(DISASM));
 
-	/* ============================= Init EIP */
-	MyDisasm.EIP = (UIntPtr) StartCodeSection;
-	/* ============================= Init VirtualAddr */
-	MyDisasm.VirtualAddr = (UIntPtr) Virtual_Address;
+  /* ============================= Init EIP */
+  MyDisasm.EIP = (UIntPtr) StartCodeSection;
+  /* ============================= Init VirtualAddr */
+  MyDisasm.VirtualAddr = (UIntPtr) Virtual_Address;
 
-	/* ============================= set IA-32 architecture */
-	MyDisasm.Archi = 0;
-	/* ============================= Loop for Disasm */
-	while (!Error){
-		/* ============================= Fix SecurityBlock */
-		MyDisasm.SecurityBlock = (UIntPtr) EndCodeSection - (UIntPtr)MyDisasm.EIP;
+  /* ============================= set IA-32 architecture */
+  MyDisasm.Archi = 0;
+  /* ============================= Loop for Disasm */
+  while (!Error){
+    /* ============================= Fix SecurityBlock */
+    MyDisasm.SecurityBlock = (UIntPtr) EndCodeSection - (UIntPtr)MyDisasm.EIP;
 
-		len = Disasm(&MyDisasm);
-		if (len == OUT_OF_BLOCK) {
-			(void) printf("disasm engine is not allowed to read more memory \n");
-			Error = 1;
-		}
-		else if (len == UNKNOWN_OPCODE) {
-			(void) printf("unknown opcode \n");
-			Error = 1;
-		}
-		else {
-            (void) printf("%.8X %s\n",(int) MyDisasm.VirtualAddr, (char*) &MyDisasm.CompleteInstr);
-	    MyDisasm.EIP = MyDisasm.EIP + (UInt64)len;
-	    MyDisasm.VirtualAddr = MyDisasm.VirtualAddr + (UInt64)len;
-			if (MyDisasm.EIP >= (UIntPtr) EndCodeSection) {
-				(void) printf("End of buffer reached ! \n");
-				Error = 1;
-			}
-		}
-	};
-	return;
+    len = Disasm(&MyDisasm);
+    if (len == OUT_OF_BLOCK) {
+      (void) printf("disasm engine is not allowed to read more memory \n");
+      Error = 1;
+    }
+    else if (len == UNKNOWN_OPCODE) {
+      (void) printf("unknown opcode \n");
+      Error = 1;
+    }
+    else {
+      (void) printf("%.8X %s\n",(int) MyDisasm.VirtualAddr, (char*) &MyDisasm.CompleteInstr);
+      MyDisasm.EIP = MyDisasm.EIP + (UIntPtr)len;
+      MyDisasm.VirtualAddr = MyDisasm.VirtualAddr + (UIntPtr)len;
+      if (MyDisasm.EIP >= (UIntPtr) EndCodeSection) {
+	(void) printf("End of buffer reached ! \n");
+	Error = 1;
+      }
+    }
+  };
+  return;
 }
 
-/* ================================================================================= */
-/*																									*/
-/*												MAIN												*/
-/*																									*/
-/*==================================================================================*/
+
 int main(int argc, char* argv[])
 {
-	BEA_UNUSED_ARG (argc);
-	BEA_UNUSED_ARG (argv);
+  BEA_UNUSED_ARG (argc);
+  BEA_UNUSED_ARG (argv);
 	
-	pSourceCode =  main;
+  pSourceCode =  main;
 
-	pBuffer = malloc(100);
-	/* ============================= Let's NOP the buffer */
-	(void) memset (pBuffer, 0x90, 100);
+  pBuffer = malloc(100);
+  /* ============================= Let's NOP the buffer */
+  (void) memset (pBuffer, 0x90, 100);
 
-	/* ============================= Copy 100 bytes in it */
-	(void) memcpy (pBuffer,(void*)(UIntPtr)pSourceCode, 100);
+  /* ============================= Copy 100 bytes in it */
+  (void) memcpy (pBuffer,(void*)(UIntPtr)pSourceCode, 100);
 
-	/* ============================= Disassemble code located in that buffer */
-	DisassembleCode (pBuffer, (char*) pBuffer + 100, pSourceCode);
-	return 0;
+  /* ============================= Disassemble code located in that buffer */
+  DisassembleCode (pBuffer, (char*) pBuffer + 100, pSourceCode);
+  return 0;
 }

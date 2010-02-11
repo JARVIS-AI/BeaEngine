@@ -104,9 +104,9 @@ typedef struct  {
 
 #pragma pack(1)
 typedef struct _Disasm {
-   UInt64 EIP;
-   UInt64 VirtualAddr;
-   UInt64 SecurityBlock;
+   UIntPtr EIP;
+   UIntPtr VirtualAddr;
+   UIntPtr SecurityBlock;
    char CompleteInstr[INSTRUCT_LENGTH];
    UInt32 Archi;
    UInt64 Options;

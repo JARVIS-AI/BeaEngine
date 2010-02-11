@@ -67,8 +67,9 @@ find_sexp (const char *name, sexp_t * start)
       else
 	return find_sexp (name, start->next);
     }
-
+#if !defined (__INTEL_COMPILER) /* Make compiler hapy */
   return NULL;			/* shouldn't get here */
+#endif
 }
 
 /**
@@ -130,94 +131,94 @@ int sexp_list_length(const sexp_t *sx) {
  * Copy an s-expression.
  */
 sexp_t *copy_sexp(const sexp_t *s) {
-  sexp_t *snew;
+  sexp_t *snew_exp;
 
   if (s == NULL) return NULL;
 
-  snew = sexp_t_allocate();
-  if (snew == NULL) {
+  snew_exp = sexp_t_allocate();
+  if (snew_exp == NULL) {
     sexp_errno = SEXP_ERR_MEMORY;
     return NULL;
   }
 
   /* initialize fields to null and zero, and fill in only those necessary. */
-  snew->val_allocated = snew->val_used = 0;
-  snew->val = NULL;
-  snew->list = snew->next = NULL;
-  snew->bindata = NULL;
-  snew->binlength = 0;
+  snew_exp->val_allocated = snew_exp->val_used = 0;
+  snew_exp->val = NULL;
+  snew_exp->list = snew_exp->next = NULL;
+  snew_exp->bindata = NULL;
+  snew_exp->binlength = 0;
 
   /* now start copying in data and setting appropriate fields. */
-  snew->ty = s->ty;
+  snew_exp->ty = s->ty;
 
   /* values */
-  if (snew->ty == SEXP_VALUE) {
-    snew->aty = s->aty;
+  if (snew_exp->ty == SEXP_VALUE) {
+    snew_exp->aty = s->aty;
 
     /* binary */
-    if (snew->aty == SEXP_BINARY) {
+    if (snew_exp->aty == SEXP_BINARY) {
       if (s->bindata == NULL && s->binlength > 0) {
 	sexp_errno = SEXP_ERR_BADCONTENT;
-	sexp_t_deallocate(snew);
+	sexp_t_deallocate(snew_exp);
 	return NULL;
       }
       
-      snew->binlength = s->binlength;
+      snew_exp->binlength = s->binlength;
       
       if (s->bindata == NULL) {
-	snew->bindata = NULL;
+	snew_exp->bindata = NULL;
       } else {
 	/** allocate space **/
 #ifdef __cplusplus
-	snew->bindata = (char *)sexp_malloc(sizeof(char)*s->binlength);
+	snew_exp->bindata = (char *)sexp_malloc(sizeof(char)*s->binlength);
 #else
-	snew->bindata = sexp_malloc(sizeof(char)*s->binlength);
+	snew_exp->bindata = sexp_malloc(sizeof(char)*s->binlength);
 #endif
       }
 
-      if (snew->bindata == NULL) {
+      if (snew_exp->bindata == NULL) {
 	sexp_errno = SEXP_ERR_MEMORY;
-	sexp_t_deallocate(snew);
+	sexp_t_deallocate(snew_exp);
 	return NULL;
       }
 
-      memcpy(snew->bindata,s->bindata,s->binlength*sizeof(char));
+      memcpy(snew_exp->bindata,s->bindata,s->binlength*sizeof(char));
 
     /* non-binary */ 
     } else {
       if (s->val == NULL && (s->val_used > 0 || s->val_allocated > 0)) {
 	sexp_errno = SEXP_ERR_BADCONTENT;
-	sexp_t_deallocate(snew);
+	sexp_t_deallocate(snew_exp);
 	return NULL;
       }
 
-      snew->val_used = snew->val_allocated = s->val_used;
+      snew_exp->val_used = snew_exp->val_allocated = s->val_used;
 
       if (s->val == NULL) {
-	snew->val = NULL;
+	snew_exp->val = NULL;
       } else {
 	/** allocate space **/
 #ifdef __cplusplus
-	snew->val = (char *)sexp_malloc(sizeof(char)*s->val_used);
+	snew_exp->val = (char *)sexp_malloc(sizeof(char)*s->val_used);
 #else
-	snew->val = sexp_malloc(sizeof(char)*s->val_used);
+	snew_exp->val = sexp_malloc(sizeof(char)*s->val_used);
 #endif
 
-	if (snew->val == NULL) {
+	if (snew_exp->val == NULL) {
 	  sexp_errno = SEXP_ERR_MEMORY;
-	  sexp_t_deallocate(snew);
+	  sexp_t_deallocate(snew_exp);
 	  return NULL;
 	}
 
-	strcpy(snew->val,s->val);
+	strcpy(snew_exp->val,s->val);
       }
     }
   } else {
-    snew->list = copy_sexp(s->list);
+    snew_exp->list = copy_sexp(s->list);
   }
   
-  snew->next = copy_sexp(s->next);
+  snew_exp->next = copy_sexp(s->next);
 
-  return snew;
+  return snew_exp;
 }
 

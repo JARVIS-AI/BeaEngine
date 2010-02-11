@@ -17,19 +17,21 @@
  *    along with BeaEngine.  If not, see <http://www.gnu.org/licenses/>. */
 
 
-static UInt64 EIP_, EIP_VA, EIP_REAL;
+static UIntPtr EIP_, EIP_VA, EIP_REAL;
 static Int32 OriginalOperandSize;        /* keep original OperandSize value if it is used as a mandatory prefix */
 static Int32 OperandSize;
 static Int32 MemDecoration;
 static Int32 AddressSize;
 static Int32 MOD_, RM_, INDEX_, SCALE_, BASE_, MMX_, SSE_, CR_, DR_, SEG_, REGOPCODE;
-static UInt64 DECALAGE_EIP;
+static UIntPtr DECALAGE_EIP;
 static Int32 FORMATNUMBER;
 static Int32 SYNTAX_;
 static UInt64 EndOfBlock;
 static Int32 RelativeAddress;
 static UInt32 Architecture;
 static Int32 ImmediatSize;
+
+
 static Int32 NB_PREFIX;
 static Int32 PrefRepe, PrefRepne;
 static UInt32 SEGMENTREGS, SEGMENTFS;

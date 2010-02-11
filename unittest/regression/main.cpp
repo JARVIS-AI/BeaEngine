@@ -3,6 +3,7 @@
 #include <stdexcept>
 #include <list>
 #include <string.h>
+#include <stdint.h>
 
 #include <beaengine/BeaEngine.h>
 
@@ -14,7 +15,7 @@
 
 
 // ===================================================================
-void do_disasm_test (const char* table_file, results_list_t& results)
+static void do_disasm_test (const char* table_file, results_list_t& results)
 {
   std::cout << "Loading table from " << table_file << std::endl;
   table_reader_c reader (table_file);

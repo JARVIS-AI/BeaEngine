@@ -768,8 +768,8 @@ eparse_sexp (char *str, size_t len, pcont_t *lc)
             state = 15;
             vcur[0] = '\0';
 
-            binexpected = atoi(val);
-            assert(binexpected > 0);
+            binexpected = (size_t)atoi(val);
+            assert((int)binexpected > 0);
             binread = 0;
 #ifdef __cplusplus
             bindata = (char *)sexp_malloc(sizeof(char)*binexpected);
@@ -831,7 +831,7 @@ eparse_sexp (char *str, size_t len, pcont_t *lc)
           break;
 
 	default:
-	  fprintf (stderr, "eparse_sexp: unknown parser state %d.\n", state);
+	  fprintf (stderr, "eparse_sexp: unknown parser state %d.\n", (int)state);
 	  break;
 	}
 

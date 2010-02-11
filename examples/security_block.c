@@ -36,7 +36,7 @@ int main(int argc, char* argv[])
 		}
 		else {
 			(void) puts(MyDisasm.CompleteInstr);
-			MyDisasm.EIP = MyDisasm.EIP + (UInt64)len;
+			MyDisasm.EIP = MyDisasm.EIP + (UIntPtr)len;
 			if (MyDisasm.EIP >= EndCodeSection) {
 				(void) printf("End of buffer reached ! \n");
 				Error = 1;

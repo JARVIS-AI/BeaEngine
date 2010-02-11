@@ -53,7 +53,7 @@ void __bea_callspec__ aad_(PDISASM pMyDisasm)
         (*pMyDisasm).Argument1.ArgSize = 16;
         if (!Security(1)) return;
         ImmediatSize = 8;
-        if (*((UInt8*)(UIntPtr) (EIP_+1)) != 0x0A) {
+	if (*((UInt8*)(UIntPtr) (EIP_+1)) != 0x0A) {
             (*pMyDisasm).Instruction.Immediat = *((UInt8*)(UIntPtr) (EIP_+1));
             (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument2.ArgMnemonic, "%.2X",(Int64) *((UInt8*)(UIntPtr) (EIP_+1)));
             (*pMyDisasm).Argument2.ArgType = CONSTANT_TYPE+ABSOLUTE_;

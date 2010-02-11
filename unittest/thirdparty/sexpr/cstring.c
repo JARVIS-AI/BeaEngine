@@ -87,7 +87,7 @@ CSTRING *snew(size_t s) {
 }
 
 CSTRING *sadd(CSTRING *s, char *a) {
-  int alen;
+  size_t alen;
   char *newbase;
 
   /* no string, so bail */

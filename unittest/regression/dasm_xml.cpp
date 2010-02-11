@@ -11,10 +11,21 @@
 #endif
 
 #if defined(__WATCOMC__)
-#define OS_STR(V) V.c_str ()
+#define OS_STR(V) (V.c_str ())
 #else
 #define OS_STR(V) V
 #endif
+
+#if defined(_MSC_VER)
+        #define I64_FMT "I64"
+#elif defined(__APPLE__)
+        #define I64_FMT "q"
+#else
+        #define I64_FMT "ll"
+#endif
+
+
+
 
 class item_c
 {
@@ -50,6 +61,8 @@ public:
   name_value_c (const char* name, Int64 v);
   name_value_c (const char* name, UInt64 v);
   name_value_c (const char* name, const char* v);
+  name_value_c (const char* name, const std::string& v);
+
 
   const std::string& name () const;
   const std::string& value () const;
@@ -65,65 +78,80 @@ private:
   m_value = BUFF
 
 // -----------------------------------------------------------------------
-name_value_c::name_value_c (const char* name, Int8 v)
+name_value_c::name_value_c (const char* name_, Int8 v)
   : item_c (false),
-    m_name (name)
+    m_name (name_)
 {
   BEA_NV_INIT ("0x%X", (int)v & 0xFF);
 }
 // ------------------------------------------------------------
-name_value_c::name_value_c (const char* name, UInt8 v)
+name_value_c::name_value_c (const char* name_, UInt8 v)
   : item_c (false),
-    m_name (name)
+    m_name (name_)
 {
   BEA_NV_INIT ("0x%X", (int)v & 0xFF);
 }
 // ------------------------------------------------------------
-name_value_c::name_value_c (const char* name, Int16 v)
+name_value_c::name_value_c (const char* name_, Int16 v)
   : item_c (false),
-    m_name (name)
+    m_name (name_)
 {
   BEA_NV_INIT ("0x%X", v);
 }
 // ------------------------------------------------------------
-name_value_c::name_value_c (const char* name, UInt16 v)
+name_value_c::name_value_c (const char* name_, UInt16 v)
   : item_c (false),
-    m_name (name)
+    m_name (name_)
 {
   BEA_NV_INIT ("0x%X", v);
 }
 // ------------------------------------------------------------
-name_value_c::name_value_c (const char* name, Int32 v)
+name_value_c::name_value_c (const char* name_, Int32 v)
   : item_c (false),
-    m_name (name)
+    m_name (name_)
 {
   BEA_NV_INIT ("0x%X", v);
 }
 // ------------------------------------------------------------
-name_value_c::name_value_c (const char* name, UInt32 v)
+name_value_c::name_value_c (const char* name_, UInt32 v)
   : item_c (false),
-    m_name (name)
+    m_name (name_)
 {
   BEA_NV_INIT ("0x%X", v);
 }
 // ------------------------------------------------------------
-name_value_c::name_value_c (const char* name, Int64 v)
+name_value_c::name_value_c (const char* name_, Int64 v)
   : item_c (false),
-    m_name (name)
+    m_name (name_)
 {
-  BEA_NV_INIT ("0x%I64X", v);
+#if defined(BEA_HAVE_INT64) && !defined(BEA_LONG_IS_64_BIT)
+  BEA_NV_INIT ("0x%"I64_FMT"X", v);
+#else
+  BEA_NV_INIT ("0x%lX", v);
+#endif
 }
 // ------------------------------------------------------------
-name_value_c::name_value_c (const char* name, UInt64 v)
+name_value_c::name_value_c (const char* name_, UInt64 v)
   : item_c (false),
-    m_name (name)
+    m_name (name_)
 {
-  BEA_NV_INIT ("0x%I64X", v);
+  #if defined(BEA_HAVE_INT64) && !defined(BEA_LONG_IS_64_BIT)
+  BEA_NV_INIT ("0x%"I64_FMT"X", v);
+#else
+  BEA_NV_INIT ("0x%lX", v);
+#endif
 }
 // ------------------------------------------------------------
-name_value_c::name_value_c (const char* name, const char* v)
+name_value_c::name_value_c (const char* name_, const char* v)
   : item_c  (false),
-    m_name  (name),
+    m_name  (name_),
+    m_value (v)
+{
+}
+// ------------------------------------------------------------
+name_value_c::name_value_c (const char* name_, const std::string& v)
+  : item_c  (false),
+    m_name  (name_),
     m_value (v)
 {
 }
@@ -158,9 +186,9 @@ private:
   item_list_t m_list;
 };
 // ---------------------------------------------------------------------
-item_list_c::item_list_c (const char* name)
+item_list_c::item_list_c (const char* name_)
   : item_c (true),
-    m_name (name)
+    m_name (name_)
 {
 }
 // ---------------------------------------------------------------------
@@ -311,8 +339,8 @@ static item_list_c* print_prefix_info (const PREFIXINFO* e)
 static item_list_c* dump_dasm (const DISASM& dasm, int dasm_len, const table_item_c& expected)
 {
   item_list_c* elt = new item_list_c ("asm");
-  elt->append (elem ("expected", expected.mnemonics ().c_str ()))
-    ->append (elem ("opcode", print_bytes (expected.bytes (), expected.length ()).c_str ()));
+  elt->append (elem ("expected", expected.mnemonics ()))
+    ->append (elem ("opcode", print_bytes (expected.bytes (), expected.length ())));
      
   if (dasm_len == UNKNOWN_OPCODE)
     {
@@ -321,8 +349,9 @@ static item_list_c* dump_dasm (const DISASM& dasm, int dasm_len, const table_ite
     }
   if ((size_t) dasm_len != expected.length ())
     {
+      std::string v (dasm.CompleteInstr);
       elt ->append ( elem ( "status", "failed"))
-	->append ( elem ( "mnemonics", (const char*) dasm.CompleteInstr));
+	->append ( elem ( "mnemonics", v));
       return elt;
     }
   elt ->append ( elem ( "options", dasm.Options))

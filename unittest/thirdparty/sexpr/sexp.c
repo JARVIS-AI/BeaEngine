@@ -34,7 +34,12 @@ LA-CC-04-094
 
 @endcond
 **/
+#ifndef WIN32
+#define  _BSD_SOURCE
+#endif
+
 #include <stdio.h>
+
 #include <stdlib.h>
 #include <string.h>
 #include "sexp.h"
@@ -215,7 +220,7 @@ print_sexp (char *buf, size_t size, const sexp_t * sx)
                 break;
               }
               b += sz;
-              left -= sz;
+              left -= (size_t)sz;
               
               if (left < tdata->binlength) {
                 left = 0;
@@ -244,7 +249,7 @@ print_sexp (char *buf, size_t size, const sexp_t * sx)
 	      left--;
 	    }
 
-	  if (left < 0)
+	  if (left <= 0)
 	    left = 0;
 	  if (left == 0)
 	    {
@@ -304,7 +309,7 @@ print_sexp (char *buf, size_t size, const sexp_t * sx)
 
   if (left != 0) {
     b[0] = 0;
-    retval = (size-left);
+    retval = (int)(size-left);
   } else {
     b--;
     b[0] = 0;
@@ -473,7 +478,7 @@ print_sexp_cstr (CSTRING **s, const sexp_t *sx, size_t ss)
   if (_s == NULL)
     retval = 0;
   else
-    retval = _s->curlen;
+    retval = (int)_s->curlen;
 
   destroy_stack (stack);
   sexp_t_deallocate(fakehead);
