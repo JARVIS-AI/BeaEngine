@@ -2,7 +2,7 @@
 #include <string>
 #include <stdio.h>
 #include <list>
-#include "unittest/regression/dasm_xml.hpp"
+#include "unittest/regression/dasm_sexp.hpp"
 
 #if !defined(BEA_LACKS_SNPRINTF)
   #define my_snprintf snprintf 
@@ -60,6 +60,7 @@ public:
   name_value_c (const char* name, UInt32 v);
   name_value_c (const char* name, Int64 v);
   name_value_c (const char* name, UInt64 v);
+  name_value_c (const char* name, double v);
   name_value_c (const char* name, const char* v);
   name_value_c (const char* name, const std::string& v);
 
@@ -154,6 +155,13 @@ name_value_c::name_value_c (const char* name_, const std::string& v)
     m_name  (name_),
     m_value (v)
 {
+}
+// ------------------------------------------------------------
+name_value_c::name_value_c (const char* name_, double v)
+  : item_c (false),
+    m_name (name_)
+{
+  BEA_NV_INIT ("%f", v);
 }
 // ------------------------------------------------------------
 const std::string& name_value_c::name () const
@@ -363,33 +371,6 @@ static item_list_c* dump_dasm (const DISASM& dasm, int dasm_len, const table_ite
   return elt;
 }
 // ---------------------------------------------------------------------
-static void dasm_to_xml_helper (std::ostream& os, const item_c* item, unsigned int level)
-{
-  std::string ident;
-  for (unsigned int i = 0; i<level; i++)
-    {
-      ident = ident + '\t';
-    }
-  if (item->is_list ())
-    {
-      os << OS_STR (ident)
-	 << "<" << OS_STR (item->name ()) << ">" << std::endl;
-      const item_list_c* lst = (const item_list_c*) item;
-      for (item_list_c::iterator_t itr = lst->begin (); itr != lst->end (); itr++)
-	{
-	  const item_c* itm = *itr;
-	  dasm_to_xml_helper (os, itm, level + 1);
-	}
-      os << OS_STR (ident) << "</" << OS_STR (item->name ()) << ">" << std::endl;
-    }
-  else
-    {
-      const name_value_c* v = (const name_value_c*) item;
-      os << OS_STR (ident) << "</" << OS_STR (v->name ()) 
-	 << " val=\"" << OS_STR (v->value ()) << "\">" << std::endl;
-    }
-}
-// ---------------------------------------------------------------------
 static void dasm_to_sexp_helper (std::ostream& os, const item_c* item, unsigned int level)
 {
   std::string ident;
@@ -416,22 +397,17 @@ static void dasm_to_sexp_helper (std::ostream& os, const item_c* item, unsigned 
     }
 }
 // ---------------------------------------------------------------------
-void dasm_to_xml (std::ostream& os, const results_list_t& rl)
+void dasm_to_sexp (std::ostream& os, const dasm_result_c& rl)
 {
   item_list_c* elt = new item_list_c ("disasm");
-  for (results_list_t::const_iterator i = rl.begin (); i!=rl.end (); i++)
-    {
-      elt->append (dump_dasm (*i->m_dasm, i->m_dasm_len, i->m_input));
-    }
-  dasm_to_xml_helper (os, elt, 0);
-  delete elt;
-}
-
-// ---------------------------------------------------------------------
-void dasm_to_sexp (std::ostream& os, const results_list_t& rl)
-{
-  item_list_c* elt = new item_list_c ("disasm");
-  for (results_list_t::const_iterator i = rl.begin (); i!=rl.end (); i++)
+  item_list_c* md  = new item_list_c ("metadata");
+  md->append  (elem ("name"      , rl.name ()))
+    ->append  (elem ("comment"   , rl.comment ()))
+    ->append  (elem ("entries"   , rl.size ()))
+    ->append  (elem ("total-time", rl.total_time ()))
+    ->append  (elem ("avg-time"  , rl.avg_time ()));
+  elt->append (md);
+  for (dasm_result_c::iterator_t i = rl.begin (); i!=rl.end (); i++)
     {
       elt->append (dump_dasm (*i->m_dasm, i->m_dasm_len, i->m_input));
     }
