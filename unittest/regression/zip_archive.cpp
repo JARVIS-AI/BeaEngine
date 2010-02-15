@@ -131,396 +131,6 @@ static int check_exist_file (const char* filename)
     return ret;
 } 
 
-/* change_file_date : change the date/time of a file
-    filename : the filename of the file where date/time must be modified
-    dosdate : the new date at the MSDos format (4 bytes)
-    tmu_date : the SAME new date at the tm_unz format */
-static void change_file_date(
-			     const char *filename,
-			     uLong dosdate,
-			     tm_unz tmu_date)
-{
-#ifdef WIN32
-  HANDLE hFile;
-  FILETIME ftm,ftLocal,ftCreate,ftLastAcc,ftLastWrite;
-
-  hFile = CreateFile(filename,GENERIC_READ | GENERIC_WRITE,
-                      0,NULL,OPEN_EXISTING,0,NULL);
-  GetFileTime(hFile,&ftCreate,&ftLastAcc,&ftLastWrite);
-  DosDateTimeToFileTime((WORD)(dosdate>>16),(WORD)dosdate,&ftLocal);
-  LocalFileTimeToFileTime(&ftLocal,&ftm);
-  SetFileTime(hFile,&ftm,&ftLastAcc,&ftm);
-  CloseHandle(hFile);
-#else
-#ifdef unix
-  struct utimbuf ut;
-  struct tm newdate;
-  newdate.tm_sec = tmu_date.tm_sec;
-  newdate.tm_min=tmu_date.tm_min;
-  newdate.tm_hour=tmu_date.tm_hour;
-  newdate.tm_mday=tmu_date.tm_mday;
-  newdate.tm_mon=tmu_date.tm_mon;
-  if (tmu_date.tm_year > 1900)
-      newdate.tm_year=tmu_date.tm_year - 1900;
-  else
-      newdate.tm_year=tmu_date.tm_year ;
-  newdate.tm_isdst=-1;
-
-  ut.actime=ut.modtime=mktime(&newdate);
-  utime(filename,&ut);
-#endif
-#endif
-}
-
-
-static int mymkdir (const char* dirname)
-{
-    int ret=0;
-#ifdef WIN32
-    ret = mkdir(dirname);
-#else
-#ifdef unix
-    ret = mkdir (dirname,0775);
-#endif
-#endif
-    return ret;
-}
-
-static int makedir (const char *newdir)
-{
-  char *buffer ;
-  char *p;
-  int  len = (int)strlen(newdir);
-
-  if (len <= 0)
-    return 0;
-
-  buffer = (char*)malloc(len+1);
-  strcpy(buffer,newdir);
-
-  if (buffer[len-1] == '/') {
-    buffer[len-1] = '\0';
-  }
-  if (mymkdir(buffer) == 0)
-    {
-      free(buffer);
-      return 1;
-    }
-
-  p = buffer+1;
-  while (1)
-    {
-      char hold;
-
-      while(*p && *p != '\\' && *p != '/')
-        p++;
-      hold = *p;
-      *p = 0;
-      if ((mymkdir(buffer) == -1) && (errno == ENOENT))
-        {
-          free(buffer);
-          return 0;
-        }
-      if (hold == 0)
-        break;
-      *p++ = hold;
-    }
-  free(buffer);
-  return 1;
-} 
-
-static int do_list (unzFile uf)
-{
-    uLong i;
-    unz_global_info gi;
-    int err;
-
-    err = unzGetGlobalInfo (uf,&gi);
-    if (err!=UNZ_OK)
-        printf("error %d with zipfile in unzGetGlobalInfo \n",err);
-    printf(" Length  Method   Size  Ratio   Date    Time   CRC-32     Name\n");
-    printf(" ------  ------   ----  -----   ----    ----   ------     ----\n");
-    for (i=0;i<gi.number_entry;i++)
-    {
-        char filename_inzip[256];
-        unz_file_info file_info;
-        uLong ratio=0;
-        const char *string_method;
-        char charCrypt=' ';
-        err = unzGetCurrentFileInfo(uf,&file_info,filename_inzip,sizeof(filename_inzip),NULL,0,NULL,0);
-        if (err!=UNZ_OK)
-        {
-            printf("error %d with zipfile in unzGetCurrentFileInfo\n",err);
-            break;
-        }
-        if (file_info.uncompressed_size>0)
-            ratio = (file_info.compressed_size*100)/file_info.uncompressed_size;
-
-        /* display a '*' if the file is crypted */
-        if ((file_info.flag & 1) != 0)
-            charCrypt='*';
-
-        if (file_info.compression_method==0)
-            string_method="Stored";
-        else
-        if (file_info.compression_method==Z_DEFLATED)
-        {
-            uInt iLevel=(uInt)((file_info.flag & 0x6)/2);
-            if (iLevel==0)
-              string_method="Defl:N";
-            else if (iLevel==1)
-              string_method="Defl:X";
-            else if ((iLevel==2) || (iLevel==3))
-              string_method="Defl:F"; /* 2:fast , 3 : extra fast*/
-        }
-        else
-            string_method="Unkn. ";
-
-        printf("%7lu  %6s%c%7lu %3lu%%  %2.2lu-%2.2lu-%2.2lu  %2.2lu:%2.2lu  %8.8lx   %s\n",
-                file_info.uncompressed_size,string_method,
-                charCrypt,
-                file_info.compressed_size,
-                ratio,
-                (uLong)file_info.tmu_date.tm_mon + 1,
-                (uLong)file_info.tmu_date.tm_mday,
-                (uLong)file_info.tmu_date.tm_year % 100,
-                (uLong)file_info.tmu_date.tm_hour,(uLong)file_info.tmu_date.tm_min,
-                (uLong)file_info.crc,filename_inzip);
-        if ((i+1)<gi.number_entry)
-        {
-            err = unzGoToNextFile(uf);
-            if (err!=UNZ_OK)
-            {
-                printf("error %d with zipfile in unzGoToNextFile\n",err);
-                break;
-            }
-        }
-    }
-
-    return 0;
-}
- 
-static int do_extract_currentfile(unzFile uf,
-				  const int* popt_extract_without_path,
-				  int* popt_overwrite,
-				  const char* password)
-{
-    char filename_inzip[256];
-    char* filename_withoutpath;
-    char* p;
-    int err=UNZ_OK;
-    FILE *fout=NULL;
-    void* buf;
-    uInt size_buf;
-
-    unz_file_info file_info;
-    uLong ratio=0;
-    err = unzGetCurrentFileInfo(uf,&file_info,filename_inzip,sizeof(filename_inzip),NULL,0,NULL,0);
-
-    if (err!=UNZ_OK)
-    {
-        printf("error %d with zipfile in unzGetCurrentFileInfo\n",err);
-        return err;
-    }
-
-    size_buf = WRITEBUFFERSIZE;
-    buf = (void*)malloc(size_buf);
-    if (buf==NULL)
-    {
-        printf("Error allocating memory\n");
-        return UNZ_INTERNALERROR;
-    }
-
-    p = filename_withoutpath = filename_inzip;
-    while ((*p) != '\0')
-    {
-        if (((*p)=='/') || ((*p)=='\\'))
-            filename_withoutpath = p+1;
-        p++;
-    }
-
-    if ((*filename_withoutpath)=='\0')
-    {
-        if ((*popt_extract_without_path)==0)
-        {
-            printf("creating directory: %s\n",filename_inzip);
-            mymkdir(filename_inzip);
-        }
-    }
-    else
-    {
-        const char* write_filename;
-        int skip=0;
-
-        if ((*popt_extract_without_path)==0)
-            write_filename = filename_inzip;
-        else
-            write_filename = filename_withoutpath;
-
-        err = unzOpenCurrentFilePassword(uf,password);
-        if (err!=UNZ_OK)
-        {
-            printf("error %d with zipfile in unzOpenCurrentFilePassword\n",err);
-        }
-
-        if (((*popt_overwrite)==0) && (err==UNZ_OK))
-        {
-            char rep=0;
-            FILE* ftestexist;
-            ftestexist = fopen(write_filename,"rb");
-            if (ftestexist!=NULL)
-            {
-                fclose(ftestexist);
-                do
-                {
-                    char answer[128];
-                    int ret;
-
-                    printf("The file %s exists. Overwrite ? [y]es, [n]o, [A]ll: ",write_filename);
-                    ret = scanf("%1s",answer);
-                    if (ret != 1) 
-                    {
-                       exit(EXIT_FAILURE);
-                    }
-                    rep = answer[0] ;
-                    if ((rep>='a') && (rep<='z'))
-                        rep -= 0x20;
-                }
-                while ((rep!='Y') && (rep!='N') && (rep!='A'));
-            }
-
-            if (rep == 'N')
-                skip = 1;
-
-            if (rep == 'A')
-                *popt_overwrite=1;
-        }
-
-        if ((skip==0) && (err==UNZ_OK))
-        {
-            fout=fopen(write_filename,"wb");
-
-            /* some zipfile don't contain directory alone before file */
-            if ((fout==NULL) && ((*popt_extract_without_path)==0) &&
-                                (filename_withoutpath!=(char*)filename_inzip))
-            {
-                char c=*(filename_withoutpath-1);
-                *(filename_withoutpath-1)='\0';
-                makedir(write_filename);
-                *(filename_withoutpath-1)=c;
-                fout=fopen(write_filename,"wb");
-            }
-
-            if (fout==NULL)
-            {
-                printf("error opening %s\n",write_filename);
-            }
-        }
-
-        if (fout!=NULL)
-        {
-            printf(" extracting: %s\n",write_filename);
-
-            do
-            {
-                err = unzReadCurrentFile(uf,buf,size_buf);
-                if (err<0)
-                {
-                    printf("error %d with zipfile in unzReadCurrentFile\n",err);
-                    break;
-                }
-                if (err>0)
-                    if (fwrite(buf,err,1,fout)!=1)
-                    {
-                        printf("error in writing extracted file\n");
-                        err=UNZ_ERRNO;
-                        break;
-                    }
-            }
-            while (err>0);
-            if (fout)
-                    fclose(fout);
-
-            if (err==0)
-                change_file_date(write_filename,file_info.dosDate,
-                                 file_info.tmu_date);
-        }
-
-        if (err==UNZ_OK)
-        {
-            err = unzCloseCurrentFile (uf);
-            if (err!=UNZ_OK)
-            {
-                printf("error %d with zipfile in unzCloseCurrentFile\n",err);
-            }
-        }
-        else
-            unzCloseCurrentFile(uf); /* don't lose the error */
-    }
-
-    free(buf);
-    return err;
-}
-
-int do_extract(
-	       unzFile uf,
-	       int opt_extract_without_path,
-	       int opt_overwrite,
-	       const char* password)
-{
-    uLong i;
-    unz_global_info gi;
-    int err;
-    FILE* fout=NULL;
-
-    err = unzGetGlobalInfo (uf,&gi);
-    if (err!=UNZ_OK)
-        printf("error %d with zipfile in unzGetGlobalInfo \n",err);
-
-    for (i=0;i<gi.number_entry;i++)
-    {
-        if (do_extract_currentfile(uf,&opt_extract_without_path,
-                                      &opt_overwrite,
-                                      password) != UNZ_OK)
-            break;
-
-        if ((i+1)<gi.number_entry)
-        {
-            err = unzGoToNextFile(uf);
-            if (err!=UNZ_OK)
-            {
-                printf("error %d with zipfile in unzGoToNextFile\n",err);
-                break;
-            }
-        }
-    }
-
-    return 0;
-}
- 
-
-int do_extract_onefile(
-		       unzFile uf,
-		       const char* filename,
-		       int opt_extract_without_path,
-		       int opt_overwrite,
-		       const char* password)
-{
-    int err = UNZ_OK;
-    if (unzLocateFile(uf,filename,CASESENSITIVITY)!=UNZ_OK)
-    {
-        printf("file %s not found in the zipfile\n",filename);
-        return 2;
-    }
-
-    if (do_extract_currentfile(uf,&opt_extract_without_path,
-                                      &opt_overwrite,
-                                      password) == UNZ_OK)
-        return 0;
-    else
-        return 1;
-}
- 
 // ================================================================
 struct zip_oarchive_impl_s
 {
@@ -648,4 +258,216 @@ void zip_oarchive_c::put (const std::string& file, const std::string& comment)
      {
        throw std::runtime_error ("Failed to close file in zipfile");
      }
+}
+// =================================================================================
+struct zip_entry_impl_s 
+{
+  zip_entry_impl_s (size_t length, int method, double ratio, UInt32 crc, 
+		    const char* name, const char* comment,int index,
+		    zip_iarchive_c* owner);
+
+  size_t          m_length;
+  int             m_method;
+  double          m_ratio;
+  UInt32          m_crc;
+  std::string     m_name;
+  std::string     m_comment;
+  int             m_index;
+  zip_iarchive_c* m_owner; 
+};
+
+zip_entry_impl_s::zip_entry_impl_s (size_t length, int method, double ratio, UInt32 crc, 
+				    const char* name, const char* comment, int index,
+				    zip_iarchive_c* owner)
+  : m_length  (length),
+    m_method  (method),
+    m_ratio   (ratio),
+    m_crc     (crc),
+    m_name    (name),
+    m_comment (comment),
+    m_index   (index),
+    m_owner   (owner)
+{
+}
+// =========================================================================
+size_t zip_entry_c::length    () const
+{
+  return m_pimpl->m_length;
+}
+// -------------------------------------------------------------------------
+int zip_entry_c::method () const
+{
+  return m_pimpl->m_method;
+}
+// -------------------------------------------------------------------------
+double zip_entry_c::ratio () const
+{
+  return m_pimpl->m_ratio;
+}
+// -------------------------------------------------------------------------
+UInt32 zip_entry_c::crc () const
+{
+  return m_pimpl->m_crc;
+}
+// -------------------------------------------------------------------------
+std::string zip_entry_c::name () const
+{
+  return m_pimpl->m_name;
+}
+// -------------------------------------------------------------------------
+std::string zip_entry_c::comment () const
+{
+  return m_pimpl->m_comment;
+}
+// -------------------------------------------------------------------------
+void zip_entry_c::explode ()
+{
+  m_pimpl->m_owner->_explode (m_pimpl->m_index);
+}
+// -------------------------------------------------------------------------
+zip_entry_c::zip_entry_c ()
+{
+}
+// -------------------------------------------------------------------------
+zip_entry_c::zip_entry_c (size_t length_, int method_, double ratio_, UInt32 crc_, 
+			  const char* name_, const char* comment_,
+			  int index, zip_iarchive_c* owner)
+  : m_pimpl (new zip_entry_impl_s (length_, method_, ratio_, crc_, name_, comment_, index, owner))
+{
+}
+// =========================================================================
+struct zip_iarchive_impl_s
+{
+  unzFile m_uzf;
+  zip_iarchive_c::entry_list_t m_entries;
+};
+// -------------------------------------------------------------------------
+zip_iarchive_c::zip_iarchive_c (const char* path)
+{
+  unzFile uzf = unzOpen (path);
+  if (uzf == NULL)
+    {
+      throw std::runtime_error ("Cant open zip archive for reading");
+    }
+  m_pimpl = new zip_iarchive_impl_s;
+  m_pimpl->m_uzf = uzf;
+  uLong i;
+  unz_global_info gi;
+  int err;
+  
+  err = unzGetGlobalInfo (uzf ,&gi);
+  if (err!=UNZ_OK)
+    {
+      throw std::runtime_error ("Zip file is corrupted");
+    }
+  for (i=0;i<gi.number_entry;i++)
+    {
+        char filename_inzip[256];
+        unz_file_info file_info;
+        double ratio=0;
+	char comment [256];
+        err = unzGetCurrentFileInfo(uzf,&file_info,filename_inzip,sizeof(filename_inzip),NULL,0,comment,sizeof (comment));
+        if (err!=UNZ_OK)
+        {
+	  throw std::runtime_error ("Zip file is corrupted.");
+        }
+        if (file_info.uncompressed_size>0)
+            ratio = (file_info.compressed_size*100)/file_info.uncompressed_size;
+	zip_entry_c ze (file_info.uncompressed_size, file_info.compression_method, 
+			ratio, file_info.crc, filename_inzip, comment, i, this);
+	m_pimpl->m_entries.push_back (ze);
+			
+        if ((i+1)<gi.number_entry)
+        {
+            err = unzGoToNextFile(uzf);
+            if (err!=UNZ_OK)
+            {
+	      throw std::runtime_error ("Zip file iteration failed");
+            }
+        }
+    }
+}
+// -------------------------------------------------------------------------
+zip_iarchive_c::~zip_iarchive_c ()
+{
+  unzClose (m_pimpl->m_uzf);
+  delete m_pimpl;
+}
+// -------------------------------------------------------------------------
+size_t zip_iarchive_c::size  () const
+{
+  return m_pimpl->m_entries.size ();
+}
+// -------------------------------------------------------------------------
+bool zip_iarchive_c::empty () const
+{
+  return m_pimpl->m_entries.empty ();
+}
+// -------------------------------------------------------------------------
+zip_iarchive_c::iterator_t zip_iarchive_c::begin () const
+{
+  return m_pimpl->m_entries.begin ();
+}
+// -------------------------------------------------------------------------
+zip_iarchive_c::iterator_t zip_iarchive_c::end () const
+{
+  return m_pimpl->m_entries.end ();
+}
+// -------------------------------------------------------------------------
+void zip_iarchive_c::_explode (int index)
+{
+  char filename_inzip[256];
+  unz_file_info file_info;
+  int err;
+  err = unzGoToFirstFile (m_pimpl->m_uzf);
+  if (err!=UNZ_OK)
+    {
+      throw std::runtime_error ("Zip file iteration failed");
+    }
+
+  for (int i=0;i <=index;i++)
+    {
+      err = unzGoToNextFile (m_pimpl->m_uzf);
+      if (err!=UNZ_OK)
+	{
+	  throw std::runtime_error ("Zip file iteration failed");
+	}
+    }
+  err = unzGetCurrentFileInfo(m_pimpl->m_uzf,
+			      &file_info,
+			      filename_inzip, sizeof(filename_inzip),
+			      NULL, 0,
+			      NULL, 0);
+  if (err!=UNZ_OK)
+    {
+      throw std::runtime_error ("Zip file is corrupted.");
+    }
+  err = unzOpenCurrentFile (m_pimpl->m_uzf);
+  if (err!=UNZ_OK)
+    {
+      throw std::runtime_error ("Zip file is corrupted.");
+    }
+  char buff [WRITEBUFFERSIZE];
+  int remains = file_info.uncompressed_size;
+  FILE* fout = fopen (filename_inzip, "wb");
+  if (!fout)
+    {
+      unzCloseCurrentFile (m_pimpl->m_uzf);
+      throw std::runtime_error ("Failed to open output file");
+    }
+  int exploded = 0;
+  while (exploded < remains)
+    {
+      int n = unzReadCurrentFile (m_pimpl->m_uzf, buff, WRITEBUFFERSIZE);
+      if (n < 0)
+	{
+	  unzCloseCurrentFile (m_pimpl->m_uzf);
+	  fclose (fout);
+	  throw std::runtime_error ("Failed to explode");
+	}
+      fwrite (buff, 1, n, fout);
+      exploded += n;
+    }
+  fclose (fout);
+  unzCloseCurrentFile (m_pimpl->m_uzf);
 }

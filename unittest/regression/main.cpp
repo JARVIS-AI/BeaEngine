@@ -10,7 +10,7 @@
 #include "unittest/regression/dasm_sexp.hpp"
 #include "unittest/regression/dasm_result.hpp"
 #include "unittest/regression/Timer.h"
-
+#include "unittest/regression/zip_archive.hpp"
 // ===================================================================
 static void do_disasm_test (const char* table_file, dasm_result_c& result)
 {
@@ -37,6 +37,15 @@ static void do_disasm_test (const char* table_file, dasm_result_c& result)
     }
 }
 // ----------------------------------------------------------
+void show_zip_content (const char* zipfile)
+{
+  zip_iarchive_c zip (zipfile);
+  for (zip_iarchive_c::iterator_t i = zip.begin (); i != zip.end (); i++)
+    {
+      std::cout << i->name () << std::endl;
+    }
+}
+// ----------------------------------------------------------
 int main (int argc, char* argv [])
 {
   if (argc != 2)
@@ -45,6 +54,7 @@ int main (int argc, char* argv [])
       return 1;
     }
   const char* table_file = argv [1];
+#if 0
   try
     {
       dasm_result_c dasm_results ("test", "bugbug");
@@ -57,4 +67,6 @@ int main (int argc, char* argv [])
       std::cerr << "Error: " << e.what () << std::endl;
     }
   return 1;
+#endif
+  show_zip_content (table_file);
 }
