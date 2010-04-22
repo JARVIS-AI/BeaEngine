@@ -29,6 +29,7 @@ import os
 import time
 import PyLookInside
 import VersionInfos
+
 #import wx.animate as ani
 
 #---------------------------------------------------------------------------
@@ -44,7 +45,7 @@ import VersionInfos
 
 #        # Bind the size event to an events handler
 #        self.Bind(wx.EVT_SIZE, self.OnSize)
-
+        
         
 #    def OnSize(self, event):
 #        w, h = self.ctrl.GetSizeTuple()
@@ -56,41 +57,41 @@ import VersionInfos
         
 #---------------------------------------------------------------------------
 
-class My_SplashScreen(wx.Frame):
+class My_SplashScreenCustom(wx.Frame):
     def __init__(self, tempo=2):
         self.tempo = tempo
         
         wx.Frame.__init__(self, None, -1,
                           style=wx.FRAME_SHAPED | wx.SIMPLE_BORDER |
                           wx.STAY_ON_TOP | wx.FRAME_NO_TASKBAR)
-
+        
         self.hasShaped = False
-
+        
         self.bmp = wx.Bitmap("Bitmaps/splashScreen.png", wx.BITMAP_TYPE_PNG)
 #        self.btn = BoutonAnime(self, "Bitmaps/loading.ani")
         
         self.SetClientSize((self.bmp.GetWidth(), self.bmp.GetHeight()))
-
+        
         dc = wx.ClientDC(self)
         dc.DrawBitmap(self.bmp, 0, 0, True)
         self.SetWindowsShape()
-
+        
         self.SetTransparent(240)
         
         self.timer = wx.Timer(self)
         self.Bind(wx.EVT_TIMER, self.TimeOut)
-
+        
         self.fc = wx.FutureCall(1500, self.ShowMain)
         
         # Bind some events to an events handler
         self.Bind(wx.EVT_PAINT, self.OnPaint)
         self.Bind(wx.EVT_WINDOW_CREATE, self.SetWindowsShape)
         self.Bind(wx.EVT_CLOSE, self.OnClose)
-
+        
         self.CentreOnScreen(wx.BOTH)
         
     #-----------------------------------------------------------------------
-    
+        
     def OnClose(self, event):
         # Make sure the default handler runs too so
         # this window gets destroyed
@@ -102,36 +103,36 @@ class My_SplashScreen(wx.Frame):
         if self.fc.IsRunning():
             self.fc.Stop()
             self.ShowMain()
-
+            
     #-----------------------------------------------------------------------
             
     def TimeOut(self, event):
         self.Close()
-
+        
     #-----------------------------------------------------------------------
         
     def SetWindowsShape(self, event=None):
         region = wx.RegionFromBitmap(self.bmp)
         self.hasShaped = self.SetShape(region)
-
+        
     #-----------------------------------------------------------------------
         
     def OnPaint(self, event):
         dc = wx.PaintDC(self)
         dc.DrawBitmap(self.bmp, 0, 0, True)
-
+        
         if self.tempo>0:
             self.timer.Start(self.tempo * 1000, True)
-
+            
         #-------------------------------------------------------------------
-
+            
         fontSize = self.GetFont().GetPointSize()
-
+        
         # wx.Font(pointSize, family, style, weight, underline, faceName)
         if wx.Platform == "__WXMAC__":
-            self.normalBoldFont = wx.Font(fontSize-5,
+            self.normalBoldFont = wx.Font(fontSize-3,
                                           wx.DEFAULT, wx.NORMAL, wx.BOLD, False, "")
-            self.normalFont = wx.Font(fontSize-5, wx.
+            self.normalFont = wx.Font(fontSize-3, wx.
                                       DEFAULT, wx.NORMAL, wx.NORMAL, False, "")
             
         elif wx.Platform == "__WXGTK__":
@@ -143,17 +144,17 @@ class My_SplashScreen(wx.Frame):
         else:
             self.normalBoldFont = wx.Font(fontSize+0,
                                           wx.DEFAULT, wx.NORMAL, wx.BOLD, False, "")
-            self.normalFont = wx.Font(fontSize+0, wx.
-                                      DEFAULT, wx.NORMAL, wx.NORMAL, False, "")
+            self.normalFont = wx.Font(fontSize+0,
+                                      wx.DEFAULT, wx.NORMAL, wx.NORMAL, False, "")
        
         dc.SetFont(self.normalFont)
         dc.SetFont(self.normalBoldFont)
-
+        
         #-------------------------------------------------------------------
         
         dc.SetTextForeground(wx.BLACK)
         dc.SetFont(self.normalBoldFont)
-
+        
         dc.DrawText(u"%s" % VersionInfos.LICENSE1_STRING, 50, 170)
         dc.SetFont(self.normalFont)
         dc.DrawText(u"%s" % VersionInfos.COMMENT_STRING, 50, 185)
@@ -168,13 +169,14 @@ class My_SplashScreen(wx.Frame):
         dc.DrawText(u"%s" % VersionInfos.OS_STRING
                     + sys.platform + u"/"
                     + os.name + "." , 50, 275)
-        dc.DrawText(u"Python %s" % sys.version, 50, 290)
+        dc.DrawText(u"Python %s" % sys.version.split()[:6], 50, 290)
+        dc.DrawText(u"Python %s" % sys.version.split()[6:], 50, 305)
         
     #-----------------------------------------------------------------------
         
     def ShowMain(self):
         self.frame = PyLookInside.My_Frame(None, -1)
-
+        
         frameicon = wx.Icon("Icons/icon_App.ico", wx.BITMAP_TYPE_ICO)
         self.frame.SetIcon(frameicon)
        
@@ -182,5 +184,5 @@ class My_SplashScreen(wx.Frame):
         
         if self.fc.IsRunning():
             self.Raise()
-
-            
+        
+        

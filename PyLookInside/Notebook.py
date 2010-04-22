@@ -67,10 +67,10 @@ class PageInfos(wx.Panel):
         
         stbxSizer = wx.BoxSizer(wx.VERTICAL)
         
-        stbxSizer.Add(stbx1Sizer, 0, wx.EXPAND | wx.ALL, 3)
-        stbxSizer.Add(stbx2Sizer, 0, wx.EXPAND | wx.ALL, 3)
-        stbxSizer.Add(stbx3Sizer, 0, wx.EXPAND | wx.ALL, 3)
-        stbxSizer.Add(stbx4Sizer, 0, wx.EXPAND | wx.ALL, 3)
+        stbxSizer.Add(stbx1Sizer, 1, wx.EXPAND | wx.ALL, 3)
+        stbxSizer.Add(stbx2Sizer, 1, wx.EXPAND | wx.ALL, 3)
+        stbxSizer.Add(stbx3Sizer, 1, wx.EXPAND | wx.ALL, 3)
+        stbxSizer.Add(stbx4Sizer, 1, wx.EXPAND | wx.ALL, 3)
         
         #----------
         
@@ -129,5 +129,5 @@ class My_Notebook(wx.Notebook):
         new = event.GetSelection()
         sel = self.GetSelection()
         event.Skip()
-
+        
         

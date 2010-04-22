@@ -58,32 +58,33 @@ class My_CustomStatusBar(wx.StatusBar):
         self.Notify()
         
     #-----------------------------------------------------------------------
-
+        
     # Handles events from the timer we started in __init__().
     # We're using it to drive a 'clock' in field 2.
     def Notify(self):
         """ Timer event. """
-        locale.setlocale(locale.LC_ALL,'')
-        tm = time.strftime('%a %d %b %Y - %Hh%M')
+        
+        locale.setlocale(locale.LC_ALL,"")
+        tm = time.strftime("%a %d %b %Y - %Hh%M")
         
         self.SetStatusText(tm, 1)
-
+        
         
     def OnSize(self, evt):
         self.Reposition()  # For normal size events
-
+        
         # Set a flag so the idle time handler will also do the repositioning.
         # It is done this way to get around a buglet where GetFieldRect is not
         # accurate during the EVT_SIZE resulting from a frame maximize.
         self.sizeChanged = True
-
+        
         
     def OnIdle(self, evt):
         if self.sizeChanged:
             self.Reposition()
-
+            
             
     def Reposition(self):
         self.sizeChanged = False
-
-
+        
+        

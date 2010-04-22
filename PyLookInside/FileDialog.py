@@ -45,9 +45,9 @@ class My_FileDialog(wx.FileDialog):
         if self.ShowModal()== wx.ID_OK:
             # This returns a Python list of files that were selected.
             paths = self.GetPaths()
-
+            
         # Destroy the dialog. Don't do this until you are done with it!
         # BAD things can happen otherwise!
         self.Destroy()
-
-
+        
+        

@@ -30,7 +30,7 @@ import wx                            # This module uses the new wx namespace
 class My_MenuBar(wx.MenuBar):
     def __init__(self, parent):
         wx.MenuBar.__init__(self)
-
+        
         #-------------------------------------------------------------------
         
         self.parent = parent
@@ -39,9 +39,9 @@ class My_MenuBar(wx.MenuBar):
         #-------------------------------------------------------------------
         
         menuFile = wx.Menu(style=wx.MENU_TEAROFF)
-
+        
         #-------------------------------------------------------------------
-
+        
         bmp = wx.Bitmap("Bitmaps/item_Open.png", wx.BITMAP_TYPE_PNG)
         
         item = wx.MenuItem(menuFile, 20,
@@ -49,9 +49,9 @@ class My_MenuBar(wx.MenuBar):
                            help=u"Display the open file dialog.")
         item.SetBitmap(bmp)
         menuFile.AppendItem(item)
-
+        
         #-------------------------------------------------------------------
-
+        
         bmp = wx.Bitmap("Bitmaps/item_Disassemble.png", wx.BITMAP_TYPE_PNG)
         
         item = wx.MenuItem(menuFile, 21,
@@ -60,9 +60,9 @@ class My_MenuBar(wx.MenuBar):
         item.SetBitmap(bmp)
         menuFile.AppendItem(item)
         menuFile.AppendSeparator()
-
+        
         #-------------------------------------------------------------------
-
+        
         bmp = wx.Bitmap("Bitmaps/item_Print.png", wx.BITMAP_TYPE_PNG)
         
         item = wx.MenuItem(menuFile, 22,
@@ -71,9 +71,9 @@ class My_MenuBar(wx.MenuBar):
         item.SetBitmap(bmp)
         menuFile.AppendItem(item)
         menuFile.AppendSeparator()
-
+        
         #-------------------------------------------------------------------
-
+        
         bmp = wx.Bitmap("Bitmaps/item_Exit.png", wx.BITMAP_TYPE_PNG)
         
         item = wx.MenuItem(menuFile, 26,
@@ -85,11 +85,11 @@ class My_MenuBar(wx.MenuBar):
         
         #-------------------------------------------------------------------
         #-------------------------------------------------------------------
-
+        
         menuView = wx.Menu(style=wx.MENU_TEAROFF)
-
+        
         #-------------------------------------------------------------------
-
+        
         bmp = wx.Bitmap("Bitmaps/item_RollUp.png", wx.BITMAP_TYPE_PNG)
                         
         item = wx.MenuItem(menuView, 27,
@@ -97,9 +97,9 @@ class My_MenuBar(wx.MenuBar):
                            help=u"Minimize the application to this titleBar.")
         item.SetBitmap(bmp)
         menuView.AppendItem(item)
-
+        
         #-------------------------------------------------------------------
-
+        
         bmp = wx.Bitmap("Bitmaps/item_Unroll.png", wx.BITMAP_TYPE_PNG)
                         
         item = wx.MenuItem(menuView, 28,
@@ -107,14 +107,14 @@ class My_MenuBar(wx.MenuBar):
                            help=u"Restore the application to this initial size.")
         item.SetBitmap(bmp)
         menuView.AppendItem(item)
-
+        
         #-------------------------------------------------------------------
         #-------------------------------------------------------------------
-
+        
         menuWindow = wx.Menu(style=wx.MENU_TEAROFF)
-
+        
         #-------------------------------------------------------------------
-
+        
         bmp = wx.Bitmap("Bitmaps/item_Empty.png", wx.BITMAP_TYPE_PNG)
                         
         item = wx.MenuItem(menuWindow, 29,
@@ -122,14 +122,14 @@ class My_MenuBar(wx.MenuBar):
                            help=u"Display a tools palette.")
         item.SetBitmap(bmp)
         menuWindow.AppendItem(item)
-
+        
         #-------------------------------------------------------------------        
         #-------------------------------------------------------------------
         
         menuHelp = wx.Menu(style=wx.MENU_TEAROFF)
-
+        
         #-------------------------------------------------------------------
-
+        
         bmp = wx.Bitmap("Bitmaps/item_About.png", wx.BITMAP_TYPE_PNG)
         
         item = wx.MenuItem(menuHelp, 23,
@@ -140,7 +140,7 @@ class My_MenuBar(wx.MenuBar):
         wx.App.SetMacAboutMenuItemId(item.GetId())
         
         #-------------------------------------------------------------------
-
+        
         bmp = wx.Bitmap("Bitmaps/item_Note.png", wx.BITMAP_TYPE_PNG)
         
         item = wx.MenuItem(menuHelp, 24,
@@ -148,9 +148,9 @@ class My_MenuBar(wx.MenuBar):
                            help=u"Little reminder.")
         item.SetBitmap(bmp)
         menuHelp.AppendItem(item)
-
+        
         #-------------------------------------------------------------------
-
+        
         bmp = wx.Bitmap("Bitmaps/item_Help.png", wx.BITMAP_TYPE_PNG)
         
         item = wx.MenuItem(menuHelp, 25,
@@ -158,14 +158,12 @@ class My_MenuBar(wx.MenuBar):
                            help=u"Online help.")
         item.SetBitmap(bmp)
         menuHelp.AppendItem(item)
-
+        
         #-------------------------------------------------------------------
         
         self.Append(menuFile, title=u"&File")
         self.Append(menuView, title=u"&View")
         self.Append(menuWindow, title=u"&Window")
         self.Append(menuHelp, title=u"&?")
-
-
-
+        
         

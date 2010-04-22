@@ -30,20 +30,20 @@ import wx                            # This module uses the new wx namespace
 class My_StaticBox(wx.Panel):
     def __init__(self, parent):
         wx.Panel.__init__(self, parent, -1)
-
+        
         #-------------------------------------------------------------------
         
         self.parent = parent
         
         #-------------------------------------------------------------------
-
+        
         fontSize = self.GetFont().GetPointSize()
-
+        
         # wx.Font(pointSize, family, style, weight, underline, faceName)
         if wx.Platform == "__WXMAC__":
             self.normalFont = wx.Font(fontSize-4,
                                       wx.DEFAULT, wx.NORMAL, wx.NORMAL, False, "")
-
+            
         elif wx.Platform == "__WXGTK__":
             self.normalFont = wx.Font(fontSize+0,
                                       wx.DEFAULT, wx.NORMAL, wx.NORMAL, False, "")
@@ -53,9 +53,9 @@ class My_StaticBox(wx.Panel):
                                       wx.DEFAULT, wx.NORMAL, wx.NORMAL, False, "")
          
         self.SetFont(self.normalFont)
-
+        
         #-------------------------------------------------------------------
-
+        
         box = wx.StaticBox(self, -1, "Instruction. Category :")
         box.SetForegroundColour("#0074ff")
         bsizer1 = wx.StaticBoxSizer(box, wx.VERTICAL)
@@ -68,7 +68,7 @@ class My_StaticBox(wx.Panel):
         bsizer1.Add(texte1, 1, wx.ALL|wx.EXPAND, 0)
         
         #-------------------------------------------------------------------
-
+        
         box = wx.StaticBox(self, -1, "Instruction. Mnemonic :")
         box.SetForegroundColour("#0074ff")
         bsizer2 = wx.StaticBoxSizer(box, wx.VERTICAL)
@@ -104,7 +104,7 @@ class My_StaticBox(wx.Panel):
         bsizer4.Add(texte1, 1, wx.ALL|wx.EXPAND, 0)
         
         #-------------------------------------------------------------------
-
+        
         box = wx.StaticBox(self, -1, "Instruction. Prefixes :")
         box.SetForegroundColour("#0074ff")
         bsizer5 = wx.StaticBoxSizer(box, wx.VERTICAL)
@@ -141,34 +141,34 @@ class My_StaticBox(wx.Panel):
         
         #-------------------------------------------------------------------
         #-------------------------------------------------------------------
-
+        
         sizer1 = wx.BoxSizer(wx.HORIZONTAL)
         sizer1.Add(bsizer1, 1, wx.EXPAND | wx.TOP, 3)
-
+        
         #----------
         
         sizer2 = wx.BoxSizer(wx.HORIZONTAL)
         sizer2.Add(bsizer2, 1, wx.EXPAND | wx.TOP, 3)
         sizer2.Add(bsizer3, 1, wx.EXPAND | wx.TOP, 3)
         sizer2.Add(bsizer4, 1, wx.EXPAND | wx.TOP, 3)
-
+        
         #----------
         
         sizer3 = wx.BoxSizer(wx.HORIZONTAL)
         sizer3.Add(bsizer5, 1, wx.EXPAND | wx.TOP, 3)
         sizer3.Add(bsizer6, 1, wx.EXPAND | wx.TOP, 3)
         sizer3.Add(bsizer7, 1, wx.EXPAND | wx.TOP, 3)
-
+        
         #----------
         
         topSizer = wx.BoxSizer(wx.VERTICAL)
-        topSizer.Add(sizer1, 0, wx.EXPAND | wx.TOP, 3)
-        topSizer.Add(sizer2, 0, wx.EXPAND | wx.TOP, 3)
-        topSizer.Add(sizer3, 0, wx.EXPAND | wx.TOP, 3)
-
+        topSizer.Add(sizer1, 1, wx.EXPAND | wx.TOP, 3)
+        topSizer.Add(sizer2, 1, wx.EXPAND | wx.TOP, 3)
+        topSizer.Add(sizer3, 1, wx.EXPAND | wx.TOP, 3)
+        
         #----------
         
         self.SetSizer(topSizer)
         topSizer.Fit(self)
-
+        
         

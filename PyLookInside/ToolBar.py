@@ -32,7 +32,7 @@ class My_Toolbar(wx.ToolBar):
         wx.ToolBar.__init__(self, parent, -1,
                             style=wx.TB_HORIZONTAL | wx.NO_BORDER |
                             wx.TB_FLAT | wx.TB_TEXT)
-        
+     
         toolSize = (24, 24)
         self.SetToolBitmapSize(toolSize)
         
@@ -73,5 +73,5 @@ class My_Toolbar(wx.ToolBar):
         self.AddSeparator()
         
         self.Realize()
-
-
+        
+        

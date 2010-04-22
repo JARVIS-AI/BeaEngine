@@ -33,23 +33,23 @@ class My_MiniFrame(wx.MiniFrame):
                  wx.SYSTEM_MENU | wx.CAPTION | wx.CLOSE_BOX |
                  wx.CLIP_CHILDREN | wx.STAY_ON_TOP):
         wx.MiniFrame.__init__(self, parent, -1, title, pos, size, style)
-
+        
         # Bind the event close to an events handler
         self.Bind(wx.EVT_CLOSE, self.OnCloseWindow)
-
+        
         #-------------------------------------------------------------------
         
         self.parent = parent
         
         #------------------------------------------------------------------
-
+        
         self.SetMaxSize((180, 100))
-
+        
         #------------------------------------------------------------------
         
         self.panel = wx.Panel(self, -1)
         self.panel.SetFocus()
-
+        
         #------------------------------------------------------------------
         
         self.btn = wx.Button(self.panel, -1, u"&Close", pos = (20, 20))
@@ -57,7 +57,7 @@ class My_MiniFrame(wx.MiniFrame):
         
         # Bind the button event to an events handler
         self.Bind(wx.EVT_BUTTON, self.OnCloseMe, self.btn)
-
+        
         self.CenterOnParent(wx.BOTH)
         self.Show(True)
         
@@ -65,9 +65,10 @@ class My_MiniFrame(wx.MiniFrame):
         
     def OnCloseMe(self, event):
         self.Close(True)
-
-
+        
+        
     def OnCloseWindow(self, event):
         self.Destroy()
-
+        
+        
 

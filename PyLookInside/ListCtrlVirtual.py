@@ -31,7 +31,7 @@ import wx.lib.mixins.listctrl  as  listmix
 class My_ListCtrl(wx.ListCtrl,
                   listmix.ListCtrlAutoWidthMixin,
                   listmix.ColumnSorterMixin):
-    
+     
     def __init__(self, parent):
         wx.ListCtrl.__init__(self, parent, -1,
                              style=wx.LC_REPORT | wx.LC_VIRTUAL |
@@ -44,7 +44,7 @@ class My_ListCtrl(wx.ListCtrl,
         #-------------------------------------------------------------------
         
         fontSize = self.GetFont().GetPointSize()
-
+        
         # wx.Font(pointSize, family, style, weight, underline, faceName)
         if wx.Platform == "__WXMAC__":
             self.normalFont = wx.Font(fontSize-2,
@@ -57,48 +57,48 @@ class My_ListCtrl(wx.ListCtrl,
         else:
             self.normalFont = wx.Font(fontSize-1,
                                       wx.DEFAULT, wx.NORMAL, wx.NORMAL, False, "")
-
+            
         self.SetFont(self.normalFont)
-
+        
         #-------------------------------------------------------------------
-
+        
         self.il = wx.ImageList(16, 16)
-
+        
         bmp = wx.Bitmap("Bitmaps/listCtrl_Icon.png", wx.BITMAP_TYPE_PNG)
         self.idx1 = self.il.Add(bmp)
-
+        
         bmp1 = wx.Bitmap("Bitmaps/small_Up_Arrow.png", wx.BITMAP_TYPE_PNG)
         self.sm_up = self.il.Add(bmp1)
-
+        
         bmp2 = wx.Bitmap("Bitmaps/small_Dn_Arrow.png", wx.BITMAP_TYPE_PNG)
         self.sm_dn = self.il.Add(bmp2)
-
+        
         self.SetImageList(self.il, wx.IMAGE_LIST_SMALL)
         
         #-------------------------------------------------------------------
-
+        
         self.InsertColumn(0, u"Offset", wx.LIST_FORMAT_LEFT, width=90)
         self.InsertColumn(1, u"Value", wx.LIST_FORMAT_LEFT, width=wx.LIST_AUTOSIZE)
-
+        
         #-------------------------------------------------------------------
-
+        
         self.SetItemCount(201)
-
+        
         #-------------------------------------------------------------------
-
+        
         self.SetForegroundColour("#6a6a66")
         
         self.attributeColor = wx.ListItemAttr()
-        self.attributeColor.SetBackgroundColour(wx.Colour(220, 225, 228))  
-
-        #-------------------------------------------------------------------
-
-        self.SetItemState(0, wx.LIST_STATE_SELECTED, wx.LIST_STATE_SELECTED)
+        self.attributeColor.SetBackgroundColour(wx.WHITE)  # wx.Colour(220, 225, 228)
 
         #-------------------------------------------------------------------
         
         self.SortListItems(0, True)
-
+        
+        #-------------------------------------------------------------------
+        
+        self.SetItemState(0, wx.LIST_STATE_SELECTED, wx.LIST_STATE_SELECTED)
+        
         #-------------------------------------------------------------------
         
         # Bind some events to an events handler
@@ -106,24 +106,24 @@ class My_ListCtrl(wx.ListCtrl,
         self.Bind(wx.EVT_LIST_ITEM_ACTIVATED, self.OnItemActivated)
         self.Bind(wx.EVT_LIST_COL_CLICK, self.OnColClick)
         
-    #----------------------------------------------------------------------- 
-
+    #-----------------------------------------------------------------------
+        
     def OnColClick(self,event):
         event.Skip()
-
+        
         
     def OnItemSelected(self, event):
         self.currentItem = event.m_itemIndex
-
+        
         
     def OnItemActivated(self, event):
         self.currentItem = event.m_itemIndex
-
+        
         
     def getColumnText(self, index, col):
         item = self.GetItem(index, col)
         return item.GetText()
-
+     
     #---------------------------------------------------
     # These methods are callbacks for implementing the
     # "virtualness" of the list...  Normally you would
@@ -132,31 +132,31 @@ class My_ListCtrl(wx.ListCtrl,
     # this demo we'll just calculate them
     def OnGetItemText(self, item, col):
         return "Item %d, column %d" % (item, col)
-
-    
+        
+     
     def OnGetItemImage(self, item):
         if item % 1 == 0:
             return self.idx1
         else:
             return -1
-
+        
         
     def OnGetItemAttr(self, item):
         if item % 1 == 0:
             return self.attributeColor
         else:
             return None
-
+        
         
     def GetListCtrl(self):
         return self
-
-    
+        
+     
     def GetSortImages(self):
         return (self.sm_dn, self.sm_up)
     
 #---------------------------------------------------------------------------
-        
+     
 class VirtualListPanel1(wx.Panel):
     def __init__(self, parent):
         wx.Panel.__init__(self, parent, -1, style=wx.WANTS_CHARS)
@@ -168,4 +168,5 @@ class VirtualListPanel1(wx.Panel):
         
         self.SetSizer(sizer)
         self.SetAutoLayout(True)
-
+        
+        
