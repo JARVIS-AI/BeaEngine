@@ -254,7 +254,8 @@ void __bea_callspec__ EvIb(PDISASM pMyDisasm)
         MOD_RM(&(*pMyDisasm).Argument1);
         EIP_ += DECALAGE_EIP+3;
         if (!Security(0)) return;
-        (void) CopyFormattedNumber((char*) &(*pMyDisasm).Argument2.ArgMnemonic,"%.2X",(Int64)*((UInt8*)(UIntPtr) (EIP_-1)));
+        //(void) CopyFormattedNumber((char*) &(*pMyDisasm).Argument2.ArgMnemonic,"%.2X",(Int64)*((UInt8*)(UIntPtr) (EIP_-1)));
+		(void) CopyFormattedNumber((char*) &(*pMyDisasm).Argument2.ArgMnemonic,"%.8X",(Int64)*((Int8*)(UIntPtr) (EIP_-1)));
         ImmediatSize = 8;
         (*pMyDisasm).Instruction.Immediat = *((UInt8*)(UIntPtr) (EIP_-1));
     }
