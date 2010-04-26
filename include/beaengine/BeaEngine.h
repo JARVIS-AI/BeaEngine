@@ -105,7 +105,7 @@ typedef struct  {
 #pragma pack(1)
 typedef struct {
    UIntPtr EIP_;
-   UIntPtr EIP_VA;
+   UInt64 EIP_VA;
    UIntPtr EIP_REAL;
    Int32 OriginalOperandSize;
    Int32 OperandSize;
@@ -145,7 +145,7 @@ typedef struct {
 #pragma pack(1)
 typedef struct _Disasm {
    UIntPtr EIP;
-   UIntPtr VirtualAddr;
+   UInt64 VirtualAddr;
    UInt32 SecurityBlock;
    char CompleteInstr[INSTRUCT_LENGTH];
    UInt32 Archi;

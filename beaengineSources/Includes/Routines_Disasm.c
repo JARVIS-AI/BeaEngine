@@ -32,15 +32,11 @@ int __bea_callspec__ Disasm (PDISASM pMyDisasm) {
         else {
             BuildCompleteInstruction(pMyDisasm);
         }
-    
+
         if (GV.ERROR_OPCODE) {
-            //free((void*) (*pMyDisasm).Reserved);
-            //(*pMyDisasm).Reserved = 0;
             return -1;
         }
         else {
-            //free((void*) (*pMyDisasm).Reserved);
-            //(*pMyDisasm).Reserved = 0;
             return (int) (GV.EIP_-(*pMyDisasm).EIP);
         }
     }
