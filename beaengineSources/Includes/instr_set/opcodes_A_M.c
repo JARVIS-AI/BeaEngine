@@ -4397,7 +4397,7 @@ void __bea_callspec__ mov_RdCd(PDISASM pMyDisasm)
 {
     (*pMyDisasm).Instruction.Category = SYSTEM_INSTRUCTION;
     MOD_RM(&(*pMyDisasm).Argument1, pMyDisasm);
-    if (MOD_ == 3) {
+    if (GV.MOD_== 3) {
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "mov ");
         CR_ = 1;
         Reg_Opcode(&(*pMyDisasm).Argument2, pMyDisasm);
@@ -4418,7 +4418,7 @@ void __bea_callspec__ mov_RdDd(PDISASM pMyDisasm)
 {
     (*pMyDisasm).Instruction.Category = SYSTEM_INSTRUCTION;
     MOD_RM(&(*pMyDisasm).Argument1, pMyDisasm);
-    if (MOD_ == 3) {
+    if (GV.MOD_== 3) {
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "mov ");
         DR_ = 1;
         Reg_Opcode(&(*pMyDisasm).Argument2, pMyDisasm);
@@ -4438,7 +4438,7 @@ void __bea_callspec__ mov_CdRd(PDISASM pMyDisasm)
 {
     (*pMyDisasm).Instruction.Category = SYSTEM_INSTRUCTION;
     MOD_RM(&(*pMyDisasm).Argument2, pMyDisasm);
-    if (MOD_ == 3) {
+    if (GV.MOD_== 3) {
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "mov ");
         CR_ = 1;
         Reg_Opcode(&(*pMyDisasm).Argument1, pMyDisasm);
@@ -4458,7 +4458,7 @@ void __bea_callspec__ mov_DdRd(PDISASM pMyDisasm)
 {
     (*pMyDisasm).Instruction.Category = SYSTEM_INSTRUCTION;
     MOD_RM(&(*pMyDisasm).Argument2, pMyDisasm);
-    if (MOD_ == 3) {
+    if (GV.MOD_== 3) {
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "mov ");
         DR_ = 1;
         Reg_Opcode(&(*pMyDisasm).Argument1, pMyDisasm);
@@ -4520,8 +4520,8 @@ void __bea_callspec__ mov_ALOb(PDISASM pMyDisasm)
     (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+DATA_TRANSFER;
     (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "mov ");
     GV.MemDecoration = Arg2byte;
-    RM_ = 5;
-    MOD_ = 0;
+    GV.RM_ = 5;
+    GV.MOD_= 0;
     (*pMyDisasm).Argument1.ArgType = REGISTER_TYPE+GENERAL_REG+REG0;
     (*pMyDisasm).Argument1.ArgSize = 8;
     (*pMyDisasm).Argument2.ArgType = MEMORY_TYPE ;
@@ -4565,8 +4565,8 @@ void __bea_callspec__ mov_eAXOv(PDISASM pMyDisasm)
     UInt64 MyAddress;
     (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+DATA_TRANSFER;
     (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "mov ");
-    RM_ = 5;
-    MOD_ = 0;
+    GV.RM_ = 5;
+    GV.MOD_= 0;
     if (GV.AddressSize == 64) {
         if (!Security(9, pMyDisasm)) return;
         MyAddress = *((UInt64 *)(UIntPtr) (GV.EIP_+1));
@@ -4643,8 +4643,8 @@ void __bea_callspec__ mov_ObAL(PDISASM pMyDisasm)
     (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+DATA_TRANSFER;
     (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "mov ");
     GV.MemDecoration = Arg1byte;
-    RM_ = 5;
-    MOD_ = 0;
+    GV.RM_ = 5;
+    GV.MOD_= 0;
     (*pMyDisasm).Argument2.ArgType = REGISTER_TYPE+GENERAL_REG+REG0;
     (*pMyDisasm).Argument1.ArgType = MEMORY_TYPE ;
     (*pMyDisasm).Argument1.ArgSize = 8;
@@ -4688,8 +4688,8 @@ void __bea_callspec__ mov_OveAX(PDISASM pMyDisasm)
     UInt64 MyAddress;
     (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+DATA_TRANSFER;
     (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "mov ");
-    RM_ = 5;
-    MOD_ = 0;
+    GV.RM_ = 5;
+    GV.MOD_= 0;
     if (GV.AddressSize == 64) {
         if (!Security(9, pMyDisasm)) return;
         MyAddress = *((UInt64 *)(UIntPtr) (GV.EIP_+1));

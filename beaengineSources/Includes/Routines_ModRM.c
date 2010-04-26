@@ -22,26 +22,26 @@ void __bea_callspec__ MOD_RM(ARGTYPE* pMyArgument, PDISASM pMyDisasm)
 {
     DECALAGE_EIP = 0;
     if (!Security(1, pMyDisasm)) return;
-    MOD_ = ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 6) & 0x3;
-    RM_  = (*((UInt8*)(UIntPtr) (GV.EIP_+1))) & 0x7;
-    if (MOD_ == 0) {
-        ModRM_0[RM_](pMyArgument, pMyDisasm);
+    GV.MOD_ = ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 6) & 0x3;
+    GV.RM_  = (*((UInt8*)(UIntPtr) (GV.EIP_+1))) & 0x7;
+    if (GV.MOD_ == 0) {
+        ModRM_0[GV.RM_](pMyArgument, pMyDisasm);
     }
-    else if (MOD_ == 1) {
+    else if (GV.MOD_ == 1) {
         DECALAGE_EIP++;
-        ModRM_1[RM_](pMyArgument, pMyDisasm);
+        ModRM_1[GV.RM_](pMyArgument, pMyDisasm);
     }
-    else if (MOD_ == 2) {
+    else if (GV.MOD_ == 2) {
         if (GV.AddressSize >= 32) {
             DECALAGE_EIP += 4;
         }
         else {
             DECALAGE_EIP += 2;
         }
-        ModRM_2[RM_](pMyArgument, pMyDisasm);
+        ModRM_2[GV.RM_](pMyArgument, pMyDisasm);
     }
     else {
-        ModRM_3[RM_](pMyArgument, pMyDisasm);
+        ModRM_3[GV.RM_](pMyArgument, pMyDisasm);
     }
 
 }
@@ -2183,7 +2183,7 @@ size_t __bea_callspec__ SIB_0(ARGTYPE* pMyArgument, size_t i, PDISASM pMyDisasm)
 
     /* ========================= Interpret Base */
 
-    if ((BASE_ == 5) && (MOD_ == 0)) {
+    if ((BASE_ == 5) && (GV.MOD_ == 0)) {
         DECALAGE_EIP += 4;
         if (!Security(7, pMyDisasm)) return i;
         (void) sprintf((char*) (*pMyArgument).ArgMnemonic+i, "%.8X",*((UInt32*)(UIntPtr) (GV.EIP_+3)));
@@ -2281,7 +2281,7 @@ size_t __bea_callspec__ SIB_1(ARGTYPE* pMyArgument, size_t i, PDISASM pMyDisasm)
     size_t j;
     /* ========================= Interpret Base */
 
-    if ((BASE_ == 5) && (MOD_ == 0)) {
+    if ((BASE_ == 5) && (GV.MOD_ == 0)) {
         DECALAGE_EIP += 4;
         if (!Security(7, pMyDisasm)) return i;
         j = i;
@@ -2389,7 +2389,7 @@ size_t __bea_callspec__ SIB_2(ARGTYPE* pMyArgument, size_t i, PDISASM pMyDisasm)
     size_t j;
     /* ========================= Interpret Base */
 
-    if ((BASE_ == 5) && (MOD_ == 0)) {
+    if ((BASE_ == 5) && (GV.MOD_ == 0)) {
         DECALAGE_EIP += 4;
         if (!Security(7, pMyDisasm)) return i;
         j = i;
@@ -2496,7 +2496,7 @@ size_t __bea_callspec__ SIB_3(ARGTYPE* pMyArgument, size_t i, PDISASM pMyDisasm)
     size_t j;
     /* ========================= Interpret Base */
 
-    if ((BASE_ == 5) && (MOD_ == 0)) {
+    if ((BASE_ == 5) && (GV.MOD_ == 0)) {
         DECALAGE_EIP += 4;
         if (!Security(7, pMyDisasm)) return i;
         j = i;

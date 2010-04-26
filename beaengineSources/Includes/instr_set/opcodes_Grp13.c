@@ -31,7 +31,7 @@ void __bea_callspec__ G13_(PDISASM pMyDisasm)
             SSE_ = 1;
             MOD_RM(&(*pMyDisasm).Argument1, pMyDisasm);
             SSE_ = 0;
-            if (MOD_ == 0x3) {
+            if (GV.MOD_== 0x3) {
                 (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "psrld ");
             }
             else {
@@ -52,7 +52,7 @@ void __bea_callspec__ G13_(PDISASM pMyDisasm)
             MMX_ = 1;
             MOD_RM(&(*pMyDisasm).Argument1, pMyDisasm);
             MMX_ = 0;
-            if (MOD_ == 0x3) {
+            if (GV.MOD_== 0x3) {
                 (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "psrld ");
             }
             else {
@@ -75,7 +75,7 @@ void __bea_callspec__ G13_(PDISASM pMyDisasm)
             SSE_ = 1;
             MOD_RM(&(*pMyDisasm).Argument1, pMyDisasm);
             SSE_ = 0;
-            if (MOD_ == 0x3) {
+            if (GV.MOD_== 0x3) {
                 (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "psrad ");
             }
             else {
@@ -96,7 +96,7 @@ void __bea_callspec__ G13_(PDISASM pMyDisasm)
             MMX_ = 1;
             MOD_RM(&(*pMyDisasm).Argument1, pMyDisasm);
             MMX_ = 0;
-            if (MOD_ == 0x3) {
+            if (GV.MOD_== 0x3) {
                 (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "psrad ");
             }
             else {
@@ -120,7 +120,7 @@ void __bea_callspec__ G13_(PDISASM pMyDisasm)
             SSE_ = 1;
             MOD_RM(&(*pMyDisasm).Argument1, pMyDisasm);
             SSE_ = 0;
-            if (MOD_ == 0x3) {
+            if (GV.MOD_== 0x3) {
                 (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "pslld ");
             }
             else {
@@ -141,7 +141,7 @@ void __bea_callspec__ G13_(PDISASM pMyDisasm)
             MMX_ = 1;
             MOD_RM(&(*pMyDisasm).Argument1, pMyDisasm);
             MMX_ = 0;
-            if (MOD_ == 0x3) {
+            if (GV.MOD_== 0x3) {
                 (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "pslld ");
             }
             else {

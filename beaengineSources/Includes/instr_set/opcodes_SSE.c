@@ -939,8 +939,8 @@ void __bea_callspec__ insertps_(PDISASM pMyDisasm)
         (*pMyDisasm).Instruction.Category = SSE41_INSTRUCTION+INSERTION_EXTRACTION;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "insertps ");
         SSE_ = 1;
-        MOD_ = ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 6) & 0x3;
-        if (MOD_ == 0x3) {
+        GV.MOD_= ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 6) & 0x3;
+        if (GV.MOD_== 0x3) {
             GV.MemDecoration = Arg2qword;
         }
         else {
@@ -1197,8 +1197,8 @@ void __bea_callspec__ movhps_VM(PDISASM pMyDisasm)
     else {
         GV.MemDecoration = Arg2qword;
         (*pMyDisasm).Instruction.Category = SSE_INSTRUCTION+DATA_TRANSFER;
-        MOD_ = ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 6) & 0x3;
-        if (MOD_ == 0x3) {
+        GV.MOD_= ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 6) & 0x3;
+        if (GV.MOD_== 0x3) {
             (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "movlhps ");
         }
         else {
@@ -1278,7 +1278,7 @@ void __bea_callspec__ movlps_VM(PDISASM pMyDisasm)
     else {
         GV.MemDecoration = Arg2qword;
         (*pMyDisasm).Instruction.Category = SSE_INSTRUCTION+DATA_TRANSFER;
-        if (MOD_ == 0x3) {
+        if (GV.MOD_== 0x3) {
             (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "movhlps ");
         }
         else {
@@ -1324,8 +1324,8 @@ void __bea_callspec__ movlps_MV(PDISASM pMyDisasm)
  * ==================================================================== */
 void __bea_callspec__ movmskps_(PDISASM pMyDisasm)
 {
-    MOD_ = ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 6) & 0x3;
-    if (MOD_ != 0x3) {
+    GV.MOD_= ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 6) & 0x3;
+    if (GV.MOD_!= 0x3) {
         FailDecode(pMyDisasm);
     }
     /* ========== 0x66 */
@@ -1396,8 +1396,8 @@ void __bea_callspec__ movnti_(PDISASM pMyDisasm)
  * ==================================================================== */
 void __bea_callspec__ movntps_(PDISASM pMyDisasm)
 {
-    MOD_ = ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 6) & 0x3;
-    if (MOD_ == 0x3) {
+    GV.MOD_= ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 6) & 0x3;
+    if (GV.MOD_== 0x3) {
         FailDecode(pMyDisasm);
     }
     /* ========== 0x66 */
@@ -1433,8 +1433,8 @@ void __bea_callspec__ movntps_(PDISASM pMyDisasm)
  * ==================================================================== */
 void __bea_callspec__ movntq_(PDISASM pMyDisasm)
 {
-    MOD_ = ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 6) & 0x3;
-    if (MOD_ == 0x3) {
+    GV.MOD_= ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 6) & 0x3;
+    if (GV.MOD_== 0x3) {
         FailDecode(pMyDisasm);
     }
     /* ========== 0x66 */
@@ -2049,8 +2049,8 @@ void __bea_callspec__ pextrb_(PDISASM pMyDisasm)
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         (*pMyDisasm).Instruction.Category = SSE41_INSTRUCTION+INSERTION_EXTRACTION;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "pextrb ");
-        MOD_ = ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 6) & 0x3;
-        if (MOD_ == 0x3) {
+        GV.MOD_= ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 6) & 0x3;
+        if (GV.MOD_== 0x3) {
             GV.MemDecoration = Arg1dword;
         }
         else {
@@ -2173,8 +2173,8 @@ void __bea_callspec__ pextrw2_(PDISASM pMyDisasm)
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         (*pMyDisasm).Instruction.Category = SSE41_INSTRUCTION+INSERTION_EXTRACTION;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "pextrw ");
-        MOD_ = ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 6) & 0x3;
-        if (MOD_ == 0x3) {
+        GV.MOD_= ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 6) & 0x3;
+        if (GV.MOD_== 0x3) {
             GV.MemDecoration = Arg1dword;
         }
         else {

@@ -69,14 +69,13 @@ int __bea_callspec__ InitVariables (PDISASM pMyDisasm) {
     (*pMyDisasm).Argument2.AccessMode = READ;
     (*pMyDisasm).Argument3.AccessMode = READ;
     (void) memset (&(*pMyDisasm).Instruction, 0, sizeof (INSTRTYPE));
-    GV.TAB_ = (Int32)(*pMyDisasm).Options & 0xff;
-    GV.SYNTAX_ = (Int32)(*pMyDisasm).Options & 0xff00;
-    GV.FORMATNUMBER = (Int32)(*pMyDisasm).Options & 0xff0000;
-    GV.SEGMENTREGS = (Int32)(*pMyDisasm).Options & 0xff000000;
+    GV.TAB_ = (UInt32)(*pMyDisasm).Options & 0xff;
+    GV.SYNTAX_ = (UInt32)(*pMyDisasm).Options & 0xff00;
+    GV.FORMATNUMBER = (UInt32)(*pMyDisasm).Options & 0xff0000;
+    GV.SEGMENTREGS = (UInt32)(*pMyDisasm).Options & 0xff000000;
 
     ERROR_OPCODE = 0;
     EndOfBlock = 0;
-    GV.AddressSize = 32;
     SEGMENTFS = 0;
     third_arg = 0;
     Architecture = (*pMyDisasm).Archi;
@@ -88,10 +87,10 @@ int __bea_callspec__ InitVariables (PDISASM pMyDisasm) {
     GV.REX.X_ = 0;
     GV.REX.R_ = 0;
     GV.REX.state = 0;
-    TAB_ = (Int32)(*pMyDisasm).Options & 0xff;
-    SYNTAX_ = (Int32)(*pMyDisasm).Options & 0xff00;
-    FORMATNUMBER = (Int32)(*pMyDisasm).Options & 0xff0000;
-    SEGMENTREGS = (Int32)(*pMyDisasm).Options & 0xff000000;
+    TAB_ = (UInt32)(*pMyDisasm).Options & 0xff;
+    SYNTAX_ = (UInt32)(*pMyDisasm).Options & 0xff00;
+    FORMATNUMBER = (UInt32)(*pMyDisasm).Options & 0xff0000;
+    SEGMENTREGS = (UInt32)(*pMyDisasm).Options & 0xff000000;
     return 1;
 }
 /* ====================================================================

@@ -27,10 +27,10 @@ void __bea_callspec__ G6_(PDISASM pMyDisasm)
     OperandSizeOld = GV.OperandSize;
     GV.OperandSize = 16;
     REGOPCODE = ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 3) & 0x7;
-    MOD_ = ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 6) & 0x3;
+    GV.MOD_= ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 6) & 0x3;
 
     if (REGOPCODE == 0) {
-        if ((OperandSizeOld == 64) && (MOD_ == 0x3)) {
+        if ((OperandSizeOld == 64) && (GV.MOD_== 0x3)) {
             GV.OperandSize = OperandSizeOld;
         }
         else {
@@ -44,7 +44,7 @@ void __bea_callspec__ G6_(PDISASM pMyDisasm)
         GV.EIP_+= DECALAGE_EIP+2;
     }
     else if (REGOPCODE == 1) {
-        if ((OperandSizeOld == 64) && (MOD_ == 0x3)) {
+        if ((OperandSizeOld == 64) && (GV.MOD_== 0x3)) {
             GV.OperandSize = OperandSizeOld;
         }
         else {

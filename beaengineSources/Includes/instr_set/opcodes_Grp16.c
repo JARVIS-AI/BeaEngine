@@ -24,7 +24,7 @@ void __bea_callspec__ G16_(PDISASM pMyDisasm)
     REGOPCODE = ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 3) & 0x7;
     if (REGOPCODE == 0) {
         MOD_RM(&(*pMyDisasm).Argument2, pMyDisasm);
-        if (MOD_ != 0x3) {
+        if (GV.MOD_!= 0x3) {
             GV.MemDecoration = Arg2byte;
             (*pMyDisasm).Instruction.Category = SSE_INSTRUCTION+CACHEABILITY_CONTROL;
             (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "prefetchNTA ");
@@ -35,7 +35,7 @@ void __bea_callspec__ G16_(PDISASM pMyDisasm)
     }
     else if (REGOPCODE == 1) {
         MOD_RM(&(*pMyDisasm).Argument2, pMyDisasm);
-        if (MOD_ != 0x3) {
+        if (GV.MOD_!= 0x3) {
             GV.MemDecoration = Arg2byte;
             (*pMyDisasm).Instruction.Category = SSE_INSTRUCTION+CACHEABILITY_CONTROL;
             (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "prefetchT0 ");
@@ -47,7 +47,7 @@ void __bea_callspec__ G16_(PDISASM pMyDisasm)
     }
     else if (REGOPCODE == 2) {
         MOD_RM(&(*pMyDisasm).Argument2, pMyDisasm);
-        if (MOD_ != 0x3) {
+        if (GV.MOD_!= 0x3) {
             GV.MemDecoration = Arg2byte;
             (*pMyDisasm).Instruction.Category = SSE_INSTRUCTION+CACHEABILITY_CONTROL;
             (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "prefetchT1 ");
@@ -59,7 +59,7 @@ void __bea_callspec__ G16_(PDISASM pMyDisasm)
     }
     else if (REGOPCODE == 3) {
         MOD_RM(&(*pMyDisasm).Argument2, pMyDisasm);
-        if (MOD_ != 0x3) {
+        if (GV.MOD_!= 0x3) {
             GV.MemDecoration = Arg2byte;
             (*pMyDisasm).Instruction.Category = SSE_INSTRUCTION+CACHEABILITY_CONTROL;
             (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "prefetchT2 ");

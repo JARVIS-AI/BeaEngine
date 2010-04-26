@@ -26,7 +26,7 @@
 /* static Int32 OperandSize; */
 /* static Int32 MemDecoration; */
 /*static Int32 AddressSize; */
-static Int32 MOD_, RM_, INDEX_, SCALE_, BASE_, MMX_, SSE_, CR_, DR_, SEG_, REGOPCODE;
+static Int32 INDEX_, SCALE_, BASE_, MMX_, SSE_, CR_, DR_, SEG_, REGOPCODE;
 static UIntPtr DECALAGE_EIP;
 static Int32 FORMATNUMBER;
 static Int32 SYNTAX_;
