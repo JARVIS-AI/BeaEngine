@@ -21,117 +21,136 @@
  * ==================================================================== */
 int __bea_callspec__ Disasm (PDISASM pMyDisasm) {
 
-    InitVariables(pMyDisasm);
-    (void) AnalyzeOpcode(pMyDisasm);
-    FixArgSizeForMemoryOperand(pMyDisasm);
-    FixREXPrefixes(pMyDisasm);
-    FillSegmentsRegisters(pMyDisasm);
-    if (SYNTAX_ == ATSyntax) {
-        BuildCompleteInstructionATSyntax(pMyDisasm);
+    if (InitVariables(pMyDisasm)) {
+        (void) AnalyzeOpcode(pMyDisasm);
+        FixArgSizeForMemoryOperand(pMyDisasm);
+        FixREXPrefixes(pMyDisasm);
+        FillSegmentsRegisters(pMyDisasm);
+        if (GV.SYNTAX_ == ATSyntax) {
+            BuildCompleteInstructionATSyntax(pMyDisasm);
+        }
+        else {
+            BuildCompleteInstruction(pMyDisasm);
+        }
+    
+        if (GV.ERROR_OPCODE) {
+            //free((void*) (*pMyDisasm).Reserved);
+            //(*pMyDisasm).Reserved = 0;
+            return -1;
+        }
+        else {
+            //free((void*) (*pMyDisasm).Reserved);
+            //(*pMyDisasm).Reserved = 0;
+            return (int) (GV.EIP_-(*pMyDisasm).EIP);
+        }
     }
     else {
-        BuildCompleteInstruction(pMyDisasm);
-    }
-    if (ERROR_OPCODE) {
         return -1;
-    }
-    else {
-        return (int) (EIP_-(*pMyDisasm).EIP);
     }
 }
 
 /* ====================================================================
  *
  * ==================================================================== */
-void __bea_callspec__ InitVariables (PDISASM pMyDisasm) {
+int __bea_callspec__ InitVariables (PDISASM pMyDisasm) {
+
+    (void) memset (&GV, 0, sizeof (InternalDatas));
+    GV.EIP_ = (*pMyDisasm).EIP;
+    GV.EIP_REAL = GV.EIP_;
+    GV.EIP_VA = (*pMyDisasm).VirtualAddr;
+    if ((*pMyDisasm).SecurityBlock != 0) GV.EndOfBlock = GV.EIP_+(*pMyDisasm).SecurityBlock;
+    GV.OperandSize = 32;
+    GV.OriginalOperandSize = 32;
+    GV.AddressSize = 32;
+    GV.Architecture = (*pMyDisasm).Archi;
+    (*pMyDisasm).Prefix.Number = 0;
+    if (Architecture == 64) GV.AddressSize = 64;
+	(void) memset (&(*pMyDisasm).Argument1, 0, sizeof (ARGTYPE));
+	(void) memset (&(*pMyDisasm).Argument2, 0, sizeof (ARGTYPE));
+	(void) memset (&(*pMyDisasm).Argument3, 0, sizeof (ARGTYPE));
+    (void) memset (&(*pMyDisasm).Prefix, 0, sizeof (PREFIXINFO));
+    (*pMyDisasm).Argument1.AccessMode = WRITE;
+    (*pMyDisasm).Argument2.AccessMode = READ;
+    (*pMyDisasm).Argument3.AccessMode = READ;
+    (void) memset (&(*pMyDisasm).Instruction, 0, sizeof (INSTRTYPE));
+    GV.TAB_ = (Int32)(*pMyDisasm).Options & 0xff;
+    GV.SYNTAX_ = (Int32)(*pMyDisasm).Options & 0xff00;
+    GV.FORMATNUMBER = (Int32)(*pMyDisasm).Options & 0xff0000;
+    GV.SEGMENTREGS = (Int32)(*pMyDisasm).Options & 0xff000000;
+
     ERROR_OPCODE = 0;
-    EIP_ = (*pMyDisasm).EIP;
-    EIP_REAL = EIP_;
-    EIP_VA = (*pMyDisasm).VirtualAddr;
     EndOfBlock = 0;
-    if ((*pMyDisasm).SecurityBlock != 0) EndOfBlock = EIP_+(*pMyDisasm).SecurityBlock;
-    OperandSize = 32;
-    OriginalOperandSize = 32;
-    MemDecoration = 0;
-    AddressSize = 32;
+    GV.AddressSize = 32;
     SEGMENTFS = 0;
     third_arg = 0;
     Architecture = (*pMyDisasm).Archi;
     (*pMyDisasm).Prefix.Number = 0;
     NB_PREFIX = 0;
-    if (Architecture == 64) AddressSize = 64;
-	(void) memset (&(*pMyDisasm).Argument1, 0, sizeof (ARGTYPE));
-	(void) memset (&(*pMyDisasm).Argument2, 0, sizeof (ARGTYPE));
-	(void) memset (&(*pMyDisasm).Argument3, 0, sizeof (ARGTYPE));
-    (void) memset (&(*pMyDisasm).Prefix, 0, sizeof (PREFIXINFO));
-    REX.W_ = 0;
-    REX.B_ = 0;
-    REX.X_ = 0;
-    REX.R_ = 0;
-    REX.state = 0;
-    (*pMyDisasm).Argument1.AccessMode = WRITE;
-    (*pMyDisasm).Argument2.AccessMode = READ;
-    (*pMyDisasm).Argument3.AccessMode = READ;
-    (void) memset (&(*pMyDisasm).Instruction, 0, sizeof (INSTRTYPE));
+    if (Architecture == 64) GV.AddressSize = 64;
+    GV.REX.W_ = 0;
+    GV.REX.B_ = 0;
+    GV.REX.X_ = 0;
+    GV.REX.R_ = 0;
+    GV.REX.state = 0;
     TAB_ = (Int32)(*pMyDisasm).Options & 0xff;
     SYNTAX_ = (Int32)(*pMyDisasm).Options & 0xff00;
     FORMATNUMBER = (Int32)(*pMyDisasm).Options & 0xff0000;
     SEGMENTREGS = (Int32)(*pMyDisasm).Options & 0xff000000;
-
+    return 1;
 }
 /* ====================================================================
  *
  * ==================================================================== */
 void __bea_callspec__ FixArgSizeForMemoryOperand (PDISASM pMyDisasm) {
 
-    if (MemDecoration == Arg2byte) {
+    if (GV.MemDecoration == Arg2byte) {
         (*pMyDisasm).Argument2.ArgSize = 8;
     }
-    else if (MemDecoration == Arg2word) {
+    else if (GV.MemDecoration == Arg2word) {
         (*pMyDisasm).Argument2.ArgSize = 16;
     }
-    else if (MemDecoration == Arg2dword) {
+    else if (GV.MemDecoration == Arg2dword) {
         (*pMyDisasm).Argument2.ArgSize = 32;
     }
-    else if (MemDecoration == Arg2qword) {
+    else if (GV.MemDecoration == Arg2qword) {
         (*pMyDisasm).Argument2.ArgSize = 64;
     }
-    else if (MemDecoration == Arg2multibytes) {
+    else if (GV.MemDecoration == Arg2multibytes) {
         (*pMyDisasm).Argument2.ArgSize = 0;
     }
-    else if (MemDecoration == Arg2tbyte) {
+    else if (GV.MemDecoration == Arg2tbyte) {
         (*pMyDisasm).Argument2.ArgSize = 80;
     }
-    else if (MemDecoration == Arg2fword) {
+    else if (GV.MemDecoration == Arg2fword) {
         (*pMyDisasm).Argument2.ArgSize = 48;
     }
-    else if (MemDecoration == Arg2dqword) {
+    else if (GV.MemDecoration == Arg2dqword) {
         (*pMyDisasm).Argument2.ArgSize = 128;
     }
 
 
-    if (MemDecoration == Arg1byte) {
+    if (GV.MemDecoration == Arg1byte) {
         (*pMyDisasm).Argument1.ArgSize = 8;
     }
-    else if (MemDecoration == Arg1word) {
+    else if (GV.MemDecoration == Arg1word) {
         (*pMyDisasm).Argument1.ArgSize = 16;
     }
-    else if (MemDecoration == Arg1dword) {
+    else if (GV.MemDecoration == Arg1dword) {
         (*pMyDisasm).Argument1.ArgSize = 32;
     }
-    else if (MemDecoration == Arg1qword) {
+    else if (GV.MemDecoration == Arg1qword) {
         (*pMyDisasm).Argument1.ArgSize = 64;
     }
-    else if (MemDecoration == Arg1multibytes) {
+    else if (GV.MemDecoration == Arg1multibytes) {
         (*pMyDisasm).Argument1.ArgSize = 0;
     }
-    else if (MemDecoration == Arg1tbyte) {
+    else if (GV.MemDecoration == Arg1tbyte) {
         (*pMyDisasm).Argument1.ArgSize = 80;
     }
-    else if (MemDecoration == Arg1fword) {
+    else if (GV.MemDecoration == Arg1fword) {
         (*pMyDisasm).Argument1.ArgSize = 48;
     }
-    else if (MemDecoration == Arg1dqword) {
+    else if (GV.MemDecoration == Arg1dqword) {
         (*pMyDisasm).Argument1.ArgSize = 128;
     }
 
@@ -142,11 +161,11 @@ void __bea_callspec__ FixArgSizeForMemoryOperand (PDISASM pMyDisasm) {
  * ==================================================================== */
 void __bea_callspec__ FixREXPrefixes (PDISASM pMyDisasm) {
 
-    (*pMyDisasm).Prefix.REX.W_ = REX.W_;
-    (*pMyDisasm).Prefix.REX.R_ = REX.R_;
-    (*pMyDisasm).Prefix.REX.X_ = REX.X_;
-    (*pMyDisasm).Prefix.REX.B_ = REX.B_;
-    (*pMyDisasm).Prefix.REX.state = REX.state;
+    (*pMyDisasm).Prefix.REX.W_ = GV.REX.W_;
+    (*pMyDisasm).Prefix.REX.R_ = GV.REX.R_;
+    (*pMyDisasm).Prefix.REX.X_ = GV.REX.X_;
+    (*pMyDisasm).Prefix.REX.B_ = GV.REX.B_;
+    (*pMyDisasm).Prefix.REX.state = GV.REX.state;
 
 }
 
@@ -155,8 +174,8 @@ void __bea_callspec__ FixREXPrefixes (PDISASM pMyDisasm) {
  * ==================================================================== */
 int __bea_callspec__ AnalyzeOpcode (PDISASM pMyDisasm) {
 
-  (*pMyDisasm).Instruction.Opcode = *((UInt8*) (UIntPtr)(EIP_));
-    (void) opcode_map1[*((UInt8*) (UIntPtr)EIP_)](pMyDisasm);
+  (*pMyDisasm).Instruction.Opcode = *((UInt8*) (UIntPtr)(GV.EIP_));
+    (void) opcode_map1[*((UInt8*) (UIntPtr)GV.EIP_)](pMyDisasm);
     return 1;
 }
 /* ====================================================================
@@ -164,12 +183,12 @@ int __bea_callspec__ AnalyzeOpcode (PDISASM pMyDisasm) {
  * ==================================================================== */
 void __bea_callspec__ EbGb(PDISASM pMyDisasm)
 {
-    MemDecoration = Arg1byte;
-    OperandSize = 8;
-    MOD_RM(&(*pMyDisasm).Argument1);
-    Reg_Opcode(&(*pMyDisasm).Argument2);
-    OperandSize = 32;
-    EIP_ += DECALAGE_EIP+2;
+    GV.MemDecoration = Arg1byte;
+    GV.OperandSize = 8;
+    MOD_RM(&(*pMyDisasm).Argument1, pMyDisasm);
+    Reg_Opcode(&(*pMyDisasm).Argument2, pMyDisasm);
+    GV.OperandSize = 32;
+    GV.EIP_ += DECALAGE_EIP+2;
 }
 
 /* ====================================================================
@@ -177,30 +196,30 @@ void __bea_callspec__ EbGb(PDISASM pMyDisasm)
  * ==================================================================== */
 void __bea_callspec__ GbEb(PDISASM pMyDisasm)
 {
-    MemDecoration = Arg2byte;
-    OperandSize = 8;
-    MOD_RM(&(*pMyDisasm).Argument2);
-    Reg_Opcode(&(*pMyDisasm).Argument1);
-    OperandSize = 32;
-    EIP_ += DECALAGE_EIP+2;
+    GV.MemDecoration = Arg2byte;
+    GV.OperandSize = 8;
+    MOD_RM(&(*pMyDisasm).Argument2, pMyDisasm);
+    Reg_Opcode(&(*pMyDisasm).Argument1, pMyDisasm);
+    GV.OperandSize = 32;
+    GV.EIP_ += DECALAGE_EIP+2;
 }
 /* ====================================================================
  *
  * ==================================================================== */
 void __bea_callspec__ EvGv(PDISASM pMyDisasm)
 {
-    if (OperandSize == 64) {
-        MemDecoration = Arg1qword;
+    if (GV.OperandSize == 64) {
+        GV.MemDecoration = Arg1qword;
     }
-    else if (OperandSize == 32) {
-        MemDecoration = Arg1dword;
+    else if (GV.OperandSize == 32) {
+        GV.MemDecoration = Arg1dword;
     }
     else {
-        MemDecoration = Arg1word;
+        GV.MemDecoration = Arg1word;
     }
-    MOD_RM(&(*pMyDisasm).Argument1);
-    Reg_Opcode(&(*pMyDisasm).Argument2);
-    EIP_ += DECALAGE_EIP+2;
+    MOD_RM(&(*pMyDisasm).Argument1, pMyDisasm);
+    Reg_Opcode(&(*pMyDisasm).Argument2, pMyDisasm);
+    GV.EIP_ += DECALAGE_EIP+2;
 }
 
 /* ====================================================================
@@ -208,9 +227,9 @@ void __bea_callspec__ EvGv(PDISASM pMyDisasm)
  * ==================================================================== */
 void __bea_callspec__ ExGx(PDISASM pMyDisasm)
 {
-    MOD_RM(&(*pMyDisasm).Argument1);
-    Reg_Opcode(&(*pMyDisasm).Argument2);
-    EIP_ += DECALAGE_EIP+2;
+    MOD_RM(&(*pMyDisasm).Argument1, pMyDisasm);
+    Reg_Opcode(&(*pMyDisasm).Argument2, pMyDisasm);
+    GV.EIP_ += DECALAGE_EIP+2;
 }
 
 /* ====================================================================
@@ -218,27 +237,27 @@ void __bea_callspec__ ExGx(PDISASM pMyDisasm)
  * ==================================================================== */
 void __bea_callspec__ EvIv(PDISASM pMyDisasm)
 {
-    if (OperandSize >= 32) {
-        MemDecoration = Arg1dword;
-        MOD_RM(&(*pMyDisasm).Argument1);
-        EIP_ += DECALAGE_EIP+6;
-        if (!Security(0)) return;
-        (void) CopyFormattedNumber((char*) &(*pMyDisasm).Argument2.ArgMnemonic,"%.8X",(Int64) *((UInt32*)(UIntPtr) (EIP_-4)));
+    if (GV.OperandSize >= 32) {
+        GV.MemDecoration = Arg1dword;
+        MOD_RM(&(*pMyDisasm).Argument1, pMyDisasm);
+        GV.EIP_ += DECALAGE_EIP+6;
+        if (!Security(0, pMyDisasm)) return;
+        (void) CopyFormattedNumber((char*) &(*pMyDisasm).Argument2.ArgMnemonic,"%.8X",(Int64) *((UInt32*)(UIntPtr) (GV.EIP_-4)));
         ImmediatSize = 32;
         (*pMyDisasm).Argument2.ArgType = CONSTANT_TYPE+ABSOLUTE_;
         (*pMyDisasm).Argument2.ArgSize = 32;
-        (*pMyDisasm).Instruction.Immediat = *((UInt32*)(UIntPtr) (EIP_-4));
+        (*pMyDisasm).Instruction.Immediat = *((UInt32*)(UIntPtr) (GV.EIP_-4));
     }
     else {
-        MemDecoration = Arg1word;
-        MOD_RM(&(*pMyDisasm).Argument1);
-        EIP_ += DECALAGE_EIP+4;
-        if (!Security(0)) return;
-        (void) CopyFormattedNumber((char*) &(*pMyDisasm).Argument2.ArgMnemonic,"%.4X",(Int64)*((UInt16*)(UIntPtr) (EIP_-2)));
+        GV.MemDecoration = Arg1word;
+        MOD_RM(&(*pMyDisasm).Argument1, pMyDisasm);
+        GV.EIP_ += DECALAGE_EIP+4;
+        if (!Security(0, pMyDisasm)) return;
+        (void) CopyFormattedNumber((char*) &(*pMyDisasm).Argument2.ArgMnemonic,"%.4X",(Int64)*((UInt16*)(UIntPtr) (GV.EIP_-2)));
         ImmediatSize = 16;
         (*pMyDisasm).Argument2.ArgType = CONSTANT_TYPE+ABSOLUTE_;
         (*pMyDisasm).Argument2.ArgSize = 16;
-        (*pMyDisasm).Instruction.Immediat = *((UInt16*)(UIntPtr) (EIP_-2));
+        (*pMyDisasm).Instruction.Immediat = *((UInt16*)(UIntPtr) (GV.EIP_-2));
     }
 }
 
@@ -249,24 +268,29 @@ void __bea_callspec__ EvIb(PDISASM pMyDisasm)
 {
     (*pMyDisasm).Argument2.ArgType = CONSTANT_TYPE+ABSOLUTE_;
     (*pMyDisasm).Argument2.ArgSize = 8;
-    if (OperandSize >= 32) {
-        MemDecoration = Arg1dword;
-        MOD_RM(&(*pMyDisasm).Argument1);
-        EIP_ += DECALAGE_EIP+3;
-        if (!Security(0)) return;
-        //(void) CopyFormattedNumber((char*) &(*pMyDisasm).Argument2.ArgMnemonic,"%.2X",(Int64)*((UInt8*)(UIntPtr) (EIP_-1)));
-		(void) CopyFormattedNumber((char*) &(*pMyDisasm).Argument2.ArgMnemonic,"%.8X",(Int64)*((Int8*)(UIntPtr) (EIP_-1)));
+    if (GV.OperandSize >= 32) {
+        GV.MemDecoration = Arg1dword;
+        MOD_RM(&(*pMyDisasm).Argument1, pMyDisasm);
+        GV.EIP_ += DECALAGE_EIP+3;
+        if (!Security(0, pMyDisasm)) return;
+        //(void) CopyFormattedNumber((char*) &(*pMyDisasm).Argument2.ArgMnemonic,"%.2X",(Int64)*((UInt8*)(UIntPtr) (GV.EIP_-1)));
+		if (GV.OperandSize == 32) {
+			(void) CopyFormattedNumber((char*) &(*pMyDisasm).Argument2.ArgMnemonic,"%.8X",(Int64)*((Int8*)(UIntPtr) (GV.EIP_-1)));
+		}
+		else {
+			(void) CopyFormattedNumber((char*) &(*pMyDisasm).Argument2.ArgMnemonic,"%.16X",(Int64)*((Int8*)(UIntPtr) (GV.EIP_-1)));
+		}
         ImmediatSize = 8;
-        (*pMyDisasm).Instruction.Immediat = *((UInt8*)(UIntPtr) (EIP_-1));
+        (*pMyDisasm).Instruction.Immediat = *((UInt8*)(UIntPtr) (GV.EIP_-1));
     }
     else {
-        MemDecoration = Arg1word;
-        MOD_RM(&(*pMyDisasm).Argument1);
-        EIP_ += DECALAGE_EIP+3;
-        if (!Security(0)) return;
-        (void) CopyFormattedNumber((char*) &(*pMyDisasm).Argument2.ArgMnemonic,"%.2X",(Int64)*((UInt8*)(UIntPtr) (EIP_-1)));
+        GV.MemDecoration = Arg1word;
+        MOD_RM(&(*pMyDisasm).Argument1, pMyDisasm);
+        GV.EIP_ += DECALAGE_EIP+3;
+        if (!Security(0, pMyDisasm)) return;
+        (void) CopyFormattedNumber((char*) &(*pMyDisasm).Argument2.ArgMnemonic,"%.4X",(Int64)*((Int8*)(UIntPtr) (GV.EIP_-1)));
         ImmediatSize = 8;
-        (*pMyDisasm).Instruction.Immediat = *((UInt8*)(UIntPtr) (EIP_-1));
+        (*pMyDisasm).Instruction.Immediat = *((UInt8*)(UIntPtr) (GV.EIP_-1));
     }
 }
 /* ====================================================================
@@ -276,15 +300,15 @@ void __bea_callspec__ EbIb(PDISASM pMyDisasm)
 {
     (*pMyDisasm).Argument2.ArgType = CONSTANT_TYPE+ABSOLUTE_;
     (*pMyDisasm).Argument2.ArgSize = 8;
-    MemDecoration = Arg1byte;
-    OperandSize = 8;
-    MOD_RM(&(*pMyDisasm).Argument1);
-    OperandSize = 32;
-    EIP_ += DECALAGE_EIP+3;
-    if (!Security(0)) return;
-    (void) CopyFormattedNumber((char*) &(*pMyDisasm).Argument2.ArgMnemonic,"%.2X",(Int64)*((UInt8*)(UIntPtr) (EIP_-1)));
+    GV.MemDecoration = Arg1byte;
+    GV.OperandSize = 8;
+    MOD_RM(&(*pMyDisasm).Argument1, pMyDisasm);
+    GV.OperandSize = 32;
+    GV.EIP_ += DECALAGE_EIP+3;
+    if (!Security(0, pMyDisasm)) return;
+    (void) CopyFormattedNumber((char*) &(*pMyDisasm).Argument2.ArgMnemonic,"%.2X",(Int64)*((UInt8*)(UIntPtr) (GV.EIP_-1)));
     ImmediatSize = 8;
-    (*pMyDisasm).Instruction.Immediat = *((UInt8*)(UIntPtr) (EIP_-1));
+    (*pMyDisasm).Instruction.Immediat = *((UInt8*)(UIntPtr) (GV.EIP_-1));
 }
 
 /* ====================================================================
@@ -292,11 +316,11 @@ void __bea_callspec__ EbIb(PDISASM pMyDisasm)
  * ==================================================================== */
 void __bea_callspec__ Eb(PDISASM pMyDisasm)
 {
-    MemDecoration = Arg1byte;
-    OperandSize = 8;
-    MOD_RM(&(*pMyDisasm).Argument1);
-    OperandSize = 32;
-    EIP_ += DECALAGE_EIP+2;
+    GV.MemDecoration = Arg1byte;
+    GV.OperandSize = 8;
+    MOD_RM(&(*pMyDisasm).Argument1, pMyDisasm);
+    GV.OperandSize = 32;
+    GV.EIP_ += DECALAGE_EIP+2;
 }
 
 /* ====================================================================
@@ -304,17 +328,17 @@ void __bea_callspec__ Eb(PDISASM pMyDisasm)
  * ==================================================================== */
 void __bea_callspec__ Ev(PDISASM pMyDisasm)
 {
-    if (OperandSize == 64) {
-        MemDecoration = Arg1qword;
+    if (GV.OperandSize == 64) {
+        GV.MemDecoration = Arg1qword;
     }
-    else if (OperandSize == 32) {
-        MemDecoration = Arg1dword;
+    else if (GV.OperandSize == 32) {
+        GV.MemDecoration = Arg1dword;
     }
     else {
-        MemDecoration = Arg1word;
+        GV.MemDecoration = Arg1word;
     }
-    MOD_RM(&(*pMyDisasm).Argument1);
-    EIP_ += DECALAGE_EIP+2;
+    MOD_RM(&(*pMyDisasm).Argument1, pMyDisasm);
+    GV.EIP_ += DECALAGE_EIP+2;
 }
 
 /* ====================================================================
@@ -322,18 +346,18 @@ void __bea_callspec__ Ev(PDISASM pMyDisasm)
  * ==================================================================== */
 void __bea_callspec__ GvEv(PDISASM pMyDisasm)
 {
-    if (OperandSize == 64) {
-        MemDecoration = Arg2qword;
+    if (GV.OperandSize == 64) {
+        GV.MemDecoration = Arg2qword;
     }
-    else if (OperandSize == 32) {
-        MemDecoration = Arg2dword;
+    else if (GV.OperandSize == 32) {
+        GV.MemDecoration = Arg2dword;
     }
     else {
-        MemDecoration = Arg2word;
+        GV.MemDecoration = Arg2word;
     }
-    MOD_RM(&(*pMyDisasm).Argument2);
-    Reg_Opcode(&(*pMyDisasm).Argument1);
-    EIP_ += DECALAGE_EIP+2;
+    MOD_RM(&(*pMyDisasm).Argument2, pMyDisasm);
+    Reg_Opcode(&(*pMyDisasm).Argument1, pMyDisasm);
+    GV.EIP_ += DECALAGE_EIP+2;
 }
 
 /* ====================================================================
@@ -341,24 +365,24 @@ void __bea_callspec__ GvEv(PDISASM pMyDisasm)
  * ==================================================================== */
 void __bea_callspec__ GvEb(PDISASM pMyDisasm)
 {
-    if (OperandSize == 64) {
-        MemDecoration = Arg2byte;
-        OperandSize = 8;
-        MOD_RM(&(*pMyDisasm).Argument2);
-        OperandSize = 64;
+    if (GV.OperandSize == 64) {
+        GV.MemDecoration = Arg2byte;
+        GV.OperandSize = 8;
+        MOD_RM(&(*pMyDisasm).Argument2, pMyDisasm);
+        GV.OperandSize = 64;
     }
-    else if (OperandSize == 32) {
-        MemDecoration = Arg2byte;
-        OperandSize = 8;
-        MOD_RM(&(*pMyDisasm).Argument2);
-        OperandSize = 32;
+    else if (GV.OperandSize == 32) {
+        GV.MemDecoration = Arg2byte;
+        GV.OperandSize = 8;
+        MOD_RM(&(*pMyDisasm).Argument2, pMyDisasm);
+        GV.OperandSize = 32;
     }
     else {
-        MemDecoration = Arg2byte;
-        MOD_RM(&(*pMyDisasm).Argument2);
+        GV.MemDecoration = Arg2byte;
+        MOD_RM(&(*pMyDisasm).Argument2, pMyDisasm);
     }
-    Reg_Opcode(&(*pMyDisasm).Argument1);
-    EIP_ += DECALAGE_EIP+2;
+    Reg_Opcode(&(*pMyDisasm).Argument1, pMyDisasm);
+    GV.EIP_ += DECALAGE_EIP+2;
 }
 
 /* ====================================================================
@@ -366,9 +390,9 @@ void __bea_callspec__ GvEb(PDISASM pMyDisasm)
  * ==================================================================== */
 void __bea_callspec__ GxEx(PDISASM pMyDisasm)
 {
-    MOD_RM(&(*pMyDisasm).Argument2);
-    Reg_Opcode(&(*pMyDisasm).Argument1);
-    EIP_ += DECALAGE_EIP+2;
+    MOD_RM(&(*pMyDisasm).Argument2, pMyDisasm);
+    Reg_Opcode(&(*pMyDisasm).Argument1, pMyDisasm);
+    GV.EIP_ += DECALAGE_EIP+2;
 }
 
 /* ====================================================================
@@ -376,10 +400,10 @@ void __bea_callspec__ GxEx(PDISASM pMyDisasm)
  * ==================================================================== */
 void __bea_callspec__ GvEw(PDISASM pMyDisasm)
 {
-    MemDecoration = Arg2word;
-    MOD_RM(&(*pMyDisasm).Argument2);
-    Reg_Opcode(&(*pMyDisasm).Argument1);
-    EIP_ += DECALAGE_EIP+2;
+    GV.MemDecoration = Arg2word;
+    MOD_RM(&(*pMyDisasm).Argument2, pMyDisasm);
+    Reg_Opcode(&(*pMyDisasm).Argument1, pMyDisasm);
+    GV.EIP_ += DECALAGE_EIP+2;
 }
 
 /* ====================================================================
@@ -388,9 +412,9 @@ void __bea_callspec__ GvEw(PDISASM pMyDisasm)
 void __bea_callspec__ ALIb(PDISASM pMyDisasm)
 {
     long MyNumber;
-    if (!Security(2)) return;
+    if (!Security(2, pMyDisasm)) return;
     ImmediatSize = 8;
-    MyNumber = *((UInt8*)(UIntPtr) (EIP_+1));
+    MyNumber = *((UInt8*)(UIntPtr) (GV.EIP_+1));
     (void) CopyFormattedNumber((char*) &(*pMyDisasm).Argument2.ArgMnemonic,"%.2X",(Int64) MyNumber);
     (*pMyDisasm).Instruction.Immediat = MyNumber;
     (void) strcpy((char*) &(*pMyDisasm).Argument1.ArgMnemonic, Registers8Bits[0]);
@@ -398,7 +422,7 @@ void __bea_callspec__ ALIb(PDISASM pMyDisasm)
     (*pMyDisasm).Argument1.ArgSize = 8;
     (*pMyDisasm).Argument2.ArgType = CONSTANT_TYPE+ABSOLUTE_;
     (*pMyDisasm).Argument2.ArgSize = 8;
-    EIP_ += 2;
+    GV.EIP_ += 2;
 }
 
 /* ====================================================================
@@ -409,12 +433,12 @@ void __bea_callspec__ eAX_Iv(PDISASM pMyDisasm)
     UInt32 MyNumber;
     (*pMyDisasm).Argument1.ArgType = REGISTER_TYPE+GENERAL_REG+REG0;
     (*pMyDisasm).Argument2.ArgType = CONSTANT_TYPE+ABSOLUTE_;
-    if (OperandSize == 64) {
-        if (!Security(5)) return;
+    if (GV.OperandSize == 64) {
+        if (!Security(5, pMyDisasm)) return;
         ImmediatSize = 32;
         (*pMyDisasm).Argument1.ArgSize = 64;
         (*pMyDisasm).Argument2.ArgSize = 32;
-        MyNumber = *((UInt32*)(UIntPtr) (EIP_+1));
+        MyNumber = *((UInt32*)(UIntPtr) (GV.EIP_+1));
         (void) CopyFormattedNumber((char*) &(*pMyDisasm).Argument2.ArgMnemonic,"%.8X",(Int64) MyNumber);
         (*pMyDisasm).Instruction.Immediat = MyNumber;
          if (REX.B_ == 1) {
@@ -423,14 +447,14 @@ void __bea_callspec__ eAX_Iv(PDISASM pMyDisasm)
         else {
             (void) strcpy ((char*) (*pMyDisasm).Argument1.ArgMnemonic, Registers64Bits[0]);
         }
-        EIP_+= 5;
+        GV.EIP_+= 5;
     }
-    else if (OperandSize == 32) {
-        if (!Security(5)) return;
+    else if (GV.OperandSize == 32) {
+        if (!Security(5, pMyDisasm)) return;
         ImmediatSize = 32;
         (*pMyDisasm).Argument1.ArgSize = 32;
         (*pMyDisasm).Argument2.ArgSize = 32;
-        MyNumber = *((UInt32*)(UIntPtr) (EIP_+1));
+        MyNumber = *((UInt32*)(UIntPtr) (GV.EIP_+1));
         (void) CopyFormattedNumber((char*) &(*pMyDisasm).Argument2.ArgMnemonic,"%.8X",(Int64) MyNumber);
         (*pMyDisasm).Instruction.Immediat = MyNumber;
          if (REX.B_ == 1) {
@@ -439,14 +463,14 @@ void __bea_callspec__ eAX_Iv(PDISASM pMyDisasm)
         else {
             (void) strcpy ((char*) (*pMyDisasm).Argument1.ArgMnemonic, Registers32Bits[0]);
         }
-        EIP_+= 5;
+        GV.EIP_+= 5;
     }
     else {
-        if (!Security(3)) return;
+        if (!Security(3, pMyDisasm)) return;
         ImmediatSize = 16;
         (*pMyDisasm).Argument1.ArgSize = 16;
         (*pMyDisasm).Argument2.ArgSize = 16;
-        MyNumber = *((UInt16*)(UIntPtr) (EIP_+1));
+        MyNumber = *((UInt16*)(UIntPtr) (GV.EIP_+1));
         (void) CopyFormattedNumber((char*) &(*pMyDisasm).Argument2.ArgMnemonic,"%.8X", (Int64) MyNumber);
         (*pMyDisasm).Instruction.Immediat = MyNumber;
          if (REX.B_ == 1) {
@@ -455,7 +479,7 @@ void __bea_callspec__ eAX_Iv(PDISASM pMyDisasm)
         else {
             (void) strcpy ((char*) (*pMyDisasm).Argument1.ArgMnemonic, Registers16Bits[0]);
         }
-        EIP_+= 3;
+        GV.EIP_+= 3;
     }
 
 }
@@ -463,9 +487,9 @@ void __bea_callspec__ eAX_Iv(PDISASM pMyDisasm)
 /* ====================================================================
  *
  * ==================================================================== */
-int __bea_callspec__ Security(int len)
+int __bea_callspec__ Security(int len, PDISASM pMyDisasm)
 {
-    if ((EndOfBlock != 0) && (EIP_+(UInt64)len > EndOfBlock)) {
+    if ((EndOfBlock != 0) && (GV.EIP_+(UInt64)len > EndOfBlock)) {
         return 0;
     }
     return 1;
@@ -481,14 +505,14 @@ void __bea_callspec__ FillFlags(PDISASM pMyDisasm, int index)
 /* ====================================================================
  *
  * ==================================================================== */
-void __bea_callspec__ CalculateRelativeAddress(UInt64 * pMyAddress, Int64 MyNumber)
+void __bea_callspec__ CalculateRelativeAddress(UInt64 * pMyAddress, Int64 MyNumber, PDISASM pMyDisasm)
 {
     RelativeAddress = 1;
-    if (EIP_VA != 0) {
-        *pMyAddress = (UInt64) (EIP_VA+(UInt64) MyNumber);
+    if (GV.EIP_VA != 0) {
+        *pMyAddress = (UInt64) (GV.EIP_VA+(UInt64) MyNumber);
     }
     else {
-        *pMyAddress = (UInt64) (EIP_REAL+(UInt64) MyNumber);
+        *pMyAddress = (UInt64) (GV.EIP_REAL+(UInt64) MyNumber);
     }
 }
 
@@ -676,9 +700,9 @@ void __bea_callspec__ BuildCompleteInstruction(PDISASM pMyDisasm)
         i = strlen((char*) &(*pMyDisasm).CompleteInstr);
     }
     /* =============== if Arg1.IsMemoryType, add decoration-example == "dword ptr ds:[" */
-    if ((MemDecoration >0) && (MemDecoration < 99)) {
+    if ((GV.MemDecoration >0) && (GV.MemDecoration < 99)) {
         if (SYNTAX_ == NasmSyntax) {
-            (void) strcpy ((char*) &(*pMyDisasm).CompleteInstr+i, NasmPrefixes[MemDecoration-1]);
+            (void) strcpy ((char*) &(*pMyDisasm).CompleteInstr+i, NasmPrefixes[GV.MemDecoration-1]);
             i = strlen((char*) &(*pMyDisasm).CompleteInstr);
             if ((SEGMENTREGS != 0) || (SEGMENTFS != 0)){
                 (void) strcpy ((char*) &(*pMyDisasm).CompleteInstr+i, "[");
@@ -698,11 +722,11 @@ void __bea_callspec__ BuildCompleteInstruction(PDISASM pMyDisasm)
         }
         else {
             if (SYNTAX_ == MasmSyntax) {
-                (void) strcpy ((char*) &(*pMyDisasm).CompleteInstr+i, MasmPrefixes[MemDecoration-1]);
+                (void) strcpy ((char*) &(*pMyDisasm).CompleteInstr+i, MasmPrefixes[GV.MemDecoration-1]);
                 i = strlen((char*) &(*pMyDisasm).CompleteInstr);
             }
             else {
-                (void) strcpy ((char*) &(*pMyDisasm).CompleteInstr+i, GoAsmPrefixes[MemDecoration-1]);
+                (void) strcpy ((char*) &(*pMyDisasm).CompleteInstr+i, GoAsmPrefixes[GV.MemDecoration-1]);
                 i = strlen((char*) &(*pMyDisasm).CompleteInstr);
             }
             if ((SEGMENTREGS != 0) || (SEGMENTFS != 0)){
@@ -740,10 +764,10 @@ void __bea_callspec__ BuildCompleteInstruction(PDISASM pMyDisasm)
     }
 
     /* =============== if Arg2.IsMemoryType, add decoration-example == "dword ptr ds:[" */
-    if ((MemDecoration >100) && (MemDecoration < 199)) {
-        MemDecoration -= 100;
+    if ((GV.MemDecoration >100) && (GV.MemDecoration < 199)) {
+        GV.MemDecoration -= 100;
         if (SYNTAX_ == NasmSyntax) {
-            (void) strcpy ((char*) &(*pMyDisasm).CompleteInstr+i, NasmPrefixes[MemDecoration-1]);
+            (void) strcpy ((char*) &(*pMyDisasm).CompleteInstr+i, NasmPrefixes[GV.MemDecoration-1]);
             i = strlen((char*) &(*pMyDisasm).CompleteInstr);
             if ((SEGMENTREGS != 0) || (SEGMENTFS != 0)){
                 (void) strcpy ((char*) &(*pMyDisasm).CompleteInstr+i, "[");
@@ -763,11 +787,11 @@ void __bea_callspec__ BuildCompleteInstruction(PDISASM pMyDisasm)
         }
         else {
             if (SYNTAX_ == MasmSyntax) {
-                (void) strcpy ((char*) &(*pMyDisasm).CompleteInstr+i, MasmPrefixes[MemDecoration-1]);
+                (void) strcpy ((char*) &(*pMyDisasm).CompleteInstr+i, MasmPrefixes[GV.MemDecoration-1]);
                 i = strlen((char*) &(*pMyDisasm).CompleteInstr);
             }
             else {
-                (void) strcpy ((char*) &(*pMyDisasm).CompleteInstr+i, GoAsmPrefixes[MemDecoration-1]);
+                (void) strcpy ((char*) &(*pMyDisasm).CompleteInstr+i, GoAsmPrefixes[GV.MemDecoration-1]);
                 i = strlen((char*) &(*pMyDisasm).CompleteInstr);
             }
             if ((SEGMENTREGS != 0) || (SEGMENTFS != 0)){
@@ -821,9 +845,9 @@ void __bea_callspec__ BuildCompleteInstructionATSyntax(PDISASM pMyDisasm)
     i = strlen((char*) &(*pMyDisasm).CompleteInstr);
 
     /* =============== suffix the mnemonic */
-    if (MemDecoration != 0) {
-        if (MemDecoration > 99) MemDecoration -= 100;
-        (void) strcpy ((char*) &(*pMyDisasm).CompleteInstr+i-1, ATSuffixes[MemDecoration-1]);
+    if (GV.MemDecoration != 0) {
+        if (GV.MemDecoration > 99) GV.MemDecoration -= 100;
+        (void) strcpy ((char*) &(*pMyDisasm).CompleteInstr+i-1, ATSuffixes[GV.MemDecoration-1]);
         i = strlen((char*) &(*pMyDisasm).CompleteInstr);
     }
     else {

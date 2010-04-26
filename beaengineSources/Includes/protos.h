@@ -17,49 +17,49 @@
  *    along with BeaEngine.  If not, see <http://www.gnu.org/licenses/>. */
 
 /* ====================================== Routines_MODRM */
-void __bea_callspec__ MOD_RM(ARGTYPE*);
-void __bea_callspec__ Reg_Opcode(ARGTYPE*);
+void __bea_callspec__ MOD_RM(ARGTYPE*, PDISASM);
+void __bea_callspec__ Reg_Opcode(ARGTYPE*, PDISASM);
 
-void __bea_callspec__ Addr_EAX(ARGTYPE*);
-void __bea_callspec__ Addr_ECX(ARGTYPE*);
-void __bea_callspec__ Addr_EDX(ARGTYPE*);
-void __bea_callspec__ Addr_EBX(ARGTYPE*);
-void __bea_callspec__ Addr_SIB(ARGTYPE*);
-void __bea_callspec__ Addr_disp32(ARGTYPE*);
-void __bea_callspec__ Addr_ESI(ARGTYPE*);
-void __bea_callspec__ Addr_EDI(ARGTYPE*);
+void __bea_callspec__ Addr_EAX(ARGTYPE*, PDISASM);
+void __bea_callspec__ Addr_ECX(ARGTYPE*, PDISASM);
+void __bea_callspec__ Addr_EDX(ARGTYPE*, PDISASM);
+void __bea_callspec__ Addr_EBX(ARGTYPE*, PDISASM);
+void __bea_callspec__ Addr_SIB(ARGTYPE*, PDISASM);
+void __bea_callspec__ Addr_disp32(ARGTYPE*, PDISASM);
+void __bea_callspec__ Addr_ESI(ARGTYPE*, PDISASM);
+void __bea_callspec__ Addr_EDI(ARGTYPE*, PDISASM);
 
-void __bea_callspec__ Addr_EAX_disp8(ARGTYPE*);
-void __bea_callspec__ Addr_ECX_disp8(ARGTYPE*);
-void __bea_callspec__ Addr_EDX_disp8(ARGTYPE*);
-void __bea_callspec__ Addr_EBX_disp8(ARGTYPE*);
-void __bea_callspec__ Addr_SIB_disp8(ARGTYPE*);
-void __bea_callspec__ Addr_EBP_disp8(ARGTYPE*);
-void __bea_callspec__ Addr_ESI_disp8(ARGTYPE*);
-void __bea_callspec__ Addr_EDI_disp8(ARGTYPE*);
+void __bea_callspec__ Addr_EAX_disp8(ARGTYPE*, PDISASM);
+void __bea_callspec__ Addr_ECX_disp8(ARGTYPE*, PDISASM);
+void __bea_callspec__ Addr_EDX_disp8(ARGTYPE*, PDISASM);
+void __bea_callspec__ Addr_EBX_disp8(ARGTYPE*, PDISASM);
+void __bea_callspec__ Addr_SIB_disp8(ARGTYPE*, PDISASM);
+void __bea_callspec__ Addr_EBP_disp8(ARGTYPE*, PDISASM);
+void __bea_callspec__ Addr_ESI_disp8(ARGTYPE*, PDISASM);
+void __bea_callspec__ Addr_EDI_disp8(ARGTYPE*, PDISASM);
 
-void __bea_callspec__ Addr_EAX_disp32(ARGTYPE*);
-void __bea_callspec__ Addr_ECX_disp32(ARGTYPE*);
-void __bea_callspec__ Addr_EDX_disp32(ARGTYPE*);
-void __bea_callspec__ Addr_EBX_disp32(ARGTYPE*);
-void __bea_callspec__ Addr_SIB_disp32(ARGTYPE*);
-void __bea_callspec__ Addr_EBP_disp32(ARGTYPE*);
-void __bea_callspec__ Addr_ESI_disp32(ARGTYPE*);
-void __bea_callspec__ Addr_EDI_disp32(ARGTYPE*);
+void __bea_callspec__ Addr_EAX_disp32(ARGTYPE*, PDISASM);
+void __bea_callspec__ Addr_ECX_disp32(ARGTYPE*, PDISASM);
+void __bea_callspec__ Addr_EDX_disp32(ARGTYPE*, PDISASM);
+void __bea_callspec__ Addr_EBX_disp32(ARGTYPE*, PDISASM);
+void __bea_callspec__ Addr_SIB_disp32(ARGTYPE*, PDISASM);
+void __bea_callspec__ Addr_EBP_disp32(ARGTYPE*, PDISASM);
+void __bea_callspec__ Addr_ESI_disp32(ARGTYPE*, PDISASM);
+void __bea_callspec__ Addr_EDI_disp32(ARGTYPE*, PDISASM);
 
-void __bea_callspec__ _rEAX(ARGTYPE*);
-void __bea_callspec__ _rECX(ARGTYPE*);
-void __bea_callspec__ _rEDX(ARGTYPE*);
-void __bea_callspec__ _rEBX(ARGTYPE*);
-void __bea_callspec__ _rESP(ARGTYPE*);
-void __bea_callspec__ _rEBP(ARGTYPE*);
-void __bea_callspec__ _rESI(ARGTYPE*);
-void __bea_callspec__ _rEDI(ARGTYPE*);
+void __bea_callspec__ _rEAX(ARGTYPE*, PDISASM);
+void __bea_callspec__ _rECX(ARGTYPE*, PDISASM);
+void __bea_callspec__ _rEDX(ARGTYPE*, PDISASM);
+void __bea_callspec__ _rEBX(ARGTYPE*, PDISASM);
+void __bea_callspec__ _rESP(ARGTYPE*, PDISASM);
+void __bea_callspec__ _rEBP(ARGTYPE*, PDISASM);
+void __bea_callspec__ _rESI(ARGTYPE*, PDISASM);
+void __bea_callspec__ _rEDI(ARGTYPE*, PDISASM);
 
-size_t __bea_callspec__ SIB_0(ARGTYPE*, size_t);
-size_t __bea_callspec__ SIB_1(ARGTYPE*, size_t);
-size_t __bea_callspec__ SIB_2(ARGTYPE*, size_t);
-size_t __bea_callspec__ SIB_3(ARGTYPE*, size_t);
+size_t __bea_callspec__ SIB_0(ARGTYPE*, size_t, PDISASM);
+size_t __bea_callspec__ SIB_1(ARGTYPE*, size_t, PDISASM);
+size_t __bea_callspec__ SIB_2(ARGTYPE*, size_t, PDISASM);
+size_t __bea_callspec__ SIB_3(ARGTYPE*, size_t, PDISASM);
 
 /* ====================================== Routines_Disasm */
 void __bea_callspec__ EbGb(PDISASM);
@@ -78,12 +78,12 @@ void __bea_callspec__ GbEb(PDISASM);
 void __bea_callspec__ ALIb(PDISASM);
 void __bea_callspec__ eAX_Iv(PDISASM);
 int __bea_callspec__ AnalyzeOpcode (PDISASM);
-int __bea_callspec__ Security(int);
-void __bea_callspec__ CalculateRelativeAddress(UInt64 *, Int64);
+int __bea_callspec__ Security(int, PDISASM);
+void __bea_callspec__ CalculateRelativeAddress(UInt64 *, Int64, PDISASM);
 size_t __bea_callspec__ CopyFormattedNumber(char*, const char*, Int64);
 void __bea_callspec__ BuildCompleteInstruction(PDISASM);
 void __bea_callspec__ BuildCompleteInstructionATSyntax(PDISASM);
-void __bea_callspec__ InitVariables (PDISASM);
+int __bea_callspec__ InitVariables (PDISASM);
 void __bea_callspec__ FillFlags(PDISASM, int);
 void __bea_callspec__ FillSegmentsRegisters (PDISASM);
 void __bea_callspec__ FixArgSizeForMemoryOperand (PDISASM);

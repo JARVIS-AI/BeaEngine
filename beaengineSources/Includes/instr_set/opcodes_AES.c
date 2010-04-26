@@ -22,10 +22,10 @@
 void __bea_callspec__ aesimc(PDISASM pMyDisasm)
 {
     /* ========== 0x66 */
-    if (OperandSize == 16) {
-        OperandSize = OriginalOperandSize;
+    if (GV.OperandSize == 16) {
+        GV.OperandSize = GV.OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
-        MemDecoration = Arg2dqword;
+        GV.MemDecoration = Arg2dqword;
         (*pMyDisasm).Instruction.Category = AES_INSTRUCTION;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "aesimc ");
         SSE_ = 1;
@@ -43,10 +43,10 @@ void __bea_callspec__ aesimc(PDISASM pMyDisasm)
 void __bea_callspec__ aesenc(PDISASM pMyDisasm)
 {
     /* ========== 0x66 */
-    if (OperandSize == 16) {
-        OperandSize = OriginalOperandSize;
+    if (GV.OperandSize == 16) {
+        GV.OperandSize = GV.OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
-        MemDecoration = Arg2dqword;
+        GV.MemDecoration = Arg2dqword;
         (*pMyDisasm).Instruction.Category = AES_INSTRUCTION;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "aesenc ");
         SSE_ = 1;
@@ -64,10 +64,10 @@ void __bea_callspec__ aesenc(PDISASM pMyDisasm)
 void __bea_callspec__ aesenclast(PDISASM pMyDisasm)
 {
     /* ========== 0x66 */
-    if (OperandSize == 16) {
-        OperandSize = OriginalOperandSize;
+    if (GV.OperandSize == 16) {
+        GV.OperandSize = GV.OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
-        MemDecoration = Arg2dqword;
+        GV.MemDecoration = Arg2dqword;
         (*pMyDisasm).Instruction.Category = AES_INSTRUCTION;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "aesenclast ");
         SSE_ = 1;
@@ -85,10 +85,10 @@ void __bea_callspec__ aesenclast(PDISASM pMyDisasm)
 void __bea_callspec__ aesdec(PDISASM pMyDisasm)
 {
     /* ========== 0x66 */
-    if (OperandSize == 16) {
-        OperandSize = OriginalOperandSize;
+    if (GV.OperandSize == 16) {
+        GV.OperandSize = GV.OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
-        MemDecoration = Arg2dqword;
+        GV.MemDecoration = Arg2dqword;
         (*pMyDisasm).Instruction.Category = AES_INSTRUCTION;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "aesdec ");
         SSE_ = 1;
@@ -106,10 +106,10 @@ void __bea_callspec__ aesdec(PDISASM pMyDisasm)
 void __bea_callspec__ aesdeclast(PDISASM pMyDisasm)
 {
     /* ========== 0x66 */
-    if (OperandSize == 16) {
-        OperandSize = OriginalOperandSize;
+    if (GV.OperandSize == 16) {
+        GV.OperandSize = GV.OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
-        MemDecoration = Arg2dqword;
+        GV.MemDecoration = Arg2dqword;
         (*pMyDisasm).Instruction.Category = AES_INSTRUCTION;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "aesdeclast ");
         SSE_ = 1;
@@ -127,20 +127,20 @@ void __bea_callspec__ aesdeclast(PDISASM pMyDisasm)
 void __bea_callspec__ aeskeygen(PDISASM pMyDisasm)
 {
     /* ========== 0x66 */
-    if (OperandSize == 16) {
-        OperandSize = OriginalOperandSize;
+    if (GV.OperandSize == 16) {
+        GV.OperandSize = GV.OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
-        MemDecoration = Arg2dqword;
+        GV.MemDecoration = Arg2dqword;
         (*pMyDisasm).Instruction.Category = AES_INSTRUCTION;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "aeskeygen-assist ");
         SSE_ = 1;
         GxEx(pMyDisasm);
         SSE_ = 0;
-        EIP_++;
-        if (!Security(0)) return;
+        GV.EIP_++;
+        if (!Security(0, pMyDisasm)) return;
         third_arg = 1;
-        (*pMyDisasm).Instruction.Immediat = *((UInt8*)(UIntPtr) (EIP_- 1));
-        (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument3.ArgMnemonic, "%.2X",(Int64) *((UInt8*)(UIntPtr) (EIP_- 1)));
+        (*pMyDisasm).Instruction.Immediat = *((UInt8*)(UIntPtr) (GV.EIP_- 1));
+        (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument3.ArgMnemonic, "%.2X",(Int64) *((UInt8*)(UIntPtr) (GV.EIP_- 1)));
         (*pMyDisasm).Argument3.ArgType = CONSTANT_TYPE+ABSOLUTE_;
         (*pMyDisasm).Argument3.ArgSize = 8;
         ImmediatSize = 8;

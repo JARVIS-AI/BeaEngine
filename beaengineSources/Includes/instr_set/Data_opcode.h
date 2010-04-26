@@ -122,7 +122,7 @@ void (__bea_callspec__ *opcode_map2[])(PDISASM) = {
  };
 
 
-void (__bea_callspec__ *ModRM_0[])(ARGTYPE*) = {
+void (__bea_callspec__ *ModRM_0[])(ARGTYPE*, PDISASM) = {
      Addr_EAX,
      Addr_ECX,
      Addr_EDX,
@@ -133,7 +133,7 @@ void (__bea_callspec__ *ModRM_0[])(ARGTYPE*) = {
      Addr_EDI,
  };
 
- void (__bea_callspec__ *ModRM_1[])(ARGTYPE*) = {
+ void (__bea_callspec__ *ModRM_1[])(ARGTYPE*, PDISASM) = {
      Addr_EAX_disp8,
      Addr_ECX_disp8,
      Addr_EDX_disp8,
@@ -144,7 +144,7 @@ void (__bea_callspec__ *ModRM_0[])(ARGTYPE*) = {
      Addr_EDI_disp8,
  };
 
- void (__bea_callspec__ *ModRM_2[])(ARGTYPE*) = {
+ void (__bea_callspec__ *ModRM_2[])(ARGTYPE*, PDISASM) = {
      Addr_EAX_disp32,
      Addr_ECX_disp32,
      Addr_EDX_disp32,
@@ -155,7 +155,7 @@ void (__bea_callspec__ *ModRM_0[])(ARGTYPE*) = {
      Addr_EDI_disp32,
  };
 
- void (__bea_callspec__ *ModRM_3[])(ARGTYPE*) = {
+ void (__bea_callspec__ *ModRM_3[])(ARGTYPE*, PDISASM) = {
      _rEAX,
      _rECX,
      _rEDX,
@@ -166,7 +166,7 @@ void (__bea_callspec__ *ModRM_0[])(ARGTYPE*) = {
      _rEDI,
  };
 
-size_t (__bea_callspec__ *SIB[])(ARGTYPE*, size_t) = {
+size_t (__bea_callspec__ *SIB[])(ARGTYPE*, size_t, PDISASM) = {
      SIB_0,
      SIB_1,
      SIB_2,

@@ -21,7 +21,7 @@
  * ==================================================================== */
 void __bea_callspec__ G5_Ev(PDISASM pMyDisasm)
 {
-    REGOPCODE = ((*((UInt8*)(UIntPtr) (EIP_+1))) >> 3) & 0x7;
+    REGOPCODE = ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 3) & 0x7;
     if (REGOPCODE == 0) {
         if ((*pMyDisasm).Prefix.LockPrefix == InvalidPrefix) {
             (*pMyDisasm).Prefix.LockPrefix = InUsePrefix;
@@ -45,19 +45,19 @@ void __bea_callspec__ G5_Ev(PDISASM pMyDisasm)
         (*pMyDisasm).Instruction.BranchType = CallType;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "call ");
         if (Architecture == 64) {
-            OperandSize = 64;
+            GV.OperandSize = 64;
         }
-        if (OperandSize == 64) {
-            MemDecoration = Arg1qword;
+        if (GV.OperandSize == 64) {
+            GV.MemDecoration = Arg1qword;
         }
-        else if (OperandSize == 32) {
-            MemDecoration = Arg1dword;
+        else if (GV.OperandSize == 32) {
+            GV.MemDecoration = Arg1dword;
         }
         else {
-            MemDecoration = Arg1word;
+            GV.MemDecoration = Arg1word;
         }
-        MOD_RM(&(*pMyDisasm).Argument1);
-        EIP_ += DECALAGE_EIP+2;
+        MOD_RM(&(*pMyDisasm).Argument1, pMyDisasm);
+        GV.EIP_ += DECALAGE_EIP+2;
         (*pMyDisasm).Instruction.ImplicitModifiedRegs = GENERAL_REG+REG4;
     }
     else if (REGOPCODE == 3) {
@@ -69,9 +69,9 @@ void __bea_callspec__ G5_Ev(PDISASM pMyDisasm)
         else {
             (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "call far ");
         }
-        MemDecoration = Arg1fword;
-        MOD_RM(&(*pMyDisasm).Argument1);
-        EIP_ += DECALAGE_EIP+2;
+        GV.MemDecoration = Arg1fword;
+        MOD_RM(&(*pMyDisasm).Argument1, pMyDisasm);
+        GV.EIP_ += DECALAGE_EIP+2;
         (*pMyDisasm).Instruction.ImplicitModifiedRegs = GENERAL_REG+REG4;
     }
     else if (REGOPCODE == 4) {
@@ -79,19 +79,19 @@ void __bea_callspec__ G5_Ev(PDISASM pMyDisasm)
         (*pMyDisasm).Instruction.BranchType = JmpType;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "jmp ");
         if (Architecture == 64) {
-            OperandSize = 64;
+            GV.OperandSize = 64;
         }
-        if (OperandSize == 64) {
-            MemDecoration = Arg1qword;
+        if (GV.OperandSize == 64) {
+            GV.MemDecoration = Arg1qword;
         }
-        else if (OperandSize == 32) {
-            MemDecoration = Arg1dword;
+        else if (GV.OperandSize == 32) {
+            GV.MemDecoration = Arg1dword;
         }
         else {
-            MemDecoration = Arg1word;
+            GV.MemDecoration = Arg1word;
         }
-        MOD_RM(&(*pMyDisasm).Argument1);
-        EIP_ += DECALAGE_EIP+2;
+        MOD_RM(&(*pMyDisasm).Argument1, pMyDisasm);
+        GV.EIP_ += DECALAGE_EIP+2;
     }
     else if (REGOPCODE == 5) {
         (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+CONTROL_TRANSFER;
@@ -102,29 +102,29 @@ void __bea_callspec__ G5_Ev(PDISASM pMyDisasm)
         else {
             (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "jmp far ");
         }
-        MemDecoration = Arg1fword;
-        MOD_RM(&(*pMyDisasm).Argument1);
-        EIP_ += DECALAGE_EIP+2;
+        GV.MemDecoration = Arg1fword;
+        MOD_RM(&(*pMyDisasm).Argument1, pMyDisasm);
+        GV.EIP_ += DECALAGE_EIP+2;
     }
     else if (REGOPCODE == 6) {
         (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+DATA_TRANSFER;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "push ");
         if (Architecture == 64) {
-            OperandSize = 64;
+            GV.OperandSize = 64;
         }
-        if (OperandSize == 64) {
-            MemDecoration = Arg2qword;
+        if (GV.OperandSize == 64) {
+            GV.MemDecoration = Arg2qword;
         }
-        else if (OperandSize == 32) {
-            MemDecoration = Arg2dword;
+        else if (GV.OperandSize == 32) {
+            GV.MemDecoration = Arg2dword;
         }
         else {
-            MemDecoration = Arg2word;
+            GV.MemDecoration = Arg2word;
         }
-        MOD_RM(&(*pMyDisasm).Argument2);
-        EIP_ += DECALAGE_EIP+2;
+        MOD_RM(&(*pMyDisasm).Argument2, pMyDisasm);
+        GV.EIP_ += DECALAGE_EIP+2;
         (*pMyDisasm).Argument1.ArgType = MEMORY_TYPE;
-        (*pMyDisasm).Argument1.ArgSize = OperandSize;
+        (*pMyDisasm).Argument1.ArgSize = GV.OperandSize;
         (*pMyDisasm).Argument1.Memory.BaseRegister = REG4;
         (*pMyDisasm).Instruction.ImplicitModifiedRegs = GENERAL_REG+REG4;
     }

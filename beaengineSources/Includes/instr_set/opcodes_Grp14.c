@@ -23,13 +23,13 @@ void __bea_callspec__ G14_(PDISASM pMyDisasm)
 {
     long MyNumber;
 
-    REGOPCODE = ((*((UInt8*)(UIntPtr) (EIP_+1))) >> 3) & 0x7;
+    REGOPCODE = ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 3) & 0x7;
     if (REGOPCODE == 2) {
-        if (OperandSize == 16) {
+        if (GV.OperandSize == 16) {
             (*pMyDisasm).Instruction.Category = SSE_INSTRUCTION+SHIFT_ROTATE;
-            MemDecoration = Arg1dqword;
+            GV.MemDecoration = Arg1dqword;
             SSE_ = 1;
-            MOD_RM(&(*pMyDisasm).Argument1);
+            MOD_RM(&(*pMyDisasm).Argument1, pMyDisasm);
             SSE_ = 0;
             if (MOD_ == 0x3) {
                 (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "psrlq ");
@@ -37,10 +37,10 @@ void __bea_callspec__ G14_(PDISASM pMyDisasm)
             else {
                 FailDecode(pMyDisasm);
             }
-            EIP_ += DECALAGE_EIP+3;
-            if (!Security(0)) return;
+            GV.EIP_ += DECALAGE_EIP+3;
+            if (!Security(0, pMyDisasm)) return;
             ImmediatSize = 8;
-            MyNumber = *((UInt8*)(UIntPtr) (EIP_-1));
+            MyNumber = *((UInt8*)(UIntPtr) (GV.EIP_-1));
             (void) CopyFormattedNumber((char*) &(*pMyDisasm).Argument2.ArgMnemonic,"%.2X",(Int64) MyNumber);
             (*pMyDisasm).Instruction.Immediat = MyNumber;
             (*pMyDisasm).Argument2.ArgType = CONSTANT_TYPE+ABSOLUTE_;
@@ -48,9 +48,9 @@ void __bea_callspec__ G14_(PDISASM pMyDisasm)
         }
         else {
             (*pMyDisasm).Instruction.Category = MMX_INSTRUCTION+SHIFT_ROTATE;
-            MemDecoration = Arg1qword;
+            GV.MemDecoration = Arg1qword;
             MMX_ = 1;
-            MOD_RM(&(*pMyDisasm).Argument1);
+            MOD_RM(&(*pMyDisasm).Argument1, pMyDisasm);
             MMX_ = 0;
             if (MOD_ == 0x3) {
                 (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "psrlq ");
@@ -58,10 +58,10 @@ void __bea_callspec__ G14_(PDISASM pMyDisasm)
             else {
                 FailDecode(pMyDisasm);
             }
-            EIP_ += DECALAGE_EIP+3;
-            if (!Security(0)) return;
+            GV.EIP_ += DECALAGE_EIP+3;
+            if (!Security(0, pMyDisasm)) return;
             ImmediatSize = 8;
-            MyNumber = *((UInt8*)(UIntPtr) (EIP_-1));
+            MyNumber = *((UInt8*)(UIntPtr) (GV.EIP_-1));
             (void) CopyFormattedNumber((char*) &(*pMyDisasm).Argument2.ArgMnemonic,"%.2X",(Int64) MyNumber);
             (*pMyDisasm).Instruction.Immediat = MyNumber;
             (*pMyDisasm).Argument2.ArgType = CONSTANT_TYPE+ABSOLUTE_;
@@ -69,11 +69,11 @@ void __bea_callspec__ G14_(PDISASM pMyDisasm)
         }
     }
     else if (REGOPCODE == 3) {
-        if (OperandSize == 16) {
+        if (GV.OperandSize == 16) {
             (*pMyDisasm).Instruction.Category = SSE_INSTRUCTION+SHIFT_ROTATE;
-            MemDecoration = Arg1dqword;
+            GV.MemDecoration = Arg1dqword;
             SSE_ = 1;
-            MOD_RM(&(*pMyDisasm).Argument1);
+            MOD_RM(&(*pMyDisasm).Argument1, pMyDisasm);
             SSE_ = 0;
             if (MOD_ == 0x3) {
                 (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "psrldq ");
@@ -81,10 +81,10 @@ void __bea_callspec__ G14_(PDISASM pMyDisasm)
             else {
                 FailDecode(pMyDisasm);
             }
-            EIP_ += DECALAGE_EIP+3;
-            if (!Security(0)) return;
+            GV.EIP_ += DECALAGE_EIP+3;
+            if (!Security(0, pMyDisasm)) return;
             ImmediatSize = 8;
-            MyNumber = *((UInt8*)(UIntPtr) (EIP_-1));
+            MyNumber = *((UInt8*)(UIntPtr) (GV.EIP_-1));
             (void) CopyFormattedNumber((char*) &(*pMyDisasm).Argument2.ArgMnemonic,"%.2X",(Int64) MyNumber);
             (*pMyDisasm).Instruction.Immediat = MyNumber;
             (*pMyDisasm).Argument2.ArgType = CONSTANT_TYPE+ABSOLUTE_;
@@ -96,11 +96,11 @@ void __bea_callspec__ G14_(PDISASM pMyDisasm)
 
     }
     else if (REGOPCODE == 6) {
-        if (OperandSize == 16) {
+        if (GV.OperandSize == 16) {
             (*pMyDisasm).Instruction.Category = SSE_INSTRUCTION+SHIFT_ROTATE;
-            MemDecoration = Arg1dqword;
+            GV.MemDecoration = Arg1dqword;
             SSE_ = 1;
-            MOD_RM(&(*pMyDisasm).Argument1);
+            MOD_RM(&(*pMyDisasm).Argument1, pMyDisasm);
             SSE_ = 0;
             if (MOD_ == 0x3) {
                 (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "psllq ");
@@ -108,10 +108,10 @@ void __bea_callspec__ G14_(PDISASM pMyDisasm)
             else {
                 FailDecode(pMyDisasm);
             }
-            EIP_ += DECALAGE_EIP+3;
-            if (!Security(0)) return;
+            GV.EIP_ += DECALAGE_EIP+3;
+            if (!Security(0, pMyDisasm)) return;
             ImmediatSize = 8;
-            MyNumber = *((UInt8*)(UIntPtr) (EIP_-1));
+            MyNumber = *((UInt8*)(UIntPtr) (GV.EIP_-1));
             (void) CopyFormattedNumber((char*) &(*pMyDisasm).Argument2.ArgMnemonic,"%.2X",(Int64) MyNumber);
             (*pMyDisasm).Instruction.Immediat = MyNumber;
             (*pMyDisasm).Argument2.ArgType = CONSTANT_TYPE+ABSOLUTE_;
@@ -119,9 +119,9 @@ void __bea_callspec__ G14_(PDISASM pMyDisasm)
         }
         else {
             (*pMyDisasm).Instruction.Category = MMX_INSTRUCTION+SHIFT_ROTATE;
-            MemDecoration = Arg1qword;
+            GV.MemDecoration = Arg1qword;
             MMX_ = 1;
-            MOD_RM(&(*pMyDisasm).Argument1);
+            MOD_RM(&(*pMyDisasm).Argument1, pMyDisasm);
             MMX_ = 0;
             if (MOD_ == 0x3) {
                 (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "psllq ");
@@ -129,10 +129,10 @@ void __bea_callspec__ G14_(PDISASM pMyDisasm)
             else {
                 FailDecode(pMyDisasm);
             }
-            EIP_ += DECALAGE_EIP+3;
-            if (!Security(0)) return;
+            GV.EIP_ += DECALAGE_EIP+3;
+            if (!Security(0, pMyDisasm)) return;
             ImmediatSize = 8;
-            MyNumber = *((UInt8*)(UIntPtr) (EIP_-1));
+            MyNumber = *((UInt8*)(UIntPtr) (GV.EIP_-1));
             (void) CopyFormattedNumber((char*) &(*pMyDisasm).Argument2.ArgMnemonic,"%.2X",(Int64) MyNumber);
             (*pMyDisasm).Instruction.Immediat = MyNumber;
             (*pMyDisasm).Argument2.ArgType = CONSTANT_TYPE+ABSOLUTE_;
@@ -140,11 +140,11 @@ void __bea_callspec__ G14_(PDISASM pMyDisasm)
         }
     }
     else if (REGOPCODE == 7) {
-        if (OperandSize == 16) {
+        if (GV.OperandSize == 16) {
             (*pMyDisasm).Instruction.Category = SSE_INSTRUCTION+SHIFT_ROTATE;
-            MemDecoration = Arg1dqword;
+            GV.MemDecoration = Arg1dqword;
             SSE_ = 1;
-            MOD_RM(&(*pMyDisasm).Argument1);
+            MOD_RM(&(*pMyDisasm).Argument1, pMyDisasm);
             SSE_ = 0;
             if (MOD_ == 0x3) {
                 (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "pslldq ");
@@ -152,10 +152,10 @@ void __bea_callspec__ G14_(PDISASM pMyDisasm)
             else {
                 FailDecode(pMyDisasm);
             }
-            EIP_ += DECALAGE_EIP+3;
-            if (!Security(0)) return;
+            GV.EIP_ += DECALAGE_EIP+3;
+            if (!Security(0, pMyDisasm)) return;
             ImmediatSize = 8;
-            MyNumber = *((UInt8*)(UIntPtr) (EIP_-1));
+            MyNumber = *((UInt8*)(UIntPtr) (GV.EIP_-1));
             (void) CopyFormattedNumber((char*) &(*pMyDisasm).Argument2.ArgMnemonic,"%.2X",(Int64) MyNumber);
             (*pMyDisasm).Instruction.Immediat = MyNumber;
             (*pMyDisasm).Argument2.ArgType = CONSTANT_TYPE+ABSOLUTE_;

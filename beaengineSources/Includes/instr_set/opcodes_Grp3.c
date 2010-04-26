@@ -21,7 +21,7 @@
  * ==================================================================== */
 void __bea_callspec__ G3_Eb(PDISASM pMyDisasm)
 {
-    REGOPCODE = ((*((UInt8*)(UIntPtr) (EIP_+1))) >> 3) & 0x7;
+    REGOPCODE = ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 3) & 0x7;
     if (REGOPCODE == 0) {
         (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+BIT_UInt8;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "test ");
@@ -54,11 +54,11 @@ void __bea_callspec__ G3_Eb(PDISASM pMyDisasm)
     else if (REGOPCODE == 4) {
         (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+ARITHMETIC_INSTRUCTION;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "mul ");
-        MemDecoration = Arg2byte;
-        OperandSize = 8;
-        MOD_RM(&(*pMyDisasm).Argument2);
-        OperandSize = 32;
-        EIP_ += DECALAGE_EIP+2;
+        GV.MemDecoration = Arg2byte;
+        GV.OperandSize = 8;
+        MOD_RM(&(*pMyDisasm).Argument2, pMyDisasm);
+        GV.OperandSize = 32;
+        GV.EIP_ += DECALAGE_EIP+2;
         (*pMyDisasm).Argument1.ArgType = REGISTER_TYPE+GENERAL_REG+REG0+REG2;
         (*pMyDisasm).Argument1.ArgSize = 8;
         FillFlags(pMyDisasm, 70);
@@ -66,11 +66,11 @@ void __bea_callspec__ G3_Eb(PDISASM pMyDisasm)
     else if (REGOPCODE == 5) {
         (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+ARITHMETIC_INSTRUCTION;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "imul ");
-        MemDecoration = Arg2byte;
-        OperandSize = 8;
-        MOD_RM(&(*pMyDisasm).Argument2);
-        OperandSize = 32;
-        EIP_ += DECALAGE_EIP+2;
+        GV.MemDecoration = Arg2byte;
+        GV.OperandSize = 8;
+        MOD_RM(&(*pMyDisasm).Argument2, pMyDisasm);
+        GV.OperandSize = 32;
+        GV.EIP_ += DECALAGE_EIP+2;
         (*pMyDisasm).Argument1.ArgType = REGISTER_TYPE+GENERAL_REG+REG0+REG2;
         (*pMyDisasm).Argument1.ArgSize = 8;
         FillFlags(pMyDisasm, 38);
@@ -78,11 +78,11 @@ void __bea_callspec__ G3_Eb(PDISASM pMyDisasm)
     else if (REGOPCODE == 6) {
         (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+ARITHMETIC_INSTRUCTION;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "div ");
-        MemDecoration = Arg2byte;
-        OperandSize = 8;
-        MOD_RM(&(*pMyDisasm).Argument2);
-        OperandSize = 32;
-        EIP_ += DECALAGE_EIP+2;
+        GV.MemDecoration = Arg2byte;
+        GV.OperandSize = 8;
+        MOD_RM(&(*pMyDisasm).Argument2, pMyDisasm);
+        GV.OperandSize = 32;
+        GV.EIP_ += DECALAGE_EIP+2;
         (*pMyDisasm).Argument1.ArgType = REGISTER_TYPE+GENERAL_REG+REG0+REG2;
         (*pMyDisasm).Argument1.ArgSize = 8;
         FillFlags(pMyDisasm, 31);
@@ -90,11 +90,11 @@ void __bea_callspec__ G3_Eb(PDISASM pMyDisasm)
     else if (REGOPCODE == 7) {
         (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+ARITHMETIC_INSTRUCTION;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "idiv ");
-        MemDecoration = Arg2byte;
-        OperandSize = 8;
-        MOD_RM(&(*pMyDisasm).Argument2);
-        OperandSize = 32;
-        EIP_ += DECALAGE_EIP+2;
+        GV.MemDecoration = Arg2byte;
+        GV.OperandSize = 8;
+        MOD_RM(&(*pMyDisasm).Argument2, pMyDisasm);
+        GV.OperandSize = 32;
+        GV.EIP_ += DECALAGE_EIP+2;
         (*pMyDisasm).Argument1.ArgType = REGISTER_TYPE+GENERAL_REG+REG0+REG2;
         (*pMyDisasm).Argument1.ArgSize = 8;
         FillFlags(pMyDisasm, 37);
@@ -106,7 +106,7 @@ void __bea_callspec__ G3_Eb(PDISASM pMyDisasm)
  * ==================================================================== */
 void __bea_callspec__ G3_Ev(PDISASM pMyDisasm)
 {
-    REGOPCODE = ((*((UInt8*)(UIntPtr) (EIP_+1))) >> 3) & 0x7;
+    REGOPCODE = ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 3) & 0x7;
     if (REGOPCODE == 0) {
         (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+BIT_UInt8;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "test ");
@@ -139,17 +139,17 @@ void __bea_callspec__ G3_Ev(PDISASM pMyDisasm)
     else if (REGOPCODE == 4) {
         (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+ARITHMETIC_INSTRUCTION;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "mul ");
-        if (OperandSize == 64) {
-            MemDecoration = Arg2qword;
+        if (GV.OperandSize == 64) {
+            GV.MemDecoration = Arg2qword;
         }
-        else if (OperandSize == 32) {
-            MemDecoration = Arg2dword;
+        else if (GV.OperandSize == 32) {
+            GV.MemDecoration = Arg2dword;
         }
         else {
-            MemDecoration = Arg2word;
+            GV.MemDecoration = Arg2word;
         }
-        MOD_RM(&(*pMyDisasm).Argument2);
-        EIP_ += DECALAGE_EIP+2;
+        MOD_RM(&(*pMyDisasm).Argument2, pMyDisasm);
+        GV.EIP_ += DECALAGE_EIP+2;
         (*pMyDisasm).Argument1.ArgType = REGISTER_TYPE+GENERAL_REG+REG0+REG2;
         (*pMyDisasm).Argument1.ArgSize = 8;
         FillFlags(pMyDisasm, 70);
@@ -157,17 +157,17 @@ void __bea_callspec__ G3_Ev(PDISASM pMyDisasm)
     else if (REGOPCODE == 5) {
         (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+ARITHMETIC_INSTRUCTION;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "imul ");
-        if (OperandSize == 64) {
-            MemDecoration = Arg2qword;
+        if (GV.OperandSize == 64) {
+            GV.MemDecoration = Arg2qword;
         }
-        else if (OperandSize == 32) {
-            MemDecoration = Arg2dword;
+        else if (GV.OperandSize == 32) {
+            GV.MemDecoration = Arg2dword;
         }
         else {
-            MemDecoration = Arg2word;
+            GV.MemDecoration = Arg2word;
         }
-        MOD_RM(&(*pMyDisasm).Argument2);
-        EIP_ += DECALAGE_EIP+2;
+        MOD_RM(&(*pMyDisasm).Argument2, pMyDisasm);
+        GV.EIP_ += DECALAGE_EIP+2;
         (*pMyDisasm).Argument1.ArgType = REGISTER_TYPE+GENERAL_REG+REG0+REG2;
         (*pMyDisasm).Argument1.ArgSize = 8;
         FillFlags(pMyDisasm, 38);
@@ -175,17 +175,17 @@ void __bea_callspec__ G3_Ev(PDISASM pMyDisasm)
     else if (REGOPCODE == 6) {
         (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+ARITHMETIC_INSTRUCTION;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "div ");
-        if (OperandSize == 64) {
-            MemDecoration = Arg2qword;
+        if (GV.OperandSize == 64) {
+            GV.MemDecoration = Arg2qword;
         }
-        else if (OperandSize == 32) {
-            MemDecoration = Arg2dword;
+        else if (GV.OperandSize == 32) {
+            GV.MemDecoration = Arg2dword;
         }
         else {
-            MemDecoration = Arg2word;
+            GV.MemDecoration = Arg2word;
         }
-        MOD_RM(&(*pMyDisasm).Argument2);
-        EIP_ += DECALAGE_EIP+2;
+        MOD_RM(&(*pMyDisasm).Argument2, pMyDisasm);
+        GV.EIP_ += DECALAGE_EIP+2;
         (*pMyDisasm).Argument1.ArgType = REGISTER_TYPE+GENERAL_REG+REG0+REG2;
         (*pMyDisasm).Argument1.ArgSize = 8;
         FillFlags(pMyDisasm, 31);
@@ -193,17 +193,17 @@ void __bea_callspec__ G3_Ev(PDISASM pMyDisasm)
     else if (REGOPCODE == 7) {
         (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+ARITHMETIC_INSTRUCTION;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "idiv ");
-        if (OperandSize == 64) {
-            MemDecoration = Arg2qword;
+        if (GV.OperandSize == 64) {
+            GV.MemDecoration = Arg2qword;
         }
-        else if (OperandSize == 32) {
-            MemDecoration = Arg2dword;
+        else if (GV.OperandSize == 32) {
+            GV.MemDecoration = Arg2dword;
         }
         else {
-            MemDecoration = Arg2word;
+            GV.MemDecoration = Arg2word;
         }
-        MOD_RM(&(*pMyDisasm).Argument2);
-        EIP_ += DECALAGE_EIP+2;
+        MOD_RM(&(*pMyDisasm).Argument2, pMyDisasm);
+        GV.EIP_ += DECALAGE_EIP+2;
         (*pMyDisasm).Argument1.ArgType = REGISTER_TYPE+GENERAL_REG+REG0+REG2;
         (*pMyDisasm).Argument1.ArgSize = 8;
         FillFlags(pMyDisasm, 37);

@@ -21,11 +21,11 @@
  * ==================================================================== */
 void __bea_callspec__ G15_(PDISASM pMyDisasm)
 {
-    REGOPCODE = ((*((UInt8*)(UIntPtr) (EIP_+1))) >> 3) & 0x7;
+    REGOPCODE = ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 3) & 0x7;
     if (REGOPCODE == 0) {
-        MOD_RM(&(*pMyDisasm).Argument1);
+        MOD_RM(&(*pMyDisasm).Argument1, pMyDisasm);
         if (MOD_ != 0x3) {
-            MemDecoration = Arg1multibytes;
+            GV.MemDecoration = Arg1multibytes;
             (*pMyDisasm).Instruction.Category = FPU_INSTRUCTION+STATE_MANAGEMENT;
             (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "fxsave ");
             (*pMyDisasm).Argument1.ArgSize = 512;
@@ -37,9 +37,9 @@ void __bea_callspec__ G15_(PDISASM pMyDisasm)
         }
     }
     else if (REGOPCODE == 1) {
-        MOD_RM(&(*pMyDisasm).Argument2);
+        MOD_RM(&(*pMyDisasm).Argument2, pMyDisasm);
         if (MOD_ != 0x3) {
-            MemDecoration = Arg2multibytes;
+            GV.MemDecoration = Arg2multibytes;
             (*pMyDisasm).Instruction.Category = FPU_INSTRUCTION+STATE_MANAGEMENT;
             (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "fxrstor ");
             (*pMyDisasm).Argument2.ArgSize = 512;
@@ -52,9 +52,9 @@ void __bea_callspec__ G15_(PDISASM pMyDisasm)
 
     }
     else if (REGOPCODE == 2) {
-        MOD_RM(&(*pMyDisasm).Argument2);
+        MOD_RM(&(*pMyDisasm).Argument2, pMyDisasm);
         if (MOD_ != 0x3) {
-            MemDecoration = Arg2dword;
+            GV.MemDecoration = Arg2dword;
             (*pMyDisasm).Instruction.Category = SSE_INSTRUCTION+STATE_MANAGEMENT;
             (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "ldmxcsr ");
             (*pMyDisasm).Argument1.ArgType = REGISTER_TYPE+SPECIAL_REG+REG1;
@@ -66,9 +66,9 @@ void __bea_callspec__ G15_(PDISASM pMyDisasm)
 
     }
     else if (REGOPCODE == 3) {
-        MOD_RM(&(*pMyDisasm).Argument1);
+        MOD_RM(&(*pMyDisasm).Argument1, pMyDisasm);
         if (MOD_ != 0x3) {
-            MemDecoration = Arg1dword;
+            GV.MemDecoration = Arg1dword;
             (*pMyDisasm).Instruction.Category = SSE_INSTRUCTION+STATE_MANAGEMENT;
             (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "stmxcsr ");
             (*pMyDisasm).Argument2.ArgType = REGISTER_TYPE+SPECIAL_REG+REG1;
@@ -81,9 +81,9 @@ void __bea_callspec__ G15_(PDISASM pMyDisasm)
     }
 
     else if (REGOPCODE == 4) {
-        MOD_RM(&(*pMyDisasm).Argument1);
+        MOD_RM(&(*pMyDisasm).Argument1, pMyDisasm);
         if (MOD_ != 0x3) {
-            MemDecoration = Arg1multibytes;
+            GV.MemDecoration = Arg1multibytes;
             (*pMyDisasm).Instruction.Category = FPU_INSTRUCTION+STATE_MANAGEMENT;
             (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "xsave ");
             (*pMyDisasm).Argument1.ArgSize = 512;
@@ -96,14 +96,14 @@ void __bea_callspec__ G15_(PDISASM pMyDisasm)
     }
 
     else if (REGOPCODE == 5) {
-        MOD_ = ((*((UInt8*)(UIntPtr) (EIP_+1))) >> 6) & 0x3;
+        MOD_ = ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 6) & 0x3;
         if (MOD_ == 0x3) {
             (*pMyDisasm).Instruction.Category = SSE2_INSTRUCTION+CACHEABILITY_CONTROL;
             (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "lfence ");
         }
         else {
-            MOD_RM(&(*pMyDisasm).Argument2);
-            MemDecoration = Arg2multibytes;
+            MOD_RM(&(*pMyDisasm).Argument2, pMyDisasm);
+            GV.MemDecoration = Arg2multibytes;
             (*pMyDisasm).Instruction.Category = FPU_INSTRUCTION+STATE_MANAGEMENT;
             (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "xrstor ");
             (*pMyDisasm).Argument2.ArgSize = 512;
@@ -113,7 +113,7 @@ void __bea_callspec__ G15_(PDISASM pMyDisasm)
 
     }
     else if (REGOPCODE == 6) {
-        MOD_ = ((*((UInt8*)(UIntPtr) (EIP_+1))) >> 6) & 0x3;
+        MOD_ = ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 6) & 0x3;
         if (MOD_ == 0x3) {
             (*pMyDisasm).Instruction.Category = SSE2_INSTRUCTION+CACHEABILITY_CONTROL;
             (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "mfence ");
@@ -123,16 +123,16 @@ void __bea_callspec__ G15_(PDISASM pMyDisasm)
         }
     }
     else if (REGOPCODE == 7) {
-        MOD_ = ((*((UInt8*)(UIntPtr) (EIP_+1))) >> 6) & 0x3;
+        MOD_ = ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 6) & 0x3;
         if (MOD_ == 0x3) {
             (*pMyDisasm).Instruction.Category = SSE2_INSTRUCTION+CACHEABILITY_CONTROL;
             (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "sfence ");
         }
         else {
-            OperandSize = 8;
-            MOD_RM(&(*pMyDisasm).Argument2);
-            OperandSize = 32;
-            MemDecoration = Arg2byte;
+            GV.OperandSize = 8;
+            MOD_RM(&(*pMyDisasm).Argument2, pMyDisasm);
+            GV.OperandSize = 32;
+            GV.MemDecoration = Arg2byte;
             (*pMyDisasm).Instruction.Category = SSE2_INSTRUCTION+CACHEABILITY_CONTROL;
             (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "clflush ");
         }
@@ -142,5 +142,5 @@ void __bea_callspec__ G15_(PDISASM pMyDisasm)
     else {
         FailDecode(pMyDisasm);
     }
-    EIP_+= DECALAGE_EIP+2;
+    GV.EIP_+= DECALAGE_EIP+2;
 }

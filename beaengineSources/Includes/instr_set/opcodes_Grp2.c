@@ -21,7 +21,7 @@
  * ==================================================================== */
 void __bea_callspec__ G2_EbIb(PDISASM pMyDisasm)
 {
-    REGOPCODE = ((*((UInt8*)(UIntPtr) (EIP_+1))) >> 3) & 0x7;
+    REGOPCODE = ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 3) & 0x7;
     EbIb(pMyDisasm);
     if (REGOPCODE == 0) {
         (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+SHIFT_ROTATE;
@@ -71,7 +71,7 @@ void __bea_callspec__ G2_EbIb(PDISASM pMyDisasm)
  * ==================================================================== */
 void __bea_callspec__ G2_EvIb(PDISASM pMyDisasm)
 {
-    REGOPCODE = ((*((UInt8*)(UIntPtr) (EIP_+1))) >> 3) & 0x7;
+    REGOPCODE = ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 3) & 0x7;
     EvIb(pMyDisasm);
     if (REGOPCODE == 0) {
         (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+SHIFT_ROTATE;
@@ -120,11 +120,11 @@ void __bea_callspec__ G2_EvIb(PDISASM pMyDisasm)
  * ==================================================================== */
 void __bea_callspec__ G2_Eb1(PDISASM pMyDisasm)
 {
-    REGOPCODE = ((*((UInt8*)(UIntPtr) (EIP_+1))) >> 3) & 0x7;
-    MemDecoration = Arg1byte;
-    OperandSize = 8;
-    MOD_RM(&(*pMyDisasm).Argument1);
-    OperandSize = 32;
+    REGOPCODE = ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 3) & 0x7;
+    GV.MemDecoration = Arg1byte;
+    GV.OperandSize = 8;
+    MOD_RM(&(*pMyDisasm).Argument1, pMyDisasm);
+    GV.OperandSize = 32;
     (void) strcpy ((*pMyDisasm).Argument2.ArgMnemonic, "1 ");
     (*pMyDisasm).Argument2.ArgType = CONSTANT_TYPE+ABSOLUTE_;
     (*pMyDisasm).Argument2.ArgSize = 8;
@@ -169,7 +169,7 @@ void __bea_callspec__ G2_Eb1(PDISASM pMyDisasm)
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "sar ");
         FillFlags(pMyDisasm, 91);
     }
-    EIP_ += DECALAGE_EIP+2;
+    GV.EIP_ += DECALAGE_EIP+2;
 }
 
 
@@ -178,17 +178,17 @@ void __bea_callspec__ G2_Eb1(PDISASM pMyDisasm)
  * ==================================================================== */
 void __bea_callspec__ G2_Ev1(PDISASM pMyDisasm)
 {
-    REGOPCODE = ((*((UInt8*)(UIntPtr) (EIP_+1))) >> 3) & 0x7;
-    if (OperandSize == 64) {
-        MemDecoration = Arg1qword;
+    REGOPCODE = ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 3) & 0x7;
+    if (GV.OperandSize == 64) {
+        GV.MemDecoration = Arg1qword;
     }
-    else if (OperandSize == 32) {
-        MemDecoration = Arg1dword;
+    else if (GV.OperandSize == 32) {
+        GV.MemDecoration = Arg1dword;
     }
     else {
-        MemDecoration = Arg1word;
+        GV.MemDecoration = Arg1word;
     }
-    MOD_RM(&(*pMyDisasm).Argument1);
+    MOD_RM(&(*pMyDisasm).Argument1, pMyDisasm);
     (void) strcpy ((*pMyDisasm).Argument2.ArgMnemonic, "1 ");
     (*pMyDisasm).Argument2.ArgType = CONSTANT_TYPE+ABSOLUTE_;
     (*pMyDisasm).Argument2.ArgSize = 8;
@@ -233,7 +233,7 @@ void __bea_callspec__ G2_Ev1(PDISASM pMyDisasm)
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "sar ");
         FillFlags(pMyDisasm, 91);
     }
-    EIP_ += DECALAGE_EIP+2;
+    GV.EIP_ += DECALAGE_EIP+2;
 }
 
 
@@ -242,11 +242,11 @@ void __bea_callspec__ G2_Ev1(PDISASM pMyDisasm)
  * ==================================================================== */
 void __bea_callspec__ G2_EbCL(PDISASM pMyDisasm)
 {
-    REGOPCODE = ((*((UInt8*)(UIntPtr) (EIP_+1))) >> 3) & 0x7;
-    MemDecoration = Arg1byte;
-    OperandSize = 8;
-    MOD_RM(&(*pMyDisasm).Argument1);
-    OperandSize = 32;
+    REGOPCODE = ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 3) & 0x7;
+    GV.MemDecoration = Arg1byte;
+    GV.OperandSize = 8;
+    MOD_RM(&(*pMyDisasm).Argument1, pMyDisasm);
+    GV.OperandSize = 32;
     (void) strcpy ((*pMyDisasm).Argument2.ArgMnemonic, Registers8Bits[1]);
     (*pMyDisasm).Argument2.ArgType = REGISTER_TYPE+GENERAL_REG+REG1;
     (*pMyDisasm).Argument2.ArgSize = 8;
@@ -290,7 +290,7 @@ void __bea_callspec__ G2_EbCL(PDISASM pMyDisasm)
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "sar ");
         FillFlags(pMyDisasm, 92);
     }
-    EIP_ += DECALAGE_EIP+2;
+    GV.EIP_ += DECALAGE_EIP+2;
 }
 
 
@@ -299,17 +299,17 @@ void __bea_callspec__ G2_EbCL(PDISASM pMyDisasm)
  * ==================================================================== */
 void __bea_callspec__ G2_EvCL(PDISASM pMyDisasm)
 {
-    REGOPCODE = ((*((UInt8*)(UIntPtr) (EIP_+1))) >> 3) & 0x7;
-    if (OperandSize == 64) {
-        MemDecoration = Arg1qword;
+    REGOPCODE = ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 3) & 0x7;
+    if (GV.OperandSize == 64) {
+        GV.MemDecoration = Arg1qword;
     }
-    else if (OperandSize == 32) {
-        MemDecoration = Arg1dword;
+    else if (GV.OperandSize == 32) {
+        GV.MemDecoration = Arg1dword;
     }
     else {
-        MemDecoration = Arg1word;
+        GV.MemDecoration = Arg1word;
     }
-    MOD_RM(&(*pMyDisasm).Argument1);
+    MOD_RM(&(*pMyDisasm).Argument1, pMyDisasm);
     (void) strcpy ((*pMyDisasm).Argument2.ArgMnemonic, Registers8Bits[1]);
     (*pMyDisasm).Argument2.ArgType = REGISTER_TYPE+GENERAL_REG+REG1;
     (*pMyDisasm).Argument2.ArgSize = 8;
@@ -353,5 +353,5 @@ void __bea_callspec__ G2_EvCL(PDISASM pMyDisasm)
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "sar ");
         FillFlags(pMyDisasm, 92);
     }
-    EIP_ += DECALAGE_EIP+2;
+    GV.EIP_ += DECALAGE_EIP+2;
 }

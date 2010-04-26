@@ -17,11 +17,15 @@
  *    along with BeaEngine.  If not, see <http://www.gnu.org/licenses/>. */
 
 
-static UIntPtr EIP_, EIP_VA, EIP_REAL;
-static Int32 OriginalOperandSize;        /* keep original OperandSize value if it is used as a mandatory prefix */
-static Int32 OperandSize;
-static Int32 MemDecoration;
-static Int32 AddressSize;
+//#define GV (*(GlobalVariables*)((*pMyDisasm).Reserved))
+#define GV (*pMyDisasm).Reserved
+
+
+//static UIntPtr EIP_, EIP_VA, EIP_REAL;
+//static Int32 OriginalOperandSize;        /* keep original OperandSize value if it is used as a mandatory prefix */
+//static Int32 OperandSize;
+//static Int32 MemDecoration;
+//static Int32 AddressSize;
 static Int32 MOD_, RM_, INDEX_, SCALE_, BASE_, MMX_, SSE_, CR_, DR_, SEG_, REGOPCODE;
 static UIntPtr DECALAGE_EIP;
 static Int32 FORMATNUMBER;
@@ -223,14 +227,14 @@ char SegmentRegs[7][4] = {
  * AT&T Suffixes
  * ===================================================== */
 char ATSuffixes[8][4] = {
-    "b ",     /* MemDecoration == 1 */
-    "w ",     /* MemDecoration == 2 */
-    "l ",     /* MemDecoration == 3 */
-    "q ",     /* MemDecoration == 4 */
-    " ",      /* MemDecoration == 5 (multibytes) */
-    "t ",     /* MemDecoration == 6 */
-    " ",      /* MemDecoration == 7 (fword) */
-    " ",      /* MemDecoration == 8 (dqword) */
+    "b ",     /* GV.MemDecoration == 1 */
+    "w ",     /* GV.MemDecoration == 2 */
+    "l ",     /* GV.MemDecoration == 3 */
+    "q ",     /* GV.MemDecoration == 4 */
+    " ",      /* GV.MemDecoration == 5 (multibytes) */
+    "t ",     /* GV.MemDecoration == 6 */
+    " ",      /* GV.MemDecoration == 7 (fword) */
+    " ",      /* GV.MemDecoration == 8 (dqword) */
 };
 
 /* =====================================================
@@ -238,28 +242,28 @@ char ATSuffixes[8][4] = {
  * ===================================================== */
 
 char MasmPrefixes[8][16] = {
-    "byte ptr ",        /* MemDecoration == 1 */
-    "word ptr ",        /* MemDecoration == 2 */
-    "dword ptr ",       /* MemDecoration == 3 */
-    "qword ptr ",       /* MemDecoration == 4 */
-    " ",                /* MemDecoration == 5 (multibytes) */
-    "tbyte ptr ",       /* MemDecoration == 6 */
-    "fword ptr ",       /* MemDecoration == 7 (fword) */
-    "dqword ptr ",      /* MemDecoration == 8 (dqword) */
+    "byte ptr ",        /* GV.MemDecoration == 1 */
+    "word ptr ",        /* GV.MemDecoration == 2 */
+    "dword ptr ",       /* GV.MemDecoration == 3 */
+    "qword ptr ",       /* GV.MemDecoration == 4 */
+    " ",                /* GV.MemDecoration == 5 (multibytes) */
+    "tbyte ptr ",       /* GV.MemDecoration == 6 */
+    "fword ptr ",       /* GV.MemDecoration == 7 (fword) */
+    "dqword ptr ",      /* GV.MemDecoration == 8 (dqword) */
 };
 
 /* =====================================================
  * NASM Prefixes for MemoryType
  * ===================================================== */
 char NasmPrefixes[8][8] = {
-    "byte ",      /* MemDecoration == 1 */
-    "word ",      /* MemDecoration == 2 */
-    "dword ",     /* MemDecoration == 3 */
-    "qword ",     /* MemDecoration == 4 */
-    " ",          /* MemDecoration == 5 (multibytes) */
-    "tword ",     /* MemDecoration == 6 */
-    " ",          /* MemDecoration == 7 (fword) */
-    " ",          /* MemDecoration == 8 (dqword) */
+    "byte ",      /* GV.MemDecoration == 1 */
+    "word ",      /* GV.MemDecoration == 2 */
+    "dword ",     /* GV.MemDecoration == 3 */
+    "qword ",     /* GV.MemDecoration == 4 */
+    " ",          /* GV.MemDecoration == 5 (multibytes) */
+    "tword ",     /* GV.MemDecoration == 6 */
+    " ",          /* GV.MemDecoration == 7 (fword) */
+    " ",          /* GV.MemDecoration == 8 (dqword) */
 };
 
 
@@ -268,14 +272,14 @@ char NasmPrefixes[8][8] = {
  * GOASM Prefixes for MemoryType
  * ===================================================== */
 char GoAsmPrefixes[8][4] = {
-    "b ",     /* MemDecoration == 1 */
-    "w ",     /* MemDecoration == 2 */
-    "d ",     /* MemDecoration == 3 */
-    "q ",     /* MemDecoration == 4 */
-    " ",      /* MemDecoration == 5 (multibytes) */
-    "t ",     /* MemDecoration == 6 */
-    " ",      /* MemDecoration == 7 (fword) */
-    " ",      /* MemDecoration == 8 (dqword) */
+    "b ",     /* GV.MemDecoration == 1 */
+    "w ",     /* GV.MemDecoration == 2 */
+    "d ",     /* GV.MemDecoration == 3 */
+    "q ",     /* GV.MemDecoration == 4 */
+    " ",      /* GV.MemDecoration == 5 (multibytes) */
+    "t ",     /* GV.MemDecoration == 6 */
+    " ",      /* GV.MemDecoration == 7 (fword) */
+    " ",      /* GV.MemDecoration == 8 (dqword) */
 };
 
 
