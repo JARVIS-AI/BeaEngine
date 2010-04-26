@@ -17,15 +17,15 @@
  *    along with BeaEngine.  If not, see <http://www.gnu.org/licenses/>. */
 
 
-//#define GV (*(GlobalVariables*)((*pMyDisasm).Reserved))
+/* #define GV (*(GlobalVariables*)((*pMyDisasm).Reserved))  */
 #define GV (*pMyDisasm).Reserved
 
 
-//static UIntPtr EIP_, EIP_VA, EIP_REAL;
-//static Int32 OriginalOperandSize;        /* keep original OperandSize value if it is used as a mandatory prefix */
-//static Int32 OperandSize;
-//static Int32 MemDecoration;
-//static Int32 AddressSize;
+/* static UIntPtr EIP_, EIP_VA, EIP_REAL; */
+/* static Int32 OriginalOperandSize;         keep original OperandSize value if it is used as a mandatory prefix */
+/* static Int32 OperandSize; */
+/* static Int32 MemDecoration; */
+/*static Int32 AddressSize; */
 static Int32 MOD_, RM_, INDEX_, SCALE_, BASE_, MMX_, SSE_, CR_, DR_, SEG_, REGOPCODE;
 static UIntPtr DECALAGE_EIP;
 static Int32 FORMATNUMBER;

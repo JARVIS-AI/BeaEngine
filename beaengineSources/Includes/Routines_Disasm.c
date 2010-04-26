@@ -269,7 +269,7 @@ void __bea_callspec__ EvIb(PDISASM pMyDisasm)
         MOD_RM(&(*pMyDisasm).Argument1, pMyDisasm);
         GV.EIP_ += DECALAGE_EIP+3;
         if (!Security(0, pMyDisasm)) return;
-        //(void) CopyFormattedNumber((char*) &(*pMyDisasm).Argument2.ArgMnemonic,"%.2X",(Int64)*((UInt8*)(UIntPtr) (GV.EIP_-1)));
+        /* (void) CopyFormattedNumber((char*) &(*pMyDisasm).Argument2.ArgMnemonic,"%.2X",(Int64)*((UInt8*)(UIntPtr) (GV.EIP_-1))); */
 		if (GV.OperandSize == 32) {
 			(void) CopyFormattedNumber((char*) &(*pMyDisasm).Argument2.ArgMnemonic,"%.8X",(Int64)*((Int8*)(UIntPtr) (GV.EIP_-1)));
 		}
