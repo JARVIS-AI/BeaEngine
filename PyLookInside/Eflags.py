@@ -45,7 +45,7 @@ class My_StaticBox(wx.Panel):
                                       wx.DEFAULT, wx.NORMAL, wx.NORMAL, False, "")
             
         elif wx.Platform == "__WXGTK__":
-            self.normalFont = wx.Font(fontSize+0,
+            self.normalFont = wx.Font(fontSize-1,
                                       wx.DEFAULT, wx.NORMAL, wx.NORMAL, False, "")
             
         else:
@@ -273,12 +273,12 @@ class My_StaticBox(wx.Panel):
         box = wx.StaticBox(self, -1, "Eflags :", style=wx.BORDER_NONE)
         box.SetForegroundColour("#0074ff")
         allSizer = wx.StaticBoxSizer(box, wx.VERTICAL)        
-        allSizer.Add(sizer, 1, wx.EXPAND | wx.ALL, 0)
+        allSizer.Add(sizer, 1, wx.EXPAND | wx.TOP, 3)
         
         #----------
         
         topSizer = wx.BoxSizer(wx.VERTICAL)
-        topSizer.Add(allSizer, 1, wx.EXPAND | wx.ALL, 0)
+        topSizer.Add(allSizer, 1, wx.EXPAND | wx.TOP, 6)
         
         self.SetSizer(topSizer)
         topSizer.Fit(self)

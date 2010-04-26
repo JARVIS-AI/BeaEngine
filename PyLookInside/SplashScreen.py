@@ -136,9 +136,9 @@ class My_SplashScreenCustom(wx.Frame):
                                       DEFAULT, wx.NORMAL, wx.NORMAL, False, "")
             
         elif wx.Platform == "__WXGTK__":
-            self.normalBoldFont = wx.Font(fontSize+0,
+            self.normalBoldFont = wx.Font(fontSize-3,
                                           wx.DEFAULT, wx.NORMAL, wx.BOLD, False, "")
-            self.normalFont = wx.Font(fontSize+0,
+            self.normalFont = wx.Font(fontSize-3,
                                       wx.DEFAULT, wx.NORMAL, wx.NORMAL, False, "")
               
         else:
@@ -147,8 +147,8 @@ class My_SplashScreenCustom(wx.Frame):
             self.normalFont = wx.Font(fontSize+0,
                                       wx.DEFAULT, wx.NORMAL, wx.NORMAL, False, "")
        
-        dc.SetFont(self.normalFont)
         dc.SetFont(self.normalBoldFont)
+        dc.SetFont(self.normalFont)
         
         #-------------------------------------------------------------------
         

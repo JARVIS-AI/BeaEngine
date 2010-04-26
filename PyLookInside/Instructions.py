@@ -45,7 +45,7 @@ class My_StaticBox(wx.Panel):
                                       wx.DEFAULT, wx.NORMAL, wx.NORMAL, False, "")
             
         elif wx.Platform == "__WXGTK__":
-            self.normalFont = wx.Font(fontSize+0,
+            self.normalFont = wx.Font(fontSize-1,
                                       wx.DEFAULT, wx.NORMAL, wx.NORMAL, False, "")
               
         else:

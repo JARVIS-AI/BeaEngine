@@ -96,7 +96,7 @@ class PageLicence(wx.Panel):
                                       wx.DEFAULT, wx.NORMAL, wx.NORMAL, False, "")
         
         elif wx.Platform == "__WXGTK__":
-            self.normalFont = wx.Font(fontSize+2,
+            self.normalFont = wx.Font(fontSize-1,
                                       wx.DEFAULT, wx.NORMAL, wx.NORMAL, False, "")
         
         else:
@@ -139,9 +139,9 @@ class PageDevelopers(wx.Panel):
         <br>
         <p><b>● BeatriX</b> <i>(original library developer)</i>
         <br>
-        <br><b>● Igor Gutnik</b> <i>(Linux & portable plateforms developer)</i>
+        <br><b>● Igor Gutnik</b> <i>(ported the project on linux)</i>
         <br>
-        <br><b>● Sigma</b> <i>(PyLookInside developer)</i>
+        <br><b>● Sigma</b> <i>(PyLookInside GUI developer)</i>
         <p></div></body></html>''')
         
         sizer = wx.BoxSizer(wx.HORIZONTAL)
@@ -210,7 +210,7 @@ class My_AboutNotebook(wx.Dialog):
         #-------------------------------------------------------------------
         
         btnOK = wx.Button(self, id=wx.ID_OK, label=u"&OK")
-        btnOK.SetDefault()
+        btnOK.SetFocus()
         
         # Bind the button event to an events handler
         self.Bind(wx.EVT_BUTTON, self.OnOK, btnOK)

@@ -72,7 +72,7 @@ class My_Frame(wx.Frame):
                           title=u"PyLookInside %s"
                           % VersionInfos.VERSION_STRING,
                           pos=wx.DefaultPosition,
-                          size=(920, 652),
+                          size=(920, 685),
                           style=wx.DEFAULT_FRAME_STYLE |
                           wx.NO_FULL_REPAINT_ON_RESIZE |
                           wx.TAB_TRAVERSAL)
@@ -151,7 +151,7 @@ class My_Frame(wx.Frame):
         
     def createNotebook(self):
         self.nb = Notebook.My_Notebook(self.pnl, 1)
-        
+       
     #-----------------------------------------------------------------------
         
     def createAuiManager(self):
@@ -159,14 +159,14 @@ class My_Frame(wx.Frame):
         self.mgr.SetManagedWindow(self.pnl)
         
         self.leftPanel = wx.Panel(self.pnl, -1, size = (200, 150),
-                                  style=wx.TAB_TRAVERSAL | wx.CLIP_CHILDREN)
+                                  style=wx.TAB_TRAVERSAL | wx.CLIP_CHILDREN) # wx.TAB_TRAVERSAL
         
         self.mgr.AddPane(self.nb, wx.aui.AuiPaneInfo().CenterPane().Name("Notebook"))
         
         self.mgr.AddPane(self.leftPanel,
                          wx.aui.AuiPaneInfo().
                          Left().Layer(1).BestSize((300, -1)).
-                         MinSize((300, -1)).
+                         MinSize((295, -1)).
                          FloatingSize((300, 160)).
                          Caption("Search & ListCtrl").
                          CloseButton(False).
@@ -179,7 +179,7 @@ class My_Frame(wx.Frame):
     #-----------------------------------------------------------------------
         
     def createSearchCtrl(self):
-        self.search = SearchCtrl.My_SearchCtrl(self.leftPanel)
+        self.search = SearchCtrl.My_SearchCtrl(self.leftPanel, style=wx.TAB_TRAVERSAL)
         
     #-----------------------------------------------------------------------
        
@@ -237,101 +237,92 @@ class My_Frame(wx.Frame):
         """ Takes a screenshot of the screen at give pos & size (rect). """
         
         if wx.Platform == "__WXMAC__":
-            w, h = self.GetClientSize()
-            # see http://aspn.activestate.com/ASPN/Mail/Message/wxpython-users/3575899
-            
-            # created by Andrea Gavana
-            #Create a DC for the whole screen area
-            dcScreen = wx.ScreenDC()
-            
-            #Create a Bitmap that will hold the screenshot image later on
-            #Note that the Bitmap must have a size big enough to hold the screenshot
-            #-1 means using the current default colour depth
-            bmp = wx.EmptyBitmap(w, h)
-            
-            #Create a memory DC that will be used for actually taking the screenshot
-            memDC = wx.MemoryDC()
-            
-            #Tell the memory DC to use our Bitmap
-            #all drawing action on the memory DC will go to the Bitmap now
-            memDC.SelectObject(bmp)
-            
-            #Blit (in this case copy) the actual screen on the memory DC
-            #and thus the Bitmap
-            memDC.Blit( 0, #Copy to this X coordinate
-                        0, #Copy to this Y coordinate
-                        w, #Copy this width
-                        h, #Copy this height dcScreen, #From where do we copy?
-                        dcScreen, #From where do we copy?
-                        x, #What's the X offset in the original DC?
-                        y  #What's the Y offset in the original DC?
-                        )
-            
-            #Select the Bitmap out of the memory DC by selecting a new
-            #uninitialized Bitmap
-            memDC.SelectObject(wx.NullBitmap)
-            
-            img = bmp.ConvertToImage()
-            fileName = "myImage.png"
-            img.SaveFile(fileName, wx.BITMAP_TYPE_PNG)
-           
-        elif wx.Platform == "__WXGTK__":
-            #Works on Windows XP and Linux.
+            # Created by John Torres and modify by Sigma
+            # Works on Mac OSX ---------- To check
+
             rect = self.GetRect()
             if sys.platform == "linux2":
-                #On linux, GetRect() returns size of client, not size of window.
-                #Compensate for this
+                # On mac, GetRect() returns size of client, not size of window.
+                # Compensate for this
                 client_x, client_y = self.ClientToScreen((0, 0))
                 border_width = client_x - rect.x
                 title_bar_height = client_y - rect.y
-                #If the window has a menu bar, remove it from the title bar height.
+                # If the window has a menu bar, remove it from the title bar height.
                 if self.GetMenuBar():
                     title_bar_height /= 2
                 rect.width += (border_width * 2)
                 rect.height += title_bar_height + border_width
             self.Raise()
             viewer_dc = wx.ScreenDC()
-            bitmap = wx.EmptyBitmap(rect.width, rect.height)
+            bitmap = wx.EmptyBitmap(rect.width, rect.height-29)
             memory_dc = wx.MemoryDC()
             memory_dc.SelectObject(bitmap)
-            memory_dc.Blit(0, 0, rect.width, rect.height, viewer_dc, rect.x, rect.y)
+            memory_dc.Blit(0, 0, rect.width, rect.height-29, viewer_dc, rect.x, rect.y)
+            memory_dc.SelectObject(wx.NullBitmap)
+            image = bitmap.ConvertToImage()
+            image.SaveFile("ScreenShots/Capture.png", wx.BITMAP_TYPE_PNG)
+           
+        elif wx.Platform == "__WXGTK__":
+            # Created by John Torres and modify by Sigma
+            # Works fine on Linux Ubuntu
+
+            rect = self.GetRect()
+            if sys.platform == "linux2":
+                # On linux, GetRect() returns size of client, not size of window.
+                # Compensate for this
+                client_x, client_y = self.ClientToScreen((0, 0))
+                border_width = client_x - rect.x
+                title_bar_height = client_y - rect.y
+                # If the window has a menu bar, remove it from the title bar height.
+                if self.GetMenuBar():
+                    title_bar_height /= 2
+                rect.width += (border_width * 2)
+                rect.height += title_bar_height + border_width
+            self.Raise()
+            viewer_dc = wx.ScreenDC()
+            bitmap = wx.EmptyBitmap(rect.width, rect.height-29)
+            memory_dc = wx.MemoryDC()
+            memory_dc.SelectObject(bitmap)
+            memory_dc.Blit(0, 0, rect.width, rect.height-29, viewer_dc, rect.x, rect.y)
             memory_dc.SelectObject(wx.NullBitmap)
             image = bitmap.ConvertToImage()
             image.SaveFile("ScreenShots/Capture.png", wx.BITMAP_TYPE_PNG)
             
         else:
+            # Created by Andrea Gavana
+            # Works fine on Windows XP, Vista and Seven
+            # See http://aspn.activestate.com/ASPN/Mail/Message/wxpython-users/3575899
+
             rect = self.GetRect()
-            # see http://aspn.activestate.com/ASPN/Mail/Message/wxpython-users/3575899
             
-            # created by Andrea Gavana
-            #Create a DC for the whole screen area
+            # Create a DC for the whole screen area
             dcScreen = wx.ScreenDC()
             
-            #Create a Bitmap that will hold the screenshot image later on
-            #Note that the Bitmap must have a size big enough to hold the screenshot
-            #-1 means using the current default colour depth
+            # Create a Bitmap that will hold the screenshot image later on
+            # Note that the Bitmap must have a size big enough to hold the screenshot
+            # -1 means using the current default colour depth
             bmp = wx.EmptyBitmap(rect.width, rect.height)
             
-            #Create a memory DC that will be used for actually taking the screenshot
+            # Create a memory DC that will be used for actually taking the screenshot
             memDC = wx.MemoryDC()
             
-            #Tell the memory DC to use our Bitmap
-            #all drawing action on the memory DC will go to the Bitmap now
+            # Tell the memory DC to use our Bitmap
+            # all drawing action on the memory DC will go to the Bitmap now
             memDC.SelectObject(bmp)
             
-            #Blit (in this case copy) the actual screen on the memory DC
-            #and thus the Bitmap
-            memDC.Blit( 0, #Copy to this X coordinate
-                        0, #Copy to this Y coordinate
-                        rect.width, #Copy this width
-                        rect.height, #Copy this height
-                        dcScreen, #From where do we copy?
-                        rect.x, #What's the X offset in the original DC?
-                        rect.y  #What's the Y offset in the original DC?
+            # Blit (in this case copy) the actual screen on the memory DC
+            # and thus the Bitmap
+            memDC.Blit( 0, # Copy to this X coordinate
+                        0, # Copy to this Y coordinate
+                        rect.width, # Copy this width
+                        rect.height, # Copy this height
+                        dcScreen, # From where do we copy ?
+                        rect.x, # What's the X offset in the original DC ?
+                        rect.y  # What's the Y offset in the original DC ?
                         )
             
-            #Select the Bitmap out of the memory DC by selecting a new
-            #uninitialized Bitmap
+            # Select the Bitmap out of the memory DC by selecting a new
+            # uninitialized Bitmap
             memDC.SelectObject(wx.NullBitmap)
             
             img = bmp.ConvertToImage()
@@ -358,7 +349,7 @@ class My_Frame(wx.Frame):
             self.SetSize((-1, 23))
            
         elif wx.Platform == "__WXGTK__":
-            self.SetSize((-1, 23))
+            self.SetSize((-1, 1))
             
         else:
             self.SetSize((-1, 0))

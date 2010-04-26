@@ -31,7 +31,7 @@ class My_SearchCtrl(wx.SearchCtrl):
     def __init__(self, parent, id=-1, value="",
                  pos=wx.DefaultPosition, size=wx.DefaultSize, style=0):
         wx.SearchCtrl.__init__(self, parent, id, value,
-                               pos, size, style)
+                               pos, size, style=wx.WANTS_CHARS) # style=wx.WANTS_CHARS  # wx.TAB_TRAVERSAL
         
         #-------------------------------------------------------------------
         

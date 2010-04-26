@@ -77,8 +77,8 @@ class My_ListCtrl(wx.ListCtrl,
         
         #-------------------------------------------------------------------
         
-        self.InsertColumn(0, u"Offset", wx.LIST_FORMAT_LEFT, width=90)
-        self.InsertColumn(1, u"Value", wx.LIST_FORMAT_LEFT, width=wx.LIST_AUTOSIZE)
+        self.InsertColumn(0, u"Offset", wx.LIST_FORMAT_LEFT, width=wx.LIST_AUTOSIZE)  # width=90
+        self.InsertColumn(1, u"Value", wx.LIST_FORMAT_LEFT, width=100)  # width=wx.LIST_AUTOSIZE
         
         #-------------------------------------------------------------------
         

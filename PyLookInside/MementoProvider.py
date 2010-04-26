@@ -69,9 +69,9 @@ class My_Memento(wx.Dialog):
         elif wx.Platform == "__WXGTK__":
             self.btnFont = wx.Font(fontSize+0,
                                    wx.DEFAULT, wx.NORMAL, wx.NORMAL, False, "")
-            self.normalFont = wx.Font(fontSize+2,
+            self.normalFont = wx.Font(fontSize-1,
                                       wx.DEFAULT, wx.NORMAL, wx.NORMAL, False, "")
-            self.boldFont = wx.Font(fontSize+5,
+            self.boldFont = wx.Font(fontSize+0,
                                     wx.DEFAULT, wx.NORMAL, wx.BOLD, False, "")
             
         else:
