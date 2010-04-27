@@ -39,7 +39,7 @@ void __bea_callspec__ G6_(PDISASM pMyDisasm)
         MOD_RM(&(*pMyDisasm).Argument1, pMyDisasm);
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "sldt ");
         (*pMyDisasm).Argument2.ArgType = REGISTER_TYPE+MEMORY_MANAGEMENT_REG+REG1;
-        (*pMyDisasm).Argument2.ArgSize = 16;
+        (*pMyDisasm).Argument2.ArgSize = 32;
         GV.OperandSize = OperandSizeOld;
         GV.EIP_+= GV.DECALAGE_EIP+2;
     }
