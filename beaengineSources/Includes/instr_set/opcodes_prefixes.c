@@ -25,7 +25,7 @@ void __bea_callspec__ PrefLock(PDISASM pMyDisasm)
     (*pMyDisasm).Prefix.LockPrefix = InvalidPrefix;
     GV.EIP_++;
     (*pMyDisasm).Prefix.Number++;
-    NB_PREFIX++;
+    GV.NB_PREFIX++;
     (*pMyDisasm).Instruction.Opcode =  *((UInt8*) (UIntPtr)GV.EIP_);
     (void) opcode_map1[*((UInt8*) (UIntPtr)GV.EIP_)](pMyDisasm);
     GV.OperandSize = 32;
@@ -40,11 +40,11 @@ void __bea_callspec__ PrefREPNE(PDISASM pMyDisasm)
     (*pMyDisasm).Prefix.RepnePrefix = SuperfluousPrefix;
     GV.EIP_++;
     (*pMyDisasm).Prefix.Number++;
-    NB_PREFIX++;
-    PrefRepne = 1;
+    GV.NB_PREFIX++;
+    GV.PrefRepne = 1;
     (*pMyDisasm).Instruction.Opcode = *((UInt8*) (UIntPtr)GV.EIP_);
     (void) opcode_map1[*((UInt8*) (UIntPtr)GV.EIP_)](pMyDisasm);
-    PrefRepne = 0;
+    GV.PrefRepne = 0;
 }
 
 /* ====================================================================
@@ -56,11 +56,11 @@ void __bea_callspec__ PrefREPE(PDISASM pMyDisasm)
     (*pMyDisasm).Prefix.RepPrefix = SuperfluousPrefix;
     GV.EIP_++;
     (*pMyDisasm).Prefix.Number++;
-    NB_PREFIX++;
-    PrefRepe = 1;
+    GV.NB_PREFIX++;
+    GV.PrefRepe = 1;
     (*pMyDisasm).Instruction.Opcode = *((UInt8*) (UIntPtr)GV.EIP_);
     (void) opcode_map1[*((UInt8*) (UIntPtr)GV.EIP_)](pMyDisasm);
-    PrefRepe = 0;
+    GV.PrefRepe = 0;
 }
 
 /* ====================================================================
@@ -72,7 +72,7 @@ void __bea_callspec__ PrefSEGCS(PDISASM pMyDisasm)
     (*pMyDisasm).Prefix.CSPrefix = InUsePrefix;
     GV.EIP_++;
     (*pMyDisasm).Prefix.Number++;
-    NB_PREFIX++;
+    GV.NB_PREFIX++;
     (*pMyDisasm).Instruction.Opcode = *((UInt8*) (UIntPtr)GV.EIP_);
     (void) opcode_map1[*((UInt8*) (UIntPtr)GV.EIP_)](pMyDisasm);
 }
@@ -86,7 +86,7 @@ void __bea_callspec__ PrefSEGDS(PDISASM pMyDisasm)
     (*pMyDisasm).Prefix.DSPrefix = InUsePrefix;
     GV.EIP_++;
     (*pMyDisasm).Prefix.Number++;
-    NB_PREFIX++;
+    GV.NB_PREFIX++;
     (*pMyDisasm).Instruction.Opcode = *((UInt8*) (UIntPtr)GV.EIP_);
     (void) opcode_map1[*((UInt8*) (UIntPtr)GV.EIP_)](pMyDisasm);
 }
@@ -100,7 +100,7 @@ void __bea_callspec__ PrefSEGES(PDISASM pMyDisasm)
     (*pMyDisasm).Prefix.ESPrefix = InUsePrefix;
     GV.EIP_++;
     (*pMyDisasm).Prefix.Number++;
-    NB_PREFIX++;
+    GV.NB_PREFIX++;
     (*pMyDisasm).Instruction.Opcode = *((UInt8*) (UIntPtr)GV.EIP_);
     (void) opcode_map1[*((UInt8*) (UIntPtr)GV.EIP_)](pMyDisasm);
 }
@@ -114,8 +114,8 @@ void __bea_callspec__ PrefSEGFS(PDISASM pMyDisasm)
     (*pMyDisasm).Prefix.FSPrefix = InUsePrefix;
     GV.EIP_++;
     (*pMyDisasm).Prefix.Number++;
-    NB_PREFIX++;
-    SEGMENTFS = 1;
+    GV.NB_PREFIX++;
+    GV.SEGMENTFS = 1;
     (*pMyDisasm).Instruction.Opcode = *((UInt8*) (UIntPtr)GV.EIP_);
     (void) opcode_map1[*((UInt8*) (UIntPtr)GV.EIP_)](pMyDisasm);
 }
@@ -129,7 +129,7 @@ void __bea_callspec__ PrefSEGGS(PDISASM pMyDisasm)
     (*pMyDisasm).Prefix.GSPrefix = InUsePrefix;
     GV.EIP_++;
     (*pMyDisasm).Prefix.Number++;
-    NB_PREFIX++;
+    GV.NB_PREFIX++;
     (*pMyDisasm).Instruction.Opcode = *((UInt8*) (UIntPtr)GV.EIP_);
     (void) opcode_map1[*((UInt8*) (UIntPtr)GV.EIP_)](pMyDisasm);
 }
@@ -144,7 +144,7 @@ void __bea_callspec__ PrefSEGSS(PDISASM pMyDisasm)
     (*pMyDisasm).Prefix.SSPrefix = InUsePrefix;
     GV.EIP_++;
     (*pMyDisasm).Prefix.Number++;
-    NB_PREFIX++;
+    GV.NB_PREFIX++;
     (*pMyDisasm).Instruction.Opcode = *((UInt8*) (UIntPtr)GV.EIP_);
     (void) opcode_map1[*((UInt8*) (UIntPtr)GV.EIP_)](pMyDisasm);
 }
@@ -158,7 +158,7 @@ void __bea_callspec__ PrefOpSize(PDISASM pMyDisasm)
     (*pMyDisasm).Prefix.OperandSize = InUsePrefix;
     GV.EIP_++;
     (*pMyDisasm).Prefix.Number++;
-    NB_PREFIX++;
+    GV.NB_PREFIX++;
     GV.OriginalOperandSize = GV.OperandSize;  /* if GV.OperandSize is used as a mandatory prefix, keep the real operandsize value */
     GV.OperandSize = 16;
     (*pMyDisasm).Instruction.Opcode = *((UInt8*) (UIntPtr)GV.EIP_);
@@ -175,7 +175,7 @@ void __bea_callspec__ PrefAdSize(PDISASM pMyDisasm)
     (*pMyDisasm).Prefix.AddressSize = InUsePrefix;
     GV.EIP_++;
     (*pMyDisasm).Prefix.Number++;
-    NB_PREFIX++;
+    GV.NB_PREFIX++;
     GV.AddressSize = GV.AddressSize >> 1;
     (*pMyDisasm).Instruction.Opcode = *((UInt8*) (UIntPtr)GV.EIP_);
     (void) opcode_map1[*((UInt8*) (UIntPtr)GV.EIP_)](pMyDisasm);

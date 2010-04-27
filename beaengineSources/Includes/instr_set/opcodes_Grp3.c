@@ -21,22 +21,22 @@
  * ==================================================================== */
 void __bea_callspec__ G3_Eb(PDISASM pMyDisasm)
 {
-    REGOPCODE = ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 3) & 0x7;
-    if (REGOPCODE == 0) {
+    GV.REGOPCODE = ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 3) & 0x7;
+    if (GV.REGOPCODE == 0) {
         (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+BIT_UInt8;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "test ");
         EbIb(pMyDisasm);
         (*pMyDisasm).Argument1.AccessMode = READ;
         FillFlags(pMyDisasm, 104);
     }
-    else if (REGOPCODE == 1) {
+    else if (GV.REGOPCODE == 1) {
         (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+BIT_UInt8;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "test ");
         EbIb(pMyDisasm);
         (*pMyDisasm).Argument1.AccessMode = READ;
         FillFlags(pMyDisasm, 104);
     }
-    else if (REGOPCODE == 2) {
+    else if (GV.REGOPCODE == 2) {
         if ((*pMyDisasm).Prefix.LockPrefix == InvalidPrefix) {
             (*pMyDisasm).Prefix.LockPrefix = InUsePrefix;
         }
@@ -45,56 +45,56 @@ void __bea_callspec__ G3_Eb(PDISASM pMyDisasm)
         Eb(pMyDisasm);
         FillFlags(pMyDisasm, 73);
     }
-    else if (REGOPCODE == 3) {
+    else if (GV.REGOPCODE == 3) {
         (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+ARITHMETIC_INSTRUCTION;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "neg ");
         Eb(pMyDisasm);
         FillFlags(pMyDisasm, 71);
     }
-    else if (REGOPCODE == 4) {
+    else if (GV.REGOPCODE == 4) {
         (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+ARITHMETIC_INSTRUCTION;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "mul ");
         GV.MemDecoration = Arg2byte;
         GV.OperandSize = 8;
         MOD_RM(&(*pMyDisasm).Argument2, pMyDisasm);
         GV.OperandSize = 32;
-        GV.EIP_ += DECALAGE_EIP+2;
+        GV.EIP_ += GV.DECALAGE_EIP+2;
         (*pMyDisasm).Argument1.ArgType = REGISTER_TYPE+GENERAL_REG+REG0+REG2;
         (*pMyDisasm).Argument1.ArgSize = 8;
         FillFlags(pMyDisasm, 70);
     }
-    else if (REGOPCODE == 5) {
+    else if (GV.REGOPCODE == 5) {
         (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+ARITHMETIC_INSTRUCTION;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "imul ");
         GV.MemDecoration = Arg2byte;
         GV.OperandSize = 8;
         MOD_RM(&(*pMyDisasm).Argument2, pMyDisasm);
         GV.OperandSize = 32;
-        GV.EIP_ += DECALAGE_EIP+2;
+        GV.EIP_ += GV.DECALAGE_EIP+2;
         (*pMyDisasm).Argument1.ArgType = REGISTER_TYPE+GENERAL_REG+REG0+REG2;
         (*pMyDisasm).Argument1.ArgSize = 8;
         FillFlags(pMyDisasm, 38);
     }
-    else if (REGOPCODE == 6) {
+    else if (GV.REGOPCODE == 6) {
         (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+ARITHMETIC_INSTRUCTION;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "div ");
         GV.MemDecoration = Arg2byte;
         GV.OperandSize = 8;
         MOD_RM(&(*pMyDisasm).Argument2, pMyDisasm);
         GV.OperandSize = 32;
-        GV.EIP_ += DECALAGE_EIP+2;
+        GV.EIP_ += GV.DECALAGE_EIP+2;
         (*pMyDisasm).Argument1.ArgType = REGISTER_TYPE+GENERAL_REG+REG0+REG2;
         (*pMyDisasm).Argument1.ArgSize = 8;
         FillFlags(pMyDisasm, 31);
     }
-    else if (REGOPCODE == 7) {
+    else if (GV.REGOPCODE == 7) {
         (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+ARITHMETIC_INSTRUCTION;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "idiv ");
         GV.MemDecoration = Arg2byte;
         GV.OperandSize = 8;
         MOD_RM(&(*pMyDisasm).Argument2, pMyDisasm);
         GV.OperandSize = 32;
-        GV.EIP_ += DECALAGE_EIP+2;
+        GV.EIP_ += GV.DECALAGE_EIP+2;
         (*pMyDisasm).Argument1.ArgType = REGISTER_TYPE+GENERAL_REG+REG0+REG2;
         (*pMyDisasm).Argument1.ArgSize = 8;
         FillFlags(pMyDisasm, 37);
@@ -106,22 +106,22 @@ void __bea_callspec__ G3_Eb(PDISASM pMyDisasm)
  * ==================================================================== */
 void __bea_callspec__ G3_Ev(PDISASM pMyDisasm)
 {
-    REGOPCODE = ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 3) & 0x7;
-    if (REGOPCODE == 0) {
+    GV.REGOPCODE = ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 3) & 0x7;
+    if (GV.REGOPCODE == 0) {
         (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+BIT_UInt8;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "test ");
         EvIv(pMyDisasm);
         (*pMyDisasm).Argument1.AccessMode = READ;
         FillFlags(pMyDisasm, 104);
     }
-    else if (REGOPCODE == 1) {
+    else if (GV.REGOPCODE == 1) {
         (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+BIT_UInt8;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "test ");
         EvIv(pMyDisasm);
         (*pMyDisasm).Argument1.AccessMode = READ;
         FillFlags(pMyDisasm, 104);
     }
-    else if (REGOPCODE == 2) {
+    else if (GV.REGOPCODE == 2) {
         if ((*pMyDisasm).Prefix.LockPrefix == InvalidPrefix) {
             (*pMyDisasm).Prefix.LockPrefix = InUsePrefix;
         }
@@ -130,13 +130,13 @@ void __bea_callspec__ G3_Ev(PDISASM pMyDisasm)
         Ev(pMyDisasm);
         FillFlags(pMyDisasm, 73);
     }
-    else if (REGOPCODE == 3) {
+    else if (GV.REGOPCODE == 3) {
         (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+ARITHMETIC_INSTRUCTION;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "neg ");
         Ev(pMyDisasm);
         FillFlags(pMyDisasm, 71);
     }
-    else if (REGOPCODE == 4) {
+    else if (GV.REGOPCODE == 4) {
         (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+ARITHMETIC_INSTRUCTION;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "mul ");
         if (GV.OperandSize == 64) {
@@ -149,12 +149,12 @@ void __bea_callspec__ G3_Ev(PDISASM pMyDisasm)
             GV.MemDecoration = Arg2word;
         }
         MOD_RM(&(*pMyDisasm).Argument2, pMyDisasm);
-        GV.EIP_ += DECALAGE_EIP+2;
+        GV.EIP_ += GV.DECALAGE_EIP+2;
         (*pMyDisasm).Argument1.ArgType = REGISTER_TYPE+GENERAL_REG+REG0+REG2;
         (*pMyDisasm).Argument1.ArgSize = 8;
         FillFlags(pMyDisasm, 70);
     }
-    else if (REGOPCODE == 5) {
+    else if (GV.REGOPCODE == 5) {
         (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+ARITHMETIC_INSTRUCTION;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "imul ");
         if (GV.OperandSize == 64) {
@@ -167,12 +167,12 @@ void __bea_callspec__ G3_Ev(PDISASM pMyDisasm)
             GV.MemDecoration = Arg2word;
         }
         MOD_RM(&(*pMyDisasm).Argument2, pMyDisasm);
-        GV.EIP_ += DECALAGE_EIP+2;
+        GV.EIP_ += GV.DECALAGE_EIP+2;
         (*pMyDisasm).Argument1.ArgType = REGISTER_TYPE+GENERAL_REG+REG0+REG2;
         (*pMyDisasm).Argument1.ArgSize = 8;
         FillFlags(pMyDisasm, 38);
     }
-    else if (REGOPCODE == 6) {
+    else if (GV.REGOPCODE == 6) {
         (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+ARITHMETIC_INSTRUCTION;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "div ");
         if (GV.OperandSize == 64) {
@@ -185,12 +185,12 @@ void __bea_callspec__ G3_Ev(PDISASM pMyDisasm)
             GV.MemDecoration = Arg2word;
         }
         MOD_RM(&(*pMyDisasm).Argument2, pMyDisasm);
-        GV.EIP_ += DECALAGE_EIP+2;
+        GV.EIP_ += GV.DECALAGE_EIP+2;
         (*pMyDisasm).Argument1.ArgType = REGISTER_TYPE+GENERAL_REG+REG0+REG2;
         (*pMyDisasm).Argument1.ArgSize = 8;
         FillFlags(pMyDisasm, 31);
     }
-    else if (REGOPCODE == 7) {
+    else if (GV.REGOPCODE == 7) {
         (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+ARITHMETIC_INSTRUCTION;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "idiv ");
         if (GV.OperandSize == 64) {
@@ -203,7 +203,7 @@ void __bea_callspec__ G3_Ev(PDISASM pMyDisasm)
             GV.MemDecoration = Arg2word;
         }
         MOD_RM(&(*pMyDisasm).Argument2, pMyDisasm);
-        GV.EIP_ += DECALAGE_EIP+2;
+        GV.EIP_ += GV.DECALAGE_EIP+2;
         (*pMyDisasm).Argument1.ArgType = REGISTER_TYPE+GENERAL_REG+REG0+REG2;
         (*pMyDisasm).Argument1.ArgSize = 8;
         FillFlags(pMyDisasm, 37);

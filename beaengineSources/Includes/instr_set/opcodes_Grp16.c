@@ -21,8 +21,8 @@
  * ==================================================================== */
 void __bea_callspec__ G16_(PDISASM pMyDisasm)
 {
-    REGOPCODE = ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 3) & 0x7;
-    if (REGOPCODE == 0) {
+    GV.REGOPCODE = ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 3) & 0x7;
+    if (GV.REGOPCODE == 0) {
         MOD_RM(&(*pMyDisasm).Argument2, pMyDisasm);
         if (GV.MOD_!= 0x3) {
             GV.MemDecoration = Arg2byte;
@@ -33,7 +33,7 @@ void __bea_callspec__ G16_(PDISASM pMyDisasm)
             FailDecode(pMyDisasm);
         }
     }
-    else if (REGOPCODE == 1) {
+    else if (GV.REGOPCODE == 1) {
         MOD_RM(&(*pMyDisasm).Argument2, pMyDisasm);
         if (GV.MOD_!= 0x3) {
             GV.MemDecoration = Arg2byte;
@@ -45,7 +45,7 @@ void __bea_callspec__ G16_(PDISASM pMyDisasm)
         }
 
     }
-    else if (REGOPCODE == 2) {
+    else if (GV.REGOPCODE == 2) {
         MOD_RM(&(*pMyDisasm).Argument2, pMyDisasm);
         if (GV.MOD_!= 0x3) {
             GV.MemDecoration = Arg2byte;
@@ -57,7 +57,7 @@ void __bea_callspec__ G16_(PDISASM pMyDisasm)
         }
 
     }
-    else if (REGOPCODE == 3) {
+    else if (GV.REGOPCODE == 3) {
         MOD_RM(&(*pMyDisasm).Argument2, pMyDisasm);
         if (GV.MOD_!= 0x3) {
             GV.MemDecoration = Arg2byte;
@@ -73,5 +73,5 @@ void __bea_callspec__ G16_(PDISASM pMyDisasm)
     else {
         FailDecode(pMyDisasm);
     }
-    GV.EIP_+= DECALAGE_EIP+2;
+    GV.EIP_+= GV.DECALAGE_EIP+2;
 }

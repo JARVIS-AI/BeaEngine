@@ -21,44 +21,44 @@
  * ==================================================================== */
 void __bea_callspec__ G2_EbIb(PDISASM pMyDisasm)
 {
-    REGOPCODE = ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 3) & 0x7;
+    GV.REGOPCODE = ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 3) & 0x7;
     EbIb(pMyDisasm);
-    if (REGOPCODE == 0) {
+    if (GV.REGOPCODE == 0) {
         (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+SHIFT_ROTATE;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "rol ");
         FillFlags(pMyDisasm, 88);
     }
-    else if (REGOPCODE == 1) {
+    else if (GV.REGOPCODE == 1) {
         (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+SHIFT_ROTATE;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "ror ");
         FillFlags(pMyDisasm, 88);
     }
-    else if (REGOPCODE == 2) {
+    else if (GV.REGOPCODE == 2) {
         (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+SHIFT_ROTATE;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "rcl ");
         FillFlags(pMyDisasm, 81);
     }
-    else if (REGOPCODE == 3) {
+    else if (GV.REGOPCODE == 3) {
         (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+SHIFT_ROTATE;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "rcr ");
         FillFlags(pMyDisasm, 81);
     }
-    else if (REGOPCODE == 4) {
+    else if (GV.REGOPCODE == 4) {
         (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+SHIFT_ROTATE;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "shl ");
         FillFlags(pMyDisasm, 92);
     }
-    else if (REGOPCODE == 5) {
+    else if (GV.REGOPCODE == 5) {
         (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+SHIFT_ROTATE;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "shr ");
         FillFlags(pMyDisasm, 92);
     }
-    else if (REGOPCODE == 6) {
+    else if (GV.REGOPCODE == 6) {
         (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+SHIFT_ROTATE;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "sal ");
         FillFlags(pMyDisasm, 92);
     }
-    else if (REGOPCODE == 7) {
+    else if (GV.REGOPCODE == 7) {
         (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+SHIFT_ROTATE;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "sar ");
         FillFlags(pMyDisasm, 92);
@@ -71,44 +71,44 @@ void __bea_callspec__ G2_EbIb(PDISASM pMyDisasm)
  * ==================================================================== */
 void __bea_callspec__ G2_EvIb(PDISASM pMyDisasm)
 {
-    REGOPCODE = ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 3) & 0x7;
+    GV.REGOPCODE = ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 3) & 0x7;
     EvIb(pMyDisasm);
-    if (REGOPCODE == 0) {
+    if (GV.REGOPCODE == 0) {
         (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+SHIFT_ROTATE;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "rol ");
         FillFlags(pMyDisasm, 88);
     }
-    else if (REGOPCODE == 1) {
+    else if (GV.REGOPCODE == 1) {
         (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+SHIFT_ROTATE;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "ror ");
         FillFlags(pMyDisasm, 88);
     }
-    else if (REGOPCODE == 2) {
+    else if (GV.REGOPCODE == 2) {
         (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+SHIFT_ROTATE;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "rcl ");
         FillFlags(pMyDisasm, 81);
     }
-    else if (REGOPCODE == 3) {
+    else if (GV.REGOPCODE == 3) {
         (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+SHIFT_ROTATE;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "rcr ");
         FillFlags(pMyDisasm, 81);
     }
-    else if (REGOPCODE == 4) {
+    else if (GV.REGOPCODE == 4) {
         (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+SHIFT_ROTATE;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "shl ");
         FillFlags(pMyDisasm, 92);
     }
-    else if (REGOPCODE == 5) {
+    else if (GV.REGOPCODE == 5) {
         (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+SHIFT_ROTATE;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "shr ");
         FillFlags(pMyDisasm, 92);
     }
-    else if (REGOPCODE == 6) {
+    else if (GV.REGOPCODE == 6) {
         (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+SHIFT_ROTATE;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "sal ");
         FillFlags(pMyDisasm, 92);
     }
-    else if (REGOPCODE == 7) {
+    else if (GV.REGOPCODE == 7) {
         (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+SHIFT_ROTATE;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "sar ");
         FillFlags(pMyDisasm, 92);
@@ -120,7 +120,7 @@ void __bea_callspec__ G2_EvIb(PDISASM pMyDisasm)
  * ==================================================================== */
 void __bea_callspec__ G2_Eb1(PDISASM pMyDisasm)
 {
-    REGOPCODE = ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 3) & 0x7;
+    GV.REGOPCODE = ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 3) & 0x7;
     GV.MemDecoration = Arg1byte;
     GV.OperandSize = 8;
     MOD_RM(&(*pMyDisasm).Argument1, pMyDisasm);
@@ -129,47 +129,47 @@ void __bea_callspec__ G2_Eb1(PDISASM pMyDisasm)
     (*pMyDisasm).Argument2.ArgType = CONSTANT_TYPE+ABSOLUTE_;
     (*pMyDisasm).Argument2.ArgSize = 8;
     (*pMyDisasm).Instruction.Immediat = 1;
-    if (REGOPCODE == 0) {
+    if (GV.REGOPCODE == 0) {
         (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+SHIFT_ROTATE;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "rol ");
         FillFlags(pMyDisasm, 87);
     }
-    else if (REGOPCODE == 1) {
+    else if (GV.REGOPCODE == 1) {
         (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+SHIFT_ROTATE;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "ror ");
         FillFlags(pMyDisasm, 87);
     }
-    else if (REGOPCODE == 2) {
+    else if (GV.REGOPCODE == 2) {
         (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+SHIFT_ROTATE;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "rcl ");
         FillFlags(pMyDisasm, 80);
     }
-    else if (REGOPCODE == 3) {
+    else if (GV.REGOPCODE == 3) {
         (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+SHIFT_ROTATE;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "rcr ");
         FillFlags(pMyDisasm, 80);
     }
-    else if (REGOPCODE == 4) {
+    else if (GV.REGOPCODE == 4) {
         (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+SHIFT_ROTATE;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "shl ");
         FillFlags(pMyDisasm, 91);
     }
-    else if (REGOPCODE == 5) {
+    else if (GV.REGOPCODE == 5) {
         (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+SHIFT_ROTATE;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "shr ");
         FillFlags(pMyDisasm, 91);
     }
-    else if (REGOPCODE == 6) {
+    else if (GV.REGOPCODE == 6) {
         (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+SHIFT_ROTATE;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "sal ");
         FillFlags(pMyDisasm, 91);
     }
-    else if (REGOPCODE == 7) {
+    else if (GV.REGOPCODE == 7) {
         (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+SHIFT_ROTATE;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "sar ");
         FillFlags(pMyDisasm, 91);
     }
-    GV.EIP_ += DECALAGE_EIP+2;
+    GV.EIP_ += GV.DECALAGE_EIP+2;
 }
 
 
@@ -178,7 +178,7 @@ void __bea_callspec__ G2_Eb1(PDISASM pMyDisasm)
  * ==================================================================== */
 void __bea_callspec__ G2_Ev1(PDISASM pMyDisasm)
 {
-    REGOPCODE = ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 3) & 0x7;
+    GV.REGOPCODE = ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 3) & 0x7;
     if (GV.OperandSize == 64) {
         GV.MemDecoration = Arg1qword;
     }
@@ -193,47 +193,47 @@ void __bea_callspec__ G2_Ev1(PDISASM pMyDisasm)
     (*pMyDisasm).Argument2.ArgType = CONSTANT_TYPE+ABSOLUTE_;
     (*pMyDisasm).Argument2.ArgSize = 8;
     (*pMyDisasm).Instruction.Immediat = 1;
-    if (REGOPCODE == 0) {
+    if (GV.REGOPCODE == 0) {
         (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+SHIFT_ROTATE;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "rol ");
         FillFlags(pMyDisasm, 87);
     }
-    else if (REGOPCODE == 1) {
+    else if (GV.REGOPCODE == 1) {
         (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+SHIFT_ROTATE;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "ror ");
         FillFlags(pMyDisasm, 87);
     }
-    else if (REGOPCODE == 2) {
+    else if (GV.REGOPCODE == 2) {
         (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+SHIFT_ROTATE;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "rcl ");
         FillFlags(pMyDisasm, 80);
     }
-    else if (REGOPCODE == 3) {
+    else if (GV.REGOPCODE == 3) {
         (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+SHIFT_ROTATE;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "rcr ");
         FillFlags(pMyDisasm, 80);
     }
-    else if (REGOPCODE == 4) {
+    else if (GV.REGOPCODE == 4) {
         (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+SHIFT_ROTATE;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "shl ");
         FillFlags(pMyDisasm, 91);
     }
-    else if (REGOPCODE == 5) {
+    else if (GV.REGOPCODE == 5) {
         (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+SHIFT_ROTATE;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "shr ");
         FillFlags(pMyDisasm, 91);
     }
-    else if (REGOPCODE == 6) {
+    else if (GV.REGOPCODE == 6) {
         (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+SHIFT_ROTATE;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "sal ");
         FillFlags(pMyDisasm, 91);
     }
-    else if (REGOPCODE == 7) {
+    else if (GV.REGOPCODE == 7) {
         (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+SHIFT_ROTATE;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "sar ");
         FillFlags(pMyDisasm, 91);
     }
-    GV.EIP_ += DECALAGE_EIP+2;
+    GV.EIP_ += GV.DECALAGE_EIP+2;
 }
 
 
@@ -242,7 +242,7 @@ void __bea_callspec__ G2_Ev1(PDISASM pMyDisasm)
  * ==================================================================== */
 void __bea_callspec__ G2_EbCL(PDISASM pMyDisasm)
 {
-    REGOPCODE = ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 3) & 0x7;
+    GV.REGOPCODE = ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 3) & 0x7;
     GV.MemDecoration = Arg1byte;
     GV.OperandSize = 8;
     MOD_RM(&(*pMyDisasm).Argument1, pMyDisasm);
@@ -250,47 +250,47 @@ void __bea_callspec__ G2_EbCL(PDISASM pMyDisasm)
     (void) strcpy ((*pMyDisasm).Argument2.ArgMnemonic, Registers8Bits[1]);
     (*pMyDisasm).Argument2.ArgType = REGISTER_TYPE+GENERAL_REG+REG1;
     (*pMyDisasm).Argument2.ArgSize = 8;
-    if (REGOPCODE == 0) {
+    if (GV.REGOPCODE == 0) {
         (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+SHIFT_ROTATE;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "rol ");
         FillFlags(pMyDisasm, 88);
     }
-    else if (REGOPCODE == 1) {
+    else if (GV.REGOPCODE == 1) {
         (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+SHIFT_ROTATE;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "ror ");
         FillFlags(pMyDisasm, 88);
     }
-    else if (REGOPCODE == 2) {
+    else if (GV.REGOPCODE == 2) {
         (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+SHIFT_ROTATE;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "rcl ");
         FillFlags(pMyDisasm, 81);
     }
-    else if (REGOPCODE == 3) {
+    else if (GV.REGOPCODE == 3) {
         (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+SHIFT_ROTATE;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "rcr ");
         FillFlags(pMyDisasm, 81);
     }
-    else if (REGOPCODE == 4) {
+    else if (GV.REGOPCODE == 4) {
         (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+SHIFT_ROTATE;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "shl ");
         FillFlags(pMyDisasm, 92);
     }
-    else if (REGOPCODE == 5) {
+    else if (GV.REGOPCODE == 5) {
         (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+SHIFT_ROTATE;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "shr ");
         FillFlags(pMyDisasm, 92);
     }
-    else if (REGOPCODE == 6) {
+    else if (GV.REGOPCODE == 6) {
         (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+SHIFT_ROTATE;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "sal ");
         FillFlags(pMyDisasm, 92);
     }
-    else if (REGOPCODE == 7) {
+    else if (GV.REGOPCODE == 7) {
         (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+SHIFT_ROTATE;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "sar ");
         FillFlags(pMyDisasm, 92);
     }
-    GV.EIP_ += DECALAGE_EIP+2;
+    GV.EIP_ += GV.DECALAGE_EIP+2;
 }
 
 
@@ -299,7 +299,7 @@ void __bea_callspec__ G2_EbCL(PDISASM pMyDisasm)
  * ==================================================================== */
 void __bea_callspec__ G2_EvCL(PDISASM pMyDisasm)
 {
-    REGOPCODE = ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 3) & 0x7;
+    GV.REGOPCODE = ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 3) & 0x7;
     if (GV.OperandSize == 64) {
         GV.MemDecoration = Arg1qword;
     }
@@ -313,45 +313,45 @@ void __bea_callspec__ G2_EvCL(PDISASM pMyDisasm)
     (void) strcpy ((*pMyDisasm).Argument2.ArgMnemonic, Registers8Bits[1]);
     (*pMyDisasm).Argument2.ArgType = REGISTER_TYPE+GENERAL_REG+REG1;
     (*pMyDisasm).Argument2.ArgSize = 8;
-    if (REGOPCODE == 0) {
+    if (GV.REGOPCODE == 0) {
         (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+SHIFT_ROTATE;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "rol ");
         FillFlags(pMyDisasm, 88);
     }
-    else if (REGOPCODE == 1) {
+    else if (GV.REGOPCODE == 1) {
         (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+SHIFT_ROTATE;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "ror ");
         FillFlags(pMyDisasm, 88);
     }
-    else if (REGOPCODE == 2) {
+    else if (GV.REGOPCODE == 2) {
         (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+SHIFT_ROTATE;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "rcl ");
         FillFlags(pMyDisasm, 81);
     }
-    else if (REGOPCODE == 3) {
+    else if (GV.REGOPCODE == 3) {
         (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+SHIFT_ROTATE;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "rcr ");
         FillFlags(pMyDisasm, 81);
     }
-    else if (REGOPCODE == 4) {
+    else if (GV.REGOPCODE == 4) {
         (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+SHIFT_ROTATE;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "shl ");
         FillFlags(pMyDisasm, 92);
     }
-    else if (REGOPCODE == 5) {
+    else if (GV.REGOPCODE == 5) {
         (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+SHIFT_ROTATE;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "shr ");
         FillFlags(pMyDisasm, 92);
     }
-    else if (REGOPCODE == 6) {
+    else if (GV.REGOPCODE == 6) {
         (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+SHIFT_ROTATE;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "sal ");
         FillFlags(pMyDisasm, 92);
     }
-    else if (REGOPCODE == 7) {
+    else if (GV.REGOPCODE == 7) {
         (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+SHIFT_ROTATE;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "sar ");
         FillFlags(pMyDisasm, 92);
     }
-    GV.EIP_ += DECALAGE_EIP+2;
+    GV.EIP_ += GV.DECALAGE_EIP+2;
 }

@@ -28,9 +28,9 @@ void __bea_callspec__ aesimc(PDISASM pMyDisasm)
         GV.MemDecoration = Arg2dqword;
         (*pMyDisasm).Instruction.Category = AES_INSTRUCTION;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "aesimc ");
-        SSE_ = 1;
+        GV.SSE_ = 1;
         GxEx(pMyDisasm);
-        SSE_ = 0;
+        GV.SSE_ = 0;
     }
     else {
         FailDecode(pMyDisasm);
@@ -49,9 +49,9 @@ void __bea_callspec__ aesenc(PDISASM pMyDisasm)
         GV.MemDecoration = Arg2dqword;
         (*pMyDisasm).Instruction.Category = AES_INSTRUCTION;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "aesenc ");
-        SSE_ = 1;
+        GV.SSE_ = 1;
         GxEx(pMyDisasm);
-        SSE_ = 0;
+        GV.SSE_ = 0;
     }
     else {
         FailDecode(pMyDisasm);
@@ -70,9 +70,9 @@ void __bea_callspec__ aesenclast(PDISASM pMyDisasm)
         GV.MemDecoration = Arg2dqword;
         (*pMyDisasm).Instruction.Category = AES_INSTRUCTION;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "aesenclast ");
-        SSE_ = 1;
+        GV.SSE_ = 1;
         GxEx(pMyDisasm);
-        SSE_ = 0;
+        GV.SSE_ = 0;
     }
     else {
         FailDecode(pMyDisasm);
@@ -91,9 +91,9 @@ void __bea_callspec__ aesdec(PDISASM pMyDisasm)
         GV.MemDecoration = Arg2dqword;
         (*pMyDisasm).Instruction.Category = AES_INSTRUCTION;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "aesdec ");
-        SSE_ = 1;
+        GV.SSE_ = 1;
         GxEx(pMyDisasm);
-        SSE_ = 0;
+        GV.SSE_ = 0;
     }
     else {
         FailDecode(pMyDisasm);
@@ -112,9 +112,9 @@ void __bea_callspec__ aesdeclast(PDISASM pMyDisasm)
         GV.MemDecoration = Arg2dqword;
         (*pMyDisasm).Instruction.Category = AES_INSTRUCTION;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "aesdeclast ");
-        SSE_ = 1;
+        GV.SSE_ = 1;
         GxEx(pMyDisasm);
-        SSE_ = 0;
+        GV.SSE_ = 0;
     }
     else {
         FailDecode(pMyDisasm);
@@ -133,17 +133,17 @@ void __bea_callspec__ aeskeygen(PDISASM pMyDisasm)
         GV.MemDecoration = Arg2dqword;
         (*pMyDisasm).Instruction.Category = AES_INSTRUCTION;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "aeskeygen-assist ");
-        SSE_ = 1;
+        GV.SSE_ = 1;
         GxEx(pMyDisasm);
-        SSE_ = 0;
+        GV.SSE_ = 0;
         GV.EIP_++;
         if (!Security(0, pMyDisasm)) return;
-        third_arg = 1;
+        GV.third_arg = 1;
         (*pMyDisasm).Instruction.Immediat = *((UInt8*)(UIntPtr) (GV.EIP_- 1));
-        (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument3.ArgMnemonic, "%.2X",(Int64) *((UInt8*)(UIntPtr) (GV.EIP_- 1)));
+        (void) CopyFormattedNumber(pMyDisasm, (char*) (*pMyDisasm).Argument3.ArgMnemonic, "%.2X",(Int64) *((UInt8*)(UIntPtr) (GV.EIP_- 1)));
         (*pMyDisasm).Argument3.ArgType = CONSTANT_TYPE+ABSOLUTE_;
         (*pMyDisasm).Argument3.ArgSize = 8;
-        ImmediatSize = 8;
+        GV.ImmediatSize = 8;
 
     }
     else {

@@ -16,32 +16,9 @@
  *    You should have received a copy of the GNU Lesser General Public License
  *    along with BeaEngine.  If not, see <http://www.gnu.org/licenses/>. */
 
+/* Define prefix GV aka GlobalVariable - used instead of global internal variables to make BeaEngine thread-safe  */
 
-/* #define GV (*(GlobalVariables*)((*pMyDisasm).Reserved))  */
 #define GV (*pMyDisasm).Reserved
-
-
-/* static UIntPtr EIP_, EIP_VA, EIP_REAL; */
-/* static Int32 OriginalOperandSize;         keep original OperandSize value if it is used as a mandatory prefix */
-/* static Int32 OperandSize; */
-/* static Int32 MemDecoration; */
-/*static Int32 AddressSize; */
-static Int32 INDEX_, SCALE_, BASE_, MMX_, SSE_, CR_, DR_, SEG_, REGOPCODE;
-static UIntPtr DECALAGE_EIP;
-static Int32 FORMATNUMBER;
-static Int32 SYNTAX_;
-static UInt64 EndOfBlock;
-static Int32 RelativeAddress;
-static UInt32 Architecture;
-static Int32 ImmediatSize;
-
-
-static Int32 NB_PREFIX;
-static Int32 PrefRepe, PrefRepne;
-static UInt32 SEGMENTREGS, SEGMENTFS;
-static Int32 third_arg;
-static Int32 TAB_;
-static Int32 ERROR_OPCODE;
 
 /* Define constants to identify the position and type of decoration used in case of memory argument */
 
@@ -570,5 +547,5 @@ char BXDI_[] = "bx+di";
 char BPSI_[] = "bp+si";
 char BPDI_[] = "bp+di";
 
-static REX_Struct REX;
+
 

@@ -21,8 +21,8 @@
  * ==================================================================== */
 void __bea_callspec__ G4_Eb(PDISASM pMyDisasm)
 {
-    REGOPCODE = ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 3) & 0x7;
-    if (REGOPCODE == 0) {
+    GV.REGOPCODE = ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 3) & 0x7;
+    if (GV.REGOPCODE == 0) {
         if ((*pMyDisasm).Prefix.LockPrefix == InvalidPrefix) {
             (*pMyDisasm).Prefix.LockPrefix = InUsePrefix;
         }
@@ -31,7 +31,7 @@ void __bea_callspec__ G4_Eb(PDISASM pMyDisasm)
         Eb(pMyDisasm);
         FillFlags(pMyDisasm, 40);
     }
-    else if (REGOPCODE == 1) {
+    else if (GV.REGOPCODE == 1) {
         if ((*pMyDisasm).Prefix.LockPrefix == InvalidPrefix) {
             (*pMyDisasm).Prefix.LockPrefix = InUsePrefix;
         }

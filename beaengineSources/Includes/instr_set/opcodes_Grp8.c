@@ -21,15 +21,15 @@
  * ==================================================================== */
 void __bea_callspec__ G8_EvIb(PDISASM pMyDisasm)
 {
-    REGOPCODE = ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 3) & 0x7;
+    GV.REGOPCODE = ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 3) & 0x7;
     EvIb(pMyDisasm);
-    if (REGOPCODE == 4) {
+    if (GV.REGOPCODE == 4) {
         (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+BIT_UInt8;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "bt ");
         (*pMyDisasm).Argument1.AccessMode = READ;
         FillFlags(pMyDisasm, 11);
     }
-    else if (REGOPCODE == 5) {
+    else if (GV.REGOPCODE == 5) {
         if ((*pMyDisasm).Prefix.LockPrefix == InvalidPrefix) {
             (*pMyDisasm).Prefix.LockPrefix = InUsePrefix;
         }
@@ -38,7 +38,7 @@ void __bea_callspec__ G8_EvIb(PDISASM pMyDisasm)
         (*pMyDisasm).Argument1.AccessMode = READ;
         FillFlags(pMyDisasm, 11);
     }
-    else if (REGOPCODE == 6) {
+    else if (GV.REGOPCODE == 6) {
         if ((*pMyDisasm).Prefix.LockPrefix == InvalidPrefix) {
             (*pMyDisasm).Prefix.LockPrefix = InUsePrefix;
         }
@@ -47,7 +47,7 @@ void __bea_callspec__ G8_EvIb(PDISASM pMyDisasm)
         (*pMyDisasm).Argument1.AccessMode = READ;
         FillFlags(pMyDisasm, 11);
     }
-    else if (REGOPCODE == 7) {
+    else if (GV.REGOPCODE == 7) {
         if ((*pMyDisasm).Prefix.LockPrefix == InvalidPrefix) {
             (*pMyDisasm).Prefix.LockPrefix = InUsePrefix;
         }

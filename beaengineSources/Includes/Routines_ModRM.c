@@ -20,7 +20,7 @@
  * ======================================= */
 void __bea_callspec__ MOD_RM(ARGTYPE* pMyArgument, PDISASM pMyDisasm)
 {
-    DECALAGE_EIP = 0;
+    GV.DECALAGE_EIP = 0;
     if (!Security(1, pMyDisasm)) return;
     GV.MOD_ = ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 6) & 0x3;
     GV.RM_  = (*((UInt8*)(UIntPtr) (GV.EIP_+1))) & 0x7;
@@ -28,15 +28,15 @@ void __bea_callspec__ MOD_RM(ARGTYPE* pMyArgument, PDISASM pMyDisasm)
         ModRM_0[GV.RM_](pMyArgument, pMyDisasm);
     }
     else if (GV.MOD_ == 1) {
-        DECALAGE_EIP++;
+        GV.DECALAGE_EIP++;
         ModRM_1[GV.RM_](pMyArgument, pMyDisasm);
     }
     else if (GV.MOD_ == 2) {
         if (GV.AddressSize >= 32) {
-            DECALAGE_EIP += 4;
+            GV.DECALAGE_EIP += 4;
         }
         else {
-            DECALAGE_EIP += 2;
+            GV.DECALAGE_EIP += 2;
         }
         ModRM_2[GV.RM_](pMyArgument, pMyDisasm);
     }
@@ -52,65 +52,65 @@ void __bea_callspec__ Reg_Opcode(ARGTYPE* pMyArgument, PDISASM pMyDisasm)
 {
     size_t i = 0;
     if (!Security(1, pMyDisasm)) return;
-    REGOPCODE = ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 3) & 0x7;
-    if (REX.R_ == 1) {
-        REGOPCODE += 0x8;
+    GV.REGOPCODE = ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 3) & 0x7;
+    if (GV.REX.R_ == 1) {
+        GV.REGOPCODE += 0x8;
     }
-    if (MMX_ == 1) {
-        (void) strcpy ((char*) (*pMyArgument).ArgMnemonic+i, RegistersMMX[REGOPCODE]);
-        (*pMyArgument).ArgType = REGISTER_TYPE+MMX_REG+REGS[REGOPCODE];
+    if (GV.MMX_  == 1) {
+        (void) strcpy ((char*) (*pMyArgument).ArgMnemonic+i, RegistersMMX[GV.REGOPCODE]);
+        (*pMyArgument).ArgType = REGISTER_TYPE+MMX_REG+REGS[GV.REGOPCODE];
         (*pMyArgument).ArgSize = 64;
     }
-    else if (SEG_ == 1) {
-        (void) strcpy ((char*) (*pMyArgument).ArgMnemonic+i, RegistersSEG[REGOPCODE]);
-        (*pMyArgument).ArgType = REGISTER_TYPE+SEGMENT_REG+REGS[REGOPCODE];
+    else if (GV.SEG_ == 1) {
+        (void) strcpy ((char*) (*pMyArgument).ArgMnemonic+i, RegistersSEG[GV.REGOPCODE]);
+        (*pMyArgument).ArgType = REGISTER_TYPE+SEGMENT_REG+REGS[GV.REGOPCODE];
         (*pMyArgument).ArgSize = 16;
     }
-    else if (CR_ == 1) {
-        (void) strcpy ((char*) (*pMyArgument).ArgMnemonic+i, RegistersCR[REGOPCODE]);
-        (*pMyArgument).ArgType = REGISTER_TYPE+CR_REG+REGS[REGOPCODE];
+    else if (GV.CR_ == 1) {
+        (void) strcpy ((char*) (*pMyArgument).ArgMnemonic+i, RegistersCR[GV.REGOPCODE]);
+        (*pMyArgument).ArgType = REGISTER_TYPE+CR_REG+REGS[GV.REGOPCODE];
         (*pMyArgument).ArgSize = 32;
     }
-    else if (DR_ == 1) {
-        if (SYNTAX_ == ATSyntax) {
-            (void) strcpy ((char*) (*pMyArgument).ArgMnemonic+i, RegistersDR_AT[REGOPCODE]);
+    else if (GV.DR_ == 1) {
+        if (GV.SYNTAX_ == ATSyntax) {
+            (void) strcpy ((char*) (*pMyArgument).ArgMnemonic+i, RegistersDR_AT[GV.REGOPCODE]);
         }
         else {
-            (void) strcpy ((char*) (*pMyArgument).ArgMnemonic+i, RegistersDR[REGOPCODE]);
+            (void) strcpy ((char*) (*pMyArgument).ArgMnemonic+i, RegistersDR[GV.REGOPCODE]);
         }
-        (*pMyArgument).ArgType = REGISTER_TYPE+DR_REG+REGS[REGOPCODE];
+        (*pMyArgument).ArgType = REGISTER_TYPE+DR_REG+REGS[GV.REGOPCODE];
         (*pMyArgument).ArgSize = 32;
     }
-    else if (SSE_ == 1) {
-        (void) strcpy ((char*) (*pMyArgument).ArgMnemonic+i, RegistersSSE[REGOPCODE]);
-        (*pMyArgument).ArgType = REGISTER_TYPE+SSE_REG+REGS[REGOPCODE];
+    else if (GV.SSE_ == 1) {
+        (void) strcpy ((char*) (*pMyArgument).ArgMnemonic+i, RegistersSSE[GV.REGOPCODE]);
+        (*pMyArgument).ArgType = REGISTER_TYPE+SSE_REG+REGS[GV.REGOPCODE];
         (*pMyArgument).ArgSize = 128;
     }
     else if (GV.OperandSize == 8) {
-        if (REX.state == 0) {
-            (void) strcpy ((char*) (*pMyArgument).ArgMnemonic+i, Registers8BitsLegacy[REGOPCODE]);
-            (*pMyArgument).ArgType = REGISTER_TYPE+GENERAL_REG+REGS8BITS[REGOPCODE];
+        if (GV.REX.state == 0) {
+            (void) strcpy ((char*) (*pMyArgument).ArgMnemonic+i, Registers8BitsLegacy[GV.REGOPCODE]);
+            (*pMyArgument).ArgType = REGISTER_TYPE+GENERAL_REG+REGS8BITS[GV.REGOPCODE];
             (*pMyArgument).ArgSize = 8;
         }
         else {
-            (void) strcpy ((char*) (*pMyArgument).ArgMnemonic+i, Registers8Bits[REGOPCODE]);
-            (*pMyArgument).ArgType = REGISTER_TYPE+GENERAL_REG+REGS[REGOPCODE];
+            (void) strcpy ((char*) (*pMyArgument).ArgMnemonic+i, Registers8Bits[GV.REGOPCODE]);
+            (*pMyArgument).ArgType = REGISTER_TYPE+GENERAL_REG+REGS[GV.REGOPCODE];
             (*pMyArgument).ArgSize = 8;
         }
     }
     else if (GV.OperandSize == 16) {
-        (void) strcpy ((char*) (*pMyArgument).ArgMnemonic+i, Registers16Bits[REGOPCODE]);
-        (*pMyArgument).ArgType = REGISTER_TYPE+GENERAL_REG+REGS[REGOPCODE];
+        (void) strcpy ((char*) (*pMyArgument).ArgMnemonic+i, Registers16Bits[GV.REGOPCODE]);
+        (*pMyArgument).ArgType = REGISTER_TYPE+GENERAL_REG+REGS[GV.REGOPCODE];
         (*pMyArgument).ArgSize = 16;
     }
     else if (GV.OperandSize == 32) {
-        (void) strcpy ((char*) (*pMyArgument).ArgMnemonic+i, Registers32Bits[REGOPCODE]);
-        (*pMyArgument).ArgType = REGISTER_TYPE+GENERAL_REG+REGS[REGOPCODE];
+        (void) strcpy ((char*) (*pMyArgument).ArgMnemonic+i, Registers32Bits[GV.REGOPCODE]);
+        (*pMyArgument).ArgType = REGISTER_TYPE+GENERAL_REG+REGS[GV.REGOPCODE];
         (*pMyArgument).ArgSize = 32;
     }
     else if (GV.OperandSize == 64) {
-        (void) strcpy ((char*) (*pMyArgument).ArgMnemonic+i, Registers64Bits[REGOPCODE]);
-        (*pMyArgument).ArgType = REGISTER_TYPE+GENERAL_REG+REGS[REGOPCODE];
+        (void) strcpy ((char*) (*pMyArgument).ArgMnemonic+i, Registers64Bits[GV.REGOPCODE]);
+        (*pMyArgument).ArgType = REGISTER_TYPE+GENERAL_REG+REGS[GV.REGOPCODE];
         (*pMyArgument).ArgSize = 64;
     }
 }
@@ -120,13 +120,13 @@ void __bea_callspec__ Reg_Opcode(ARGTYPE* pMyArgument, PDISASM pMyDisasm)
 void __bea_callspec__ Addr_EAX(ARGTYPE* pMyArgument, PDISASM pMyDisasm)
 {
     size_t i = 0;
-    if (SYNTAX_ == ATSyntax) {
+    if (GV.SYNTAX_ == ATSyntax) {
         (void) strcpy((char*) (*pMyArgument).ArgMnemonic, "(%");
         i += 2;
     }
     (*pMyArgument).ArgType = MEMORY_TYPE;
     if (GV.AddressSize == 64) {
-        if (REX.B_ == 1) {
+        if (GV.REX.B_ == 1) {
             (void) strcpy ((char*) (*pMyArgument).ArgMnemonic+i, Registers64Bits[8]);
             (*pMyArgument).Memory.BaseRegister = REGS[8];
         }
@@ -137,7 +137,7 @@ void __bea_callspec__ Addr_EAX(ARGTYPE* pMyArgument, PDISASM pMyDisasm)
     }
     else if (GV.AddressSize == 32) {
 
-        if (REX.B_ == 1) {
+        if (GV.REX.B_ == 1) {
             (void) strcpy ((char*) (*pMyArgument).ArgMnemonic+i, Registers32Bits[8]);
             (*pMyArgument).Memory.BaseRegister = REGS[8];
 
@@ -151,7 +151,7 @@ void __bea_callspec__ Addr_EAX(ARGTYPE* pMyArgument, PDISASM pMyDisasm)
             (void) strcpy ((char*) (*pMyArgument).ArgMnemonic+i, BXSI_);
     }
     i = strlen ((char*) &(*pMyArgument).ArgMnemonic);
-    if (SYNTAX_ == ATSyntax) {
+    if (GV.SYNTAX_ == ATSyntax) {
         (void) strcpy((char*) (*pMyArgument).ArgMnemonic+i, ")");
         i += 1;
     }
@@ -163,13 +163,13 @@ void __bea_callspec__ Addr_EAX(ARGTYPE* pMyArgument, PDISASM pMyDisasm)
 void __bea_callspec__ Addr_ECX(ARGTYPE* pMyArgument, PDISASM pMyDisasm)
 {
     size_t i = 0;
-    if (SYNTAX_ == ATSyntax) {
+    if (GV.SYNTAX_ == ATSyntax) {
         (void) strcpy((char*) (*pMyArgument).ArgMnemonic, "(%");
         i += 2;
     }
     (*pMyArgument).ArgType = MEMORY_TYPE;
     if (GV.AddressSize == 64) {
-        if (REX.B_ == 1) {
+        if (GV.REX.B_ == 1) {
             (void) strcpy ((char*) (*pMyArgument).ArgMnemonic+i, Registers64Bits[9]);
             (*pMyArgument).Memory.BaseRegister = REGS[1+8];
         }
@@ -180,7 +180,7 @@ void __bea_callspec__ Addr_ECX(ARGTYPE* pMyArgument, PDISASM pMyDisasm)
     }
     else if (GV.AddressSize == 32) {
 
-        if (REX.B_ == 1) {
+        if (GV.REX.B_ == 1) {
             (void) strcpy ((char*) (*pMyArgument).ArgMnemonic+i, Registers32Bits[9]);
             (*pMyArgument).Memory.BaseRegister = REGS[1+8];
 
@@ -194,7 +194,7 @@ void __bea_callspec__ Addr_ECX(ARGTYPE* pMyArgument, PDISASM pMyDisasm)
             (void) strcpy ((char*) (*pMyArgument).ArgMnemonic+i, BXDI_);
     }
     i = strlen ((char*) &(*pMyArgument).ArgMnemonic);
-    if (SYNTAX_ == ATSyntax) {
+    if (GV.SYNTAX_ == ATSyntax) {
         (void) strcpy((char*) (*pMyArgument).ArgMnemonic+i, ")");
         i += 1;
     }
@@ -207,13 +207,13 @@ void __bea_callspec__ Addr_ECX(ARGTYPE* pMyArgument, PDISASM pMyDisasm)
 void __bea_callspec__ Addr_EDX(ARGTYPE* pMyArgument, PDISASM pMyDisasm)
 {
     size_t i = 0;
-    if (SYNTAX_ == ATSyntax) {
+    if (GV.SYNTAX_ == ATSyntax) {
         (void) strcpy((char*) (*pMyArgument).ArgMnemonic, "(%");
         i += 2;
     }
     (*pMyArgument).ArgType = MEMORY_TYPE;
     if (GV.AddressSize == 64) {
-        if (REX.B_ == 1) {
+        if (GV.REX.B_ == 1) {
             (void) strcpy ((char*) (*pMyArgument).ArgMnemonic+i, Registers64Bits[10]);
             (*pMyArgument).Memory.BaseRegister = REGS[2+8];
         }
@@ -224,7 +224,7 @@ void __bea_callspec__ Addr_EDX(ARGTYPE* pMyArgument, PDISASM pMyDisasm)
     }
     else if (GV.AddressSize == 32) {
 
-        if (REX.B_ == 1) {
+        if (GV.REX.B_ == 1) {
             (void) strcpy ((char*) (*pMyArgument).ArgMnemonic+i, Registers32Bits[10]);
             (*pMyArgument).Memory.BaseRegister = REGS[2+8];
         }
@@ -237,7 +237,7 @@ void __bea_callspec__ Addr_EDX(ARGTYPE* pMyArgument, PDISASM pMyDisasm)
             (void) strcpy ((char*) (*pMyArgument).ArgMnemonic+i, BPSI_);
     }
     i = strlen ((char*) &(*pMyArgument).ArgMnemonic);
-    if (SYNTAX_ == ATSyntax) {
+    if (GV.SYNTAX_ == ATSyntax) {
         (void) strcpy((char*) (*pMyArgument).ArgMnemonic+i, ")");
         i += 1;
     }
@@ -251,13 +251,13 @@ void __bea_callspec__ Addr_EDX(ARGTYPE* pMyArgument, PDISASM pMyDisasm)
 void __bea_callspec__ Addr_EBX(ARGTYPE* pMyArgument, PDISASM pMyDisasm)
 {
     size_t i = 0;
-    if (SYNTAX_ == ATSyntax) {
+    if (GV.SYNTAX_ == ATSyntax) {
         (void) strcpy((char*) (*pMyArgument).ArgMnemonic, "(%");
         i += 2;
     }
     (*pMyArgument).ArgType = MEMORY_TYPE;
     if (GV.AddressSize == 64) {
-        if (REX.B_ == 1) {
+        if (GV.REX.B_ == 1) {
             (void) strcpy ((char*) (*pMyArgument).ArgMnemonic+i, Registers64Bits[11]);
             (*pMyArgument).Memory.BaseRegister = REGS[3+8];
         }
@@ -268,7 +268,7 @@ void __bea_callspec__ Addr_EBX(ARGTYPE* pMyArgument, PDISASM pMyDisasm)
     }
     else if (GV.AddressSize == 32) {
 
-        if (REX.B_ == 1) {
+        if (GV.REX.B_ == 1) {
             (void) strcpy ((char*) (*pMyArgument).ArgMnemonic+i, Registers32Bits[11]);
             (*pMyArgument).Memory.BaseRegister = REGS[3+8];
         }
@@ -281,7 +281,7 @@ void __bea_callspec__ Addr_EBX(ARGTYPE* pMyArgument, PDISASM pMyDisasm)
             (void) strcpy ((char*) (*pMyArgument).ArgMnemonic+i, BPDI_);
     }
     i = strlen ((char*) &(*pMyArgument).ArgMnemonic);
-    if (SYNTAX_ == ATSyntax) {
+    if (GV.SYNTAX_ == ATSyntax) {
         (void) strcpy((char*) (*pMyArgument).ArgMnemonic+i, ")");
         i += 1;
     }
@@ -296,11 +296,11 @@ void __bea_callspec__ Addr_SIB(ARGTYPE* pMyArgument, PDISASM pMyDisasm)
     if (!Security(2, pMyDisasm)) return;
     (*pMyArgument).ArgType = MEMORY_TYPE;
     if (GV.AddressSize >= 32) {
-        DECALAGE_EIP++;
-        BASE_ = ((UInt8) *((UInt8*) (UIntPtr)GV.EIP_+2)) & 0x7;
-        SCALE_ = (((UInt8) *((UInt8*) (UIntPtr)GV.EIP_+2)) & 0xc0) >> 6;
-        INDEX_ = (((UInt8) *((UInt8*) (UIntPtr)GV.EIP_+2)) & 0x38) >> 3;
-        (void) SIB[SCALE_](pMyArgument, 0, pMyDisasm);
+        GV.DECALAGE_EIP++;
+        GV.BASE_  = ((UInt8) *((UInt8*) (UIntPtr)GV.EIP_+2)) & 0x7;
+        GV.SCALE_  = (((UInt8) *((UInt8*) (UIntPtr)GV.EIP_+2)) & 0xc0) >> 6;
+        GV.INDEX_  = (((UInt8) *((UInt8*) (UIntPtr)GV.EIP_+2)) & 0x38) >> 3;
+        (void) SIB[GV.SCALE_ ](pMyArgument, 0, pMyDisasm);
     }
     else {
         (void) strcpy ((char*) (*pMyArgument).ArgMnemonic, Registers16Bits[6]);
@@ -319,17 +319,17 @@ void __bea_callspec__ Addr_disp32(ARGTYPE* pMyArgument, PDISASM pMyDisasm)
     (*pMyArgument).ArgType = MEMORY_TYPE;
     if (GV.AddressSize >= 32) {
         if (!Security(6, pMyDisasm)) return;
-        DECALAGE_EIP+=4;
+        GV.DECALAGE_EIP+=4;
         MyNumber = *((Int32*)(UIntPtr) (GV.EIP_+2));
         (*pMyArgument).Memory.Displacement = MyNumber;
-        if (Architecture == 64) {
+        if (GV.Architecture == 64) {
             MyNumber += 6;
-            MyNumber += NB_PREFIX;
+            MyNumber += GV.NB_PREFIX;
             CalculateRelativeAddress(&MyAddress, (Int64)MyNumber, pMyDisasm);
-            i+= CopyFormattedNumber((char*) (*pMyArgument).ArgMnemonic+i,"%I64X", (Int64)MyAddress);
+            i+= CopyFormattedNumber(pMyDisasm, (char*) (*pMyArgument).ArgMnemonic+i,"%I64X", (Int64)MyAddress);
         }
         else {
-            i+= CopyFormattedNumber((char*) (*pMyArgument).ArgMnemonic+i,"%.8X", (Int64)MyNumber);
+            i+= CopyFormattedNumber(pMyDisasm, (char*) (*pMyArgument).ArgMnemonic+i,"%.8X", (Int64)MyNumber);
         }
     }
     else {
@@ -345,13 +345,13 @@ void __bea_callspec__ Addr_ESI(ARGTYPE* pMyArgument, PDISASM pMyDisasm)
 {
     long MyNumber;
     size_t i = 0;
-    if (SYNTAX_ == ATSyntax) {
+    if (GV.SYNTAX_ == ATSyntax) {
         (void) strcpy((char*) (*pMyArgument).ArgMnemonic, "(%");
         i += 2;
     }
     (*pMyArgument).ArgType = MEMORY_TYPE;
     if (GV.AddressSize == 64) {
-        if (REX.B_ == 1) {
+        if (GV.REX.B_ == 1) {
             (void) strcpy ((char*) (*pMyArgument).ArgMnemonic+i, Registers64Bits[14]);
             (*pMyArgument).Memory.BaseRegister = REGS[6+8];
         }
@@ -362,7 +362,7 @@ void __bea_callspec__ Addr_ESI(ARGTYPE* pMyArgument, PDISASM pMyDisasm)
     }
     else if (GV.AddressSize == 32) {
 
-        if (REX.B_ == 1) {
+        if (GV.REX.B_ == 1) {
             (void) strcpy ((char*) (*pMyArgument).ArgMnemonic+i, Registers32Bits[14]);
             (*pMyArgument).Memory.BaseRegister = REGS[6+8];
         }
@@ -372,14 +372,14 @@ void __bea_callspec__ Addr_ESI(ARGTYPE* pMyArgument, PDISASM pMyDisasm)
         }
     }
     else {
-        DECALAGE_EIP+=2;
+        GV.DECALAGE_EIP+=2;
         MyNumber = *((UInt16*)(UIntPtr) (GV.EIP_+2));
         (*pMyArgument).Memory.Displacement = MyNumber;
         if (!Security(2, pMyDisasm)) return;
-        (void) CopyFormattedNumber((char*) (*pMyArgument).ArgMnemonic+i,"%.4X", (Int64)MyNumber);
+        (void) CopyFormattedNumber(pMyDisasm, (char*) (*pMyArgument).ArgMnemonic+i,"%.4X", (Int64)MyNumber);
     }
     i = strlen ((char*) &(*pMyArgument).ArgMnemonic);
-    if (SYNTAX_ == ATSyntax) {
+    if (GV.SYNTAX_ == ATSyntax) {
         (void) strcpy((char*) (*pMyArgument).ArgMnemonic+i, ")");
         i += 1;
     }
@@ -391,13 +391,13 @@ void __bea_callspec__ Addr_ESI(ARGTYPE* pMyArgument, PDISASM pMyDisasm)
 void __bea_callspec__ Addr_EDI(ARGTYPE* pMyArgument, PDISASM pMyDisasm)
 {
     size_t i = 0;
-    if (SYNTAX_ == ATSyntax) {
+    if (GV.SYNTAX_ == ATSyntax) {
         (void) strcpy((char*) (*pMyArgument).ArgMnemonic, "(%");
         i += 2;
     }
     (*pMyArgument).ArgType = MEMORY_TYPE;
     if (GV.AddressSize == 64) {
-        if (REX.B_ == 1) {
+        if (GV.REX.B_ == 1) {
             (void) strcpy ((char*) (*pMyArgument).ArgMnemonic+i, Registers64Bits[15]);
             (*pMyArgument).Memory.BaseRegister = REGS[7+8];
         }
@@ -408,7 +408,7 @@ void __bea_callspec__ Addr_EDI(ARGTYPE* pMyArgument, PDISASM pMyDisasm)
     }
     else if (GV.AddressSize == 32) {
 
-        if (REX.B_ == 1) {
+        if (GV.REX.B_ == 1) {
             (void) strcpy ((char*) (*pMyArgument).ArgMnemonic+i, Registers32Bits[15]);
             (*pMyArgument).Memory.BaseRegister = REGS[7+8];
         }
@@ -422,7 +422,7 @@ void __bea_callspec__ Addr_EDI(ARGTYPE* pMyArgument, PDISASM pMyDisasm)
             (*pMyArgument).Memory.BaseRegister = REGS[3];
     }
     i = strlen ((char*) &(*pMyArgument).ArgMnemonic);
-    if (SYNTAX_ == ATSyntax) {
+    if (GV.SYNTAX_ == ATSyntax) {
         (void) strcpy((char*) (*pMyArgument).ArgMnemonic+i, ")");
         i += 1;
     }
@@ -437,23 +437,23 @@ void __bea_callspec__ Addr_EAX_disp8(ARGTYPE* pMyArgument, PDISASM pMyDisasm)
     long MyNumber;
     MyNumber = *((Int8*)(UIntPtr) (GV.EIP_+2));
     (*pMyArgument).Memory.Displacement = MyNumber;
-    if (SYNTAX_ == ATSyntax) {
+    if (GV.SYNTAX_ == ATSyntax) {
         if (MyNumber < 0) {
             (void) strcpy((char*) (*pMyArgument).ArgMnemonic+i, "-");
             i++;
             j=i;
-            i+= CopyFormattedNumber((char*) (*pMyArgument).ArgMnemonic+j,"%.2X",(Int64) ~MyNumber+1);
+            i+= CopyFormattedNumber(pMyDisasm, (char*) (*pMyArgument).ArgMnemonic+j,"%.2X",(Int64) ~MyNumber+1);
         }
         else {
             j=i;
-            i+= CopyFormattedNumber((char*) (*pMyArgument).ArgMnemonic+j,"%.2X",(Int64) MyNumber);
+            i+= CopyFormattedNumber(pMyDisasm, (char*) (*pMyArgument).ArgMnemonic+j,"%.2X",(Int64) MyNumber);
         }
         (void) strcpy((char*) (*pMyArgument).ArgMnemonic+i, "(%");
         i+=2;
     }
     (*pMyArgument).ArgType = MEMORY_TYPE;
     if (GV.AddressSize == 64) {
-        if (REX.B_ == 1) {
+        if (GV.REX.B_ == 1) {
             (void) strcpy ((char*) (*pMyArgument).ArgMnemonic+i, Registers64Bits[8]);
             (*pMyArgument).Memory.BaseRegister = REGS[8];
         }
@@ -464,7 +464,7 @@ void __bea_callspec__ Addr_EAX_disp8(ARGTYPE* pMyArgument, PDISASM pMyDisasm)
     }
     else if (GV.AddressSize == 32) {
 
-        if (REX.B_ == 1) {
+        if (GV.REX.B_ == 1) {
             (void) strcpy ((char*) (*pMyArgument).ArgMnemonic+i, Registers32Bits[8]);
             (*pMyArgument).Memory.BaseRegister = REGS[8];
 
@@ -478,7 +478,7 @@ void __bea_callspec__ Addr_EAX_disp8(ARGTYPE* pMyArgument, PDISASM pMyDisasm)
             (void) strcpy ((char*) (*pMyArgument).ArgMnemonic+i, BXSI_);
     }
     i = strlen ((char*) &(*pMyArgument).ArgMnemonic);
-    if (SYNTAX_ == ATSyntax) {
+    if (GV.SYNTAX_ == ATSyntax) {
         (void) strcpy((char*) (*pMyArgument).ArgMnemonic+i, ")");
         i += 1;
     }
@@ -486,12 +486,12 @@ void __bea_callspec__ Addr_EAX_disp8(ARGTYPE* pMyArgument, PDISASM pMyDisasm)
         if (MyNumber < 0) {
             (void) strcpy((char*) (*pMyArgument).ArgMnemonic+i, "-");
             i++;
-            i+= CopyFormattedNumber((char*) (*pMyArgument).ArgMnemonic+i,"%.2X",(Int64) ~MyNumber+1);
+            i+= CopyFormattedNumber(pMyDisasm, (char*) (*pMyArgument).ArgMnemonic+i,"%.2X",(Int64) ~MyNumber+1);
         }
         else {
             (void) strcpy((char*) (*pMyArgument).ArgMnemonic+i, "+");
             i++;
-            i+= CopyFormattedNumber((char*) (*pMyArgument).ArgMnemonic+i,"%.2X",(Int64) MyNumber);
+            i+= CopyFormattedNumber(pMyDisasm, (char*) (*pMyArgument).ArgMnemonic+i,"%.2X",(Int64) MyNumber);
         }
     }
 }
@@ -505,23 +505,23 @@ void __bea_callspec__ Addr_ECX_disp8(ARGTYPE* pMyArgument, PDISASM pMyDisasm)
     long MyNumber;
     MyNumber = (Int8) *((UInt8*) (UIntPtr)GV.EIP_+2);
     (*pMyArgument).Memory.Displacement = MyNumber;
-    if (SYNTAX_ == ATSyntax) {
+    if (GV.SYNTAX_ == ATSyntax) {
         if (MyNumber < 0) {
             (void) strcpy((char*) (*pMyArgument).ArgMnemonic+i, "-");
             i++;
             j=i;
-            i+= CopyFormattedNumber((char*) (*pMyArgument).ArgMnemonic+j,"%.2X",(Int64) ~MyNumber+1);
+            i+= CopyFormattedNumber(pMyDisasm, (char*) (*pMyArgument).ArgMnemonic+j,"%.2X",(Int64) ~MyNumber+1);
         }
         else {
             j=i;
-            i+= CopyFormattedNumber((char*) (*pMyArgument).ArgMnemonic+j,"%.2X",(Int64) MyNumber);
+            i+= CopyFormattedNumber(pMyDisasm, (char*) (*pMyArgument).ArgMnemonic+j,"%.2X",(Int64) MyNumber);
         }
         (void) strcpy((char*) (*pMyArgument).ArgMnemonic+i, "(%");
         i+=2;
     }
     (*pMyArgument).ArgType = MEMORY_TYPE;
     if (GV.AddressSize == 64) {
-        if (REX.B_ == 1) {
+        if (GV.REX.B_ == 1) {
             (void) strcpy ((char*) (*pMyArgument).ArgMnemonic+i, Registers64Bits[9]);
             (*pMyArgument).Memory.BaseRegister = REGS[1+8];
         }
@@ -532,7 +532,7 @@ void __bea_callspec__ Addr_ECX_disp8(ARGTYPE* pMyArgument, PDISASM pMyDisasm)
     }
     else if (GV.AddressSize == 32) {
 
-        if (REX.B_ == 1) {
+        if (GV.REX.B_ == 1) {
             (void) strcpy ((char*) (*pMyArgument).ArgMnemonic+i, Registers32Bits[9]);
             (*pMyArgument).Memory.BaseRegister = REGS[1+8];
 
@@ -546,7 +546,7 @@ void __bea_callspec__ Addr_ECX_disp8(ARGTYPE* pMyArgument, PDISASM pMyDisasm)
             (void) strcpy ((char*) (*pMyArgument).ArgMnemonic+i, BXDI_);
     }
     i = strlen ((char*) &(*pMyArgument).ArgMnemonic);
-    if (SYNTAX_ == ATSyntax) {
+    if (GV.SYNTAX_ == ATSyntax) {
         (void) strcpy((char*) (*pMyArgument).ArgMnemonic+i, ")");
         i += 1;
     }
@@ -554,12 +554,12 @@ void __bea_callspec__ Addr_ECX_disp8(ARGTYPE* pMyArgument, PDISASM pMyDisasm)
         if (MyNumber < 0) {
             (void) strcpy((char*) (*pMyArgument).ArgMnemonic+i, "-");
             i++;
-            i+= CopyFormattedNumber((char*) (*pMyArgument).ArgMnemonic+i,"%.2X",(Int64) ~MyNumber+1);
+            i+= CopyFormattedNumber(pMyDisasm, (char*) (*pMyArgument).ArgMnemonic+i,"%.2X",(Int64) ~MyNumber+1);
         }
         else {
             (void) strcpy((char*) (*pMyArgument).ArgMnemonic+i, "+");
             i++;
-            i+= CopyFormattedNumber((char*) (*pMyArgument).ArgMnemonic+i,"%.2X",(Int64) MyNumber);
+            i+= CopyFormattedNumber(pMyDisasm, (char*) (*pMyArgument).ArgMnemonic+i,"%.2X",(Int64) MyNumber);
         }
     }
 }
@@ -573,23 +573,23 @@ void __bea_callspec__ Addr_EDX_disp8(ARGTYPE* pMyArgument, PDISASM pMyDisasm)
     long MyNumber;
     MyNumber = *((Int8*)(UIntPtr) (GV.EIP_+2));
     (*pMyArgument).Memory.Displacement = MyNumber;
-    if (SYNTAX_ == ATSyntax) {
+    if (GV.SYNTAX_ == ATSyntax) {
         if (MyNumber < 0) {
             (void) strcpy((char*) (*pMyArgument).ArgMnemonic+i, "-");
             i++;
             j=i;
-            i+= CopyFormattedNumber((char*) (*pMyArgument).ArgMnemonic+j,"%.2X",(Int64) ~MyNumber+1);
+            i+= CopyFormattedNumber(pMyDisasm, (char*) (*pMyArgument).ArgMnemonic+j,"%.2X",(Int64) ~MyNumber+1);
         }
         else {
             j=i;
-            i+= CopyFormattedNumber((char*) (*pMyArgument).ArgMnemonic+j,"%.2X",(Int64) MyNumber);
+            i+= CopyFormattedNumber(pMyDisasm, (char*) (*pMyArgument).ArgMnemonic+j,"%.2X",(Int64) MyNumber);
         }
         (void) strcpy((char*) (*pMyArgument).ArgMnemonic+i, "(%");
         i+=2;
     }
     (*pMyArgument).ArgType = MEMORY_TYPE;
     if (GV.AddressSize == 64) {
-        if (REX.B_ == 1) {
+        if (GV.REX.B_ == 1) {
             (void) strcpy ((char*) (*pMyArgument).ArgMnemonic+i, Registers64Bits[10]);
             (*pMyArgument).Memory.BaseRegister = REGS[2+8];
         }
@@ -599,7 +599,7 @@ void __bea_callspec__ Addr_EDX_disp8(ARGTYPE* pMyArgument, PDISASM pMyDisasm)
         }
     }
     else if (GV.AddressSize == 32) {
-        if (REX.B_ == 1) {
+        if (GV.REX.B_ == 1) {
             (void) strcpy ((char*) (*pMyArgument).ArgMnemonic+i, Registers32Bits[10]);
             (*pMyArgument).Memory.BaseRegister = REGS[2+8];
 
@@ -613,7 +613,7 @@ void __bea_callspec__ Addr_EDX_disp8(ARGTYPE* pMyArgument, PDISASM pMyDisasm)
             (void) strcpy ((char*) (*pMyArgument).ArgMnemonic+i, BPSI_);
     }
     i = strlen ((char*) &(*pMyArgument).ArgMnemonic);
-    if (SYNTAX_ == ATSyntax) {
+    if (GV.SYNTAX_ == ATSyntax) {
         (void) strcpy((char*) (*pMyArgument).ArgMnemonic+i, ")");
         i += 1;
     }
@@ -621,12 +621,12 @@ void __bea_callspec__ Addr_EDX_disp8(ARGTYPE* pMyArgument, PDISASM pMyDisasm)
         if (MyNumber < 0) {
             (void) strcpy((char*) (*pMyArgument).ArgMnemonic+i, "-");
             i++;
-            i+= CopyFormattedNumber((char*) (*pMyArgument).ArgMnemonic+i,"%.2X",(Int64) ~MyNumber+1);
+            i+= CopyFormattedNumber(pMyDisasm, (char*) (*pMyArgument).ArgMnemonic+i,"%.2X",(Int64) ~MyNumber+1);
         }
         else {
             (void) strcpy((char*) (*pMyArgument).ArgMnemonic+i, "+");
             i++;
-            i+= CopyFormattedNumber((char*) (*pMyArgument).ArgMnemonic+i,"%.2X",(Int64) MyNumber);
+            i+= CopyFormattedNumber(pMyDisasm, (char*) (*pMyArgument).ArgMnemonic+i,"%.2X",(Int64) MyNumber);
         }
     }
 }
@@ -640,23 +640,23 @@ void __bea_callspec__ Addr_EBX_disp8(ARGTYPE* pMyArgument, PDISASM pMyDisasm)
     long MyNumber;
     MyNumber = *((Int8*)(UIntPtr) (GV.EIP_+2));
     (*pMyArgument).Memory.Displacement = MyNumber;
-    if (SYNTAX_ == ATSyntax) {
+    if (GV.SYNTAX_ == ATSyntax) {
         if (MyNumber < 0) {
             (void) strcpy((char*) (*pMyArgument).ArgMnemonic+i, "-");
             i++;
             j=i;
-            i+= CopyFormattedNumber((char*) (*pMyArgument).ArgMnemonic+j,"%.2X",(Int64) ~MyNumber+1);
+            i+= CopyFormattedNumber(pMyDisasm, (char*) (*pMyArgument).ArgMnemonic+j,"%.2X",(Int64) ~MyNumber+1);
         }
         else {
             j=i;
-            i+= CopyFormattedNumber((char*) (*pMyArgument).ArgMnemonic+j,"%.2X",(Int64) MyNumber);
+            i+= CopyFormattedNumber(pMyDisasm, (char*) (*pMyArgument).ArgMnemonic+j,"%.2X",(Int64) MyNumber);
         }
         (void) strcpy((char*) (*pMyArgument).ArgMnemonic+i, "(%");
         i+=2;
     }
     (*pMyArgument).ArgType = MEMORY_TYPE;
     if (GV.AddressSize == 64) {
-        if (REX.B_ == 1) {
+        if (GV.REX.B_ == 1) {
             (void) strcpy ((char*) (*pMyArgument).ArgMnemonic+i, Registers64Bits[11]);
             (*pMyArgument).Memory.BaseRegister = REGS[3+8];
         }
@@ -666,7 +666,7 @@ void __bea_callspec__ Addr_EBX_disp8(ARGTYPE* pMyArgument, PDISASM pMyDisasm)
         }
     }
     else if (GV.AddressSize == 32) {
-        if (REX.B_ == 1) {
+        if (GV.REX.B_ == 1) {
             (void) strcpy ((char*) (*pMyArgument).ArgMnemonic+i, Registers32Bits[11]);
             (*pMyArgument).Memory.BaseRegister = REGS[3+8];
 
@@ -680,7 +680,7 @@ void __bea_callspec__ Addr_EBX_disp8(ARGTYPE* pMyArgument, PDISASM pMyDisasm)
             (void) strcpy ((char*) (*pMyArgument).ArgMnemonic+i, BPDI_);
     }
     i = strlen ((char*) &(*pMyArgument).ArgMnemonic);
-    if (SYNTAX_ == ATSyntax) {
+    if (GV.SYNTAX_ == ATSyntax) {
         (void) strcpy((char*) (*pMyArgument).ArgMnemonic+i, ")");
         i += 1;
     }
@@ -688,12 +688,12 @@ void __bea_callspec__ Addr_EBX_disp8(ARGTYPE* pMyArgument, PDISASM pMyDisasm)
         if (MyNumber < 0) {
             (void) strcpy((char*) (*pMyArgument).ArgMnemonic+i, "-");
             i++;
-            i+= CopyFormattedNumber((char*) (*pMyArgument).ArgMnemonic+i,"%.2X",(Int64) ~MyNumber+1);
+            i+= CopyFormattedNumber(pMyDisasm, (char*) (*pMyArgument).ArgMnemonic+i,"%.2X",(Int64) ~MyNumber+1);
         }
         else {
             (void) strcpy((char*) (*pMyArgument).ArgMnemonic+i, "+");
             i++;
-            i+= CopyFormattedNumber((char*) (*pMyArgument).ArgMnemonic+i,"%.2X",(Int64) MyNumber);
+            i+= CopyFormattedNumber(pMyDisasm, (char*) (*pMyArgument).ArgMnemonic+i,"%.2X",(Int64) MyNumber);
         }
     }
 }
@@ -708,35 +708,35 @@ void __bea_callspec__ Addr_SIB_disp8(ARGTYPE* pMyArgument, PDISASM pMyDisasm)
     if (!Security(2, pMyDisasm)) return;
     MyNumber = *((Int8*)(UIntPtr) (GV.EIP_+3));
     (*pMyArgument).Memory.Displacement = MyNumber;
-    if (SYNTAX_ == ATSyntax) {
+    if (GV.SYNTAX_ == ATSyntax) {
         if (MyNumber < 0) {
             (void) strcpy((char*) (*pMyArgument).ArgMnemonic+i, "-");
             i++;
             j=i;
-            i+= CopyFormattedNumber((char*) (*pMyArgument).ArgMnemonic+j,"%.2X",(Int64) ~MyNumber+1);
+            i+= CopyFormattedNumber(pMyDisasm, (char*) (*pMyArgument).ArgMnemonic+j,"%.2X",(Int64) ~MyNumber+1);
         }
         else {
             j=i;
-            i+= CopyFormattedNumber((char*) (*pMyArgument).ArgMnemonic+j,"%.2X",(Int64) MyNumber);
+            i+= CopyFormattedNumber(pMyDisasm, (char*) (*pMyArgument).ArgMnemonic+j,"%.2X",(Int64) MyNumber);
         }
         /*(void) strcpy((char*) (*pMyArgument).ArgMnemonic+i, "(%");
          *i+=2; */
     }
     (*pMyArgument).ArgType = MEMORY_TYPE;
     if (GV.AddressSize >= 32) {
-        DECALAGE_EIP++;
-        BASE_ = (*((UInt8*)(UIntPtr) (GV.EIP_+2))) & 0x7;
-        SCALE_ = ((*((UInt8*)(UIntPtr) (GV.EIP_+2))) & 0xc0) >> 6;
-        INDEX_ = ((*((UInt8*)(UIntPtr) (GV.EIP_+2))) & 0x38) >> 3;
+        GV.DECALAGE_EIP++;
+        GV.BASE_  = (*((UInt8*)(UIntPtr) (GV.EIP_+2))) & 0x7;
+        GV.SCALE_  = ((*((UInt8*)(UIntPtr) (GV.EIP_+2))) & 0xc0) >> 6;
+        GV.INDEX_  = ((*((UInt8*)(UIntPtr) (GV.EIP_+2))) & 0x38) >> 3;
         j = i;
-        i += SIB[SCALE_](pMyArgument, j, pMyDisasm);
+        i += SIB[GV.SCALE_ ](pMyArgument, j, pMyDisasm);
     }
     else {
         (void) strcpy ((char*) (*pMyArgument).ArgMnemonic, Registers16Bits[6]);
         i += strlen (Registers16Bits[6]);
     }
 
-    if (SYNTAX_ == ATSyntax) {
+    if (GV.SYNTAX_ == ATSyntax) {
         (void) strcpy((char*) (*pMyArgument).ArgMnemonic+i, ")");
         i++;
     }
@@ -744,12 +744,12 @@ void __bea_callspec__ Addr_SIB_disp8(ARGTYPE* pMyArgument, PDISASM pMyDisasm)
         if (MyNumber < 0) {
             (void) strcpy((char*) (*pMyArgument).ArgMnemonic+i, "-");
             i++;
-            i+= CopyFormattedNumber((char*) (*pMyArgument).ArgMnemonic+i,"%.2X",(Int64) ~MyNumber+1);
+            i+= CopyFormattedNumber(pMyDisasm, (char*) (*pMyArgument).ArgMnemonic+i,"%.2X",(Int64) ~MyNumber+1);
         }
         else {
             (void) strcpy((char*) (*pMyArgument).ArgMnemonic+i, "+");
             i++;
-            i+= CopyFormattedNumber((char*) (*pMyArgument).ArgMnemonic+i,"%.2X",(Int64) MyNumber);
+            i+= CopyFormattedNumber(pMyDisasm, (char*) (*pMyArgument).ArgMnemonic+i,"%.2X",(Int64) MyNumber);
         }
     }
 
@@ -764,23 +764,23 @@ void __bea_callspec__ Addr_EBP_disp8(ARGTYPE* pMyArgument, PDISASM pMyDisasm)
     long MyNumber;
     MyNumber = *((Int8*)(UIntPtr) (GV.EIP_+2));
     (*pMyArgument).Memory.Displacement = MyNumber;
-    if (SYNTAX_ == ATSyntax) {
+    if (GV.SYNTAX_ == ATSyntax) {
         if (MyNumber < 0) {
             (void) strcpy((char*) (*pMyArgument).ArgMnemonic+i, "-");
             i++;
             j=i;
-            i+= CopyFormattedNumber((char*) (*pMyArgument).ArgMnemonic+j,"%.2X",(Int64) ~MyNumber+1);
+            i+= CopyFormattedNumber(pMyDisasm, (char*) (*pMyArgument).ArgMnemonic+j,"%.2X",(Int64) ~MyNumber+1);
         }
         else {
             j=i;
-            i+= CopyFormattedNumber((char*) (*pMyArgument).ArgMnemonic+j,"%.2X",(Int64) MyNumber);
+            i+= CopyFormattedNumber(pMyDisasm, (char*) (*pMyArgument).ArgMnemonic+j,"%.2X",(Int64) MyNumber);
         }
         (void) strcpy((char*) (*pMyArgument).ArgMnemonic+i, "(%");
         i+=2;
     }
     (*pMyArgument).ArgType = MEMORY_TYPE;
     if (GV.AddressSize == 64) {
-        if (REX.B_ == 1) {
+        if (GV.REX.B_ == 1) {
             (void) strcpy ((char*) (*pMyArgument).ArgMnemonic+i, Registers64Bits[13]);
             (*pMyArgument).Memory.BaseRegister = REGS[5+8];
         }
@@ -790,7 +790,7 @@ void __bea_callspec__ Addr_EBP_disp8(ARGTYPE* pMyArgument, PDISASM pMyDisasm)
         }
     }
     else if (GV.AddressSize == 32) {
-        if (REX.B_ == 1) {
+        if (GV.REX.B_ == 1) {
             (void) strcpy ((char*) (*pMyArgument).ArgMnemonic+i, Registers32Bits[13]);
             (*pMyArgument).Memory.BaseRegister = REGS[5+8];
 
@@ -805,7 +805,7 @@ void __bea_callspec__ Addr_EBP_disp8(ARGTYPE* pMyArgument, PDISASM pMyDisasm)
             (*pMyArgument).Memory.BaseRegister = REGS[7];
     }
     i = strlen ((char*) &(*pMyArgument).ArgMnemonic);
-    if (SYNTAX_ == ATSyntax) {
+    if (GV.SYNTAX_ == ATSyntax) {
         (void) strcpy((char*) (*pMyArgument).ArgMnemonic+i, ")");
         i += 1;
     }
@@ -813,12 +813,12 @@ void __bea_callspec__ Addr_EBP_disp8(ARGTYPE* pMyArgument, PDISASM pMyDisasm)
         if (MyNumber < 0) {
             (void) strcpy((char*) (*pMyArgument).ArgMnemonic+i, "-");
             i++;
-            i+= CopyFormattedNumber((char*) (*pMyArgument).ArgMnemonic+i,"%.2X",(Int64) ~MyNumber+1);
+            i+= CopyFormattedNumber(pMyDisasm, (char*) (*pMyArgument).ArgMnemonic+i,"%.2X",(Int64) ~MyNumber+1);
         }
         else {
             (void) strcpy((char*) (*pMyArgument).ArgMnemonic+i, "+");
             i++;
-            i+= CopyFormattedNumber((char*) (*pMyArgument).ArgMnemonic+i,"%.2X",(Int64) MyNumber);
+            i+= CopyFormattedNumber(pMyDisasm, (char*) (*pMyArgument).ArgMnemonic+i,"%.2X",(Int64) MyNumber);
         }
     }
 }
@@ -832,23 +832,23 @@ void __bea_callspec__ Addr_ESI_disp8(ARGTYPE* pMyArgument, PDISASM pMyDisasm)
     long MyNumber;
     MyNumber = *((Int8*)(UIntPtr) (GV.EIP_+2));
     (*pMyArgument).Memory.Displacement = MyNumber;
-    if (SYNTAX_ == ATSyntax) {
+    if (GV.SYNTAX_ == ATSyntax) {
         if (MyNumber < 0) {
             (void) strcpy((char*) (*pMyArgument).ArgMnemonic+i, "-");
             i++;
             j=i;
-            i+= CopyFormattedNumber((char*) (*pMyArgument).ArgMnemonic+j,"%.2X",(Int64) ~MyNumber+1);
+            i+= CopyFormattedNumber(pMyDisasm, (char*) (*pMyArgument).ArgMnemonic+j,"%.2X",(Int64) ~MyNumber+1);
         }
         else {
             j=i;
-            i+= CopyFormattedNumber((char*) (*pMyArgument).ArgMnemonic+j,"%.2X",(Int64) MyNumber);
+            i+= CopyFormattedNumber(pMyDisasm, (char*) (*pMyArgument).ArgMnemonic+j,"%.2X",(Int64) MyNumber);
         }
         (void) strcpy((char*) (*pMyArgument).ArgMnemonic+i, "(%");
         i+=2;
     }
     (*pMyArgument).ArgType = MEMORY_TYPE;
     if (GV.AddressSize == 64) {
-        if (REX.B_ == 1) {
+        if (GV.REX.B_ == 1) {
             (void) strcpy ((char*) (*pMyArgument).ArgMnemonic+i, Registers64Bits[14]);
             (*pMyArgument).Memory.BaseRegister = REGS[6+8];
         }
@@ -858,7 +858,7 @@ void __bea_callspec__ Addr_ESI_disp8(ARGTYPE* pMyArgument, PDISASM pMyDisasm)
         }
     }
     else if (GV.AddressSize == 32) {
-        if (REX.B_ == 1) {
+        if (GV.REX.B_ == 1) {
             (void) strcpy ((char*) (*pMyArgument).ArgMnemonic+i, Registers32Bits[14]);
             (*pMyArgument).Memory.BaseRegister = REGS[6+8];
 
@@ -873,7 +873,7 @@ void __bea_callspec__ Addr_ESI_disp8(ARGTYPE* pMyArgument, PDISASM pMyDisasm)
             (*pMyArgument).Memory.BaseRegister = REGS[5];
     }
     i = strlen ((char*) &(*pMyArgument).ArgMnemonic);
-    if (SYNTAX_ == ATSyntax) {
+    if (GV.SYNTAX_ == ATSyntax) {
         (void) strcpy((char*) (*pMyArgument).ArgMnemonic+i, ")");
         i += 1;
     }
@@ -881,12 +881,12 @@ void __bea_callspec__ Addr_ESI_disp8(ARGTYPE* pMyArgument, PDISASM pMyDisasm)
         if (MyNumber < 0) {
             (void) strcpy((char*) (*pMyArgument).ArgMnemonic+i, "-");
             i++;
-            i+= CopyFormattedNumber((char*) (*pMyArgument).ArgMnemonic+i,"%.2X",(Int64) ~MyNumber+1);
+            i+= CopyFormattedNumber(pMyDisasm, (char*) (*pMyArgument).ArgMnemonic+i,"%.2X",(Int64) ~MyNumber+1);
         }
         else {
             (void) strcpy((char*) (*pMyArgument).ArgMnemonic+i, "+");
             i++;
-            i+= CopyFormattedNumber((char*) (*pMyArgument).ArgMnemonic+i,"%.2X",(Int64) MyNumber);
+            i+= CopyFormattedNumber(pMyDisasm, (char*) (*pMyArgument).ArgMnemonic+i,"%.2X",(Int64) MyNumber);
         }
     }
 }
@@ -900,23 +900,23 @@ void __bea_callspec__ Addr_EDI_disp8(ARGTYPE* pMyArgument, PDISASM pMyDisasm)
     long MyNumber;
     MyNumber = *((Int8*)(UIntPtr) (GV.EIP_+2));
     (*pMyArgument).Memory.Displacement = MyNumber;
-    if (SYNTAX_ == ATSyntax) {
+    if (GV.SYNTAX_ == ATSyntax) {
         if (MyNumber < 0) {
             (void) strcpy((char*) (*pMyArgument).ArgMnemonic+i, "-");
             i++;
             j=i;
-            i+= CopyFormattedNumber((char*) (*pMyArgument).ArgMnemonic+j,"%.2X",(Int64) ~MyNumber+1);
+            i+= CopyFormattedNumber(pMyDisasm, (char*) (*pMyArgument).ArgMnemonic+j,"%.2X",(Int64) ~MyNumber+1);
         }
         else {
             j=i;
-            i+= CopyFormattedNumber((char*) (*pMyArgument).ArgMnemonic+j,"%.2X",(Int64) MyNumber);
+            i+= CopyFormattedNumber(pMyDisasm, (char*) (*pMyArgument).ArgMnemonic+j,"%.2X",(Int64) MyNumber);
         }
         (void) strcpy((char*) (*pMyArgument).ArgMnemonic+i, "(%");
         i+=2;
     }
     (*pMyArgument).ArgType = MEMORY_TYPE;
     if (GV.AddressSize == 64) {
-        if (REX.B_ == 1) {
+        if (GV.REX.B_ == 1) {
             (void) strcpy ((char*) (*pMyArgument).ArgMnemonic+i, Registers64Bits[15]);
             (*pMyArgument).Memory.BaseRegister = REGS[7+8];
         }
@@ -926,7 +926,7 @@ void __bea_callspec__ Addr_EDI_disp8(ARGTYPE* pMyArgument, PDISASM pMyDisasm)
         }
     }
     else if (GV.AddressSize == 32) {
-        if (REX.B_ == 1) {
+        if (GV.REX.B_ == 1) {
             (void) strcpy ((char*) (*pMyArgument).ArgMnemonic+i, Registers32Bits[15]);
             (*pMyArgument).Memory.BaseRegister = REGS[7+8];
 
@@ -941,7 +941,7 @@ void __bea_callspec__ Addr_EDI_disp8(ARGTYPE* pMyArgument, PDISASM pMyDisasm)
             (*pMyArgument).Memory.BaseRegister = REGS[3];
     }
     i = strlen ((char*) &(*pMyArgument).ArgMnemonic);
-    if (SYNTAX_ == ATSyntax) {
+    if (GV.SYNTAX_ == ATSyntax) {
         (void) strcpy((char*) (*pMyArgument).ArgMnemonic+i, ")");
         i += 1;
     }
@@ -949,12 +949,12 @@ void __bea_callspec__ Addr_EDI_disp8(ARGTYPE* pMyArgument, PDISASM pMyDisasm)
         if (MyNumber < 0) {
             (void) strcpy((char*) (*pMyArgument).ArgMnemonic+i, "-");
             i++;
-            i+= CopyFormattedNumber((char*) (*pMyArgument).ArgMnemonic+i,"%.2X",(Int64) ~MyNumber+1);
+            i+= CopyFormattedNumber(pMyDisasm, (char*) (*pMyArgument).ArgMnemonic+i,"%.2X",(Int64) ~MyNumber+1);
         }
         else {
             (void) strcpy((char*) (*pMyArgument).ArgMnemonic+i, "+");
             i++;
-            i+= CopyFormattedNumber((char*) (*pMyArgument).ArgMnemonic+i,"%.2X",(Int64) MyNumber);
+            i+= CopyFormattedNumber(pMyDisasm, (char*) (*pMyArgument).ArgMnemonic+i,"%.2X",(Int64) MyNumber);
         }
     }
 }
@@ -968,23 +968,23 @@ void __bea_callspec__ Addr_EAX_disp32(ARGTYPE* pMyArgument, PDISASM pMyDisasm)
     long MyNumber;
     MyNumber = *((Int32*)(UIntPtr) (GV.EIP_+2));
     (*pMyArgument).Memory.Displacement = MyNumber;
-    if (SYNTAX_ == ATSyntax) {
+    if (GV.SYNTAX_ == ATSyntax) {
         if (MyNumber < 0) {
             (void) strcpy((char*) (*pMyArgument).ArgMnemonic+i, "-");
             i ++;
             j=i;
-            i+= CopyFormattedNumber((char*) (*pMyArgument).ArgMnemonic+j,"%.8X",(Int64) ~MyNumber+1);
+            i+= CopyFormattedNumber(pMyDisasm, (char*) (*pMyArgument).ArgMnemonic+j,"%.8X",(Int64) ~MyNumber+1);
         }
         else {
             j = i;
-            i+= CopyFormattedNumber((char*) (*pMyArgument).ArgMnemonic+j,"%.8X",(Int64) MyNumber);
+            i+= CopyFormattedNumber(pMyDisasm, (char*) (*pMyArgument).ArgMnemonic+j,"%.8X",(Int64) MyNumber);
         }
         (void) strcpy((char*) (*pMyArgument).ArgMnemonic+i, "(%");
         i+=2;
     }
     (*pMyArgument).ArgType = MEMORY_TYPE;
     if (GV.AddressSize == 64) {
-        if (REX.B_ == 1) {
+        if (GV.REX.B_ == 1) {
             (void) strcpy ((char*) (*pMyArgument).ArgMnemonic+i, Registers64Bits[8]);
             (*pMyArgument).Memory.BaseRegister = REGS[8];
         }
@@ -994,7 +994,7 @@ void __bea_callspec__ Addr_EAX_disp32(ARGTYPE* pMyArgument, PDISASM pMyDisasm)
         }
     }
     else if (GV.AddressSize == 32) {
-        if (REX.B_ == 1) {
+        if (GV.REX.B_ == 1) {
             (void) strcpy ((char*) (*pMyArgument).ArgMnemonic+i, Registers32Bits[8]);
             (*pMyArgument).Memory.BaseRegister = REGS[8];
         }
@@ -1007,7 +1007,7 @@ void __bea_callspec__ Addr_EAX_disp32(ARGTYPE* pMyArgument, PDISASM pMyDisasm)
             (void) strcpy ((char*) (*pMyArgument).ArgMnemonic+i, BXSI_);
     }
     i = strlen ((char*) &(*pMyArgument).ArgMnemonic);
-    if (SYNTAX_ == ATSyntax) {
+    if (GV.SYNTAX_ == ATSyntax) {
         (void) strcpy((char*) (*pMyArgument).ArgMnemonic+i, ")");
         i += 1;
     }
@@ -1015,12 +1015,12 @@ void __bea_callspec__ Addr_EAX_disp32(ARGTYPE* pMyArgument, PDISASM pMyDisasm)
         if (MyNumber < 0) {
             (void) strcpy((char*) (*pMyArgument).ArgMnemonic+i, "-");
             i++;
-            i+= CopyFormattedNumber((char*) (*pMyArgument).ArgMnemonic+i,"%.8X",(Int64) ~MyNumber+1);
+            i+= CopyFormattedNumber(pMyDisasm, (char*) (*pMyArgument).ArgMnemonic+i,"%.8X",(Int64) ~MyNumber+1);
         }
         else {
             (void) strcpy((char*) (*pMyArgument).ArgMnemonic+i, "+");
             i++;
-            i+= CopyFormattedNumber((char*) (*pMyArgument).ArgMnemonic+i,"%.8X",(Int64) MyNumber);
+            i+= CopyFormattedNumber(pMyDisasm, (char*) (*pMyArgument).ArgMnemonic+i,"%.8X",(Int64) MyNumber);
         }
     }
 }
@@ -1035,23 +1035,23 @@ void __bea_callspec__ Addr_ECX_disp32(ARGTYPE* pMyArgument, PDISASM pMyDisasm)
     long MyNumber;
     MyNumber = *((Int32*)(UIntPtr) (GV.EIP_+2));
     (*pMyArgument).Memory.Displacement = MyNumber;
-    if (SYNTAX_ == ATSyntax) {
+    if (GV.SYNTAX_ == ATSyntax) {
         if (MyNumber < 0) {
             (void) strcpy((char*) (*pMyArgument).ArgMnemonic+i, "-");
             i ++;
             j=i;
-            i+= CopyFormattedNumber((char*) (*pMyArgument).ArgMnemonic+j,"%.8X",(Int64) ~MyNumber+1);
+            i+= CopyFormattedNumber(pMyDisasm, (char*) (*pMyArgument).ArgMnemonic+j,"%.8X",(Int64) ~MyNumber+1);
         }
         else {
             j = i;
-            i+= CopyFormattedNumber((char*) (*pMyArgument).ArgMnemonic+j,"%.8X",(Int64) MyNumber);
+            i+= CopyFormattedNumber(pMyDisasm, (char*) (*pMyArgument).ArgMnemonic+j,"%.8X",(Int64) MyNumber);
         }
         (void) strcpy((char*) (*pMyArgument).ArgMnemonic+i, "(%");
         i+=2;
     }
     (*pMyArgument).ArgType = MEMORY_TYPE;
     if (GV.AddressSize == 64) {
-        if (REX.B_ == 1) {
+        if (GV.REX.B_ == 1) {
             (void) strcpy ((char*) (*pMyArgument).ArgMnemonic+i, Registers64Bits[9]);
             (*pMyArgument).Memory.BaseRegister = REGS[1+8];
         }
@@ -1061,7 +1061,7 @@ void __bea_callspec__ Addr_ECX_disp32(ARGTYPE* pMyArgument, PDISASM pMyDisasm)
         }
     }
     else if (GV.AddressSize == 32) {
-        if (REX.B_ == 1) {
+        if (GV.REX.B_ == 1) {
             (void) strcpy ((char*) (*pMyArgument).ArgMnemonic+i, Registers32Bits[9]);
             (*pMyArgument).Memory.BaseRegister = REGS[1+8];
 
@@ -1075,7 +1075,7 @@ void __bea_callspec__ Addr_ECX_disp32(ARGTYPE* pMyArgument, PDISASM pMyDisasm)
             (void) strcpy ((char*) (*pMyArgument).ArgMnemonic+i, BXDI_);
     }
     i = strlen ((char*) &(*pMyArgument).ArgMnemonic);
-    if (SYNTAX_ == ATSyntax) {
+    if (GV.SYNTAX_ == ATSyntax) {
         (void) strcpy((char*) (*pMyArgument).ArgMnemonic+i, ")");
         i += 1;
     }
@@ -1083,12 +1083,12 @@ void __bea_callspec__ Addr_ECX_disp32(ARGTYPE* pMyArgument, PDISASM pMyDisasm)
         if (MyNumber < 0) {
             (void) strcpy((char*) (*pMyArgument).ArgMnemonic+i, "-");
             i++;
-            i+= CopyFormattedNumber((char*) (*pMyArgument).ArgMnemonic+i,"%.8X",(Int64) ~MyNumber+1);
+            i+= CopyFormattedNumber(pMyDisasm, (char*) (*pMyArgument).ArgMnemonic+i,"%.8X",(Int64) ~MyNumber+1);
         }
         else {
             (void) strcpy((char*) (*pMyArgument).ArgMnemonic+i, "+");
             i++;
-            i+= CopyFormattedNumber((char*) (*pMyArgument).ArgMnemonic+i,"%.8X",(Int64) MyNumber);
+            i+= CopyFormattedNumber(pMyDisasm, (char*) (*pMyArgument).ArgMnemonic+i,"%.8X",(Int64) MyNumber);
         }
     }
 }
@@ -1102,23 +1102,23 @@ void __bea_callspec__ Addr_EDX_disp32(ARGTYPE* pMyArgument, PDISASM pMyDisasm)
     long MyNumber;
     MyNumber = *((Int32*)(UIntPtr) (GV.EIP_+2));
     (*pMyArgument).Memory.Displacement = MyNumber;
-    if (SYNTAX_ == ATSyntax) {
+    if (GV.SYNTAX_ == ATSyntax) {
         if (MyNumber < 0) {
             (void) strcpy((char*) (*pMyArgument).ArgMnemonic+i, "-");
             i ++;
             j=i;
-            i+= CopyFormattedNumber((char*) (*pMyArgument).ArgMnemonic+j,"%.8X",(Int64) ~MyNumber+1);
+            i+= CopyFormattedNumber(pMyDisasm, (char*) (*pMyArgument).ArgMnemonic+j,"%.8X",(Int64) ~MyNumber+1);
         }
         else {
             j = i;
-            i+= CopyFormattedNumber((char*) (*pMyArgument).ArgMnemonic+j,"%.8X",(Int64) MyNumber);
+            i+= CopyFormattedNumber(pMyDisasm, (char*) (*pMyArgument).ArgMnemonic+j,"%.8X",(Int64) MyNumber);
         }
         (void) strcpy((char*) (*pMyArgument).ArgMnemonic+i, "(%");
         i+=2;
     }
     (*pMyArgument).ArgType = MEMORY_TYPE;
     if (GV.AddressSize == 64) {
-        if (REX.B_ == 1) {
+        if (GV.REX.B_ == 1) {
             (void) strcpy ((char*) (*pMyArgument).ArgMnemonic+i, Registers64Bits[10]);
             (*pMyArgument).Memory.BaseRegister = REGS[2+8];
         }
@@ -1128,7 +1128,7 @@ void __bea_callspec__ Addr_EDX_disp32(ARGTYPE* pMyArgument, PDISASM pMyDisasm)
         }
     }
     else if (GV.AddressSize == 32) {
-        if (REX.B_ == 1) {
+        if (GV.REX.B_ == 1) {
             (void) strcpy ((char*) (*pMyArgument).ArgMnemonic+i, Registers32Bits[10]);
             (*pMyArgument).Memory.BaseRegister = REGS[2+8];
 
@@ -1142,7 +1142,7 @@ void __bea_callspec__ Addr_EDX_disp32(ARGTYPE* pMyArgument, PDISASM pMyDisasm)
             (void) strcpy ((char*) (*pMyArgument).ArgMnemonic+i, BPSI_);
     }
     i = strlen ((char*) &(*pMyArgument).ArgMnemonic);
-    if (SYNTAX_ == ATSyntax) {
+    if (GV.SYNTAX_ == ATSyntax) {
         (void) strcpy((char*) (*pMyArgument).ArgMnemonic+i, ")");
         i += 1;
     }
@@ -1150,12 +1150,12 @@ void __bea_callspec__ Addr_EDX_disp32(ARGTYPE* pMyArgument, PDISASM pMyDisasm)
         if (MyNumber < 0) {
             (void) strcpy((char*) (*pMyArgument).ArgMnemonic+i, "-");
             i++;
-            i+= CopyFormattedNumber((char*) (*pMyArgument).ArgMnemonic+i,"%.8X",(Int64) ~MyNumber+1);
+            i+= CopyFormattedNumber(pMyDisasm, (char*) (*pMyArgument).ArgMnemonic+i,"%.8X",(Int64) ~MyNumber+1);
         }
         else {
             (void) strcpy((char*) (*pMyArgument).ArgMnemonic+i, "+");
             i++;
-            i+= CopyFormattedNumber((char*) (*pMyArgument).ArgMnemonic+i,"%.8X",(Int64) MyNumber);
+            i+= CopyFormattedNumber(pMyDisasm, (char*) (*pMyArgument).ArgMnemonic+i,"%.8X",(Int64) MyNumber);
         }
     }
 }
@@ -1169,23 +1169,23 @@ void __bea_callspec__ Addr_EBX_disp32(ARGTYPE* pMyArgument, PDISASM pMyDisasm)
     long MyNumber;
     MyNumber = *((Int32*)(UIntPtr) (GV.EIP_+2));
     (*pMyArgument).Memory.Displacement = MyNumber;
-    if (SYNTAX_ == ATSyntax) {
+    if (GV.SYNTAX_ == ATSyntax) {
         if (MyNumber < 0) {
             (void) strcpy((char*) (*pMyArgument).ArgMnemonic+i, "-");
             i ++;
             j=i;
-            i+= CopyFormattedNumber((char*) (*pMyArgument).ArgMnemonic+j,"%.8X",(Int64) ~MyNumber+1);
+            i+= CopyFormattedNumber(pMyDisasm, (char*) (*pMyArgument).ArgMnemonic+j,"%.8X",(Int64) ~MyNumber+1);
         }
         else {
             j = i;
-            i+= CopyFormattedNumber((char*) (*pMyArgument).ArgMnemonic+j,"%.8X",(Int64) MyNumber);
+            i+= CopyFormattedNumber(pMyDisasm, (char*) (*pMyArgument).ArgMnemonic+j,"%.8X",(Int64) MyNumber);
         }
         (void) strcpy((char*) (*pMyArgument).ArgMnemonic+i, "(%");
         i+=2;
     }
     (*pMyArgument).ArgType = MEMORY_TYPE;
     if (GV.AddressSize == 64) {
-        if (REX.B_ == 1) {
+        if (GV.REX.B_ == 1) {
             (void) strcpy ((char*) (*pMyArgument).ArgMnemonic+i, Registers64Bits[11]);
             (*pMyArgument).Memory.BaseRegister = REGS[3+8];
         }
@@ -1195,7 +1195,7 @@ void __bea_callspec__ Addr_EBX_disp32(ARGTYPE* pMyArgument, PDISASM pMyDisasm)
         }
     }
     else if (GV.AddressSize == 32) {
-        if (REX.B_ == 1) {
+        if (GV.REX.B_ == 1) {
             (void) strcpy ((char*) (*pMyArgument).ArgMnemonic+i, Registers32Bits[11]);
             (*pMyArgument).Memory.BaseRegister = REGS[3+8];
 
@@ -1209,7 +1209,7 @@ void __bea_callspec__ Addr_EBX_disp32(ARGTYPE* pMyArgument, PDISASM pMyDisasm)
             (void) strcpy ((char*) (*pMyArgument).ArgMnemonic+i, BPDI_);
     }
     i = strlen ((char*) &(*pMyArgument).ArgMnemonic);
-    if (SYNTAX_ == ATSyntax) {
+    if (GV.SYNTAX_ == ATSyntax) {
         (void) strcpy((char*) (*pMyArgument).ArgMnemonic+i, ")");
         i += 1;
     }
@@ -1217,12 +1217,12 @@ void __bea_callspec__ Addr_EBX_disp32(ARGTYPE* pMyArgument, PDISASM pMyDisasm)
         if (MyNumber < 0) {
             (void) strcpy((char*) (*pMyArgument).ArgMnemonic+i, "-");
             i++;
-            i+= CopyFormattedNumber((char*) (*pMyArgument).ArgMnemonic+i,"%.8X",(Int64) ~MyNumber+1);
+            i+= CopyFormattedNumber(pMyDisasm, (char*) (*pMyArgument).ArgMnemonic+i,"%.8X",(Int64) ~MyNumber+1);
         }
         else {
             (void) strcpy((char*) (*pMyArgument).ArgMnemonic+i, "+");
             i++;
-            i+= CopyFormattedNumber((char*) (*pMyArgument).ArgMnemonic+i,"%.8X",(Int64) MyNumber);
+            i+= CopyFormattedNumber(pMyDisasm, (char*) (*pMyArgument).ArgMnemonic+i,"%.8X",(Int64) MyNumber);
         }
     }
 }
@@ -1237,28 +1237,28 @@ void __bea_callspec__ Addr_SIB_disp32(ARGTYPE* pMyArgument, PDISASM pMyDisasm)
     if (!Security(2, pMyDisasm)) return;
     MyNumber = *((Int32*)(UIntPtr) (GV.EIP_+3));
     (*pMyArgument).Memory.Displacement = MyNumber;
-    if (SYNTAX_ == ATSyntax) {
+    if (GV.SYNTAX_ == ATSyntax) {
         if (MyNumber < 0) {
             (void) strcpy((char*) (*pMyArgument).ArgMnemonic+i, "-");
             i ++;
             j=i;
-            i+= CopyFormattedNumber((char*) (*pMyArgument).ArgMnemonic+j,"%.8X",(Int64) ~MyNumber+1);
+            i+= CopyFormattedNumber(pMyDisasm, (char*) (*pMyArgument).ArgMnemonic+j,"%.8X",(Int64) ~MyNumber+1);
         }
         else {
             j = i;
-            i+= CopyFormattedNumber((char*) (*pMyArgument).ArgMnemonic+j,"%.8X",(Int64) MyNumber);
+            i+= CopyFormattedNumber(pMyDisasm, (char*) (*pMyArgument).ArgMnemonic+j,"%.8X",(Int64) MyNumber);
         }
         /*(void) strcpy((char*) (*pMyArgument).ArgMnemonic+i, "(%");
          *i+=2; */
     }
     (*pMyArgument).ArgType = MEMORY_TYPE;
     if (GV.AddressSize >= 32) {
-        DECALAGE_EIP++;
-        BASE_ = ((UInt8) *((UInt8*) (UIntPtr)GV.EIP_+2)) & 0x7;
-        SCALE_ = (((UInt8) *((UInt8*) (UIntPtr)GV.EIP_+2)) & 0xc0) >> 6;
-        INDEX_ = (((UInt8) *((UInt8*) (UIntPtr)GV.EIP_+2)) & 0x38) >> 3;
+        GV.DECALAGE_EIP++;
+        GV.BASE_  = ((UInt8) *((UInt8*) (UIntPtr)GV.EIP_+2)) & 0x7;
+        GV.SCALE_  = (((UInt8) *((UInt8*) (UIntPtr)GV.EIP_+2)) & 0xc0) >> 6;
+        GV.INDEX_  = (((UInt8) *((UInt8*) (UIntPtr)GV.EIP_+2)) & 0x38) >> 3;
         j = i;
-        i += SIB[SCALE_](pMyArgument, j, pMyDisasm);
+        i += SIB[GV.SCALE_ ](pMyArgument, j, pMyDisasm);
     }
     else {
         (void) strcpy ((char*) (*pMyArgument).ArgMnemonic, Registers16Bits[6]);
@@ -1266,7 +1266,7 @@ void __bea_callspec__ Addr_SIB_disp32(ARGTYPE* pMyArgument, PDISASM pMyDisasm)
         i += strlen (Registers16Bits[6]);
     }
 
-    if (SYNTAX_ == ATSyntax) {
+    if (GV.SYNTAX_ == ATSyntax) {
         (void) strcpy((char*) (*pMyArgument).ArgMnemonic+i, ")");
         i += 1;
     }
@@ -1274,12 +1274,12 @@ void __bea_callspec__ Addr_SIB_disp32(ARGTYPE* pMyArgument, PDISASM pMyDisasm)
         if (MyNumber < 0) {
             (void) strcpy((char*) (*pMyArgument).ArgMnemonic+i, "-");
             i++;
-            i+= CopyFormattedNumber((char*) (*pMyArgument).ArgMnemonic+i,"%.8X",(Int64) ~MyNumber+1);
+            i+= CopyFormattedNumber(pMyDisasm, (char*) (*pMyArgument).ArgMnemonic+i,"%.8X",(Int64) ~MyNumber+1);
         }
         else {
             (void) strcpy((char*) (*pMyArgument).ArgMnemonic+i, "+");
             i++;
-            i+= CopyFormattedNumber((char*) (*pMyArgument).ArgMnemonic+i,"%.8X",(Int64) MyNumber);
+            i+= CopyFormattedNumber(pMyDisasm, (char*) (*pMyArgument).ArgMnemonic+i,"%.8X",(Int64) MyNumber);
         }
     }
 
@@ -1294,23 +1294,23 @@ void __bea_callspec__ Addr_EBP_disp32(ARGTYPE* pMyArgument, PDISASM pMyDisasm)
     long MyNumber;
     MyNumber = *((Int32*)(UIntPtr) (GV.EIP_+2));
     (*pMyArgument).Memory.Displacement = MyNumber;
-    if (SYNTAX_ == ATSyntax) {
+    if (GV.SYNTAX_ == ATSyntax) {
         if (MyNumber < 0) {
             (void) strcpy((char*) (*pMyArgument).ArgMnemonic+i, "-");
             i ++;
             j=i;
-            i+= CopyFormattedNumber((char*) (*pMyArgument).ArgMnemonic+j,"%.8X",(Int64) ~MyNumber+1);
+            i+= CopyFormattedNumber(pMyDisasm, (char*) (*pMyArgument).ArgMnemonic+j,"%.8X",(Int64) ~MyNumber+1);
         }
         else {
             j = i;
-            i+= CopyFormattedNumber((char*) (*pMyArgument).ArgMnemonic+j,"%.8X",(Int64) MyNumber);
+            i+= CopyFormattedNumber(pMyDisasm, (char*) (*pMyArgument).ArgMnemonic+j,"%.8X",(Int64) MyNumber);
         }
         (void) strcpy((char*) (*pMyArgument).ArgMnemonic+i, "(%");
         i+=2;
     }
     (*pMyArgument).ArgType = MEMORY_TYPE;
     if (GV.AddressSize == 64) {
-        if (REX.B_ == 1) {
+        if (GV.REX.B_ == 1) {
             (void) strcpy ((char*) (*pMyArgument).ArgMnemonic+i, Registers64Bits[13]);
             (*pMyArgument).Memory.BaseRegister = REGS[5+8];
         }
@@ -1320,7 +1320,7 @@ void __bea_callspec__ Addr_EBP_disp32(ARGTYPE* pMyArgument, PDISASM pMyDisasm)
         }
     }
     else if (GV.AddressSize == 32) {
-        if (REX.B_ == 1) {
+        if (GV.REX.B_ == 1) {
             (void) strcpy ((char*) (*pMyArgument).ArgMnemonic+i, Registers32Bits[13]);
             (*pMyArgument).Memory.BaseRegister = REGS[5+8];
 
@@ -1335,7 +1335,7 @@ void __bea_callspec__ Addr_EBP_disp32(ARGTYPE* pMyArgument, PDISASM pMyDisasm)
             (*pMyArgument).Memory.BaseRegister = REGS[7];
     }
     i = strlen ((char*) &(*pMyArgument).ArgMnemonic);
-    if (SYNTAX_ == ATSyntax) {
+    if (GV.SYNTAX_ == ATSyntax) {
         (void) strcpy((char*) (*pMyArgument).ArgMnemonic+i, ")");
         i += 1;
     }
@@ -1343,12 +1343,12 @@ void __bea_callspec__ Addr_EBP_disp32(ARGTYPE* pMyArgument, PDISASM pMyDisasm)
         if (MyNumber < 0) {
             (void) strcpy((char*) (*pMyArgument).ArgMnemonic+i, "-");
             i++;
-            i+= CopyFormattedNumber((char*) (*pMyArgument).ArgMnemonic+i,"%.8X",(Int64) ~MyNumber+1);
+            i+= CopyFormattedNumber(pMyDisasm, (char*) (*pMyArgument).ArgMnemonic+i,"%.8X",(Int64) ~MyNumber+1);
         }
         else {
             (void) strcpy((char*) (*pMyArgument).ArgMnemonic+i, "+");
             i++;
-            i+= CopyFormattedNumber((char*) (*pMyArgument).ArgMnemonic+i,"%.8X",(Int64) MyNumber);
+            i+= CopyFormattedNumber(pMyDisasm, (char*) (*pMyArgument).ArgMnemonic+i,"%.8X",(Int64) MyNumber);
         }
     }
 }
@@ -1362,23 +1362,23 @@ void __bea_callspec__ Addr_ESI_disp32(ARGTYPE* pMyArgument, PDISASM pMyDisasm)
     long MyNumber;
     MyNumber = *((Int32*)(UIntPtr) (GV.EIP_+2));
     (*pMyArgument).Memory.Displacement = MyNumber;
-    if (SYNTAX_ == ATSyntax) {
+    if (GV.SYNTAX_ == ATSyntax) {
         if (MyNumber < 0) {
             (void) strcpy((char*) (*pMyArgument).ArgMnemonic+i, "-");
             i ++;
             j=i;
-            i+= CopyFormattedNumber((char*) (*pMyArgument).ArgMnemonic+j,"%.8X",(Int64) ~MyNumber+1);
+            i+= CopyFormattedNumber(pMyDisasm, (char*) (*pMyArgument).ArgMnemonic+j,"%.8X",(Int64) ~MyNumber+1);
         }
         else {
             j = i;
-            i+= CopyFormattedNumber((char*) (*pMyArgument).ArgMnemonic+j,"%.8X",(Int64) MyNumber);
+            i+= CopyFormattedNumber(pMyDisasm, (char*) (*pMyArgument).ArgMnemonic+j,"%.8X",(Int64) MyNumber);
         }
         (void) strcpy((char*) (*pMyArgument).ArgMnemonic+i, "(%");
         i+=2;
     }
     (*pMyArgument).ArgType = MEMORY_TYPE;
     if (GV.AddressSize == 64) {
-        if (REX.B_ == 1) {
+        if (GV.REX.B_ == 1) {
             (void) strcpy ((char*) (*pMyArgument).ArgMnemonic+i, Registers64Bits[14]);
             (*pMyArgument).Memory.BaseRegister = REGS[6+8];
         }
@@ -1388,7 +1388,7 @@ void __bea_callspec__ Addr_ESI_disp32(ARGTYPE* pMyArgument, PDISASM pMyDisasm)
         }
     }
     else if (GV.AddressSize == 32) {
-        if (REX.B_ == 1) {
+        if (GV.REX.B_ == 1) {
             (void) strcpy ((char*) (*pMyArgument).ArgMnemonic+i, Registers32Bits[14]);
             (*pMyArgument).Memory.BaseRegister = REGS[6+8];
 
@@ -1403,7 +1403,7 @@ void __bea_callspec__ Addr_ESI_disp32(ARGTYPE* pMyArgument, PDISASM pMyDisasm)
             (*pMyArgument).Memory.BaseRegister = REGS[5];
     }
     i = strlen ((char*) &(*pMyArgument).ArgMnemonic);
-    if (SYNTAX_ == ATSyntax) {
+    if (GV.SYNTAX_ == ATSyntax) {
         (void) strcpy((char*) (*pMyArgument).ArgMnemonic+i, ")");
         i += 1;
     }
@@ -1411,12 +1411,12 @@ void __bea_callspec__ Addr_ESI_disp32(ARGTYPE* pMyArgument, PDISASM pMyDisasm)
         if (MyNumber < 0) {
             (void) strcpy((char*) (*pMyArgument).ArgMnemonic+i, "-");
             i++;
-            i+= CopyFormattedNumber((char*) (*pMyArgument).ArgMnemonic+i,"%.8X",(Int64) ~MyNumber+1);
+            i+= CopyFormattedNumber(pMyDisasm, (char*) (*pMyArgument).ArgMnemonic+i,"%.8X",(Int64) ~MyNumber+1);
         }
         else {
             (void) strcpy((char*) (*pMyArgument).ArgMnemonic+i, "+");
             i++;
-            i+= CopyFormattedNumber((char*) (*pMyArgument).ArgMnemonic+i,"%.8X",(Int64) MyNumber);
+            i+= CopyFormattedNumber(pMyDisasm, (char*) (*pMyArgument).ArgMnemonic+i,"%.8X",(Int64) MyNumber);
         }
     }
 }
@@ -1430,23 +1430,23 @@ void __bea_callspec__ Addr_EDI_disp32(ARGTYPE* pMyArgument, PDISASM pMyDisasm)
     long MyNumber;
     MyNumber = *((Int32*)(UIntPtr) (GV.EIP_+2));
     (*pMyArgument).Memory.Displacement = MyNumber;
-    if (SYNTAX_ == ATSyntax) {
+    if (GV.SYNTAX_ == ATSyntax) {
         if (MyNumber < 0) {
             (void) strcpy((char*) (*pMyArgument).ArgMnemonic+i, "-");
             i ++;
             j=i;
-            i+= CopyFormattedNumber((char*) (*pMyArgument).ArgMnemonic+j,"%.8X",(Int64) ~MyNumber+1);
+            i+= CopyFormattedNumber(pMyDisasm, (char*) (*pMyArgument).ArgMnemonic+j,"%.8X",(Int64) ~MyNumber+1);
         }
         else {
             j = i;
-            i+= CopyFormattedNumber((char*) (*pMyArgument).ArgMnemonic+j,"%.8X",(Int64) MyNumber);
+            i+= CopyFormattedNumber(pMyDisasm, (char*) (*pMyArgument).ArgMnemonic+j,"%.8X",(Int64) MyNumber);
         }
         (void) strcpy((char*) (*pMyArgument).ArgMnemonic+i, "(%");
         i+=2;
     }
     (*pMyArgument).ArgType = MEMORY_TYPE;
     if (GV.AddressSize == 64) {
-        if (REX.B_ == 1) {
+        if (GV.REX.B_ == 1) {
             (void) strcpy ((char*) (*pMyArgument).ArgMnemonic+i, Registers64Bits[15]);
             (*pMyArgument).Memory.BaseRegister = REGS[7+8];
         }
@@ -1456,7 +1456,7 @@ void __bea_callspec__ Addr_EDI_disp32(ARGTYPE* pMyArgument, PDISASM pMyDisasm)
         }
     }
     else if (GV.AddressSize == 32) {
-        if (REX.B_ == 1) {
+        if (GV.REX.B_ == 1) {
             (void) strcpy ((char*) (*pMyArgument).ArgMnemonic+i, Registers32Bits[15]);
             (*pMyArgument).Memory.BaseRegister = REGS[7+8];
 
@@ -1471,7 +1471,7 @@ void __bea_callspec__ Addr_EDI_disp32(ARGTYPE* pMyArgument, PDISASM pMyDisasm)
             (*pMyArgument).Memory.BaseRegister = REGS[3];
     }
     i = strlen ((char*) &(*pMyArgument).ArgMnemonic);
-    if (SYNTAX_ == ATSyntax) {
+    if (GV.SYNTAX_ == ATSyntax) {
         (void) strcpy((char*) (*pMyArgument).ArgMnemonic+i, ")");
         i += 1;
     }
@@ -1479,12 +1479,12 @@ void __bea_callspec__ Addr_EDI_disp32(ARGTYPE* pMyArgument, PDISASM pMyDisasm)
         if (MyNumber < 0) {
             (void) strcpy((char*) (*pMyArgument).ArgMnemonic+i, "-");
             i++;
-            i+= CopyFormattedNumber((char*) (*pMyArgument).ArgMnemonic+i,"%.8X",(Int64) ~MyNumber+1);
+            i+= CopyFormattedNumber(pMyDisasm, (char*) (*pMyArgument).ArgMnemonic+i,"%.8X",(Int64) ~MyNumber+1);
         }
         else {
             (void) strcpy((char*) (*pMyArgument).ArgMnemonic+i, "+");
             i++;
-            i+= CopyFormattedNumber((char*) (*pMyArgument).ArgMnemonic+i,"%.8X",(Int64) MyNumber);
+            i+= CopyFormattedNumber(pMyDisasm, (char*) (*pMyArgument).ArgMnemonic+i,"%.8X",(Int64) MyNumber);
         }
     }
 }
@@ -1496,15 +1496,15 @@ void __bea_callspec__ _rEAX(ARGTYPE* pMyArgument, PDISASM pMyDisasm)
 {
     int i = 0;
     GV.MemDecoration = 0;
-    if (MMX_ == 1) {
+    if (GV.MMX_  == 1) {
         (void) strcpy ((char*) (*pMyArgument).ArgMnemonic+i, RegistersMMX[0]);
         (*pMyArgument).ArgType = REGISTER_TYPE+MMX_REG+REGS[0];
         (*pMyArgument).ArgSize = 64;
         return;
     }
 
-    if (SSE_ == 1) {
-        if (REX.B_ == 1) {
+    if (GV.SSE_ == 1) {
+        if (GV.REX.B_ == 1) {
             (void) strcpy ((char*) (*pMyArgument).ArgMnemonic+i, RegistersSSE[8]);
             (*pMyArgument).ArgType = REGISTER_TYPE+SSE_REG+REGS[8];
             (*pMyArgument).ArgSize = 128;
@@ -1517,7 +1517,7 @@ void __bea_callspec__ _rEAX(ARGTYPE* pMyArgument, PDISASM pMyDisasm)
         return;
     }
     if (GV.OperandSize == 64) {
-        if (REX.B_ == 1) {
+        if (GV.REX.B_ == 1) {
             (void) strcpy ((char*) (*pMyArgument).ArgMnemonic+i, Registers64Bits[8]);
             (*pMyArgument).ArgType = REGISTER_TYPE+GENERAL_REG+REGS[8];
             (*pMyArgument).ArgSize = 64;
@@ -1529,7 +1529,7 @@ void __bea_callspec__ _rEAX(ARGTYPE* pMyArgument, PDISASM pMyDisasm)
         }
     }
     else if (GV.OperandSize == 32) {
-        if (REX.B_ == 1) {
+        if (GV.REX.B_ == 1) {
             (void) strcpy ((char*) (*pMyArgument).ArgMnemonic+i, Registers32Bits[8]);
             (*pMyArgument).ArgType = REGISTER_TYPE+GENERAL_REG+REGS[8];
             (*pMyArgument).ArgSize = 32;
@@ -1541,7 +1541,7 @@ void __bea_callspec__ _rEAX(ARGTYPE* pMyArgument, PDISASM pMyDisasm)
         }
     }
     else if (GV.OperandSize == 16) {
-        if (REX.B_ == 1) {
+        if (GV.REX.B_ == 1) {
             (void) strcpy ((char*) (*pMyArgument).ArgMnemonic+i, Registers16Bits[8]);
             (*pMyArgument).ArgType = REGISTER_TYPE+GENERAL_REG+REGS[8];
             (*pMyArgument).ArgSize = 16;
@@ -1553,13 +1553,13 @@ void __bea_callspec__ _rEAX(ARGTYPE* pMyArgument, PDISASM pMyDisasm)
         }
     }
     else if (GV.OperandSize == 8) {
-        if (REX.B_ == 1) {
+        if (GV.REX.B_ == 1) {
             (void) strcpy ((char*) (*pMyArgument).ArgMnemonic+i, Registers8Bits[8]);
             (*pMyArgument).ArgType = REGISTER_TYPE+GENERAL_REG+REGS[8];
             (*pMyArgument).ArgSize = 8;
         }
         else {
-            if (REX.state == 0) {
+            if (GV.REX.state == 0) {
                 (void) strcpy ((char*) (*pMyArgument).ArgMnemonic+i, Registers8BitsLegacy[0]);
                 (*pMyArgument).ArgType = REGISTER_TYPE+GENERAL_REG+REGS8BITS[0];
                 (*pMyArgument).ArgSize = 8;
@@ -1581,15 +1581,15 @@ void __bea_callspec__ _rECX(ARGTYPE* pMyArgument, PDISASM pMyDisasm)
 {
     int i = 0;
     GV.MemDecoration = 0;
-    if (MMX_ == 1) {
+    if (GV.MMX_  == 1) {
         (void) strcpy ((char*) (*pMyArgument).ArgMnemonic+i, RegistersMMX[1]);
         (*pMyArgument).ArgType = REGISTER_TYPE+MMX_REG+REGS[1];
         (*pMyArgument).ArgSize = 64;
         return;
     }
 
-    if (SSE_ == 1) {
-        if (REX.B_ == 1) {
+    if (GV.SSE_ == 1) {
+        if (GV.REX.B_ == 1) {
             (void) strcpy ((char*) (*pMyArgument).ArgMnemonic+i, RegistersSSE[1+8]);
             (*pMyArgument).ArgType = REGISTER_TYPE+SSE_REG+REGS[1+8];
             (*pMyArgument).ArgSize = 128;
@@ -1602,7 +1602,7 @@ void __bea_callspec__ _rECX(ARGTYPE* pMyArgument, PDISASM pMyDisasm)
         return;
     }
     if (GV.OperandSize == 64) {
-        if (REX.B_ == 1) {
+        if (GV.REX.B_ == 1) {
             (void) strcpy ((char*) (*pMyArgument).ArgMnemonic+i, Registers64Bits[1+8]);
             (*pMyArgument).ArgType = REGISTER_TYPE+GENERAL_REG+REGS[1+8];
             (*pMyArgument).ArgSize = 64;
@@ -1614,7 +1614,7 @@ void __bea_callspec__ _rECX(ARGTYPE* pMyArgument, PDISASM pMyDisasm)
         }
     }
     else if (GV.OperandSize == 32) {
-        if (REX.B_ == 1) {
+        if (GV.REX.B_ == 1) {
             (void) strcpy ((char*) (*pMyArgument).ArgMnemonic+i, Registers32Bits[1+8]);
             (*pMyArgument).ArgType = REGISTER_TYPE+GENERAL_REG+REGS[1+8];
             (*pMyArgument).ArgSize = 32;
@@ -1626,7 +1626,7 @@ void __bea_callspec__ _rECX(ARGTYPE* pMyArgument, PDISASM pMyDisasm)
         }
     }
     else if (GV.OperandSize == 16) {
-        if (REX.B_ == 1) {
+        if (GV.REX.B_ == 1) {
             (void) strcpy ((char*) (*pMyArgument).ArgMnemonic+i, Registers16Bits[1+8]);
             (*pMyArgument).ArgType = REGISTER_TYPE+GENERAL_REG+REGS[1+8];
             (*pMyArgument).ArgSize = 16;
@@ -1638,13 +1638,13 @@ void __bea_callspec__ _rECX(ARGTYPE* pMyArgument, PDISASM pMyDisasm)
         }
     }
     else if (GV.OperandSize == 8) {
-        if (REX.B_ == 1) {
+        if (GV.REX.B_ == 1) {
             (void) strcpy ((char*) (*pMyArgument).ArgMnemonic+i, Registers8Bits[1+8]);
             (*pMyArgument).ArgType = REGISTER_TYPE+GENERAL_REG+REGS[1+8];
             (*pMyArgument).ArgSize = 8;
         }
         else {
-            if (REX.state == 0) {
+            if (GV.REX.state == 0) {
                 (void) strcpy ((char*) (*pMyArgument).ArgMnemonic+i, Registers8BitsLegacy[1]);
                 (*pMyArgument).ArgType = REGISTER_TYPE+GENERAL_REG+REGS8BITS[1];
                 (*pMyArgument).ArgSize = 8;
@@ -1667,15 +1667,15 @@ void __bea_callspec__ _rEDX(ARGTYPE* pMyArgument, PDISASM pMyDisasm)
 {
     int i = 0;
     GV.MemDecoration = 0;
-    if (MMX_ == 1) {
+    if (GV.MMX_  == 1) {
         (void) strcpy ((char*) (*pMyArgument).ArgMnemonic+i, RegistersMMX[2+0]);
         (*pMyArgument).ArgType = REGISTER_TYPE+MMX_REG+REGS[2+0];
         (*pMyArgument).ArgSize = 64;
         return;
     }
 
-    if (SSE_ == 1) {
-        if (REX.B_ == 1) {
+    if (GV.SSE_ == 1) {
+        if (GV.REX.B_ == 1) {
             (void) strcpy ((char*) (*pMyArgument).ArgMnemonic+i, RegistersSSE[2+8]);
             (*pMyArgument).ArgType = REGISTER_TYPE+SSE_REG+REGS[2+8];
             (*pMyArgument).ArgSize = 128;
@@ -1688,7 +1688,7 @@ void __bea_callspec__ _rEDX(ARGTYPE* pMyArgument, PDISASM pMyDisasm)
         return;
     }
     if (GV.OperandSize == 64) {
-        if (REX.B_ == 1) {
+        if (GV.REX.B_ == 1) {
             (void) strcpy ((char*) (*pMyArgument).ArgMnemonic+i, Registers64Bits[2+8]);
             (*pMyArgument).ArgType = REGISTER_TYPE+GENERAL_REG+REGS[2+8];
             (*pMyArgument).ArgSize = 64;
@@ -1700,7 +1700,7 @@ void __bea_callspec__ _rEDX(ARGTYPE* pMyArgument, PDISASM pMyDisasm)
         }
     }
     else if (GV.OperandSize == 32) {
-        if (REX.B_ == 1) {
+        if (GV.REX.B_ == 1) {
             (void) strcpy ((char*) (*pMyArgument).ArgMnemonic+i, Registers32Bits[2+8]);
             (*pMyArgument).ArgType = REGISTER_TYPE+GENERAL_REG+REGS[2+8];
             (*pMyArgument).ArgSize = 32;
@@ -1712,7 +1712,7 @@ void __bea_callspec__ _rEDX(ARGTYPE* pMyArgument, PDISASM pMyDisasm)
         }
     }
     else if (GV.OperandSize == 16) {
-        if (REX.B_ == 1) {
+        if (GV.REX.B_ == 1) {
             (void) strcpy ((char*) (*pMyArgument).ArgMnemonic+i, Registers16Bits[2+8]);
             (*pMyArgument).ArgType = REGISTER_TYPE+GENERAL_REG+REGS[2+8];
             (*pMyArgument).ArgSize = 16;
@@ -1724,13 +1724,13 @@ void __bea_callspec__ _rEDX(ARGTYPE* pMyArgument, PDISASM pMyDisasm)
         }
     }
     else if (GV.OperandSize == 8) {
-        if (REX.B_ == 1) {
+        if (GV.REX.B_ == 1) {
             (void) strcpy ((char*) (*pMyArgument).ArgMnemonic+i, Registers8Bits[2+8]);
             (*pMyArgument).ArgType = REGISTER_TYPE+GENERAL_REG+REGS[2+8];
             (*pMyArgument).ArgSize = 8;
         }
         else {
-            if (REX.state == 0) {
+            if (GV.REX.state == 0) {
                 (void) strcpy ((char*) (*pMyArgument).ArgMnemonic+i, Registers8BitsLegacy[2+0]);
                 (*pMyArgument).ArgType = REGISTER_TYPE+GENERAL_REG+REGS8BITS[2+0];
                 (*pMyArgument).ArgSize = 8;
@@ -1753,15 +1753,15 @@ void __bea_callspec__ _rEBX(ARGTYPE* pMyArgument, PDISASM pMyDisasm)
 {
     int i = 0;
     GV.MemDecoration = 0;
-    if (MMX_ == 1) {
+    if (GV.MMX_  == 1) {
         (void) strcpy ((char*) (*pMyArgument).ArgMnemonic+i, RegistersMMX[3+0]);
         (*pMyArgument).ArgType = REGISTER_TYPE+MMX_REG+REGS[3+0];
         (*pMyArgument).ArgSize = 64;
         return;
     }
 
-    if (SSE_ == 1) {
-        if (REX.B_ == 1) {
+    if (GV.SSE_ == 1) {
+        if (GV.REX.B_ == 1) {
             (void) strcpy ((char*) (*pMyArgument).ArgMnemonic+i, RegistersSSE[3+8]);
             (*pMyArgument).ArgType = REGISTER_TYPE+SSE_REG+REGS[3+8];
             (*pMyArgument).ArgSize = 128;
@@ -1774,7 +1774,7 @@ void __bea_callspec__ _rEBX(ARGTYPE* pMyArgument, PDISASM pMyDisasm)
         return;
     }
     if (GV.OperandSize == 64) {
-        if (REX.B_ == 1) {
+        if (GV.REX.B_ == 1) {
             (void) strcpy ((char*) (*pMyArgument).ArgMnemonic+i, Registers64Bits[3+8]);
             (*pMyArgument).ArgType = REGISTER_TYPE+GENERAL_REG+REGS[3+8];
             (*pMyArgument).ArgSize = 64;
@@ -1786,7 +1786,7 @@ void __bea_callspec__ _rEBX(ARGTYPE* pMyArgument, PDISASM pMyDisasm)
         }
     }
     else if (GV.OperandSize == 32) {
-        if (REX.B_ == 1) {
+        if (GV.REX.B_ == 1) {
             (void) strcpy ((char*) (*pMyArgument).ArgMnemonic+i, Registers32Bits[3+8]);
             (*pMyArgument).ArgType = REGISTER_TYPE+GENERAL_REG+REGS[3+8];
             (*pMyArgument).ArgSize = 32;
@@ -1798,7 +1798,7 @@ void __bea_callspec__ _rEBX(ARGTYPE* pMyArgument, PDISASM pMyDisasm)
         }
     }
     else if (GV.OperandSize == 16) {
-        if (REX.B_ == 1) {
+        if (GV.REX.B_ == 1) {
             (void) strcpy ((char*) (*pMyArgument).ArgMnemonic+i, Registers16Bits[3+8]);
             (*pMyArgument).ArgType = REGISTER_TYPE+GENERAL_REG+REGS[3+8];
             (*pMyArgument).ArgSize = 16;
@@ -1810,13 +1810,13 @@ void __bea_callspec__ _rEBX(ARGTYPE* pMyArgument, PDISASM pMyDisasm)
         }
     }
     else if (GV.OperandSize == 8) {
-        if (REX.B_ == 1) {
+        if (GV.REX.B_ == 1) {
             (void) strcpy ((char*) (*pMyArgument).ArgMnemonic+i, Registers8Bits[3+8]);
             (*pMyArgument).ArgType = REGISTER_TYPE+GENERAL_REG+REGS[3+8];
             (*pMyArgument).ArgSize = 8;
         }
         else {
-            if (REX.state == 0) {
+            if (GV.REX.state == 0) {
                 (void) strcpy ((char*) (*pMyArgument).ArgMnemonic+i, Registers8BitsLegacy[3+0]);
                 (*pMyArgument).ArgType = REGISTER_TYPE+GENERAL_REG+REGS8BITS[3+0];
                 (*pMyArgument).ArgSize = 8;
@@ -1839,15 +1839,15 @@ void __bea_callspec__ _rESP(ARGTYPE* pMyArgument, PDISASM pMyDisasm)
 {
     int i = 0;
     GV.MemDecoration = 0;
-    if (MMX_ == 1) {
+    if (GV.MMX_  == 1) {
         (void) strcpy ((char*) (*pMyArgument).ArgMnemonic+i, RegistersMMX[4+0]);
         (*pMyArgument).ArgType = REGISTER_TYPE+MMX_REG+REGS[4+0];
         (*pMyArgument).ArgSize = 64;
         return;
     }
 
-    if (SSE_ == 1) {
-        if (REX.B_ == 1) {
+    if (GV.SSE_ == 1) {
+        if (GV.REX.B_ == 1) {
             (void) strcpy ((char*) (*pMyArgument).ArgMnemonic+i, RegistersSSE[4+8]);
             (*pMyArgument).ArgType = REGISTER_TYPE+SSE_REG+REGS[4+8];
             (*pMyArgument).ArgSize = 128;
@@ -1860,7 +1860,7 @@ void __bea_callspec__ _rESP(ARGTYPE* pMyArgument, PDISASM pMyDisasm)
         return;
     }
     if (GV.OperandSize == 64) {
-        if (REX.B_ == 1) {
+        if (GV.REX.B_ == 1) {
             (void) strcpy ((char*) (*pMyArgument).ArgMnemonic+i, Registers64Bits[4+8]);
             (*pMyArgument).ArgType = REGISTER_TYPE+GENERAL_REG+REGS[4+8];
             (*pMyArgument).ArgSize = 64;
@@ -1872,7 +1872,7 @@ void __bea_callspec__ _rESP(ARGTYPE* pMyArgument, PDISASM pMyDisasm)
         }
     }
     else if (GV.OperandSize == 32) {
-        if (REX.B_ == 1) {
+        if (GV.REX.B_ == 1) {
             (void) strcpy ((char*) (*pMyArgument).ArgMnemonic+i, Registers32Bits[4+8]);
             (*pMyArgument).ArgType = REGISTER_TYPE+GENERAL_REG+REGS[4+8];
             (*pMyArgument).ArgSize = 32;
@@ -1884,7 +1884,7 @@ void __bea_callspec__ _rESP(ARGTYPE* pMyArgument, PDISASM pMyDisasm)
         }
     }
     else if (GV.OperandSize == 16) {
-        if (REX.B_ == 1) {
+        if (GV.REX.B_ == 1) {
             (void) strcpy ((char*) (*pMyArgument).ArgMnemonic+i, Registers16Bits[4+8]);
             (*pMyArgument).ArgType = REGISTER_TYPE+GENERAL_REG+REGS[4+8];
             (*pMyArgument).ArgSize = 16;
@@ -1896,13 +1896,13 @@ void __bea_callspec__ _rESP(ARGTYPE* pMyArgument, PDISASM pMyDisasm)
         }
     }
     else if (GV.OperandSize == 8) {
-        if (REX.B_ == 1) {
+        if (GV.REX.B_ == 1) {
             (void) strcpy ((char*) (*pMyArgument).ArgMnemonic+i, Registers8Bits[4+8]);
             (*pMyArgument).ArgType = REGISTER_TYPE+GENERAL_REG+REGS[4+8];
             (*pMyArgument).ArgSize = 8;
         }
         else {
-            if (REX.state == 0) {
+            if (GV.REX.state == 0) {
                 (void) strcpy ((char*) (*pMyArgument).ArgMnemonic+i, Registers8BitsLegacy[4+0]);
                 (*pMyArgument).ArgType = REGISTER_TYPE+GENERAL_REG+REGS8BITS[4+0];
                 (*pMyArgument).ArgSize = 8;
@@ -1925,15 +1925,15 @@ void __bea_callspec__ _rEBP(ARGTYPE* pMyArgument, PDISASM pMyDisasm)
 {
     int i = 0;
     GV.MemDecoration = 0;
-    if (MMX_ == 1) {
+    if (GV.MMX_  == 1) {
         (void) strcpy ((char*) (*pMyArgument).ArgMnemonic+i, RegistersMMX[5+0]);
         (*pMyArgument).ArgType = REGISTER_TYPE+MMX_REG+REGS[5+0];
         (*pMyArgument).ArgSize = 64;
         return;
     }
 
-    if (SSE_ == 1) {
-        if (REX.B_ == 1) {
+    if (GV.SSE_ == 1) {
+        if (GV.REX.B_ == 1) {
             (void) strcpy ((char*) (*pMyArgument).ArgMnemonic+i, RegistersSSE[5+8]);
             (*pMyArgument).ArgType = REGISTER_TYPE+SSE_REG+REGS[5+8];
             (*pMyArgument).ArgSize = 128;
@@ -1946,7 +1946,7 @@ void __bea_callspec__ _rEBP(ARGTYPE* pMyArgument, PDISASM pMyDisasm)
         return;
     }
     if (GV.OperandSize == 64) {
-        if (REX.B_ == 1) {
+        if (GV.REX.B_ == 1) {
             (void) strcpy ((char*) (*pMyArgument).ArgMnemonic+i, Registers64Bits[5+8]);
             (*pMyArgument).ArgType = REGISTER_TYPE+GENERAL_REG+REGS[5+8];
             (*pMyArgument).ArgSize = 64;
@@ -1958,7 +1958,7 @@ void __bea_callspec__ _rEBP(ARGTYPE* pMyArgument, PDISASM pMyDisasm)
         }
     }
     else if (GV.OperandSize == 32) {
-        if (REX.B_ == 1) {
+        if (GV.REX.B_ == 1) {
             (void) strcpy ((char*) (*pMyArgument).ArgMnemonic+i, Registers32Bits[5+8]);
             (*pMyArgument).ArgType = REGISTER_TYPE+GENERAL_REG+REGS[5+8];
             (*pMyArgument).ArgSize = 32;
@@ -1970,7 +1970,7 @@ void __bea_callspec__ _rEBP(ARGTYPE* pMyArgument, PDISASM pMyDisasm)
         }
     }
     else if (GV.OperandSize == 16) {
-        if (REX.B_ == 1) {
+        if (GV.REX.B_ == 1) {
             (void) strcpy ((char*) (*pMyArgument).ArgMnemonic+i, Registers16Bits[5+8]);
             (*pMyArgument).ArgType = REGISTER_TYPE+GENERAL_REG+REGS[5+8];
             (*pMyArgument).ArgSize = 16;
@@ -1982,13 +1982,13 @@ void __bea_callspec__ _rEBP(ARGTYPE* pMyArgument, PDISASM pMyDisasm)
         }
     }
     else if (GV.OperandSize == 8) {
-        if (REX.B_ == 1) {
+        if (GV.REX.B_ == 1) {
             (void) strcpy ((char*) (*pMyArgument).ArgMnemonic+i, Registers8Bits[5+8]);
             (*pMyArgument).ArgType = REGISTER_TYPE+GENERAL_REG+REGS[5+8];
             (*pMyArgument).ArgSize = 8;
         }
         else {
-            if (REX.state == 0) {
+            if (GV.REX.state == 0) {
                 (void) strcpy ((char*) (*pMyArgument).ArgMnemonic+i, Registers8BitsLegacy[5+0]);
                 (*pMyArgument).ArgType = REGISTER_TYPE+GENERAL_REG+REGS8BITS[5+0];
                 (*pMyArgument).ArgSize = 8;
@@ -2011,15 +2011,15 @@ void __bea_callspec__ _rESI(ARGTYPE* pMyArgument, PDISASM pMyDisasm)
 {
     int i = 0;
     GV.MemDecoration = 0;
-    if (MMX_ == 1) {
+    if (GV.MMX_  == 1) {
         (void) strcpy ((char*) (*pMyArgument).ArgMnemonic+i, RegistersMMX[6+0]);
         (*pMyArgument).ArgType = REGISTER_TYPE+MMX_REG+REGS[6+0];
         (*pMyArgument).ArgSize = 64;
         return;
     }
 
-    if (SSE_ == 1) {
-        if (REX.B_ == 1) {
+    if (GV.SSE_ == 1) {
+        if (GV.REX.B_ == 1) {
             (void) strcpy ((char*) (*pMyArgument).ArgMnemonic+i, RegistersSSE[6+8]);
             (*pMyArgument).ArgType = REGISTER_TYPE+SSE_REG+REGS[6+8];
             (*pMyArgument).ArgSize = 128;
@@ -2032,7 +2032,7 @@ void __bea_callspec__ _rESI(ARGTYPE* pMyArgument, PDISASM pMyDisasm)
         return;
     }
     if (GV.OperandSize == 64) {
-        if (REX.B_ == 1) {
+        if (GV.REX.B_ == 1) {
             (void) strcpy ((char*) (*pMyArgument).ArgMnemonic+i, Registers64Bits[6+8]);
             (*pMyArgument).ArgType = REGISTER_TYPE+GENERAL_REG+REGS[6+8];
             (*pMyArgument).ArgSize = 64;
@@ -2044,7 +2044,7 @@ void __bea_callspec__ _rESI(ARGTYPE* pMyArgument, PDISASM pMyDisasm)
         }
     }
     else if (GV.OperandSize == 32) {
-        if (REX.B_ == 1) {
+        if (GV.REX.B_ == 1) {
             (void) strcpy ((char*) (*pMyArgument).ArgMnemonic+i, Registers32Bits[6+8]);
             (*pMyArgument).ArgType = REGISTER_TYPE+GENERAL_REG+REGS[6+8];
             (*pMyArgument).ArgSize = 32;
@@ -2056,7 +2056,7 @@ void __bea_callspec__ _rESI(ARGTYPE* pMyArgument, PDISASM pMyDisasm)
         }
     }
     else if (GV.OperandSize == 16) {
-        if (REX.B_ == 1) {
+        if (GV.REX.B_ == 1) {
             (void) strcpy ((char*) (*pMyArgument).ArgMnemonic+i, Registers16Bits[6+8]);
             (*pMyArgument).ArgType = REGISTER_TYPE+GENERAL_REG+REGS[6+8];
             (*pMyArgument).ArgSize = 16;
@@ -2068,13 +2068,13 @@ void __bea_callspec__ _rESI(ARGTYPE* pMyArgument, PDISASM pMyDisasm)
         }
     }
     else if (GV.OperandSize == 8) {
-        if (REX.B_ == 1) {
+        if (GV.REX.B_ == 1) {
             (void) strcpy ((char*) (*pMyArgument).ArgMnemonic+i, Registers8Bits[6+8]);
             (*pMyArgument).ArgType = REGISTER_TYPE+GENERAL_REG+REGS[6+8];
             (*pMyArgument).ArgSize = 8;
         }
         else {
-            if (REX.state == 0) {
+            if (GV.REX.state == 0) {
                 (void) strcpy ((char*) (*pMyArgument).ArgMnemonic+i, Registers8BitsLegacy[6+0]);
                 (*pMyArgument).ArgType = REGISTER_TYPE+GENERAL_REG+REGS8BITS[6+0];
                 (*pMyArgument).ArgSize = 8;
@@ -2097,15 +2097,15 @@ void __bea_callspec__ _rEDI(ARGTYPE* pMyArgument, PDISASM pMyDisasm)
 {
     int i = 0;
     GV.MemDecoration = 0;
-    if (MMX_ == 1) {
+    if (GV.MMX_  == 1) {
         (void) strcpy ((char*) (*pMyArgument).ArgMnemonic+i, RegistersMMX[7+0]);
         (*pMyArgument).ArgType = REGISTER_TYPE+MMX_REG+REGS[7+0];
         (*pMyArgument).ArgSize = 64;
         return;
     }
 
-    if (SSE_ == 1) {
-        if (REX.B_ == 1) {
+    if (GV.SSE_ == 1) {
+        if (GV.REX.B_ == 1) {
             (void) strcpy ((char*) (*pMyArgument).ArgMnemonic+i, RegistersSSE[7+8]);
             (*pMyArgument).ArgType = REGISTER_TYPE+SSE_REG+REGS[7+8];
             (*pMyArgument).ArgSize = 128;
@@ -2118,7 +2118,7 @@ void __bea_callspec__ _rEDI(ARGTYPE* pMyArgument, PDISASM pMyDisasm)
         return;
     }
     if (GV.OperandSize == 64) {
-        if (REX.B_ == 1) {
+        if (GV.REX.B_ == 1) {
             (void) strcpy ((char*) (*pMyArgument).ArgMnemonic+i, Registers64Bits[7+8]);
             (*pMyArgument).ArgType = REGISTER_TYPE+GENERAL_REG+REGS[7+8];
             (*pMyArgument).ArgSize = 64;
@@ -2130,7 +2130,7 @@ void __bea_callspec__ _rEDI(ARGTYPE* pMyArgument, PDISASM pMyDisasm)
         }
     }
     else if (GV.OperandSize == 32) {
-        if (REX.B_ == 1) {
+        if (GV.REX.B_ == 1) {
             (void) strcpy ((char*) (*pMyArgument).ArgMnemonic+i, Registers32Bits[7+8]);
             (*pMyArgument).ArgType = REGISTER_TYPE+GENERAL_REG+REGS[7+8];
             (*pMyArgument).ArgSize = 32;
@@ -2142,7 +2142,7 @@ void __bea_callspec__ _rEDI(ARGTYPE* pMyArgument, PDISASM pMyDisasm)
         }
     }
     else if (GV.OperandSize == 16) {
-        if (REX.B_ == 1) {
+        if (GV.REX.B_ == 1) {
             (void) strcpy ((char*) (*pMyArgument).ArgMnemonic+i, Registers16Bits[7+8]);
             (*pMyArgument).ArgType = REGISTER_TYPE+GENERAL_REG+REGS[7+8];
             (*pMyArgument).ArgSize = 16;
@@ -2154,13 +2154,13 @@ void __bea_callspec__ _rEDI(ARGTYPE* pMyArgument, PDISASM pMyDisasm)
         }
     }
     else if (GV.OperandSize == 8) {
-        if (REX.B_ == 1) {
+        if (GV.REX.B_ == 1) {
             (void) strcpy ((char*) (*pMyArgument).ArgMnemonic+i, Registers8Bits[7+8]);
             (*pMyArgument).ArgType = REGISTER_TYPE+GENERAL_REG+REGS[7+8];
             (*pMyArgument).ArgSize = 8;
         }
         else {
-            if (REX.state == 0) {
+            if (GV.REX.state == 0) {
                 (void) strcpy ((char*) (*pMyArgument).ArgMnemonic+i, Registers8BitsLegacy[7+0]);
                 (*pMyArgument).ArgType = REGISTER_TYPE+GENERAL_REG+REGS8BITS[7+0];
                 (*pMyArgument).ArgSize = 8;
@@ -2183,8 +2183,8 @@ size_t __bea_callspec__ SIB_0(ARGTYPE* pMyArgument, size_t i, PDISASM pMyDisasm)
 
     /* ========================= Interpret Base */
 
-    if ((BASE_ == 5) && (GV.MOD_ == 0)) {
-        DECALAGE_EIP += 4;
+    if ((GV.BASE_  == 5) && (GV.MOD_ == 0)) {
+        GV.DECALAGE_EIP += 4;
         if (!Security(7, pMyDisasm)) return i;
         (void) sprintf((char*) (*pMyArgument).ArgMnemonic+i, "%.8X",*((UInt32*)(UIntPtr) (GV.EIP_+3)));
         (*pMyArgument).Memory.Displacement = *((UInt32*)(UIntPtr) (GV.EIP_+3));
@@ -2192,41 +2192,41 @@ size_t __bea_callspec__ SIB_0(ARGTYPE* pMyArgument, size_t i, PDISASM pMyDisasm)
     }
     else {
 
-        if (SYNTAX_ == ATSyntax) {
+        if (GV.SYNTAX_ == ATSyntax) {
             (void) strcpy((char*) (*pMyArgument).ArgMnemonic+i, "(%");
             i += 2;
         }
         if (GV.AddressSize == 64) {
-            if (REX.B_ == 0) {
-                (void) strcpy((char*) (*pMyArgument).ArgMnemonic+i, Registers64Bits[BASE_]);
-                (*pMyArgument).Memory.BaseRegister = REGS[BASE_];
-                i += strlen(Registers64Bits[BASE_]);
+            if (GV.REX.B_ == 0) {
+                (void) strcpy((char*) (*pMyArgument).ArgMnemonic+i, Registers64Bits[GV.BASE_ ]);
+                (*pMyArgument).Memory.BaseRegister = REGS[GV.BASE_ ];
+                i += strlen(Registers64Bits[GV.BASE_ ]);
             }
             else {
-                (void) strcpy((char*) (*pMyArgument).ArgMnemonic+i, Registers64Bits[BASE_+8]);
-                (*pMyArgument).Memory.BaseRegister = REGS[BASE_+8];
-                i += strlen( Registers64Bits[BASE_+8]);
+                (void) strcpy((char*) (*pMyArgument).ArgMnemonic+i, Registers64Bits[GV.BASE_ +8]);
+                (*pMyArgument).Memory.BaseRegister = REGS[GV.BASE_ +8];
+                i += strlen( Registers64Bits[GV.BASE_ +8]);
             }
         }
         else if (GV.AddressSize == 32) {
-            if (REX.B_ == 0) {
-                (void) strcpy((char*) (*pMyArgument).ArgMnemonic+i, Registers32Bits[BASE_]);
-                (*pMyArgument).Memory.BaseRegister = REGS[BASE_];
-                i += strlen( Registers32Bits[BASE_]);
+            if (GV.REX.B_ == 0) {
+                (void) strcpy((char*) (*pMyArgument).ArgMnemonic+i, Registers32Bits[GV.BASE_ ]);
+                (*pMyArgument).Memory.BaseRegister = REGS[GV.BASE_ ];
+                i += strlen( Registers32Bits[GV.BASE_ ]);
             }
             else {
-                (void) strcpy((char*) (*pMyArgument).ArgMnemonic+i, Registers32Bits[BASE_+8]);
-                (*pMyArgument).Memory.BaseRegister = REGS[BASE_+8];
-                i += strlen( Registers32Bits[BASE_+8]);
+                (void) strcpy((char*) (*pMyArgument).ArgMnemonic+i, Registers32Bits[GV.BASE_ +8]);
+                (*pMyArgument).Memory.BaseRegister = REGS[GV.BASE_ +8];
+                i += strlen( Registers32Bits[GV.BASE_ +8]);
             }
         }
     }
     /* ======================== Interpret Index */
 
 
-    if (INDEX_ != 4) {
-        if (SYNTAX_ == ATSyntax) {
-            if (BASE_ == 5) {
+    if (GV.INDEX_  != 4) {
+        if (GV.SYNTAX_ == ATSyntax) {
+            if (GV.BASE_  == 5) {
                 (void) strcpy((char*) (*pMyArgument).ArgMnemonic+i, "(,%");
                 i+=3;
             }
@@ -2241,32 +2241,32 @@ size_t __bea_callspec__ SIB_0(ARGTYPE* pMyArgument, size_t i, PDISASM pMyDisasm)
         }
 
         if (GV.AddressSize == 64) {
-            if (REX.X_ == 0) {
-                (void) strcpy((char*) (*pMyArgument).ArgMnemonic+i, Registers64Bits[INDEX_]);
-                (*pMyArgument).Memory.IndexRegister = REGS[INDEX_];
-                i += strlen( Registers64Bits[INDEX_]);
+            if (GV.REX.X_ == 0) {
+                (void) strcpy((char*) (*pMyArgument).ArgMnemonic+i, Registers64Bits[GV.INDEX_ ]);
+                (*pMyArgument).Memory.IndexRegister = REGS[GV.INDEX_ ];
+                i += strlen( Registers64Bits[GV.INDEX_ ]);
             }
             else {
-                (void) strcpy((char*) (*pMyArgument).ArgMnemonic+i, Registers64Bits[INDEX_+8]);
-                (*pMyArgument).Memory.IndexRegister = REGS[INDEX_+8];
-                i += strlen( Registers64Bits[INDEX_+8]);
+                (void) strcpy((char*) (*pMyArgument).ArgMnemonic+i, Registers64Bits[GV.INDEX_ +8]);
+                (*pMyArgument).Memory.IndexRegister = REGS[GV.INDEX_ +8];
+                i += strlen( Registers64Bits[GV.INDEX_ +8]);
             }
         }
         else if (GV.AddressSize == 32) {
-            if (REX.X_ == 0) {
-                (void) strcpy((char*) (*pMyArgument).ArgMnemonic+i, Registers32Bits[INDEX_]);
-                (*pMyArgument).Memory.IndexRegister = REGS[INDEX_];
-                i += strlen( Registers32Bits[INDEX_]);
+            if (GV.REX.X_ == 0) {
+                (void) strcpy((char*) (*pMyArgument).ArgMnemonic+i, Registers32Bits[GV.INDEX_ ]);
+                (*pMyArgument).Memory.IndexRegister = REGS[GV.INDEX_ ];
+                i += strlen( Registers32Bits[GV.INDEX_ ]);
             }
             else {
-                (void) strcpy((char*) (*pMyArgument).ArgMnemonic+i, Registers32Bits[INDEX_+8]);
-                (*pMyArgument).Memory.IndexRegister = REGS[INDEX_+8];
-                i += strlen( Registers32Bits[INDEX_+8]);
+                (void) strcpy((char*) (*pMyArgument).ArgMnemonic+i, Registers32Bits[GV.INDEX_ +8]);
+                (*pMyArgument).Memory.IndexRegister = REGS[GV.INDEX_ +8];
+                i += strlen( Registers32Bits[GV.INDEX_ +8]);
             }
         }
     }
     (*pMyArgument).Memory.Scale = 1;
-    if ((SYNTAX_ == ATSyntax) && ((BASE_ != 5) || (INDEX_ != 4))) {
+    if ((GV.SYNTAX_ == ATSyntax) && ((GV.BASE_  != 5) || (GV.INDEX_  != 4))) {
         (void) strcpy((char*) (*pMyArgument).ArgMnemonic+i, ")");
         i++;
     }
@@ -2281,49 +2281,49 @@ size_t __bea_callspec__ SIB_1(ARGTYPE* pMyArgument, size_t i, PDISASM pMyDisasm)
     size_t j;
     /* ========================= Interpret Base */
 
-    if ((BASE_ == 5) && (GV.MOD_ == 0)) {
-        DECALAGE_EIP += 4;
+    if ((GV.BASE_  == 5) && (GV.MOD_ == 0)) {
+        GV.DECALAGE_EIP += 4;
         if (!Security(7, pMyDisasm)) return i;
         j = i;
-        i+= CopyFormattedNumber((char*) (*pMyArgument).ArgMnemonic+j,"%.8X",(Int64) *((UInt32*)(UIntPtr) (GV.EIP_+3)));
+        i+= CopyFormattedNumber(pMyDisasm, (char*) (*pMyArgument).ArgMnemonic+j,"%.8X",(Int64) *((UInt32*)(UIntPtr) (GV.EIP_+3)));
         (*pMyArgument).Memory.Displacement = *((UInt32*)(UIntPtr) (GV.EIP_+3));
     }
     else {
 
-        if (SYNTAX_ == ATSyntax) {
+        if (GV.SYNTAX_ == ATSyntax) {
             (void) strcpy((char*) (*pMyArgument).ArgMnemonic+i, "(%");
             i += 2;
         }
         if (GV.AddressSize == 64) {
-            if (REX.B_ == 0) {
-                (void) strcpy((char*) (*pMyArgument).ArgMnemonic+i, Registers64Bits[BASE_]);
-                (*pMyArgument).Memory.BaseRegister = REGS[BASE_];
-                i += strlen( Registers64Bits[BASE_]);
+            if (GV.REX.B_ == 0) {
+                (void) strcpy((char*) (*pMyArgument).ArgMnemonic+i, Registers64Bits[GV.BASE_ ]);
+                (*pMyArgument).Memory.BaseRegister = REGS[GV.BASE_ ];
+                i += strlen( Registers64Bits[GV.BASE_ ]);
             }
             else {
-                (void) strcpy((char*) (*pMyArgument).ArgMnemonic+i, Registers64Bits[BASE_+8]);
-                (*pMyArgument).Memory.BaseRegister = REGS[BASE_+8];
-                i += strlen( Registers64Bits[BASE_+8]);
+                (void) strcpy((char*) (*pMyArgument).ArgMnemonic+i, Registers64Bits[GV.BASE_ +8]);
+                (*pMyArgument).Memory.BaseRegister = REGS[GV.BASE_ +8];
+                i += strlen( Registers64Bits[GV.BASE_ +8]);
             }
         }
         else if (GV.AddressSize == 32) {
-            if (REX.B_ == 0) {
-                (void) strcpy((char*) (*pMyArgument).ArgMnemonic+i, Registers32Bits[BASE_]);
-                (*pMyArgument).Memory.BaseRegister = REGS[BASE_];
-                i += strlen( Registers32Bits[BASE_]);
+            if (GV.REX.B_ == 0) {
+                (void) strcpy((char*) (*pMyArgument).ArgMnemonic+i, Registers32Bits[GV.BASE_ ]);
+                (*pMyArgument).Memory.BaseRegister = REGS[GV.BASE_ ];
+                i += strlen( Registers32Bits[GV.BASE_ ]);
             }
             else {
-                (void) strcpy((char*) (*pMyArgument).ArgMnemonic+i, Registers32Bits[BASE_+8]);
-                (*pMyArgument).Memory.BaseRegister = REGS[BASE_+8];
-                i += strlen( Registers32Bits[BASE_+8]);
+                (void) strcpy((char*) (*pMyArgument).ArgMnemonic+i, Registers32Bits[GV.BASE_ +8]);
+                (*pMyArgument).Memory.BaseRegister = REGS[GV.BASE_ +8];
+                i += strlen( Registers32Bits[GV.BASE_ +8]);
             }
         }
     }
     /* ======================== Interpret Index */
 
-    if (INDEX_ != 4) {
-        if (SYNTAX_ == ATSyntax) {
-            if (BASE_ == 5) {
+    if (GV.INDEX_  != 4) {
+        if (GV.SYNTAX_ == ATSyntax) {
+            if (GV.BASE_  == 5) {
                 (void) strcpy((char*) (*pMyArgument).ArgMnemonic+i, "(,%");
                 i+=3;
             }
@@ -2338,32 +2338,32 @@ size_t __bea_callspec__ SIB_1(ARGTYPE* pMyArgument, size_t i, PDISASM pMyDisasm)
         }
 
         if (GV.AddressSize == 64) {
-            if (REX.X_ == 0) {
-                (void) strcpy((char*) (*pMyArgument).ArgMnemonic+i, Registers64Bits[INDEX_]);
-                (*pMyArgument).Memory.IndexRegister = REGS[INDEX_];
-                i += strlen( Registers64Bits[INDEX_]);
+            if (GV.REX.X_ == 0) {
+                (void) strcpy((char*) (*pMyArgument).ArgMnemonic+i, Registers64Bits[GV.INDEX_ ]);
+                (*pMyArgument).Memory.IndexRegister = REGS[GV.INDEX_ ];
+                i += strlen( Registers64Bits[GV.INDEX_ ]);
             }
             else {
-                (void) strcpy((char*) (*pMyArgument).ArgMnemonic+i, Registers64Bits[INDEX_+8]);
-                (*pMyArgument).Memory.IndexRegister = REGS[INDEX_+8];
-                i += strlen( Registers64Bits[INDEX_+8]);
+                (void) strcpy((char*) (*pMyArgument).ArgMnemonic+i, Registers64Bits[GV.INDEX_ +8]);
+                (*pMyArgument).Memory.IndexRegister = REGS[GV.INDEX_ +8];
+                i += strlen( Registers64Bits[GV.INDEX_ +8]);
             }
         }
         else if (GV.AddressSize == 32) {
-            if (REX.X_ == 0) {
-                (void) strcpy((char*) (*pMyArgument).ArgMnemonic+i, Registers32Bits[INDEX_]);
-                (*pMyArgument).Memory.IndexRegister = REGS[INDEX_];
-                i += strlen( Registers32Bits[INDEX_]);
+            if (GV.REX.X_ == 0) {
+                (void) strcpy((char*) (*pMyArgument).ArgMnemonic+i, Registers32Bits[GV.INDEX_ ]);
+                (*pMyArgument).Memory.IndexRegister = REGS[GV.INDEX_ ];
+                i += strlen( Registers32Bits[GV.INDEX_ ]);
             }
             else {
-                (void) strcpy((char*) (*pMyArgument).ArgMnemonic+i, Registers32Bits[INDEX_+8]);
-                (*pMyArgument).Memory.IndexRegister = REGS[INDEX_+8];
-                i += strlen( Registers32Bits[INDEX_+8]);
+                (void) strcpy((char*) (*pMyArgument).ArgMnemonic+i, Registers32Bits[GV.INDEX_ +8]);
+                (*pMyArgument).Memory.IndexRegister = REGS[GV.INDEX_ +8];
+                i += strlen( Registers32Bits[GV.INDEX_ +8]);
             }
         }
         (*pMyArgument).Memory.Scale = 2;
-        if (SYNTAX_ == ATSyntax) {
-            if ((BASE_ != 5) || (INDEX_ != 4)) {
+        if (GV.SYNTAX_ == ATSyntax) {
+            if ((GV.BASE_  != 5) || (GV.INDEX_  != 4)) {
                 (void) strcpy((char*) (*pMyArgument).ArgMnemonic+i, ",2");
                 i+=2;
             }
@@ -2374,7 +2374,7 @@ size_t __bea_callspec__ SIB_1(ARGTYPE* pMyArgument, size_t i, PDISASM pMyDisasm)
             i+=2;
         }
     }
-    if ((SYNTAX_ == ATSyntax) && ((BASE_ != 5) || (INDEX_ != 4))) {
+    if ((GV.SYNTAX_ == ATSyntax) && ((GV.BASE_  != 5) || (GV.INDEX_  != 4))) {
         (void) strcpy((char*) (*pMyArgument).ArgMnemonic+i, ")");
         i++;
     }
@@ -2389,49 +2389,49 @@ size_t __bea_callspec__ SIB_2(ARGTYPE* pMyArgument, size_t i, PDISASM pMyDisasm)
     size_t j;
     /* ========================= Interpret Base */
 
-    if ((BASE_ == 5) && (GV.MOD_ == 0)) {
-        DECALAGE_EIP += 4;
+    if ((GV.BASE_  == 5) && (GV.MOD_ == 0)) {
+        GV.DECALAGE_EIP += 4;
         if (!Security(7, pMyDisasm)) return i;
         j = i;
-        i+= CopyFormattedNumber((char*) (*pMyArgument).ArgMnemonic+j,"%.8X",(Int64) *((UInt32*)(UIntPtr) (GV.EIP_+3)));
+        i+= CopyFormattedNumber(pMyDisasm, (char*) (*pMyArgument).ArgMnemonic+j,"%.8X",(Int64) *((UInt32*)(UIntPtr) (GV.EIP_+3)));
         (*pMyArgument).Memory.Displacement = *((UInt32*)(UIntPtr) (GV.EIP_+3));
     }
     else {
 
-        if (SYNTAX_ == ATSyntax) {
+        if (GV.SYNTAX_ == ATSyntax) {
             (void) strcpy((char*) (*pMyArgument).ArgMnemonic+i, "(%");
             i += 2;
         }
         if (GV.AddressSize == 64) {
-            if (REX.B_ == 0) {
-                (void) strcpy((char*) (*pMyArgument).ArgMnemonic+i, Registers64Bits[BASE_]);
-                (*pMyArgument).Memory.BaseRegister = REGS[BASE_];
-                i += strlen( Registers64Bits[BASE_]);
+            if (GV.REX.B_ == 0) {
+                (void) strcpy((char*) (*pMyArgument).ArgMnemonic+i, Registers64Bits[GV.BASE_ ]);
+                (*pMyArgument).Memory.BaseRegister = REGS[GV.BASE_ ];
+                i += strlen( Registers64Bits[GV.BASE_ ]);
             }
             else {
-                (void) strcpy((char*) (*pMyArgument).ArgMnemonic+i, Registers64Bits[BASE_+8]);
-                (*pMyArgument).Memory.BaseRegister = REGS[BASE_+8];
-                i += strlen( Registers64Bits[BASE_+8]);
+                (void) strcpy((char*) (*pMyArgument).ArgMnemonic+i, Registers64Bits[GV.BASE_ +8]);
+                (*pMyArgument).Memory.BaseRegister = REGS[GV.BASE_ +8];
+                i += strlen( Registers64Bits[GV.BASE_ +8]);
             }
         }
         else if (GV.AddressSize == 32) {
-            if (REX.B_ == 0) {
-                (void) strcpy((char*) (*pMyArgument).ArgMnemonic+i, Registers32Bits[BASE_]);
-                (*pMyArgument).Memory.BaseRegister = REGS[BASE_];
-                i += strlen( Registers32Bits[BASE_]);
+            if (GV.REX.B_ == 0) {
+                (void) strcpy((char*) (*pMyArgument).ArgMnemonic+i, Registers32Bits[GV.BASE_ ]);
+                (*pMyArgument).Memory.BaseRegister = REGS[GV.BASE_ ];
+                i += strlen( Registers32Bits[GV.BASE_ ]);
             }
             else {
-                (void) strcpy((char*) (*pMyArgument).ArgMnemonic+i, Registers32Bits[BASE_+8]);
-                (*pMyArgument).Memory.BaseRegister = REGS[BASE_+8];
-                i += strlen( Registers32Bits[BASE_+8]);
+                (void) strcpy((char*) (*pMyArgument).ArgMnemonic+i, Registers32Bits[GV.BASE_ +8]);
+                (*pMyArgument).Memory.BaseRegister = REGS[GV.BASE_ +8];
+                i += strlen( Registers32Bits[GV.BASE_ +8]);
             }
         }
     }
     /* ======================== Interpret Index */
 
-    if (INDEX_ != 4) {
-        if (SYNTAX_ == ATSyntax) {
-            if (BASE_ == 5) {
+    if (GV.INDEX_  != 4) {
+        if (GV.SYNTAX_ == ATSyntax) {
+            if (GV.BASE_  == 5) {
                 (void) strcpy((char*) (*pMyArgument).ArgMnemonic+i, "(,%");
                 i+=3;
             }
@@ -2446,32 +2446,32 @@ size_t __bea_callspec__ SIB_2(ARGTYPE* pMyArgument, size_t i, PDISASM pMyDisasm)
         }
 
         if (GV.AddressSize == 64) {
-            if (REX.X_ == 0) {
-                (void) strcpy((char*) (*pMyArgument).ArgMnemonic+i, Registers64Bits[INDEX_]);
-                (*pMyArgument).Memory.IndexRegister = REGS[INDEX_];
-                i += strlen( Registers64Bits[INDEX_]);
+            if (GV.REX.X_ == 0) {
+                (void) strcpy((char*) (*pMyArgument).ArgMnemonic+i, Registers64Bits[GV.INDEX_ ]);
+                (*pMyArgument).Memory.IndexRegister = REGS[GV.INDEX_ ];
+                i += strlen( Registers64Bits[GV.INDEX_ ]);
             }
             else {
-                (void) strcpy((char*) (*pMyArgument).ArgMnemonic+i, Registers64Bits[INDEX_+8]);
-                (*pMyArgument).Memory.IndexRegister = REGS[INDEX_+8];
-                i += strlen( Registers64Bits[INDEX_+8]);
+                (void) strcpy((char*) (*pMyArgument).ArgMnemonic+i, Registers64Bits[GV.INDEX_ +8]);
+                (*pMyArgument).Memory.IndexRegister = REGS[GV.INDEX_ +8];
+                i += strlen( Registers64Bits[GV.INDEX_ +8]);
             }
         }
         else if (GV.AddressSize == 32) {
-            if (REX.X_ == 0) {
-                (void) strcpy((char*) (*pMyArgument).ArgMnemonic+i, Registers32Bits[INDEX_]);
-                (*pMyArgument).Memory.IndexRegister = REGS[INDEX_];
-                i += strlen( Registers32Bits[INDEX_]);
+            if (GV.REX.X_ == 0) {
+                (void) strcpy((char*) (*pMyArgument).ArgMnemonic+i, Registers32Bits[GV.INDEX_ ]);
+                (*pMyArgument).Memory.IndexRegister = REGS[GV.INDEX_ ];
+                i += strlen( Registers32Bits[GV.INDEX_ ]);
             }
             else {
-                (void) strcpy((char*) (*pMyArgument).ArgMnemonic+i, Registers32Bits[INDEX_+8]);
-                (*pMyArgument).Memory.IndexRegister = REGS[INDEX_+8];
-                i += strlen( Registers32Bits[INDEX_+8]);
+                (void) strcpy((char*) (*pMyArgument).ArgMnemonic+i, Registers32Bits[GV.INDEX_ +8]);
+                (*pMyArgument).Memory.IndexRegister = REGS[GV.INDEX_ +8];
+                i += strlen( Registers32Bits[GV.INDEX_ +8]);
             }
         }
         (*pMyArgument).Memory.Scale = 4;
-        if (SYNTAX_ == ATSyntax) {
-            if ((BASE_ != 5) || (INDEX_ != 4)) {
+        if (GV.SYNTAX_ == ATSyntax) {
+            if ((GV.BASE_  != 5) || (GV.INDEX_  != 4)) {
                 (void) strcpy((char*) (*pMyArgument).ArgMnemonic+i, ",4");
                 i+=2;
             }
@@ -2481,7 +2481,7 @@ size_t __bea_callspec__ SIB_2(ARGTYPE* pMyArgument, size_t i, PDISASM pMyDisasm)
             i+=2;
         }
     }
-    if ((SYNTAX_ == ATSyntax) && ((BASE_ != 5) || (INDEX_ != 4))) {
+    if ((GV.SYNTAX_ == ATSyntax) && ((GV.BASE_  != 5) || (GV.INDEX_  != 4))) {
         (void) strcpy((char*) (*pMyArgument).ArgMnemonic+i, ")");
         i++;
     }
@@ -2496,49 +2496,49 @@ size_t __bea_callspec__ SIB_3(ARGTYPE* pMyArgument, size_t i, PDISASM pMyDisasm)
     size_t j;
     /* ========================= Interpret Base */
 
-    if ((BASE_ == 5) && (GV.MOD_ == 0)) {
-        DECALAGE_EIP += 4;
+    if ((GV.BASE_  == 5) && (GV.MOD_ == 0)) {
+        GV.DECALAGE_EIP += 4;
         if (!Security(7, pMyDisasm)) return i;
         j = i;
-        i+= CopyFormattedNumber((char*) (*pMyArgument).ArgMnemonic+j,"%.8X",(Int64) *((UInt32*)(UIntPtr) (GV.EIP_+3)));
+        i+= CopyFormattedNumber(pMyDisasm, (char*) (*pMyArgument).ArgMnemonic+j,"%.8X",(Int64) *((UInt32*)(UIntPtr) (GV.EIP_+3)));
         (*pMyArgument).Memory.Displacement = *((UInt32*)(UIntPtr) (GV.EIP_+3));
     }
     else {
 
-        if (SYNTAX_ == ATSyntax) {
+        if (GV.SYNTAX_ == ATSyntax) {
             (void) strcpy((char*) (*pMyArgument).ArgMnemonic+i, "(%");
             i += 2;
         }
         if (GV.AddressSize == 64) {
-            if (REX.B_ == 0) {
-                (void) strcpy((char*) (*pMyArgument).ArgMnemonic+i, Registers64Bits[BASE_]);
-                (*pMyArgument).Memory.BaseRegister = REGS[BASE_];
-                i += strlen( Registers64Bits[BASE_]);
+            if (GV.REX.B_ == 0) {
+                (void) strcpy((char*) (*pMyArgument).ArgMnemonic+i, Registers64Bits[GV.BASE_ ]);
+                (*pMyArgument).Memory.BaseRegister = REGS[GV.BASE_ ];
+                i += strlen( Registers64Bits[GV.BASE_ ]);
             }
             else {
-                (void) strcpy((char*) (*pMyArgument).ArgMnemonic+i, Registers64Bits[BASE_+8]);
-                (*pMyArgument).Memory.BaseRegister = REGS[BASE_+8];
-                i += strlen( Registers64Bits[BASE_+8]);
+                (void) strcpy((char*) (*pMyArgument).ArgMnemonic+i, Registers64Bits[GV.BASE_ +8]);
+                (*pMyArgument).Memory.BaseRegister = REGS[GV.BASE_ +8];
+                i += strlen( Registers64Bits[GV.BASE_ +8]);
             }
         }
         else if (GV.AddressSize == 32) {
-            if (REX.B_ == 0) {
-                (void) strcpy((char*) (*pMyArgument).ArgMnemonic+i, Registers32Bits[BASE_]);
-                (*pMyArgument).Memory.BaseRegister = REGS[BASE_];
-                i += strlen( Registers32Bits[BASE_]);
+            if (GV.REX.B_ == 0) {
+                (void) strcpy((char*) (*pMyArgument).ArgMnemonic+i, Registers32Bits[GV.BASE_ ]);
+                (*pMyArgument).Memory.BaseRegister = REGS[GV.BASE_ ];
+                i += strlen( Registers32Bits[GV.BASE_ ]);
             }
             else {
-                (void) strcpy((char*) (*pMyArgument).ArgMnemonic+i, Registers32Bits[BASE_+8]);
-                (*pMyArgument).Memory.BaseRegister = REGS[BASE_+8];
-                i += strlen( Registers32Bits[BASE_+8]);
+                (void) strcpy((char*) (*pMyArgument).ArgMnemonic+i, Registers32Bits[GV.BASE_ +8]);
+                (*pMyArgument).Memory.BaseRegister = REGS[GV.BASE_ +8];
+                i += strlen( Registers32Bits[GV.BASE_ +8]);
             }
         }
     }
     /* ======================== Interpret Index */
 
-    if (INDEX_ != 4) {
-        if (SYNTAX_ == ATSyntax) {
-            if (BASE_ == 5) {
+    if (GV.INDEX_  != 4) {
+        if (GV.SYNTAX_ == ATSyntax) {
+            if (GV.BASE_  == 5) {
                 (void) strcpy((char*) (*pMyArgument).ArgMnemonic+i, "(,%");
                 i+=3;
             }
@@ -2553,32 +2553,32 @@ size_t __bea_callspec__ SIB_3(ARGTYPE* pMyArgument, size_t i, PDISASM pMyDisasm)
         }
 
         if (GV.AddressSize == 64) {
-            if (REX.X_ == 0) {
-                (void) strcpy((char*) (*pMyArgument).ArgMnemonic+i, Registers64Bits[INDEX_]);
-                (*pMyArgument).Memory.IndexRegister = REGS[INDEX_];
-                i += strlen( Registers64Bits[INDEX_]);
+            if (GV.REX.X_ == 0) {
+                (void) strcpy((char*) (*pMyArgument).ArgMnemonic+i, Registers64Bits[GV.INDEX_ ]);
+                (*pMyArgument).Memory.IndexRegister = REGS[GV.INDEX_ ];
+                i += strlen( Registers64Bits[GV.INDEX_ ]);
             }
             else {
-                (void) strcpy((char*) (*pMyArgument).ArgMnemonic+i, Registers64Bits[INDEX_+8]);
-                (*pMyArgument).Memory.IndexRegister = REGS[INDEX_+8];
-                i += strlen( Registers64Bits[INDEX_+8]);
+                (void) strcpy((char*) (*pMyArgument).ArgMnemonic+i, Registers64Bits[GV.INDEX_ +8]);
+                (*pMyArgument).Memory.IndexRegister = REGS[GV.INDEX_ +8];
+                i += strlen( Registers64Bits[GV.INDEX_ +8]);
             }
         }
         else if (GV.AddressSize == 32) {
-            if (REX.X_ == 0) {
-                (void) strcpy((char*) (*pMyArgument).ArgMnemonic+i, Registers32Bits[INDEX_]);
-                (*pMyArgument).Memory.IndexRegister = REGS[INDEX_];
-                i += strlen( Registers32Bits[INDEX_]);
+            if (GV.REX.X_ == 0) {
+                (void) strcpy((char*) (*pMyArgument).ArgMnemonic+i, Registers32Bits[GV.INDEX_ ]);
+                (*pMyArgument).Memory.IndexRegister = REGS[GV.INDEX_ ];
+                i += strlen( Registers32Bits[GV.INDEX_ ]);
             }
             else {
-                (void) strcpy((char*) (*pMyArgument).ArgMnemonic+i, Registers32Bits[INDEX_+8]);
-                (*pMyArgument).Memory.IndexRegister = REGS[INDEX_+8];
-                i += strlen( Registers32Bits[INDEX_+8]);
+                (void) strcpy((char*) (*pMyArgument).ArgMnemonic+i, Registers32Bits[GV.INDEX_ +8]);
+                (*pMyArgument).Memory.IndexRegister = REGS[GV.INDEX_ +8];
+                i += strlen( Registers32Bits[GV.INDEX_ +8]);
             }
         }
         (*pMyArgument).Memory.Scale = 8;
-        if (SYNTAX_ == ATSyntax) {
-            if ((BASE_ != 5) || (INDEX_ != 4)) {
+        if (GV.SYNTAX_ == ATSyntax) {
+            if ((GV.BASE_  != 5) || (GV.INDEX_  != 4)) {
                 (void) strcpy((char*) (*pMyArgument).ArgMnemonic+i, ",8");
                 i+=2;
             }
@@ -2588,7 +2588,7 @@ size_t __bea_callspec__ SIB_3(ARGTYPE* pMyArgument, size_t i, PDISASM pMyDisasm)
             i+=2;
         }
     }
-    if ((SYNTAX_ == ATSyntax) && ((BASE_ != 5) || (INDEX_ != 4))) {
+    if ((GV.SYNTAX_ == ATSyntax) && ((GV.BASE_  != 5) || (GV.INDEX_  != 4))) {
         (void) strcpy((char*) (*pMyArgument).ArgMnemonic+i, ")");
         i++;
     }

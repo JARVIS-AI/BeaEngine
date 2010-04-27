@@ -27,14 +27,14 @@ void __bea_callspec__ pclmulqdq_(PDISASM pMyDisasm)
         GV.MemDecoration = 0;
         (*pMyDisasm).Instruction.Category = CLMUL_INSTRUCTION;
 
-        SSE_ = 1;
+        GV.SSE_ = 1;
         GxEx(pMyDisasm);
-        SSE_ = 0;
+        GV.SSE_ = 0;
         GV.EIP_++;
         if (!Security(0, pMyDisasm)) return;
 
         (*pMyDisasm).Instruction.Immediat = *((UInt8*)(UIntPtr) (GV.EIP_- 1));
-        ImmediatSize = 8;
+        GV.ImmediatSize = 8;
         if ((*pMyDisasm).Instruction.Immediat == 0) {
             (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "pclmullqlqdq ");
         }
@@ -49,8 +49,8 @@ void __bea_callspec__ pclmulqdq_(PDISASM pMyDisasm)
         }
         else {
             (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "pclmulqdq ");
-            third_arg = 1;
-            (void) CopyFormattedNumber((char*) (*pMyDisasm).Argument3.ArgMnemonic, "%.2X",(Int64) *((UInt8*)(UIntPtr) (GV.EIP_- 1)));
+            GV.third_arg = 1;
+            (void) CopyFormattedNumber(pMyDisasm, (char*) (*pMyDisasm).Argument3.ArgMnemonic, "%.2X",(Int64) *((UInt8*)(UIntPtr) (GV.EIP_- 1)));
             (*pMyDisasm).Argument3.ArgType = CONSTANT_TYPE+ABSOLUTE_;
             (*pMyDisasm).Argument3.ArgSize = 8;
         }
