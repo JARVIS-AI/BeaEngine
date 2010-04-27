@@ -122,7 +122,7 @@ typedef struct {
    Int32 DR_;
    Int32 SEG_;
    Int32 REGOPCODE;
-   Int32 DECALAGE_EIP;
+   UInt32 DECALAGE_EIP;
    Int32 FORMATNUMBER;
    Int32 SYNTAX_;
    UInt64 EndOfBlock;
