@@ -25,7 +25,7 @@
 
 #include <stddef.h>
 
-#if defined(__GNUC__) || defined (__INTEL_COMPILER)
+#if defined(__GNUC__) || defined (__INTEL_COMPILER) || defined(__LCC__)
 #include <stdint.h>
 #endif
 
@@ -50,7 +50,7 @@
 		typedef size_t             UIntPtr;
 	#endif
 	#define BEA_HAVE_INT64 1
-#elif defined(__GNUC__)
+#elif defined(__GNUC__) || defined(__LCC__)
 	/*
 	* Unix/GCC
 	*/

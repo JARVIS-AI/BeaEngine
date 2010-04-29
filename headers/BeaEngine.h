@@ -2,8 +2,8 @@
 #ifndef _BEA_ENGINE_
 #define _BEA_ENGINE_
 
-#include <Includes/export.h>
-#include <Includes/basic_types.h>
+#include "Includes/export.h"
+#include "Includes/basic_types.h"
 
 #if !defined(BEA_ENGINE_STATIC)
 	#if defined(BUILD_BEA_ENGINE_DLL)
