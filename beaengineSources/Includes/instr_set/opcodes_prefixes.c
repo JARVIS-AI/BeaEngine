@@ -160,10 +160,22 @@ void __bea_callspec__ PrefOpSize(PDISASM pMyDisasm)
     (*pMyDisasm).Prefix.Number++;
     GV.NB_PREFIX++;
     GV.OriginalOperandSize = GV.OperandSize;  /* if GV.OperandSize is used as a mandatory prefix, keep the real operandsize value */
-    GV.OperandSize = 16;
+    if (GV.Architecture == 16) {
+        GV.OperandSize = 32;
+    }
+    else {
+        if (GV.OperandSize != 64) {
+            GV.OperandSize = 16;
+        }
+    }
     (*pMyDisasm).Instruction.Opcode = *((UInt8*) (UIntPtr)GV.EIP_);
     (void) opcode_map1[*((UInt8*) (UIntPtr)GV.EIP_)](pMyDisasm);
-    GV.OperandSize = 32;
+    if (GV.Architecture == 16) {
+        GV.OperandSize = 16;
+    }
+    else {
+        GV.OperandSize = 32;
+    }
 }
 
 /* ====================================================================
@@ -176,10 +188,22 @@ void __bea_callspec__ PrefAdSize(PDISASM pMyDisasm)
     GV.EIP_++;
     (*pMyDisasm).Prefix.Number++;
     GV.NB_PREFIX++;
-    GV.AddressSize = GV.AddressSize >> 1;
+    if (GV.Architecture == 16) {
+        GV.AddressSize = GV.AddressSize << 1;
+    }
+    else {
+        GV.AddressSize = GV.AddressSize >> 1;
+    }    
+
     (*pMyDisasm).Instruction.Opcode = *((UInt8*) (UIntPtr)GV.EIP_);
     (void) opcode_map1[*((UInt8*) (UIntPtr)GV.EIP_)](pMyDisasm);
-    GV.AddressSize = GV.AddressSize << 1;
+    if (GV.Architecture == 16) {
+        GV.AddressSize = GV.AddressSize >> 1;
+    }
+    else {
+        GV.AddressSize = GV.AddressSize << 1;
+    } 
+
 }
 
 /* ====================================================================

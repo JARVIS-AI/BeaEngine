@@ -297,9 +297,9 @@ void __bea_callspec__ Addr_SIB(ARGTYPE* pMyArgument, PDISASM pMyDisasm)
     (*pMyArgument).ArgType = MEMORY_TYPE;
     if (GV.AddressSize >= 32) {
         GV.DECALAGE_EIP++;
-        GV.BASE_  = ((UInt8) *((UInt8*) (UIntPtr)GV.EIP_+2)) & 0x7;
-        GV.SCALE_  = (((UInt8) *((UInt8*) (UIntPtr)GV.EIP_+2)) & 0xc0) >> 6;
-        GV.INDEX_  = (((UInt8) *((UInt8*) (UIntPtr)GV.EIP_+2)) & 0x38) >> 3;
+        GV.BASE_  = ((UInt8) *((UInt8*) (UIntPtr) (GV.EIP_+2))) & 0x7;
+        GV.SCALE_  = (((UInt8) *((UInt8*) (UIntPtr)(GV.EIP_+2))) & 0xc0) >> 6;
+        GV.INDEX_  = (((UInt8) *((UInt8*) (UIntPtr)(GV.EIP_+2))) & 0x38) >> 3;
         (void) SIB[GV.SCALE_ ](pMyArgument, 0, pMyDisasm);
     }
     else {
@@ -706,7 +706,12 @@ void __bea_callspec__ Addr_SIB_disp8(ARGTYPE* pMyArgument, PDISASM pMyDisasm)
     size_t i = 0, j;
     long MyNumber;
     if (!Security(2, pMyDisasm)) return;
-    MyNumber = *((Int8*)(UIntPtr) (GV.EIP_+3));
+    if (GV.AddressSize >= 32) {
+        MyNumber = *((Int8*)(UIntPtr) (GV.EIP_+3));
+    }
+    else {
+        MyNumber = *((Int8*)(UIntPtr) (GV.EIP_+2));
+    }
     (*pMyArgument).Memory.Displacement = MyNumber;
     if (GV.SYNTAX_ == ATSyntax) {
         if (MyNumber < 0) {
@@ -1235,7 +1240,13 @@ void __bea_callspec__ Addr_SIB_disp32(ARGTYPE* pMyArgument, PDISASM pMyDisasm)
     size_t i = 0, j;
     long MyNumber;
     if (!Security(2, pMyDisasm)) return;
-    MyNumber = *((Int32*)(UIntPtr) (GV.EIP_+3));
+    if (GV.AddressSize >= 32) {
+        MyNumber = *((Int32*)(UIntPtr) (GV.EIP_+3));
+    }
+    else {
+        MyNumber = *((Int32*)(UIntPtr) (GV.EIP_+2));
+    }
+
     (*pMyArgument).Memory.Displacement = MyNumber;
     if (GV.SYNTAX_ == ATSyntax) {
         if (MyNumber < 0) {

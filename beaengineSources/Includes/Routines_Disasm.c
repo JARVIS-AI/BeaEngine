@@ -61,6 +61,11 @@ int __bea_callspec__ InitVariables (PDISASM pMyDisasm) {
     GV.Architecture = (*pMyDisasm).Archi;
     (*pMyDisasm).Prefix.Number = 0;
     if (GV.Architecture == 64) GV.AddressSize = 64;
+    if (GV.Architecture == 16) {
+        GV.OperandSize = 16;
+        GV.OriginalOperandSize = 16;
+        GV.AddressSize = 16;        
+    }
 	(void) memset (&(*pMyDisasm).Argument1, 0, sizeof (ARGTYPE));
 	(void) memset (&(*pMyDisasm).Argument2, 0, sizeof (ARGTYPE));
 	(void) memset (&(*pMyDisasm).Argument3, 0, sizeof (ARGTYPE));
