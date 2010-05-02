@@ -155,7 +155,7 @@ typedef struct _Disasm {
    ARGTYPE Argument2;
    ARGTYPE Argument3;
    PREFIXINFO Prefix;
-   InternalDatas Reserved;
+   InternalDatas Reserved_;
 } DISASM, *PDISASM, *LPDISASM;
 #pragma pack()
 

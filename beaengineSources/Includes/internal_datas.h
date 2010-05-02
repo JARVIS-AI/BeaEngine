@@ -18,7 +18,7 @@
 
 /* Define prefix GV aka GlobalVariable - used instead of global internal variables to make BeaEngine thread-safe  */
 
-#define GV (*pMyDisasm).Reserved
+#define GV (*pMyDisasm).Reserved_
 
 /* Define constants to identify the position and type of decoration used in case of memory argument */
 
