@@ -344,5 +344,6 @@ extern "C"
 #endif
 
 BEA_API int __bea_callspec__ Disasm (LPDISASM pDisAsm);
-
+BEA_API char* __bea_callspec__ BeaEngineVersion (void);
+BEA_API char* __bea_callspec__ BeaEngineRevision (void);
 #endif

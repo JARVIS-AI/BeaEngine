@@ -321,8 +321,9 @@ uses Windows,SysUtils;
 
 
   function Disasm(var aDisAsm:TDISASM):longint;stdcall;
-
-
+  function BeaEngineVersion:longint;stdcall;
+  function BeaEngineRevision:longint;stdcall;
+  
 implementation
 {$IFNDEF USEDLL}
 {$L BeaEngineLib.obj}
@@ -350,6 +351,8 @@ function _sprintf(Buffer, Format: PAnsiChar):longint; varargs;  cdecl; external 
 function Disasm(var aDisAsm:TDISASM):longint;stdcall;external 'BeaEngine.DLL' index 1;
 {$ELSE}
 function Disasm(var aDisAsm:TDISASM):longint;stdcall;external;
+function BeaEngineVersion:longint;stdcall;external;
+function BeaEngineRevision:longint;stdcall;external;
 {$ENDIF}
 
 end.

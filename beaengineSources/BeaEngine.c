@@ -1,7 +1,7 @@
 /*
- * BeaEngine 3.0-x86 & x86-64 disassembler library
+ * BeaEngine 4 - x86 & x86-64 disassembler library
  *
- * Copyright 2006-2009, BeatriX
+ * Copyright 2006-2010, BeatriX
  * File coded by BeatriX
  *
  * This file is part of BeaEngine.
@@ -51,5 +51,6 @@
 #include "Includes/instr_set/opcodes_prefixes.c"
 #include "Includes/Routines_ModRM.c"
 #include "Includes/Routines_Disasm.c"
+#include "Includes/BeaEngineVersion.c"
 
 void BeaEngine(void){return;}

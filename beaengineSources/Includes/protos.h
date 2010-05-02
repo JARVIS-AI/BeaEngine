@@ -16,6 +16,10 @@
  *    You should have received a copy of the GNU Lesser General Public License
  *    along with BeaEngine.  If not, see <http://www.gnu.org/licenses/>. */
 
+
+char* __bea_callspec__ BeaEngineVersion(void);
+char* __bea_callspec__ BeaEngineRevision(void);
+
 /* ====================================== Routines_MODRM */
 void __bea_callspec__ MOD_RM(ARGTYPE*, PDISASM);
 void __bea_callspec__ Reg_Opcode(ARGTYPE*, PDISASM);

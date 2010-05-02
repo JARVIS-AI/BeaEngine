@@ -265,3 +265,5 @@ ShowSegmentRegs   = 0x01000000
 
 # ====================================== Import Disasm function
 Disasm = windll.BeaEngine.Disasm
+BeaEngineVersion = windll.BeaEngine.BeaEngineVersion
+BeaEngineRevision = windll.BeaEngine.BeaEngineRevision
