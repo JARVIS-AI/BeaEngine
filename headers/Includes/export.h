@@ -81,7 +81,7 @@
 
 #ifndef __bea_callspec__
 #if defined(BEA_USE_STDCALL)
-    #if defined(__WIN32__) || defined(WIN32) || defined(_WIN32)
+    #if defined(__WIN32__) || defined(WIN32) || defined(_WIN32) || defined(_WIN64)
         #if defined(__BORLANDC__) || defined(__WATCOMC__) || defined(__MSC_VER) || defined(__MINGW32__) || defined(__LCC__) || defined(__POCC__)
             #define __bea_callspec__	 __stdcall
         #else
