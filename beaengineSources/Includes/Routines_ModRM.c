@@ -971,7 +971,12 @@ void __bea_callspec__ Addr_EAX_disp32(ARGTYPE* pMyArgument, PDISASM pMyDisasm)
 {
     size_t i = 0, j;
     long MyNumber;
-    MyNumber = *((Int32*)(UIntPtr) (GV.EIP_+2));
+    if (GV.AddressSize == 16) {
+        MyNumber = *((Int16*)(UIntPtr) (GV.EIP_+2));
+    }
+    else{
+        MyNumber = *((Int32*)(UIntPtr) (GV.EIP_+2));
+    }
     (*pMyArgument).Memory.Displacement = MyNumber;
     if (GV.SYNTAX_ == ATSyntax) {
         if (MyNumber < 0) {
@@ -1038,7 +1043,12 @@ void __bea_callspec__ Addr_ECX_disp32(ARGTYPE* pMyArgument, PDISASM pMyDisasm)
 {
     size_t i = 0, j;
     long MyNumber;
-    MyNumber = *((Int32*)(UIntPtr) (GV.EIP_+2));
+    if (GV.AddressSize == 16) {
+        MyNumber = *((Int16*)(UIntPtr) (GV.EIP_+2));
+    }
+    else{
+        MyNumber = *((Int32*)(UIntPtr) (GV.EIP_+2));
+    }
     (*pMyArgument).Memory.Displacement = MyNumber;
     if (GV.SYNTAX_ == ATSyntax) {
         if (MyNumber < 0) {
@@ -1105,7 +1115,12 @@ void __bea_callspec__ Addr_EDX_disp32(ARGTYPE* pMyArgument, PDISASM pMyDisasm)
 {
     size_t i = 0, j;
     long MyNumber;
-    MyNumber = *((Int32*)(UIntPtr) (GV.EIP_+2));
+    if (GV.AddressSize == 16) {
+        MyNumber = *((Int16*)(UIntPtr) (GV.EIP_+2));
+    }
+    else{
+        MyNumber = *((Int32*)(UIntPtr) (GV.EIP_+2));
+    }
     (*pMyArgument).Memory.Displacement = MyNumber;
     if (GV.SYNTAX_ == ATSyntax) {
         if (MyNumber < 0) {
@@ -1172,7 +1187,12 @@ void __bea_callspec__ Addr_EBX_disp32(ARGTYPE* pMyArgument, PDISASM pMyDisasm)
 {
     size_t i = 0, j;
     long MyNumber;
-    MyNumber = *((Int32*)(UIntPtr) (GV.EIP_+2));
+    if (GV.AddressSize == 16) {
+        MyNumber = *((Int16*)(UIntPtr) (GV.EIP_+2));
+    }
+    else{
+        MyNumber = *((Int32*)(UIntPtr) (GV.EIP_+2));
+    }
     (*pMyArgument).Memory.Displacement = MyNumber;
     if (GV.SYNTAX_ == ATSyntax) {
         if (MyNumber < 0) {
@@ -1244,7 +1264,7 @@ void __bea_callspec__ Addr_SIB_disp32(ARGTYPE* pMyArgument, PDISASM pMyDisasm)
         MyNumber = *((Int32*)(UIntPtr) (GV.EIP_+3));
     }
     else {
-        MyNumber = *((Int32*)(UIntPtr) (GV.EIP_+2));
+        MyNumber = *((Int16*)(UIntPtr) (GV.EIP_+2));
     }
 
     (*pMyArgument).Memory.Displacement = MyNumber;
@@ -1303,7 +1323,12 @@ void __bea_callspec__ Addr_EBP_disp32(ARGTYPE* pMyArgument, PDISASM pMyDisasm)
 {
     size_t i = 0, j;
     long MyNumber;
-    MyNumber = *((Int32*)(UIntPtr) (GV.EIP_+2));
+    if (GV.AddressSize == 16) {
+        MyNumber = *((Int16*)(UIntPtr) (GV.EIP_+2));
+    }
+    else{
+        MyNumber = *((Int32*)(UIntPtr) (GV.EIP_+2));
+    }
     (*pMyArgument).Memory.Displacement = MyNumber;
     if (GV.SYNTAX_ == ATSyntax) {
         if (MyNumber < 0) {
@@ -1371,7 +1396,12 @@ void __bea_callspec__ Addr_ESI_disp32(ARGTYPE* pMyArgument, PDISASM pMyDisasm)
 {
     size_t i = 0, j;
     long MyNumber;
-    MyNumber = *((Int32*)(UIntPtr) (GV.EIP_+2));
+    if (GV.AddressSize == 16) {
+        MyNumber = *((Int16*)(UIntPtr) (GV.EIP_+2));
+    }
+    else{
+        MyNumber = *((Int32*)(UIntPtr) (GV.EIP_+2));
+    }
     (*pMyArgument).Memory.Displacement = MyNumber;
     if (GV.SYNTAX_ == ATSyntax) {
         if (MyNumber < 0) {
@@ -1439,7 +1469,12 @@ void __bea_callspec__ Addr_EDI_disp32(ARGTYPE* pMyArgument, PDISASM pMyDisasm)
 {
     size_t i = 0, j;
     long MyNumber;
-    MyNumber = *((Int32*)(UIntPtr) (GV.EIP_+2));
+    if (GV.AddressSize == 16) {
+        MyNumber = *((Int16*)(UIntPtr) (GV.EIP_+2));
+    }
+    else{
+        MyNumber = *((Int32*)(UIntPtr) (GV.EIP_+2));
+    }
     (*pMyArgument).Memory.Displacement = MyNumber;
     if (GV.SYNTAX_ == ATSyntax) {
         if (MyNumber < 0) {

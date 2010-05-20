@@ -42,7 +42,7 @@ void __bea_callspec__ addps_VW(PDISASM pMyDisasm)
         GV.SSE_ = 0;
     }
     /* ========== 0x66 */
-    else if (GV.OperandSize == 16) {
+    else if ((*pMyDisasm).Prefix.OperandSize == InUsePrefix) {            
         GV.OperandSize = GV.OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         GV.MemDecoration = Arg2dqword;
@@ -56,9 +56,9 @@ void __bea_callspec__ addps_VW(PDISASM pMyDisasm)
         GV.MemDecoration = Arg2dqword;
         (*pMyDisasm).Instruction.Category = SSE_INSTRUCTION+ARITHMETIC_INSTRUCTION;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "addps ");
-        GV.MMX_ = 1;
+        GV.SSE_ = 1;
         GxEx(pMyDisasm);
-        GV.MMX_ = 0;
+        GV.SSE_ = 0;
     }
 }
 
@@ -79,7 +79,7 @@ void __bea_callspec__ addsubpd_(PDISASM pMyDisasm)
     }
 
     /* ========== 0x66 */
-    else if (GV.OperandSize == 16) {
+    else if ((*pMyDisasm).Prefix.OperandSize == InUsePrefix) {            
         GV.OperandSize = GV.OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         GV.MemDecoration = Arg2dqword;
@@ -101,7 +101,7 @@ void __bea_callspec__ addsubpd_(PDISASM pMyDisasm)
 void __bea_callspec__ andnps_VW(PDISASM pMyDisasm)
 {
     /* ========== 0x66 */
-    if (GV.OperandSize == 16) {
+    if ((*pMyDisasm).Prefix.OperandSize == InUsePrefix) {            
         GV.OperandSize = GV.OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         GV.MemDecoration = Arg2dqword;
@@ -128,7 +128,7 @@ void __bea_callspec__ andnps_VW(PDISASM pMyDisasm)
 void __bea_callspec__ andps_VW(PDISASM pMyDisasm)
 {
     /* ========== 0x66 */
-    if (GV.OperandSize == 16){
+    if ((*pMyDisasm).Prefix.OperandSize == InUsePrefix) {            
         GV.OperandSize = GV.OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         GV.MemDecoration = Arg2dqword;
@@ -155,7 +155,7 @@ void __bea_callspec__ andps_VW(PDISASM pMyDisasm)
 void __bea_callspec__ blendpd_(PDISASM pMyDisasm)
 {
     /* ========== 0x66 */
-    if (GV.OperandSize == 16) {
+    if ((*pMyDisasm).Prefix.OperandSize == InUsePrefix) {            
         GV.OperandSize = GV.OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         GV.MemDecoration = Arg2dqword;
@@ -187,7 +187,7 @@ void __bea_callspec__ blendpd_(PDISASM pMyDisasm)
 void __bea_callspec__ blendps_(PDISASM pMyDisasm)
 {
     /* ========== 0x66 */
-    if (GV.OperandSize == 16) {
+    if ((*pMyDisasm).Prefix.OperandSize == InUsePrefix) {            
         GV.OperandSize = GV.OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         GV.MemDecoration = Arg2dqword;
@@ -217,7 +217,7 @@ void __bea_callspec__ blendps_(PDISASM pMyDisasm)
 void __bea_callspec__ blendvpd_(PDISASM pMyDisasm)
 {
     /* ========== 0x66 */
-    if (GV.OperandSize == 16) {
+    if ((*pMyDisasm).Prefix.OperandSize == InUsePrefix) {            
         GV.OperandSize = GV.OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         GV.MemDecoration = Arg2dqword;
@@ -240,7 +240,7 @@ void __bea_callspec__ blendvpd_(PDISASM pMyDisasm)
 void __bea_callspec__ blendvps_(PDISASM pMyDisasm)
 {
     /* ========== 0x66 */
-    if (GV.OperandSize == 16) {
+    if ((*pMyDisasm).Prefix.OperandSize == InUsePrefix) {            
         GV.OperandSize = GV.OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         GV.MemDecoration = Arg2dqword;
@@ -283,7 +283,7 @@ void __bea_callspec__ cmpps_VW(PDISASM pMyDisasm)
         GV.SSE_ = 0;
     }
     /* ========== 0x66 */
-    else if (GV.OperandSize == 16) {
+    else if ((*pMyDisasm).Prefix.OperandSize == InUsePrefix) {            
         GV.OperandSize = GV.OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         GV.MemDecoration = Arg2dqword;
@@ -354,7 +354,7 @@ void __bea_callspec__ crc32_GvEv(PDISASM pMyDisasm)
 void __bea_callspec__ comiss_VW(PDISASM pMyDisasm)
 {
     /* ========== 0x66 */
-    if (GV.OperandSize == 16) {
+    if ((*pMyDisasm).Prefix.OperandSize == InUsePrefix) {            
         GV.OperandSize = GV.OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         GV.MemDecoration = Arg2qword;
@@ -400,7 +400,7 @@ void __bea_callspec__ cvtps2pd_(PDISASM pMyDisasm)
         GV.SSE_ = 0;
     }
     /* ========== 0x66 */
-    else if (GV.OperandSize == 16) {
+    else if ((*pMyDisasm).Prefix.OperandSize == InUsePrefix) {            
         GV.OperandSize = GV.OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         GV.MemDecoration = Arg2dqword;
@@ -437,7 +437,7 @@ void __bea_callspec__ cvtdq2ps_(PDISASM pMyDisasm)
         GV.SSE_ = 0;
     }
     /* ========== 0x66 */
-    else if (GV.OperandSize == 16) {
+    else if ((*pMyDisasm).Prefix.OperandSize == InUsePrefix) {            
         GV.OperandSize = GV.OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         GV.MemDecoration = Arg2dqword;
@@ -508,7 +508,7 @@ void __bea_callspec__ cvtpi2ps_(PDISASM pMyDisasm)
         }
     }
     /* ========== 0x66 */
-    else if (GV.OperandSize == 16) {
+    else if ((*pMyDisasm).Prefix.OperandSize == InUsePrefix) {            
         GV.OperandSize = GV.OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         (*pMyDisasm).Instruction.Category = SSE2_INSTRUCTION+CONVERSION_INSTRUCTION;
@@ -587,7 +587,7 @@ void __bea_callspec__ cvtps2pi_(PDISASM pMyDisasm)
         }
     }
     /* ========== 0x66 */
-    else if (GV.OperandSize == 16) {
+    else if ((*pMyDisasm).Prefix.OperandSize == InUsePrefix) {            
         GV.OperandSize = GV.OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         (*pMyDisasm).Instruction.Category = SSE2_INSTRUCTION+CONVERSION_INSTRUCTION;
@@ -656,7 +656,7 @@ void __bea_callspec__ cvttps2pi_(PDISASM pMyDisasm)
         GV.EIP_+= GV.DECALAGE_EIP+2;
     }
     /* ========== 0x66 */
-    else if (GV.OperandSize == 16) {
+    else if ((*pMyDisasm).Prefix.OperandSize == InUsePrefix) {            
         GV.OperandSize = GV.OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         (*pMyDisasm).Instruction.Category = SSE2_INSTRUCTION+CONVERSION_INSTRUCTION;
@@ -711,7 +711,7 @@ void __bea_callspec__ cvtpd2dq_(PDISASM pMyDisasm)
         GV.SSE_ = 0;
     }
     /* ========== 0x66 */
-    else if (GV.OperandSize == 16) {
+    else if ((*pMyDisasm).Prefix.OperandSize == InUsePrefix) {            
         GV.OperandSize = GV.OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         GV.MemDecoration = Arg2dqword;
@@ -733,7 +733,7 @@ void __bea_callspec__ cvtpd2dq_(PDISASM pMyDisasm)
 void __bea_callspec__ dppd_(PDISASM pMyDisasm)
 {
     /* ========== 0x66 */
-    if (GV.OperandSize == 16) {
+    if ((*pMyDisasm).Prefix.OperandSize == InUsePrefix) {            
         GV.OperandSize = GV.OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         GV.MemDecoration = Arg2dqword;
@@ -764,7 +764,7 @@ void __bea_callspec__ dppd_(PDISASM pMyDisasm)
 void __bea_callspec__ dpps_(PDISASM pMyDisasm)
 {
     /* ========== 0x66 */
-    if (GV.OperandSize == 16) {
+    if ((*pMyDisasm).Prefix.OperandSize == InUsePrefix) {            
         GV.OperandSize = GV.OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         GV.MemDecoration = Arg2dqword;
@@ -816,7 +816,7 @@ void __bea_callspec__ divps_VW(PDISASM pMyDisasm)
         GV.SSE_ = 0;
     }
     /* ========== 0x66 */
-    else if (GV.OperandSize == 16) {
+    else if ((*pMyDisasm).Prefix.OperandSize == InUsePrefix) {            
         GV.OperandSize = GV.OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         GV.MemDecoration = Arg2dqword;
@@ -830,9 +830,9 @@ void __bea_callspec__ divps_VW(PDISASM pMyDisasm)
         GV.MemDecoration = Arg2dqword;
         (*pMyDisasm).Instruction.Category = SSE_INSTRUCTION+ARITHMETIC_INSTRUCTION;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "divps ");
-        GV.MMX_ = 1;
+        GV.SSE_ = 1;
         GxEx(pMyDisasm);
-        GV.MMX_ = 0;
+        GV.SSE_ = 0;
     }
 }
 
@@ -843,7 +843,7 @@ void __bea_callspec__ divps_VW(PDISASM pMyDisasm)
 void __bea_callspec__ extractps_(PDISASM pMyDisasm)
 {
     /* ========== 0x66 */
-    if (GV.OperandSize == 16) {
+    if ((*pMyDisasm).Prefix.OperandSize == InUsePrefix) {            
         GV.OperandSize = GV.OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         GV.MemDecoration = Arg1dword;
@@ -878,7 +878,7 @@ void __bea_callspec__ haddpd_VW(PDISASM pMyDisasm)
 {
 
     /* ========== 0x66 */
-    if (GV.OperandSize == 16) {
+    if ((*pMyDisasm).Prefix.OperandSize == InUsePrefix) {            
         GV.OperandSize = GV.OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         GV.MemDecoration = Arg2dqword;
@@ -906,7 +906,7 @@ void __bea_callspec__ hsubpd_VW(PDISASM pMyDisasm)
 {
 
     /* ========== 0x66 */
-    if (GV.OperandSize == 16) {
+    if ((*pMyDisasm).Prefix.OperandSize == InUsePrefix) {            
         GV.OperandSize = GV.OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         GV.MemDecoration = Arg2dqword;
@@ -933,7 +933,7 @@ void __bea_callspec__ hsubpd_VW(PDISASM pMyDisasm)
 void __bea_callspec__ insertps_(PDISASM pMyDisasm)
 {
     /* ========== 0x66 */
-    if (GV.OperandSize == 16) {
+    if ((*pMyDisasm).Prefix.OperandSize == InUsePrefix) {            
         GV.OperandSize = GV.OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         (*pMyDisasm).Instruction.Category = SSE41_INSTRUCTION+INSERTION_EXTRACTION;
@@ -1000,7 +1000,7 @@ void __bea_callspec__ lddqu_(PDISASM pMyDisasm)
 void __bea_callspec__ maskmovq_(PDISASM pMyDisasm)
 {
     /* ========== 0x66 */
-    if (GV.OperandSize == 16) {
+    if ((*pMyDisasm).Prefix.OperandSize == InUsePrefix) {            
         GV.OperandSize = GV.OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         GV.MemDecoration = Arg2dqword;
@@ -1047,7 +1047,7 @@ void __bea_callspec__ maxps_VW(PDISASM pMyDisasm)
         GV.SSE_ = 0;
     }
     /* ========== 0x66 */
-    else if (GV.OperandSize == 16) {
+    else if ((*pMyDisasm).Prefix.OperandSize == InUsePrefix) {            
         GV.OperandSize = GV.OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         GV.MemDecoration = Arg2dqword;
@@ -1061,9 +1061,9 @@ void __bea_callspec__ maxps_VW(PDISASM pMyDisasm)
         GV.MemDecoration = Arg2dqword;
         (*pMyDisasm).Instruction.Category = SSE_INSTRUCTION+ARITHMETIC_INSTRUCTION;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "maxps ");
-        GV.MMX_ = 1;
+        GV.SSE_ = 1;
         GxEx(pMyDisasm);
-        GV.MMX_ = 0;
+        GV.SSE_ = 0;
     }
 }
 
@@ -1094,7 +1094,7 @@ void __bea_callspec__ minps_VW(PDISASM pMyDisasm)
         GV.SSE_ = 0;
     }
     /* ========== 0x66 */
-    else if (GV.OperandSize == 16) {
+    else if ((*pMyDisasm).Prefix.OperandSize == InUsePrefix) {            
         GV.OperandSize = GV.OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         GV.MemDecoration = Arg2dqword;
@@ -1108,9 +1108,9 @@ void __bea_callspec__ minps_VW(PDISASM pMyDisasm)
         GV.MemDecoration = Arg2dqword;
         (*pMyDisasm).Instruction.Category = SSE_INSTRUCTION+ARITHMETIC_INSTRUCTION;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "minps ");
-        GV.MMX_ = 1;
+        GV.SSE_ = 1;
         GxEx(pMyDisasm);
-        GV.MMX_ = 0;
+        GV.SSE_ = 0;
     }
 }
 
@@ -1120,7 +1120,7 @@ void __bea_callspec__ minps_VW(PDISASM pMyDisasm)
 void __bea_callspec__ movaps_VW(PDISASM pMyDisasm)
 {
     /* ========== 0x66 */
-    if (GV.OperandSize == 16) {
+    if ((*pMyDisasm).Prefix.OperandSize == InUsePrefix) {            
         GV.OperandSize = GV.OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         GV.MemDecoration = Arg2dqword;
@@ -1146,7 +1146,7 @@ void __bea_callspec__ movaps_VW(PDISASM pMyDisasm)
 void __bea_callspec__ movaps_WV(PDISASM pMyDisasm)
 {
     /* ========== 0x66 */
-    if (GV.OperandSize == 16) {
+    if ((*pMyDisasm).Prefix.OperandSize == InUsePrefix) {            
         GV.OperandSize = GV.OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         GV.MemDecoration = Arg1dqword;
@@ -1184,7 +1184,7 @@ void __bea_callspec__ movhps_VM(PDISASM pMyDisasm)
         GV.SSE_ = 0;
     }
     /* ========== 0x66 */
-    else if (GV.OperandSize == 16) {
+    else if ((*pMyDisasm).Prefix.OperandSize == InUsePrefix) {            
         GV.OperandSize = GV.OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         GV.MemDecoration = Arg2qword;
@@ -1218,7 +1218,7 @@ void __bea_callspec__ movhps_MV(PDISASM pMyDisasm)
 {
 
     /* ========== 0x66 */
-    if (GV.OperandSize == 16) {
+    if ((*pMyDisasm).Prefix.OperandSize == InUsePrefix) {            
         GV.OperandSize = GV.OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         GV.MemDecoration = Arg1qword;
@@ -1265,7 +1265,7 @@ void __bea_callspec__ movlps_VM(PDISASM pMyDisasm)
         GV.SSE_ = 0;
     }
     /* ========== 0x66 */
-    else if (GV.OperandSize == 16) {
+    else if ((*pMyDisasm).Prefix.OperandSize == InUsePrefix) {            
         GV.OperandSize = GV.OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         GV.MemDecoration = Arg2qword;
@@ -1298,7 +1298,7 @@ void __bea_callspec__ movlps_MV(PDISASM pMyDisasm)
 {
 
     /* ========== 0x66 */
-    if (GV.OperandSize == 16) {
+    if ((*pMyDisasm).Prefix.OperandSize == InUsePrefix) {            
         GV.OperandSize = GV.OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         GV.MemDecoration = Arg1qword;
@@ -1329,7 +1329,7 @@ void __bea_callspec__ movmskps_(PDISASM pMyDisasm)
         FailDecode(pMyDisasm);
     }
     /* ========== 0x66 */
-    else if (GV.OperandSize == 16) {
+    else if ((*pMyDisasm).Prefix.OperandSize == InUsePrefix) {            
         GV.OperandSize = GV.OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         GV.MemDecoration = Arg2dqword;
@@ -1363,7 +1363,7 @@ void __bea_callspec__ movntdqa_(PDISASM pMyDisasm)
 {
 
     /* ========== 0x66 */
-    if (GV.OperandSize == 16) {
+    if ((*pMyDisasm).Prefix.OperandSize == InUsePrefix) {            
         GV.OperandSize = GV.OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         GV.MemDecoration = Arg2dqword;
@@ -1401,7 +1401,7 @@ void __bea_callspec__ movntps_(PDISASM pMyDisasm)
         FailDecode(pMyDisasm);
     }
     /* ========== 0x66 */
-    else if (GV.OperandSize == 16) {
+    else if ((*pMyDisasm).Prefix.OperandSize == InUsePrefix) {            
         GV.OperandSize = GV.OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         GV.MemDecoration = Arg1dqword;
@@ -1438,7 +1438,7 @@ void __bea_callspec__ movntq_(PDISASM pMyDisasm)
         FailDecode(pMyDisasm);
     }
     /* ========== 0x66 */
-    else if (GV.OperandSize == 16) {
+    else if ((*pMyDisasm).Prefix.OperandSize == InUsePrefix) {            
         GV.OperandSize = GV.OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         GV.MemDecoration = Arg1dqword;
@@ -1485,7 +1485,7 @@ void __bea_callspec__ movups_VW(PDISASM pMyDisasm)
         GV.SSE_ = 0;
     }
     /* ========== 0x66 */
-    else if (GV.OperandSize == 16) {
+    else if ((*pMyDisasm).Prefix.OperandSize == InUsePrefix) {            
         GV.OperandSize = GV.OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         GV.MemDecoration = Arg2dqword;
@@ -1533,7 +1533,7 @@ void __bea_callspec__ movups_WV(PDISASM pMyDisasm)
         GV.SSE_ = 0;
     }
     /* ========== 0x66 */
-    else if (GV.OperandSize == 16) {
+    else if ((*pMyDisasm).Prefix.OperandSize == InUsePrefix) {            
         GV.OperandSize = GV.OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         GV.MemDecoration = Arg1dqword;
@@ -1560,7 +1560,7 @@ void __bea_callspec__ movups_WV(PDISASM pMyDisasm)
 void __bea_callspec__ mpsadbw_(PDISASM pMyDisasm)
 {
     /* ========== 0x66 */
-    if (GV.OperandSize == 16) {
+    if ((*pMyDisasm).Prefix.OperandSize == InUsePrefix) {            
         GV.OperandSize = GV.OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         GV.MemDecoration = Arg2dqword;
@@ -1612,7 +1612,7 @@ void __bea_callspec__ mulps_VW(PDISASM pMyDisasm)
         GV.SSE_ = 0;
     }
     /* ========== 0x66 */
-    else if (GV.OperandSize == 16) {
+    else if ((*pMyDisasm).Prefix.OperandSize == InUsePrefix) {            
         GV.OperandSize = GV.OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         GV.MemDecoration = Arg2dqword;
@@ -1639,7 +1639,7 @@ void __bea_callspec__ mulps_VW(PDISASM pMyDisasm)
 void __bea_callspec__ orps_VW(PDISASM pMyDisasm)
 {
     /* ========== 0x66 */
-    if (GV.OperandSize == 16) {
+    if ((*pMyDisasm).Prefix.OperandSize == InUsePrefix) {            
         GV.OperandSize = GV.OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         GV.MemDecoration = Arg2dqword;
@@ -1666,7 +1666,7 @@ void __bea_callspec__ orps_VW(PDISASM pMyDisasm)
 void __bea_callspec__ packusdw_(PDISASM pMyDisasm)
 {
     /* ========== 0x66 */
-    if (GV.OperandSize == 16) {
+    if ((*pMyDisasm).Prefix.OperandSize == InUsePrefix) {            
         GV.OperandSize = GV.OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         GV.MemDecoration = Arg2dqword;
@@ -1691,7 +1691,7 @@ void __bea_callspec__ paddq_(PDISASM pMyDisasm)
 {
     (*pMyDisasm).Instruction.Category = SSE2_INSTRUCTION+SIMD128bits;
     /* ========== 0x66 */
-    if (GV.OperandSize == 16) {
+    if ((*pMyDisasm).Prefix.OperandSize == InUsePrefix) {            
         GV.OperandSize = GV.OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         GV.MemDecoration = Arg2dqword;
@@ -1717,7 +1717,7 @@ void __bea_callspec__ pavgb_(PDISASM pMyDisasm)
 {
     (*pMyDisasm).Instruction.Category = SSE_INSTRUCTION+SIMD64bits;
     /* ========== 0x66 */
-    if (GV.OperandSize == 16) {
+    if ((*pMyDisasm).Prefix.OperandSize == InUsePrefix) {            
         GV.OperandSize = GV.OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         GV.MemDecoration = Arg2dqword;
@@ -1743,7 +1743,7 @@ void __bea_callspec__ pavgw_(PDISASM pMyDisasm)
 {
     (*pMyDisasm).Instruction.Category = SSE_INSTRUCTION+SIMD64bits;
     /* ========== 0x66 */
-    if (GV.OperandSize == 16) {
+    if ((*pMyDisasm).Prefix.OperandSize == InUsePrefix) {            
         GV.OperandSize = GV.OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         GV.MemDecoration = Arg2dqword;
@@ -1769,7 +1769,7 @@ void __bea_callspec__ palignr_(PDISASM pMyDisasm)
 {
     (*pMyDisasm).Instruction.Category = SSE_INSTRUCTION+SIMD64bits;
     /* ========== 0x66 */
-    if (GV.OperandSize == 16) {
+    if ((*pMyDisasm).Prefix.OperandSize == InUsePrefix) {            
         GV.OperandSize = GV.OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         GV.MemDecoration = Arg2dqword;
@@ -1811,7 +1811,7 @@ void __bea_callspec__ pblendvb_(PDISASM pMyDisasm)
 {
     (*pMyDisasm).Instruction.Category = SSE41_INSTRUCTION+PACKED_BLENDING_INSTRUCTION;
     /* ========== 0x66 */
-    if (GV.OperandSize == 16) {
+    if ((*pMyDisasm).Prefix.OperandSize == InUsePrefix) {            
         GV.OperandSize = GV.OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         GV.MemDecoration = Arg2dqword;
@@ -1836,7 +1836,7 @@ void __bea_callspec__ pblendvb_(PDISASM pMyDisasm)
 void __bea_callspec__ pblendw_(PDISASM pMyDisasm)
 {
     /* ========== 0x66 */
-    if (GV.OperandSize == 16) {
+    if ((*pMyDisasm).Prefix.OperandSize == InUsePrefix) {            
         GV.OperandSize = GV.OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         GV.MemDecoration = Arg2dqword;
@@ -1868,7 +1868,7 @@ void __bea_callspec__ pblendw_(PDISASM pMyDisasm)
 void __bea_callspec__ pcmpeqq_(PDISASM pMyDisasm)
 {
     /* ========== 0x66 */
-    if (GV.OperandSize == 16) {
+    if ((*pMyDisasm).Prefix.OperandSize == InUsePrefix) {            
         GV.OperandSize = GV.OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         GV.MemDecoration = Arg2dqword;
@@ -1892,7 +1892,7 @@ void __bea_callspec__ pcmpeqq_(PDISASM pMyDisasm)
 void __bea_callspec__ pcmpestri_(PDISASM pMyDisasm)
 {
     /* ========== 0x66 */
-    if (GV.OperandSize == 16) {
+    if ((*pMyDisasm).Prefix.OperandSize == InUsePrefix) {            
         GV.OperandSize = GV.OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         GV.MemDecoration = Arg2dqword;
@@ -1924,7 +1924,7 @@ void __bea_callspec__ pcmpestri_(PDISASM pMyDisasm)
 void __bea_callspec__ pcmpestrm_(PDISASM pMyDisasm)
 {
     /* ========== 0x66 */
-    if (GV.OperandSize == 16) {
+    if ((*pMyDisasm).Prefix.OperandSize == InUsePrefix) {            
         GV.OperandSize = GV.OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         GV.MemDecoration = Arg2dqword;
@@ -1956,7 +1956,7 @@ void __bea_callspec__ pcmpestrm_(PDISASM pMyDisasm)
 void __bea_callspec__ pcmpistri_(PDISASM pMyDisasm)
 {
     /* ========== 0x66 */
-    if (GV.OperandSize == 16) {
+    if ((*pMyDisasm).Prefix.OperandSize == InUsePrefix) {            
         GV.OperandSize = GV.OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         GV.MemDecoration = Arg2dqword;
@@ -1988,7 +1988,7 @@ void __bea_callspec__ pcmpistri_(PDISASM pMyDisasm)
 void __bea_callspec__ pcmpistrm_(PDISASM pMyDisasm)
 {
     /* ========== 0x66 */
-    if (GV.OperandSize == 16) {
+    if ((*pMyDisasm).Prefix.OperandSize == InUsePrefix) {            
         GV.OperandSize = GV.OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         GV.MemDecoration = Arg2dqword;
@@ -2020,7 +2020,7 @@ void __bea_callspec__ pcmpistrm_(PDISASM pMyDisasm)
 void __bea_callspec__ pcmpgtq_(PDISASM pMyDisasm)
 {
     /* ========== 0x66 */
-    if (GV.OperandSize == 16) {
+    if ((*pMyDisasm).Prefix.OperandSize == InUsePrefix) {            
         GV.OperandSize = GV.OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         GV.MemDecoration = Arg2dqword;
@@ -2044,7 +2044,7 @@ void __bea_callspec__ pcmpgtq_(PDISASM pMyDisasm)
 void __bea_callspec__ pextrb_(PDISASM pMyDisasm)
 {
     /* ========== 0x66 */
-    if (GV.OperandSize == 16) {
+    if ((*pMyDisasm).Prefix.OperandSize == InUsePrefix) {            
         GV.OperandSize = GV.OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         (*pMyDisasm).Instruction.Category = SSE41_INSTRUCTION+INSERTION_EXTRACTION;
@@ -2083,7 +2083,7 @@ void __bea_callspec__ pextrb_(PDISASM pMyDisasm)
 void __bea_callspec__ pextrd_(PDISASM pMyDisasm)
 {
     /* ========== 0x66 */
-    if (GV.OperandSize == 16) {
+    if ((*pMyDisasm).Prefix.OperandSize == InUsePrefix) {            
         GV.OperandSize = GV.OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         GV.MemDecoration = Arg2dqword;
@@ -2122,7 +2122,7 @@ void __bea_callspec__ pextrd_(PDISASM pMyDisasm)
 void __bea_callspec__ pextrw_(PDISASM pMyDisasm)
 {
     /* ========== 0x66 */
-    if (GV.OperandSize == 16) {
+    if ((*pMyDisasm).Prefix.OperandSize == InUsePrefix) {            
         GV.OperandSize = GV.OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         (*pMyDisasm).Instruction.Category = SSE_INSTRUCTION+SIMD64bits;
@@ -2168,7 +2168,7 @@ void __bea_callspec__ pextrw_(PDISASM pMyDisasm)
 void __bea_callspec__ pextrw2_(PDISASM pMyDisasm)
 {
     /* ========== 0x66 */
-    if (GV.OperandSize == 16) {
+    if ((*pMyDisasm).Prefix.OperandSize == InUsePrefix) {            
         GV.OperandSize = GV.OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         (*pMyDisasm).Instruction.Category = SSE41_INSTRUCTION+INSERTION_EXTRACTION;
@@ -2207,7 +2207,7 @@ void __bea_callspec__ pextrw2_(PDISASM pMyDisasm)
 void __bea_callspec__ phaddd_(PDISASM pMyDisasm)
 {
     /* ========== 0x66 */
-    if (GV.OperandSize == 16) {
+    if ((*pMyDisasm).Prefix.OperandSize == InUsePrefix) {            
         GV.OperandSize = GV.OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         GV.MemDecoration = Arg2dqword;
@@ -2234,7 +2234,7 @@ void __bea_callspec__ phaddd_(PDISASM pMyDisasm)
 void __bea_callspec__ phaddsw_(PDISASM pMyDisasm)
 {
     /* ========== 0x66 */
-    if (GV.OperandSize == 16) {
+    if ((*pMyDisasm).Prefix.OperandSize == InUsePrefix) {            
         GV.OperandSize = GV.OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         GV.MemDecoration = Arg2dqword;
@@ -2261,7 +2261,7 @@ void __bea_callspec__ phaddsw_(PDISASM pMyDisasm)
 void __bea_callspec__ phaddw_(PDISASM pMyDisasm)
 {
     /* ========== 0x66 */
-    if (GV.OperandSize == 16) {
+    if ((*pMyDisasm).Prefix.OperandSize == InUsePrefix) {            
         GV.OperandSize = GV.OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         GV.MemDecoration = Arg2dqword;
@@ -2288,7 +2288,7 @@ void __bea_callspec__ phaddw_(PDISASM pMyDisasm)
 void __bea_callspec__ phminposuw_(PDISASM pMyDisasm)
 {
     /* ========== 0x66 */
-    if (GV.OperandSize == 16) {
+    if ((*pMyDisasm).Prefix.OperandSize == InUsePrefix) {            
         GV.OperandSize = GV.OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         GV.MemDecoration = Arg2dqword;
@@ -2310,7 +2310,7 @@ void __bea_callspec__ phminposuw_(PDISASM pMyDisasm)
 void __bea_callspec__ phsubw_(PDISASM pMyDisasm)
 {
     /* ========== 0x66 */
-    if (GV.OperandSize == 16) {
+    if ((*pMyDisasm).Prefix.OperandSize == InUsePrefix) {            
         GV.OperandSize = GV.OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         GV.MemDecoration = Arg2dqword;
@@ -2337,7 +2337,7 @@ void __bea_callspec__ phsubw_(PDISASM pMyDisasm)
 void __bea_callspec__ phsubd_(PDISASM pMyDisasm)
 {
     /* ========== 0x66 */
-    if (GV.OperandSize == 16) {
+    if ((*pMyDisasm).Prefix.OperandSize == InUsePrefix) {            
         GV.OperandSize = GV.OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         GV.MemDecoration = Arg2dqword;
@@ -2364,7 +2364,7 @@ void __bea_callspec__ phsubd_(PDISASM pMyDisasm)
 void __bea_callspec__ phsubsw_(PDISASM pMyDisasm)
 {
     /* ========== 0x66 */
-    if (GV.OperandSize == 16) {
+    if ((*pMyDisasm).Prefix.OperandSize == InUsePrefix) {            
         GV.OperandSize = GV.OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         GV.MemDecoration = Arg2dqword;
@@ -2391,7 +2391,7 @@ void __bea_callspec__ phsubsw_(PDISASM pMyDisasm)
 void __bea_callspec__ pinsrb_(PDISASM pMyDisasm)
 {
     /* ========== 0x66 */
-    if (GV.OperandSize == 16) {
+    if ((*pMyDisasm).Prefix.OperandSize == InUsePrefix) {            
         GV.OperandSize = GV.OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         GV.MemDecoration = Arg2dqword;
@@ -2423,7 +2423,7 @@ void __bea_callspec__ pinsrb_(PDISASM pMyDisasm)
 void __bea_callspec__ pinsrd_(PDISASM pMyDisasm)
 {
     /* ========== 0x66 */
-    if (GV.OperandSize == 16) {
+    if ((*pMyDisasm).Prefix.OperandSize == InUsePrefix) {            
         GV.OperandSize = GV.OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         GV.MemDecoration = Arg2dqword;
@@ -2463,7 +2463,7 @@ void __bea_callspec__ pinsrd_(PDISASM pMyDisasm)
 void __bea_callspec__ pinsrw_(PDISASM pMyDisasm)
 {
     /* ========== 0x66 */
-    if (GV.OperandSize == 16) {
+    if ((*pMyDisasm).Prefix.OperandSize == InUsePrefix) {            
         GV.OperandSize = GV.OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         (*pMyDisasm).Instruction.Category = SSE_INSTRUCTION+SIMD64bits;
@@ -2510,7 +2510,7 @@ void __bea_callspec__ pinsrw_(PDISASM pMyDisasm)
 void __bea_callspec__ pmaxsb_(PDISASM pMyDisasm)
 {
     /* ========== 0x66 */
-    if (GV.OperandSize == 16) {
+    if ((*pMyDisasm).Prefix.OperandSize == InUsePrefix) {            
         GV.OperandSize = GV.OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         GV.MemDecoration = Arg2dqword;
@@ -2531,7 +2531,7 @@ void __bea_callspec__ pmaxsb_(PDISASM pMyDisasm)
 void __bea_callspec__ pmaxsd_(PDISASM pMyDisasm)
 {
     /* ========== 0x66 */
-    if (GV.OperandSize == 16) {
+    if ((*pMyDisasm).Prefix.OperandSize == InUsePrefix) {            
         GV.OperandSize = GV.OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         GV.MemDecoration = Arg2dqword;
@@ -2552,7 +2552,7 @@ void __bea_callspec__ pmaxsd_(PDISASM pMyDisasm)
 void __bea_callspec__ pmaxuw_(PDISASM pMyDisasm)
 {
     /* ========== 0x66 */
-    if (GV.OperandSize == 16) {
+    if ((*pMyDisasm).Prefix.OperandSize == InUsePrefix) {            
         GV.OperandSize = GV.OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         GV.MemDecoration = Arg2dqword;
@@ -2573,7 +2573,7 @@ void __bea_callspec__ pmaxuw_(PDISASM pMyDisasm)
 void __bea_callspec__ pmaxud_(PDISASM pMyDisasm)
 {
     /* ========== 0x66 */
-    if (GV.OperandSize == 16) {
+    if ((*pMyDisasm).Prefix.OperandSize == InUsePrefix) {            
         GV.OperandSize = GV.OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         GV.MemDecoration = Arg2dqword;
@@ -2594,7 +2594,7 @@ void __bea_callspec__ pmaxud_(PDISASM pMyDisasm)
 void __bea_callspec__ pminsb_(PDISASM pMyDisasm)
 {
     /* ========== 0x66 */
-    if (GV.OperandSize == 16) {
+    if ((*pMyDisasm).Prefix.OperandSize == InUsePrefix) {            
         GV.OperandSize = GV.OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         GV.MemDecoration = Arg2dqword;
@@ -2615,7 +2615,7 @@ void __bea_callspec__ pminsb_(PDISASM pMyDisasm)
 void __bea_callspec__ pminsd_(PDISASM pMyDisasm)
 {
     /* ========== 0x66 */
-    if (GV.OperandSize == 16) {
+    if ((*pMyDisasm).Prefix.OperandSize == InUsePrefix) {            
         GV.OperandSize = GV.OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         GV.MemDecoration = Arg2dqword;
@@ -2636,7 +2636,7 @@ void __bea_callspec__ pminsd_(PDISASM pMyDisasm)
 void __bea_callspec__ pminuw_(PDISASM pMyDisasm)
 {
     /* ========== 0x66 */
-    if (GV.OperandSize == 16) {
+    if ((*pMyDisasm).Prefix.OperandSize == InUsePrefix) {            
         GV.OperandSize = GV.OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         GV.MemDecoration = Arg2dqword;
@@ -2657,7 +2657,7 @@ void __bea_callspec__ pminuw_(PDISASM pMyDisasm)
 void __bea_callspec__ pminud_(PDISASM pMyDisasm)
 {
     /* ========== 0x66 */
-    if (GV.OperandSize == 16) {
+    if ((*pMyDisasm).Prefix.OperandSize == InUsePrefix) {            
         GV.OperandSize = GV.OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         GV.MemDecoration = Arg2dqword;
@@ -2679,7 +2679,7 @@ void __bea_callspec__ pminud_(PDISASM pMyDisasm)
 void __bea_callspec__ pminub_(PDISASM pMyDisasm)
 {
     /* ========== 0x66 */
-    if (GV.OperandSize == 16) {
+    if ((*pMyDisasm).Prefix.OperandSize == InUsePrefix) {            
         GV.OperandSize = GV.OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         GV.MemDecoration = Arg2dqword;
@@ -2706,7 +2706,7 @@ void __bea_callspec__ pminub_(PDISASM pMyDisasm)
 void __bea_callspec__ pmaxub_(PDISASM pMyDisasm)
 {
     /* ========== 0x66 */
-    if (GV.OperandSize == 16) {
+    if ((*pMyDisasm).Prefix.OperandSize == InUsePrefix) {            
         GV.OperandSize = GV.OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         GV.MemDecoration = Arg2dqword;
@@ -2733,7 +2733,7 @@ void __bea_callspec__ pmaxub_(PDISASM pMyDisasm)
 void __bea_callspec__ pminsw_(PDISASM pMyDisasm)
 {
     /* ========== 0x66 */
-    if (GV.OperandSize == 16) {
+    if ((*pMyDisasm).Prefix.OperandSize == InUsePrefix) {            
         GV.OperandSize = GV.OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         GV.MemDecoration = Arg2dqword;
@@ -2760,7 +2760,7 @@ void __bea_callspec__ pminsw_(PDISASM pMyDisasm)
 void __bea_callspec__ pmaxsw_(PDISASM pMyDisasm)
 {
     /* ========== 0x66 */
-    if (GV.OperandSize == 16) {
+    if ((*pMyDisasm).Prefix.OperandSize == InUsePrefix) {            
         GV.OperandSize = GV.OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         GV.MemDecoration = Arg2dqword;
@@ -2787,7 +2787,7 @@ void __bea_callspec__ pmaxsw_(PDISASM pMyDisasm)
 void __bea_callspec__ pmaddubsw_(PDISASM pMyDisasm)
 {
     /* ========== 0x66 */
-    if (GV.OperandSize == 16) {
+    if ((*pMyDisasm).Prefix.OperandSize == InUsePrefix) {            
         GV.OperandSize = GV.OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         GV.MemDecoration = Arg2dqword;
@@ -2814,7 +2814,7 @@ void __bea_callspec__ pmaddubsw_(PDISASM pMyDisasm)
 void __bea_callspec__ pmovmskb_(PDISASM pMyDisasm)
 {
     /* ========== 0x66 */
-    if (GV.OperandSize == 16) {
+    if ((*pMyDisasm).Prefix.OperandSize == InUsePrefix) {            
 
         GV.OperandSize = GV.OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
@@ -2847,7 +2847,7 @@ void __bea_callspec__ pmovmskb_(PDISASM pMyDisasm)
 void __bea_callspec__ pmovsxbd_(PDISASM pMyDisasm)
 {
     /* ========== 0x66 */
-    if (GV.OperandSize == 16) {
+    if ((*pMyDisasm).Prefix.OperandSize == InUsePrefix) {            
         GV.OperandSize = GV.OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         GV.MemDecoration = Arg2dqword;
@@ -2869,7 +2869,7 @@ void __bea_callspec__ pmovsxbd_(PDISASM pMyDisasm)
 void __bea_callspec__ pmovsxbq_(PDISASM pMyDisasm)
 {
     /* ========== 0x66 */
-    if (GV.OperandSize == 16) {
+    if ((*pMyDisasm).Prefix.OperandSize == InUsePrefix) {            
         GV.OperandSize = GV.OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         GV.MemDecoration = Arg2dqword;
@@ -2891,7 +2891,7 @@ void __bea_callspec__ pmovsxbq_(PDISASM pMyDisasm)
 void __bea_callspec__ pmovsxbw_(PDISASM pMyDisasm)
 {
     /* ========== 0x66 */
-    if (GV.OperandSize == 16) {
+    if ((*pMyDisasm).Prefix.OperandSize == InUsePrefix) {            
         GV.OperandSize = GV.OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         GV.MemDecoration = Arg2dqword;
@@ -2913,7 +2913,7 @@ void __bea_callspec__ pmovsxbw_(PDISASM pMyDisasm)
 void __bea_callspec__ pmovsxdq_(PDISASM pMyDisasm)
 {
     /* ========== 0x66 */
-    if (GV.OperandSize == 16) {
+    if ((*pMyDisasm).Prefix.OperandSize == InUsePrefix) {            
         GV.OperandSize = GV.OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         GV.MemDecoration = Arg2dqword;
@@ -2935,7 +2935,7 @@ void __bea_callspec__ pmovsxdq_(PDISASM pMyDisasm)
 void __bea_callspec__ pmovsxwd_(PDISASM pMyDisasm)
 {
     /* ========== 0x66 */
-    if (GV.OperandSize == 16) {
+    if ((*pMyDisasm).Prefix.OperandSize == InUsePrefix) {            
         GV.OperandSize = GV.OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         GV.MemDecoration = Arg2dqword;
@@ -2957,7 +2957,7 @@ void __bea_callspec__ pmovsxwd_(PDISASM pMyDisasm)
 void __bea_callspec__ pmovsxwq_(PDISASM pMyDisasm)
 {
     /* ========== 0x66 */
-    if (GV.OperandSize == 16) {
+    if ((*pMyDisasm).Prefix.OperandSize == InUsePrefix) {            
         GV.OperandSize = GV.OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         GV.MemDecoration = Arg2dqword;
@@ -2979,7 +2979,7 @@ void __bea_callspec__ pmovsxwq_(PDISASM pMyDisasm)
 void __bea_callspec__ pmovzxbd_(PDISASM pMyDisasm)
 {
     /* ========== 0x66 */
-    if (GV.OperandSize == 16) {
+    if ((*pMyDisasm).Prefix.OperandSize == InUsePrefix) {            
         GV.OperandSize = GV.OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         GV.MemDecoration = Arg2dqword;
@@ -3001,7 +3001,7 @@ void __bea_callspec__ pmovzxbd_(PDISASM pMyDisasm)
 void __bea_callspec__ pmovzxbq_(PDISASM pMyDisasm)
 {
     /* ========== 0x66 */
-    if (GV.OperandSize == 16) {
+    if ((*pMyDisasm).Prefix.OperandSize == InUsePrefix) {            
         GV.OperandSize = GV.OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         GV.MemDecoration = Arg2dqword;
@@ -3023,7 +3023,7 @@ void __bea_callspec__ pmovzxbq_(PDISASM pMyDisasm)
 void __bea_callspec__ pmovzxbw_(PDISASM pMyDisasm)
 {
     /* ========== 0x66 */
-    if (GV.OperandSize == 16) {
+    if ((*pMyDisasm).Prefix.OperandSize == InUsePrefix) {            
         GV.OperandSize = GV.OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         GV.MemDecoration = Arg2dqword;
@@ -3045,7 +3045,7 @@ void __bea_callspec__ pmovzxbw_(PDISASM pMyDisasm)
 void __bea_callspec__ pmovzxdq_(PDISASM pMyDisasm)
 {
     /* ========== 0x66 */
-    if (GV.OperandSize == 16) {
+    if ((*pMyDisasm).Prefix.OperandSize == InUsePrefix) {            
         GV.OperandSize = GV.OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         GV.MemDecoration = Arg2dqword;
@@ -3067,7 +3067,7 @@ void __bea_callspec__ pmovzxdq_(PDISASM pMyDisasm)
 void __bea_callspec__ pmovzxwd_(PDISASM pMyDisasm)
 {
     /* ========== 0x66 */
-    if (GV.OperandSize == 16) {
+    if ((*pMyDisasm).Prefix.OperandSize == InUsePrefix) {            
         GV.OperandSize = GV.OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         GV.MemDecoration = Arg2dqword;
@@ -3089,7 +3089,7 @@ void __bea_callspec__ pmovzxwd_(PDISASM pMyDisasm)
 void __bea_callspec__ pmovzxwq_(PDISASM pMyDisasm)
 {
     /* ========== 0x66 */
-    if (GV.OperandSize == 16) {
+    if ((*pMyDisasm).Prefix.OperandSize == InUsePrefix) {            
         GV.OperandSize = GV.OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         GV.MemDecoration = Arg2dqword;
@@ -3111,7 +3111,7 @@ void __bea_callspec__ pmovzxwq_(PDISASM pMyDisasm)
 void __bea_callspec__ pmuldq_(PDISASM pMyDisasm)
 {
     /* ========== 0x66 */
-    if (GV.OperandSize == 16) {
+    if ((*pMyDisasm).Prefix.OperandSize == InUsePrefix) {            
         GV.OperandSize = GV.OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         GV.MemDecoration = Arg2dqword;
@@ -3133,7 +3133,7 @@ void __bea_callspec__ pmuldq_(PDISASM pMyDisasm)
 void __bea_callspec__ pmulld_(PDISASM pMyDisasm)
 {
     /* ========== 0x66 */
-    if (GV.OperandSize == 16) {
+    if ((*pMyDisasm).Prefix.OperandSize == InUsePrefix) {            
         GV.OperandSize = GV.OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         GV.MemDecoration = Arg2dqword;
@@ -3155,7 +3155,7 @@ void __bea_callspec__ pmulld_(PDISASM pMyDisasm)
 void __bea_callspec__ pmulhrsw_(PDISASM pMyDisasm)
 {
     /* ========== 0x66 */
-    if (GV.OperandSize == 16) {
+    if ((*pMyDisasm).Prefix.OperandSize == InUsePrefix) {            
         GV.OperandSize = GV.OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         GV.MemDecoration = Arg2dqword;
@@ -3183,7 +3183,7 @@ void __bea_callspec__ pmulhuw_(PDISASM pMyDisasm)
 {
     (*pMyDisasm).Instruction.Category = SSE_INSTRUCTION+SIMD64bits;
     /* ========== 0x66 */
-    if (GV.OperandSize == 16) {
+    if ((*pMyDisasm).Prefix.OperandSize == InUsePrefix) {            
         GV.OperandSize = GV.OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         GV.MemDecoration = Arg2dqword;
@@ -3209,7 +3209,7 @@ void __bea_callspec__ pmuludq_(PDISASM pMyDisasm)
 {
     (*pMyDisasm).Instruction.Category = SSE_INSTRUCTION+SIMD64bits;
     /* ========== 0x66 */
-    if (GV.OperandSize == 16) {
+    if ((*pMyDisasm).Prefix.OperandSize == InUsePrefix) {            
         GV.OperandSize = GV.OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         GV.MemDecoration = Arg2dqword;
@@ -3247,7 +3247,7 @@ void __bea_callspec__ psadbw_(PDISASM pMyDisasm)
 {
     (*pMyDisasm).Instruction.Category = SSE_INSTRUCTION+SIMD64bits;
     /* ========== 0x66 */
-    if (GV.OperandSize == 16) {
+    if ((*pMyDisasm).Prefix.OperandSize == InUsePrefix) {            
         GV.OperandSize = GV.OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         GV.MemDecoration = Arg2dqword;
@@ -3272,7 +3272,7 @@ void __bea_callspec__ psadbw_(PDISASM pMyDisasm)
 void __bea_callspec__ pshufb_(PDISASM pMyDisasm)
 {
     /* ========== 0x66 */
-    if (GV.OperandSize == 16) {
+    if ((*pMyDisasm).Prefix.OperandSize == InUsePrefix) {            
         GV.OperandSize = GV.OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         GV.MemDecoration = Arg2dqword;
@@ -3335,7 +3335,7 @@ void __bea_callspec__ pshufw_(PDISASM pMyDisasm)
     }
 
     /* ========== 0x66 */
-    else if (GV.OperandSize == 16) {
+    else if ((*pMyDisasm).Prefix.OperandSize == InUsePrefix) {            
         GV.OperandSize = GV.OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         GV.MemDecoration = Arg2dqword;
@@ -3375,7 +3375,7 @@ void __bea_callspec__ pshufw_(PDISASM pMyDisasm)
 void __bea_callspec__ psignb_(PDISASM pMyDisasm)
 {
     /* ========== 0x66 */
-    if (GV.OperandSize == 16) {
+    if ((*pMyDisasm).Prefix.OperandSize == InUsePrefix) {            
         GV.OperandSize = GV.OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         GV.MemDecoration = Arg2dqword;
@@ -3402,7 +3402,7 @@ void __bea_callspec__ psignb_(PDISASM pMyDisasm)
 void __bea_callspec__ psignd_(PDISASM pMyDisasm)
 {
     /* ========== 0x66 */
-    if (GV.OperandSize == 16) {
+    if ((*pMyDisasm).Prefix.OperandSize == InUsePrefix) {            
         GV.OperandSize = GV.OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         GV.MemDecoration = Arg2dqword;
@@ -3429,7 +3429,7 @@ void __bea_callspec__ psignd_(PDISASM pMyDisasm)
 void __bea_callspec__ psignw_(PDISASM pMyDisasm)
 {
     /* ========== 0x66 */
-    if (GV.OperandSize == 16) {
+    if ((*pMyDisasm).Prefix.OperandSize == InUsePrefix) {            
         GV.OperandSize = GV.OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         GV.MemDecoration = Arg2dqword;
@@ -3456,7 +3456,7 @@ void __bea_callspec__ psignw_(PDISASM pMyDisasm)
 void __bea_callspec__ psubq_(PDISASM pMyDisasm)
 {
     /* ========== 0x66 */
-    if (GV.OperandSize == 16) {
+    if ((*pMyDisasm).Prefix.OperandSize == InUsePrefix) {            
         GV.OperandSize = GV.OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         GV.MemDecoration = Arg2dqword;
@@ -3483,7 +3483,7 @@ void __bea_callspec__ psubq_(PDISASM pMyDisasm)
 void __bea_callspec__ ptest_(PDISASM pMyDisasm)
 {
     /* ========== 0x66 */
-    if (GV.OperandSize == 16) {
+    if ((*pMyDisasm).Prefix.OperandSize == InUsePrefix) {            
         GV.OperandSize = GV.OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         GV.MemDecoration = Arg2dqword;
@@ -3505,7 +3505,7 @@ void __bea_callspec__ ptest_(PDISASM pMyDisasm)
 void __bea_callspec__ punpcklqdq_(PDISASM pMyDisasm)
 {
     /* ========== 0x66 */
-    if (GV.OperandSize == 16) {
+    if ((*pMyDisasm).Prefix.OperandSize == InUsePrefix) {            
         GV.OperandSize = GV.OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         GV.MemDecoration = Arg2dqword;
@@ -3527,7 +3527,7 @@ void __bea_callspec__ punpcklqdq_(PDISASM pMyDisasm)
 void __bea_callspec__ punpckhqdq_(PDISASM pMyDisasm)
 {
     /* ========== 0x66 */
-    if (GV.OperandSize == 16) {
+    if ((*pMyDisasm).Prefix.OperandSize == InUsePrefix) {            
         GV.OperandSize = GV.OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         GV.MemDecoration = Arg2dqword;
@@ -3576,7 +3576,7 @@ void __bea_callspec__ rcpps_(PDISASM pMyDisasm)
 void __bea_callspec__ roundpd_(PDISASM pMyDisasm)
 {
     /* ========== 0x66 */
-    if (GV.OperandSize == 16) {
+    if ((*pMyDisasm).Prefix.OperandSize == InUsePrefix) {            
         GV.OperandSize = GV.OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         GV.MemDecoration = Arg2dqword;
@@ -3606,7 +3606,7 @@ void __bea_callspec__ roundpd_(PDISASM pMyDisasm)
 void __bea_callspec__ roundps_(PDISASM pMyDisasm)
 {
     /* ========== 0x66 */
-    if (GV.OperandSize == 16) {
+    if ((*pMyDisasm).Prefix.OperandSize == InUsePrefix) {            
         GV.OperandSize = GV.OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         GV.MemDecoration = Arg2dqword;
@@ -3636,7 +3636,7 @@ void __bea_callspec__ roundps_(PDISASM pMyDisasm)
 void __bea_callspec__ roundsd_(PDISASM pMyDisasm)
 {
     /* ========== 0x66 */
-    if (GV.OperandSize == 16) {
+    if ((*pMyDisasm).Prefix.OperandSize == InUsePrefix) {            
         GV.OperandSize = GV.OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         GV.MemDecoration = Arg2dqword;
@@ -3666,7 +3666,7 @@ void __bea_callspec__ roundsd_(PDISASM pMyDisasm)
 void __bea_callspec__ roundss_(PDISASM pMyDisasm)
 {
     /* ========== 0x66 */
-    if (GV.OperandSize == 16) {
+    if ((*pMyDisasm).Prefix.OperandSize == InUsePrefix) {            
         GV.OperandSize = GV.OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         GV.MemDecoration = Arg2dqword;
@@ -3723,7 +3723,7 @@ void __bea_callspec__ shufps_(PDISASM pMyDisasm)
 {
 
     /* ========== 0x66 */
-    if (GV.OperandSize == 16) {
+    if ((*pMyDisasm).Prefix.OperandSize == InUsePrefix) {            
         GV.OperandSize = GV.OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         GV.MemDecoration = Arg2dqword;
@@ -3779,7 +3779,7 @@ void __bea_callspec__ sqrtps_VW(PDISASM pMyDisasm)
         GV.SSE_ = 0;
     }
     /* ========== 0x66 */
-    else if (GV.OperandSize == 16) {
+    else if ((*pMyDisasm).Prefix.OperandSize == InUsePrefix) {            
         GV.OperandSize = GV.OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         GV.MemDecoration = Arg2dqword;
@@ -3793,9 +3793,9 @@ void __bea_callspec__ sqrtps_VW(PDISASM pMyDisasm)
         GV.MemDecoration = Arg2dqword;
         (*pMyDisasm).Instruction.Category = SSE_INSTRUCTION+ARITHMETIC_INSTRUCTION;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "sqrtps ");
-        GV.MMX_ = 1;
+        GV.SSE_ = 1;
         GxEx(pMyDisasm);
-        GV.MMX_ = 0;
+        GV.SSE_ = 0;
     }
 }
 
@@ -3826,7 +3826,7 @@ void __bea_callspec__ subps_VW(PDISASM pMyDisasm)
         GV.SSE_ = 0;
     }
     /* ========== 0x66 */
-    else if (GV.OperandSize == 16) {
+    else if ((*pMyDisasm).Prefix.OperandSize == InUsePrefix) {            
         GV.OperandSize = GV.OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         GV.MemDecoration = Arg2dqword;
@@ -3840,9 +3840,9 @@ void __bea_callspec__ subps_VW(PDISASM pMyDisasm)
         GV.MemDecoration = Arg2dqword;
         (*pMyDisasm).Instruction.Category = SSE_INSTRUCTION+ARITHMETIC_INSTRUCTION;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "subps ");
-        GV.MMX_ = 1;
+        GV.SSE_ = 1;
         GxEx(pMyDisasm);
-        GV.MMX_ = 0;
+        GV.SSE_ = 0;
     }
 }
 
@@ -3906,7 +3906,7 @@ void __bea_callspec__ unpckhps_(PDISASM pMyDisasm)
 void __bea_callspec__ unpcklps_(PDISASM pMyDisasm)
 {
     /* ========== 0x66 */
-    if (GV.OperandSize == 16) {
+    if ((*pMyDisasm).Prefix.OperandSize == InUsePrefix) {            
         GV.OperandSize = GV.OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         GV.MemDecoration = Arg2dqword;
@@ -3933,7 +3933,7 @@ void __bea_callspec__ unpcklps_(PDISASM pMyDisasm)
 void __bea_callspec__ xorps_VW(PDISASM pMyDisasm)
 {
     /* ========== 0x66 */
-    if (GV.OperandSize == 16) {
+    if ((*pMyDisasm).Prefix.OperandSize == InUsePrefix) {            
         GV.OperandSize = GV.OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         GV.MemDecoration = Arg2dqword;
