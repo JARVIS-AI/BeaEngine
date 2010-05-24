@@ -2468,7 +2468,7 @@ void __bea_callspec__ pinsrw_(PDISASM pMyDisasm)
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         (*pMyDisasm).Instruction.Category = SSE_INSTRUCTION+SIMD64bits;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "pinsrw ");
-        GV.MemDecoration = Arg2dqword;
+        GV.MemDecoration = Arg2word;
         MOD_RM(&(*pMyDisasm).Argument2, pMyDisasm);
         GV.SSE_ = 1;
         Reg_Opcode(&(*pMyDisasm).Argument1, pMyDisasm);
@@ -2486,7 +2486,7 @@ void __bea_callspec__ pinsrw_(PDISASM pMyDisasm)
     else {
         (*pMyDisasm).Instruction.Category = SSE_INSTRUCTION+SIMD64bits;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "pinsrw ");
-        GV.MemDecoration = Arg2dqword;
+        GV.MemDecoration = Arg2word;
         MOD_RM(&(*pMyDisasm).Argument2, pMyDisasm);
         GV.MMX_ = 1;
         Reg_Opcode(&(*pMyDisasm).Argument1, pMyDisasm);
