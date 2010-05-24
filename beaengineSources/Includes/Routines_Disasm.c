@@ -64,7 +64,7 @@ int __bea_callspec__ InitVariables (PDISASM pMyDisasm) {
     if (GV.Architecture == 16) {
         GV.OperandSize = 16;
         GV.OriginalOperandSize = 16;
-        GV.AddressSize = 16;        
+        GV.AddressSize = 16;
     }
 	(void) memset (&(*pMyDisasm).Argument1, 0, sizeof (ARGTYPE));
 	(void) memset (&(*pMyDisasm).Argument2, 0, sizeof (ARGTYPE));
@@ -220,12 +220,18 @@ void __bea_callspec__ ExGx(PDISASM pMyDisasm)
 void __bea_callspec__ EvIv(PDISASM pMyDisasm)
 {
     if (GV.OperandSize >= 32) {
-        GV.MemDecoration = Arg1dword;
+        if (GV.OperandSize == 64) {
+            GV.MemDecoration = Arg1qword;
+        }
+        else {
+            GV.MemDecoration = Arg1dword;
+        }
+        GV.ImmediatSize = 32;                       /* place this instruction before MOD_RM routine to inform it there is an immediat value */
         MOD_RM(&(*pMyDisasm).Argument1, pMyDisasm);
         GV.EIP_ += GV.DECALAGE_EIP+6;
         if (!Security(0, pMyDisasm)) return;
         (void) CopyFormattedNumber(pMyDisasm, (char*) &(*pMyDisasm).Argument2.ArgMnemonic,"%.8X",(Int64) *((UInt32*)(UIntPtr) (GV.EIP_-4)));
-        GV.ImmediatSize = 32;
+
         (*pMyDisasm).Argument2.ArgType = CONSTANT_TYPE+ABSOLUTE_;
         (*pMyDisasm).Argument2.ArgSize = 32;
         (*pMyDisasm).Instruction.Immediat = *((UInt32*)(UIntPtr) (GV.EIP_-4));
@@ -251,7 +257,12 @@ void __bea_callspec__ EvIb(PDISASM pMyDisasm)
     (*pMyDisasm).Argument2.ArgType = CONSTANT_TYPE+ABSOLUTE_;
     (*pMyDisasm).Argument2.ArgSize = 8;
     if (GV.OperandSize >= 32) {
-        GV.MemDecoration = Arg1dword;
+        if (GV.OperandSize == 64) {
+            GV.MemDecoration = Arg1qword;
+        }
+        else {
+            GV.MemDecoration = Arg1dword;
+        }
         MOD_RM(&(*pMyDisasm).Argument1, pMyDisasm);
         GV.EIP_ += GV.DECALAGE_EIP+3;
         if (!Security(0, pMyDisasm)) return;

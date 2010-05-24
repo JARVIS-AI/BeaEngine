@@ -325,6 +325,15 @@ void __bea_callspec__ Addr_disp32(ARGTYPE* pMyArgument, PDISASM pMyDisasm)
         if (GV.Architecture == 64) {
             MyNumber += 6;
             MyNumber += GV.NB_PREFIX;
+            if (GV.ImmediatSize == 32) {
+                MyNumber += 4;
+            }
+            if ((*pMyDisasm).Instruction.Opcode >= 0x0F3800) {      /* add two bytes if opcode is a 3-bytes */
+                MyNumber +=2;
+            }
+            else if ((*pMyDisasm).Instruction.Opcode >= 0x0100) {   /* add one byte if opcode is a 2-bytes */
+                MyNumber +=1;
+            }
             CalculateRelativeAddress(&MyAddress, (Int64)MyNumber, pMyDisasm);
             i+= CopyFormattedNumber(pMyDisasm, (char*) (*pMyArgument).ArgMnemonic+i,"%I64X", (Int64)MyAddress);
         }
