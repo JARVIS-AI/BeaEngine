@@ -125,7 +125,7 @@ uses Windows,SysUtils;
   type
 
      _Disasm = packed record
-          EIP : int32;
+          EIP : longint;
           VirtualAddr : int64;
           SecurityBlock : longint;
           CompleteInstr : array[0..(INSTRUCT_LENGTH)-1] of AnsiChar;
@@ -136,7 +136,7 @@ uses Windows,SysUtils;
           Argument2 : TARGTYPE;
           Argument3 : TARGTYPE;
           Prefix : TPREFIXINFO;
-          Reserved_ : array[0..39] of int32;
+          Reserved_ : array[0..39] of longint;
        end;
      TDISASM = _Disasm;
      PDISASM = ^_Disasm;
