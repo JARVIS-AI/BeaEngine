@@ -2425,11 +2425,11 @@ void __bea_callspec__ vmread_(PDISASM pMyDisasm)
     (*pMyDisasm).Instruction.Category = VM_INSTRUCTION;
     (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vmread ");
     if (GV.Architecture == 64) {
-        GV.OperandSize == 64;
+        GV.OperandSize = 64;
     }
     EvGv(pMyDisasm);
     if (GV.Architecture == 64) {
-        GV.OperandSize == 32;
+        GV.OperandSize = 32;
     }
 }
 
@@ -2441,11 +2441,11 @@ void __bea_callspec__ vmwrite_(PDISASM pMyDisasm)
     (*pMyDisasm).Instruction.Category = VM_INSTRUCTION;
     (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vmwrite ");
     if (GV.Architecture == 64) {
-        GV.OperandSize == 64;
+        GV.OperandSize = 64;
     }
     GvEv(pMyDisasm);
     if (GV.Architecture == 64) {
-        GV.OperandSize == 32;
+        GV.OperandSize = 32;
     }
 }
 
