@@ -2,7 +2,7 @@
  * @file   basic_types.h
  * @author  <igor.gutnik@gmail.com>
  * @date   Thu Dec 24 19:31:22 2009
- * 
+ *
  * @brief  Definitions of fixed-size integer types for various platforms
  *
  * This file is part of BeaEngine.
@@ -149,7 +149,7 @@
 		typedef unsigned long long UInt64;
 	#endif
 	#define BEA_HAVE_INT64 1
-#elif defined(__IBMCPP__) 
+#elif defined(__IBMCPP__)
 	/*
 	* IBM XL C++
 	*/
@@ -199,7 +199,7 @@
     typedef signed __int64         UInt64;
     #define BEA_HAVE_INT64 1
 	typedef size_t                 UIntPtr;
-#elif defined(__sgi) 
+#elif defined(__sgi)
 	/*
 	* MIPSpro C++
 	*/
@@ -227,7 +227,7 @@
 	#define W64LIT(x) x##ui64
 #else
 	#define W64LIT(x) x##ULL
-#endif 
+#endif
 
 
 #ifndef C_STATIC_ASSERT
@@ -247,4 +247,4 @@ C_STATIC_ASSERT(sizeof_UInt32, (sizeof(UInt32) == 4));
 C_STATIC_ASSERT(sizeof_Int64 , (sizeof(Int64)  == 8));
 C_STATIC_ASSERT(sizeof_UInt64, (sizeof(UInt64) == 8));
 
-#endif 
+#endif
