@@ -26,13 +26,25 @@ void __bea_callspec__ G9_(PDISASM pMyDisasm)
     GV.MemDecoration = Arg2qword;
     MOD_RM(&(*pMyDisasm).Argument2, pMyDisasm);
     if (GV.REGOPCODE == 1) {
-        (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+DATA_TRANSFER;
-        (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "cmpxchg8b ");
-        (*pMyDisasm).Argument1.ArgType = REGISTER_TYPE+GENERAL_REG+REG0+REG2;
-        (*pMyDisasm).Argument1.ArgSize = 32;
-        (*pMyDisasm).Argument1.AccessMode = READ;
-        FillFlags(pMyDisasm, 23);
-        GV.EIP_ += GV.DECALAGE_EIP+2;
+        if (GV.REX.W_ == 1) {
+            GV.MemDecoration = Arg2dqword;
+            (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+DATA_TRANSFER;
+            (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "cmpxchg16b ");
+            (*pMyDisasm).Argument1.ArgType = REGISTER_TYPE+GENERAL_REG+REG0+REG2;
+            (*pMyDisasm).Argument1.ArgSize = 128;
+            (*pMyDisasm).Argument1.AccessMode = READ;
+            FillFlags(pMyDisasm, 23);
+            GV.EIP_ += GV.DECALAGE_EIP+2;
+        }
+        else {
+            (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+DATA_TRANSFER;
+            (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "cmpxchg8b ");
+            (*pMyDisasm).Argument1.ArgType = REGISTER_TYPE+GENERAL_REG+REG0+REG2;
+            (*pMyDisasm).Argument1.ArgSize = 64;
+            (*pMyDisasm).Argument1.AccessMode = READ;
+            FillFlags(pMyDisasm, 23);
+            GV.EIP_ += GV.DECALAGE_EIP+2;
+        }
     }
     else if (GV.REGOPCODE == 6) {
         (*pMyDisasm).Instruction.Category = VM_INSTRUCTION;

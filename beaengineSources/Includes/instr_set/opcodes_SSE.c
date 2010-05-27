@@ -649,7 +649,7 @@ void __bea_callspec__ cvtps2pi_(PDISASM pMyDisasm)
     else {
         (*pMyDisasm).Instruction.Category = SSE2_INSTRUCTION+CONVERSION_INSTRUCTION;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "cvtps2pi ");
-        GV.MemDecoration = Arg2dqword;
+        GV.MemDecoration = Arg2qword;
         GV.SSE_ = 1;
         MOD_RM(&(*pMyDisasm).Argument2, pMyDisasm);
         GV.SSE_ = 0;
@@ -718,7 +718,7 @@ void __bea_callspec__ cvttps2pi_(PDISASM pMyDisasm)
     else {
         (*pMyDisasm).Instruction.Category = SSE2_INSTRUCTION+CONVERSION_INSTRUCTION;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "cvttps2pi ");
-        GV.MemDecoration = Arg2dqword;
+        GV.MemDecoration = Arg2qword;
         GV.SSE_ = 1;
         MOD_RM(&(*pMyDisasm).Argument2, pMyDisasm);
         GV.SSE_ = 0;
@@ -1460,7 +1460,7 @@ void __bea_callspec__ movntps_(PDISASM pMyDisasm)
 
     }
     else {
-        GV.MemDecoration = Arg1qword;
+        GV.MemDecoration = Arg1dqword;
         (*pMyDisasm).Instruction.Category = SSE2_INSTRUCTION+CACHEABILITY_CONTROL;
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "movntps ");
         GV.SSE_ = 1;
