@@ -4,6 +4,7 @@
 #include <windows.h>
 #else
 #include <unistd.h> 
+#include <stdlib.h>
 #endif
 
 std::string get_temp_path ()

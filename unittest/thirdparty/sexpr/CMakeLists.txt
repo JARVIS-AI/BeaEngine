@@ -10,4 +10,6 @@ faststack.h  sexp_errors.h  sexp_ops.h
 
 add_library (sexpr STATIC ${sources} ${headers})
 
-
+if (BEA_COMPILER STREQUAL gnu)
+set_target_properties (sexpr PROPERTIES COMPILE_FLAGS "-w")
+endif ()

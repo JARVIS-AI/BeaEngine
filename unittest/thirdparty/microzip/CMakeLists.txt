@@ -13,9 +13,13 @@ set (headers
 
 add_library (microzip STATIC ${sources} ${headers})
 
-add_executable (u_zip minizip.c)
-target_link_libraries (u_zip microzip z)
+if (BEA_COMPILER STREQUAL gnu)
+set_target_properties (microzip PROPERTIES COMPILE_FLAGS "-w")
+endif ()
 
-add_executable (u_unzip miniunz.c)
-target_link_libraries (u_unzip microzip z)
+#add_executable (u_zip minizip.c)
+#target_link_libraries (u_zip microzip z)
+
+#add_executable (u_unzip miniunz.c)
+#target_link_libraries (u_unzip microzip z)
 

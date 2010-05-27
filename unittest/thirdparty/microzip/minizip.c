@@ -12,7 +12,7 @@
 #include <errno.h>
 #include <fcntl.h>
 
-#ifdef unix
+#if !defined(WIN32)
 # include <unistd.h>
 # include <utime.h>
 # include <sys/types.h>

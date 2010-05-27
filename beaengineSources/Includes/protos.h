@@ -17,8 +17,8 @@
  *    along with BeaEngine.  If not, see <http://www.gnu.org/licenses/>. */
 
 
-char* __bea_callspec__ BeaEngineVersion(void);
-char* __bea_callspec__ BeaEngineRevision(void);
+const char* __bea_callspec__ BeaEngineVersion(void);
+const char* __bea_callspec__ BeaEngineRevision(void);
 
 /* ====================================== Routines_MODRM */
 void __bea_callspec__ MOD_RM(ARGTYPE*, PDISASM);
