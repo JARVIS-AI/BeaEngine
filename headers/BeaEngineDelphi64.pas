@@ -130,7 +130,7 @@ uses Windows,SysUtils;
           SecurityBlock : longint;
           CompleteInstr : array[0..(INSTRUCT_LENGTH)-1] of AnsiChar;
           Archi : longint;
-          Options : longint;
+          Options : int64;
           Instruction : TINSTRTYPE;
           Argument1 : TARGTYPE;
           Argument2 : TARGTYPE;
