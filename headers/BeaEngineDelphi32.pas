@@ -8,7 +8,7 @@
 //  BeaEngine.pas convert by Vince
 // ====================================================================
 // [+] BranchTaken,BranchNotTaken added in TPREFIXINFO v3.1.0
-unit BeaEngine;
+unit BeaEngineDelphi32;
 // ====================================================================
 // Default link type is static lib
 // comment below line to switch link with DLL
