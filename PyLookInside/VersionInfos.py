@@ -23,21 +23,18 @@ along with BeaEngine.  If not, see <http://www.gnu.org/licenses/>.
 
 # Import packages
 
-import sys
-
 #---------------------------------------------------------------------------
 
 NAME_STRING = u"PyLookInside"
 VERSION_STRING = u"v4.0"
-AUTHORS_STRING = u"BeatriX"
+AUTHORS_STRING = u"JCie"
 CREATED_STRING = u"December 2009"
 COPYRIGHT_STRING = u"© Copyright 2009-2010  |  BeatriX"
 LICENSE1_STRING = u"BeatriX"
-LICENSE2_STRING = u"License : wxWindows Library Version 3.1"
-LICENSE3_STRING = u"This application is Open Source - License LGPL version 3 (:-)"
+LICENSE2_STRING = u"This application is Open Source"
+LICENSE3_STRING = u"License GNU-LGPL Version 3 (:-)"
+LICENSE4_STRING = u"License wxWindows Library Version 3.1"
 COMMENT_STRING = u""
 OS_STRING = u"Current Operating System - "
 
 # VERSION_STRING = u"v" + sys.version.split()[0]
-     
-     

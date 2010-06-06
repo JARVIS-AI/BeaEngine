@@ -109,7 +109,7 @@ class PageLicence(wx.Panel):
         
         self.field = wx.TextCtrl(self, -1, value=u"", size=(100, 165),
                                  style=wx.TE_LEFT | wx.TE_MULTILINE |
-                                 wx.BORDER_THEME)
+                                 wx.TE_READONLY | wx.BORDER_THEME)
         
         self.field.SetFont(self.normalFont)
         self.field.SetSize(self.field.GetBestSize())
@@ -139,9 +139,10 @@ class PageDevelopers(wx.Panel):
         <br>
         <p><b>● BeatriX</b> <i>(original library developer)</i>
         <br>
-        <br><b>● Igor Gutnik</b> <i>(ported the project on linux)</i>
+        <br><b>● Igor Gutnik</b> <i>(he has ported the entire project under linux </i>
+        <br><i>and he has render this library available on many platforms)</i>
         <br>
-        <br><b>● Sigma</b> <i>(PyLookInside GUI developer)</i>
+        <br><b>● JCie</b> <i>(PyLookInside GUI developer)</i>
         <p></div></body></html>''')
         
         sizer = wx.BoxSizer(wx.HORIZONTAL)
@@ -164,7 +165,7 @@ class PageContributors(wx.Panel):
         fix bugs on BeaEngine. Thanks to them, BeaEngine is stable and
         efficient.</p>
         <br>
-        <p><b><u>Here they are :</u></b></p>
+        <p><b><u>List below :</u></b></p>
         <br>
         <p><b><i>andrewl, Ange Albertini, bax, William Pomian, Pyrae,
         Vincent Roy, Kharneth, Eedy, Neitsa, KumaT, Rafal Cyran,

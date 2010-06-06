@@ -28,11 +28,11 @@ import wx                            # This module uses the new wx namespace
 #---------------------------------------------------------------------------
 
 class My_SearchCtrl(wx.SearchCtrl):
-    def __init__(self, parent, id=-1, value="",
-                 pos=wx.DefaultPosition, size=wx.DefaultSize, style=0):
+    def __init__(self, parent, id=-1, value=u"",
+                 pos=wx.DefaultPosition, size=(270, -1), style=0):
         wx.SearchCtrl.__init__(self, parent, id, value,
-                               pos, size, style=wx.WANTS_CHARS) # style=wx.WANTS_CHARS  # wx.TAB_TRAVERSAL
-        
+                               pos, size, style)
+                               
         #-------------------------------------------------------------------
         
         self.parent = parent

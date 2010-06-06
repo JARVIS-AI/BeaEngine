@@ -36,7 +36,7 @@ class My_ListCtrl(wx.ListCtrl,
         wx.ListCtrl.__init__(self, parent, -1,
                              style=wx.LC_REPORT | wx.LC_VIRTUAL |
                              wx.LC_SORT_ASCENDING | wx.LC_SINGLE_SEL |
-                             wx.LC_VRULES | wx.BORDER_NONE)
+                             wx.LC_VRULES | wx.BORDER_SUNKEN)
         
         listmix.ListCtrlAutoWidthMixin.__init__(self)
         listmix.ColumnSorterMixin.__init__(self, 2)

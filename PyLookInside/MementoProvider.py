@@ -102,7 +102,7 @@ class My_Memento(wx.Dialog):
         
         self.field = wx.TextCtrl(self, -1, value=u"", size=(100, 165),
                                  style=wx.TE_LEFT | wx.TE_MULTILINE |
-                                 wx.BORDER_THEME)
+                                 wx.BORDER_SIMPLE) # wx.BORDER_THEME
         
         self.field.SetFont(self.normalFont)
         self.field.SetSize(self.field.GetBestSize())

@@ -24,8 +24,9 @@ along with BeaEngine.  If not, see <http://www.gnu.org/licenses/>.
 # Import packages
 
 import wx                            # This module uses the new wx namespace
-import sys
 import os
+import sys
+import platform
 import time
 import PyLookInside
 import VersionInfos
@@ -136,9 +137,9 @@ class My_SplashScreenCustom(wx.Frame):
                                       DEFAULT, wx.NORMAL, wx.NORMAL, False, "")
             
         elif wx.Platform == "__WXGTK__":
-            self.normalBoldFont = wx.Font(fontSize-3,
+            self.normalBoldFont = wx.Font(fontSize-2,
                                           wx.DEFAULT, wx.NORMAL, wx.BOLD, False, "")
-            self.normalFont = wx.Font(fontSize-3,
+            self.normalFont = wx.Font(fontSize-2,
                                       wx.DEFAULT, wx.NORMAL, wx.NORMAL, False, "")
               
         else:
@@ -155,22 +156,25 @@ class My_SplashScreenCustom(wx.Frame):
         dc.SetTextForeground(wx.BLACK)
         dc.SetFont(self.normalBoldFont)
         
-        dc.DrawText(u"%s" % VersionInfos.LICENSE1_STRING, 50, 170)
+        dc.DrawText(u"%s" % VersionInfos.LICENSE1_STRING, 50, 160)
+
         dc.SetFont(self.normalFont)
-        dc.DrawText(u"%s" % VersionInfos.COMMENT_STRING, 50, 185)
-        dc.DrawText(u"%s" % VersionInfos.LICENSE3_STRING, 50, 200)
-        dc.DrawText(u"%s" % VersionInfos.COPYRIGHT_STRING, 50, 215)
-        dc.DrawText(u"%s" % VersionInfos.LICENSE2_STRING, 50, 230)
+        dc.DrawText(u"%s" % VersionInfos.LICENSE2_STRING, 50, 190)
+        dc.DrawText(u"%s" % VersionInfos.LICENSE3_STRING, 50, 205)
+        dc.DrawText(u"%s" % VersionInfos.LICENSE4_STRING, 50, 220)
+        dc.DrawText(u"%s" % VersionInfos.COPYRIGHT_STRING, 50, 235)
+
+
         dc.DrawText(u"PyLookInside was built using Python "
-                    + sys.version.split()[0] +
-                    " and wxPython "
-                    + wx.VERSION_STRING +
-                    u" unicode", 50, 245)
+                    + sys.version.split()[0] + ",", 50, 260)
+        dc.DrawText(u"wxPython "
+                    + wx.VERSION_STRING + u" unicode" +
+                    u" and wxWindows.", 50, 275)
         dc.DrawText(u"%s" % VersionInfos.OS_STRING
-                    + sys.platform + u"/"
-                    + os.name + "." , 50, 275)
-        dc.DrawText(u"Python %s" % sys.version.split()[:6], 50, 290)
-        dc.DrawText(u"Python %s" % sys.version.split()[6:], 50, 305)
+                    + platform.system() + u" "
+                    + platform.win32_ver()[1], 50, 300)
+        # dc.DrawText(u"Python %s" % sys.version.split()[:6], 50, 285)
+        # dc.DrawText(u"Python %s" % sys.version.split()[6:], 50, 300)
         
     #-----------------------------------------------------------------------
         

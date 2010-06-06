@@ -93,7 +93,7 @@ class PageOptions(wx.Panel):
 class My_Notebook(wx.Notebook):
     def __init__(self, parent, id):
         wx.Notebook.__init__(self, parent, id, size=(21, 21),
-                             style=wx.BK_DEFAULT)
+                             style=wx.CLIP_CHILDREN)  # wx.BK_DEFAULT | 
         
         # Create some instance of class
         page1 = PageInfos(self)

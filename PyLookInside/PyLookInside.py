@@ -26,10 +26,10 @@ along with BeaEngine.  If not, see <http://www.gnu.org/licenses/>.
 #############################################################################
 # Name      :  PyLookInside.py                                              #
 # Version   :  4.0                                                          #
-# Authors   :  BeatriX & Sigma                                              #
+# Authors   :  JCie & Beatrix                                               #
 # Created   :  December 2009                                                #
 # Copyright :  © Copyright 2009-2010  |  BeatriX                            #
-# License   :  wxWindows License                                            #
+# License   :  wxWindows License Version 3.1                                #
 # About     :  PyLookInside was built using Python 2.6.4,                   #
 #              wxPython 2.8.10.1 unicode, and wxWindows                     #
 #############################################################################
@@ -40,13 +40,12 @@ along with BeaEngine.  If not, see <http://www.gnu.org/licenses/>.
 import wxversion
 wxversion.select("2.8-unicode")  # Launch the script only from wx.Python 2.8
 
-import sys
-
 try:
     import wx                        # This module uses the new wx namespace
 except ImportError:
     raise ImportError, u"The wxPython unicode module is required to run this program."
 
+import sys
 import VersionInfos
 import SplashScreen
 import MenuBar
@@ -72,18 +71,17 @@ class My_Frame(wx.Frame):
                           title=u"PyLookInside %s"
                           % VersionInfos.VERSION_STRING,
                           pos=wx.DefaultPosition,
-                          size=(920, 685),
-                          style=wx.DEFAULT_FRAME_STYLE |
-                          wx.NO_FULL_REPAINT_ON_RESIZE |
-                          wx.TAB_TRAVERSAL)
+                          size=(920, 683),
+                          style=wx.DEFAULT_FRAME_STYLE | wx.TAB_TRAVERSAL |
+                          wx.NO_FULL_REPAINT_ON_RESIZE)
         
         # Bind the close event to an events handler
         self.Bind(wx.EVT_CLOSE, self.OnCloseWindow)
         
         #-------------------------------------------------------------------
         
-        self.pnl = wx.Panel(self, -1)
-        self.SetBackgroundColour("#f0f0f0")
+        self.pnl = wx.Panel(self, 1)
+#        self.SetBackgroundColour("#f0f0f0")
         
         #-------------------------------------------------------------------
         
@@ -150,25 +148,26 @@ class My_Frame(wx.Frame):
     #-----------------------------------------------------------------------
         
     def createNotebook(self):
-        self.nb = Notebook.My_Notebook(self.pnl, 1)
-       
+        self.nb = Notebook.My_Notebook(self.pnl, -1)
+        # Select initial items
+        self.nb.SetSelection(0)
+        
     #-----------------------------------------------------------------------
         
     def createAuiManager(self):
         self.mgr = wx.aui.AuiManager()
         self.mgr.SetManagedWindow(self.pnl)
         
-        self.leftPanel = wx.Panel(self.pnl, -1, size = (200, 150),
-                                  style=wx.TAB_TRAVERSAL | wx.CLIP_CHILDREN) # wx.TAB_TRAVERSAL
-        
+        self.leftPanel = wx.Panel(self.pnl, style=wx.TAB_TRAVERSAL | wx.CLIP_CHILDREN)
+    
         self.mgr.AddPane(self.nb, wx.aui.AuiPaneInfo().CenterPane().Name("Notebook"))
         
         self.mgr.AddPane(self.leftPanel,
                          wx.aui.AuiPaneInfo().
-                         Left().Layer(1).BestSize((300, -1)).
+                         Left().Layer(0).BestSize((300, -1)).
                          MinSize((295, -1)).
                          FloatingSize((300, 160)).
-                         Caption("Search & ListCtrl").
+                         Caption("Search").
                          CloseButton(False).
                          Name("ListCtrl"))
         
@@ -177,22 +176,25 @@ class My_Frame(wx.Frame):
         # self.mgr.SetFlags(self.mgr.GetFlags() ^ wx.aui.AUI_MGR_TRANSPARENT_DRAG)
         
     #-----------------------------------------------------------------------
-        
+
     def createSearchCtrl(self):
-        self.search = SearchCtrl.My_SearchCtrl(self.leftPanel, style=wx.TAB_TRAVERSAL)
+        self.search = SearchCtrl.My_SearchCtrl(self.leftPanel)  # style=wx.TE_PROCESS_ENTER
         
+#    def createSearchCtrl(self):
+#        self.search = SearchCtrl.My_SearchCtrl(self.leftPanel, )leftPanel
+#        self.search.SetFocus()
+
     #-----------------------------------------------------------------------
        
     def createListCtrl(self):
         self.list = ListCtrlVirtual.My_ListCtrl(self.leftPanel)
-#        self.list.SetFocus()
         
     #-----------------------------------------------------------------------
         
     def doLayout(self):
         listSizer = wx.BoxSizer(wx.VERTICAL)
         
-        listSizer.Add(self.search, 0, wx.EXPAND | wx.ALL, 0)
+        listSizer.Add(self.search, 0, wx.EXPAND | wx.ALL, 3)
         listSizer.Add(self.list, 1, wx.EXPAND | wx.ALL, 0)
         
         #----------
