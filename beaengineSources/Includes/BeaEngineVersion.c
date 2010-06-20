@@ -19,13 +19,13 @@
 /* ====================================================================
  *
  * ==================================================================== */
-const char* __bea_callspec__ BeaEngineVersion() {
+const char* __bea_callspec__ BeaEngineVersion(void) {
 	return "trunk";
 }
 
 /* ====================================================================
  *
  * ==================================================================== */
-const char* __bea_callspec__ BeaEngineRevision() {
+const char* __bea_callspec__ BeaEngineRevision(void) {
 	return "trunk";
 }
