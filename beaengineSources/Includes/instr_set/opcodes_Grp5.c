@@ -27,7 +27,9 @@ void __bea_callspec__ G5_Ev(PDISASM pMyDisasm)
             (*pMyDisasm).Prefix.LockPrefix = InUsePrefix;
         }
         (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+ARITHMETIC_INSTRUCTION;
-        (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "inc ");
+        #ifndef BEA_LIGHT_DISASSEMBLY
+           (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "inc ");
+        #endif
         Ev(pMyDisasm);
         FillFlags(pMyDisasm, 40);
     }
@@ -36,14 +38,18 @@ void __bea_callspec__ G5_Ev(PDISASM pMyDisasm)
             (*pMyDisasm).Prefix.LockPrefix = InUsePrefix;
         }
         (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+ARITHMETIC_INSTRUCTION;
-        (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "dec ");
+        #ifndef BEA_LIGHT_DISASSEMBLY
+           (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "dec ");
+        #endif
         Ev(pMyDisasm);
         FillFlags(pMyDisasm, 30);
     }
     else if (GV.REGOPCODE == 2) {
         (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+CONTROL_TRANSFER;
         (*pMyDisasm).Instruction.BranchType = CallType;
-        (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "call ");
+        #ifndef BEA_LIGHT_DISASSEMBLY
+           (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "call ");
+        #endif
         if (GV.Architecture == 64) {
             GV.OperandSize = 64;
         }
@@ -64,10 +70,14 @@ void __bea_callspec__ G5_Ev(PDISASM pMyDisasm)
         (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+CONTROL_TRANSFER;
         (*pMyDisasm).Instruction.BranchType = CallType;
         if (GV.SYNTAX_ == ATSyntax) {
-            (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "lcall ");
+            #ifndef BEA_LIGHT_DISASSEMBLY
+               (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "lcall ");
+            #endif
         }
         else {
-            (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "call far ");
+            #ifndef BEA_LIGHT_DISASSEMBLY
+               (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "call far ");
+            #endif
         }
         GV.MemDecoration = Arg1fword;
         MOD_RM(&(*pMyDisasm).Argument1, pMyDisasm);
@@ -77,7 +87,9 @@ void __bea_callspec__ G5_Ev(PDISASM pMyDisasm)
     else if (GV.REGOPCODE == 4) {
         (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+CONTROL_TRANSFER;
         (*pMyDisasm).Instruction.BranchType = JmpType;
-        (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "jmp ");
+        #ifndef BEA_LIGHT_DISASSEMBLY
+           (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "jmp ");
+        #endif
         if (GV.Architecture == 64) {
             GV.OperandSize = 64;
         }
@@ -97,10 +109,14 @@ void __bea_callspec__ G5_Ev(PDISASM pMyDisasm)
         (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+CONTROL_TRANSFER;
         (*pMyDisasm).Instruction.BranchType = CallType;
         if (GV.SYNTAX_ == ATSyntax) {
-            (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "ljmp ");
+            #ifndef BEA_LIGHT_DISASSEMBLY
+               (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "ljmp ");
+            #endif
         }
         else {
-            (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "jmp far ");
+            #ifndef BEA_LIGHT_DISASSEMBLY
+               (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "jmp far ");
+            #endif
         }
         GV.MemDecoration = Arg1fword;
         MOD_RM(&(*pMyDisasm).Argument1, pMyDisasm);
@@ -108,7 +124,9 @@ void __bea_callspec__ G5_Ev(PDISASM pMyDisasm)
     }
     else if (GV.REGOPCODE == 6) {
         (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+DATA_TRANSFER;
-        (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "push ");
+        #ifndef BEA_LIGHT_DISASSEMBLY
+           (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "push ");
+        #endif
         if (GV.Architecture == 64) {
             GV.OperandSize = 64;
         }

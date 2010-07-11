@@ -36,21 +36,33 @@ void __bea_callspec__ pclmulqdq_(PDISASM pMyDisasm)
         (*pMyDisasm).Instruction.Immediat = *((UInt8*)(UIntPtr) (GV.EIP_- 1));
         GV.ImmediatSize = 8;
         if ((*pMyDisasm).Instruction.Immediat == 0) {
-            (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "pclmullqlqdq ");
+            #ifndef BEA_LIGHT_DISASSEMBLY
+               (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "pclmullqlqdq ");
+            #endif
         }
         else if ((*pMyDisasm).Instruction.Immediat == 0x01 ) {
-            (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "pclmulhqlqdq ");
+            #ifndef BEA_LIGHT_DISASSEMBLY
+               (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "pclmulhqlqdq ");
+            #endif
         }
         else if ((*pMyDisasm).Instruction.Immediat == 0x10 ) {
-            (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "pclmullqhqdq ");
+            #ifndef BEA_LIGHT_DISASSEMBLY
+               (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "pclmullqhqdq ");
+            #endif
         }
         else if ((*pMyDisasm).Instruction.Immediat == 0x011 ) {
-            (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "pclmulhqhqdq ");
+            #ifndef BEA_LIGHT_DISASSEMBLY
+               (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "pclmulhqhqdq ");
+            #endif
         }
         else {
-            (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "pclmulqdq ");
+            #ifndef BEA_LIGHT_DISASSEMBLY
+               (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "pclmulqdq ");
+            #endif
             GV.third_arg = 1;
-            (void) CopyFormattedNumber(pMyDisasm, (char*) (*pMyDisasm).Argument3.ArgMnemonic, "%.2X",(Int64) *((UInt8*)(UIntPtr) (GV.EIP_- 1)));
+            #ifndef BEA_LIGHT_DISASSEMBLY
+               (void) CopyFormattedNumber(pMyDisasm, (char*) (*pMyDisasm).Argument3.ArgMnemonic, "%.2X",(Int64) *((UInt8*)(UIntPtr) (GV.EIP_- 1)));
+            #endif
             (*pMyDisasm).Argument3.ArgType = CONSTANT_TYPE+ABSOLUTE_;
             (*pMyDisasm).Argument3.ArgSize = 8;
         }

@@ -28,7 +28,9 @@ void __bea_callspec__ G1_EbIb(PDISASM pMyDisasm)
             (*pMyDisasm).Prefix.LockPrefix = InUsePrefix;
         }
         (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+ARITHMETIC_INSTRUCTION;
-        (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "add ");
+        #ifndef BEA_LIGHT_DISASSEMBLY
+           (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "add ");
+        #endif
         FillFlags(pMyDisasm, 5);
     }
     else if (GV.REGOPCODE == 1) {
@@ -36,7 +38,9 @@ void __bea_callspec__ G1_EbIb(PDISASM pMyDisasm)
             (*pMyDisasm).Prefix.LockPrefix = InUsePrefix;
         }
         (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+LOGICAL_INSTRUCTION;
-        (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "or ");
+        #ifndef BEA_LIGHT_DISASSEMBLY
+           (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "or ");
+        #endif
         FillFlags(pMyDisasm, 74);
     }
     else if (GV.REGOPCODE == 2) {
@@ -44,7 +48,9 @@ void __bea_callspec__ G1_EbIb(PDISASM pMyDisasm)
             (*pMyDisasm).Prefix.LockPrefix = InUsePrefix;
         }
         (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+ARITHMETIC_INSTRUCTION;
-        (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "adc ");
+        #ifndef BEA_LIGHT_DISASSEMBLY
+           (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "adc ");
+        #endif
         FillFlags(pMyDisasm, 4);
     }
     else if (GV.REGOPCODE == 3) {
@@ -52,7 +58,9 @@ void __bea_callspec__ G1_EbIb(PDISASM pMyDisasm)
             (*pMyDisasm).Prefix.LockPrefix = InUsePrefix;
         }
         (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+ARITHMETIC_INSTRUCTION;
-        (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "sbb ");
+        #ifndef BEA_LIGHT_DISASSEMBLY
+           (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "sbb ");
+        #endif
         FillFlags(pMyDisasm, 93);
     }
     else if (GV.REGOPCODE == 4) {
@@ -60,7 +68,9 @@ void __bea_callspec__ G1_EbIb(PDISASM pMyDisasm)
             (*pMyDisasm).Prefix.LockPrefix = InUsePrefix;
         }
         (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+LOGICAL_INSTRUCTION;
-        (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "and ");
+        #ifndef BEA_LIGHT_DISASSEMBLY
+           (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "and ");
+        #endif
         FillFlags(pMyDisasm, 6);
     }
     else if (GV.REGOPCODE == 5) {
@@ -68,7 +78,9 @@ void __bea_callspec__ G1_EbIb(PDISASM pMyDisasm)
             (*pMyDisasm).Prefix.LockPrefix = InUsePrefix;
         }
         (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+ARITHMETIC_INSTRUCTION;
-        (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "sub ");
+        #ifndef BEA_LIGHT_DISASSEMBLY
+           (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "sub ");
+        #endif
         FillFlags(pMyDisasm, 103);
     }
 
@@ -77,13 +89,17 @@ void __bea_callspec__ G1_EbIb(PDISASM pMyDisasm)
             (*pMyDisasm).Prefix.LockPrefix = InUsePrefix;
         }
         (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+LOGICAL_INSTRUCTION;
-        (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "xor ");
+        #ifndef BEA_LIGHT_DISASSEMBLY
+           (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "xor ");
+        #endif
         FillFlags(pMyDisasm, 113);
     }
 
     else if (GV.REGOPCODE == 7) {
         (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+ARITHMETIC_INSTRUCTION;
-        (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "cmp ");
+        #ifndef BEA_LIGHT_DISASSEMBLY
+           (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "cmp ");
+        #endif
         FillFlags(pMyDisasm, 20);
         (*pMyDisasm).Argument1.AccessMode = READ;
     }
@@ -114,7 +130,9 @@ void __bea_callspec__ G1_EvIv(PDISASM pMyDisasm)
             (*pMyDisasm).Prefix.LockPrefix = InUsePrefix;
         }
         (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+ARITHMETIC_INSTRUCTION;
-        (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "add ");
+        #ifndef BEA_LIGHT_DISASSEMBLY
+           (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "add ");
+        #endif
         FillFlags(pMyDisasm, 5);
     }
     else if (GV.REGOPCODE == 1) {
@@ -122,7 +140,9 @@ void __bea_callspec__ G1_EvIv(PDISASM pMyDisasm)
             (*pMyDisasm).Prefix.LockPrefix = InUsePrefix;
         }
         (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+LOGICAL_INSTRUCTION;
-        (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "or ");
+        #ifndef BEA_LIGHT_DISASSEMBLY
+           (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "or ");
+        #endif
         FillFlags(pMyDisasm, 74);
     }
     else if (GV.REGOPCODE == 2) {
@@ -130,7 +150,9 @@ void __bea_callspec__ G1_EvIv(PDISASM pMyDisasm)
             (*pMyDisasm).Prefix.LockPrefix = InUsePrefix;
         }
         (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+ARITHMETIC_INSTRUCTION;
-        (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "adc ");
+        #ifndef BEA_LIGHT_DISASSEMBLY
+           (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "adc ");
+        #endif
         FillFlags(pMyDisasm, 4);
     }
     else if (GV.REGOPCODE == 3) {
@@ -138,7 +160,9 @@ void __bea_callspec__ G1_EvIv(PDISASM pMyDisasm)
             (*pMyDisasm).Prefix.LockPrefix = InUsePrefix;
         }
         (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+ARITHMETIC_INSTRUCTION;
-        (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "sbb ");
+        #ifndef BEA_LIGHT_DISASSEMBLY
+           (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "sbb ");
+        #endif
         FillFlags(pMyDisasm, 93);
     }
     else if (GV.REGOPCODE == 4) {
@@ -146,7 +170,9 @@ void __bea_callspec__ G1_EvIv(PDISASM pMyDisasm)
             (*pMyDisasm).Prefix.LockPrefix = InUsePrefix;
         }
         (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+LOGICAL_INSTRUCTION;
-        (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "and ");
+        #ifndef BEA_LIGHT_DISASSEMBLY
+           (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "and ");
+        #endif
         FillFlags(pMyDisasm, 6);
     }
     else if (GV.REGOPCODE == 5) {
@@ -154,7 +180,9 @@ void __bea_callspec__ G1_EvIv(PDISASM pMyDisasm)
             (*pMyDisasm).Prefix.LockPrefix = InUsePrefix;
         }
         (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+ARITHMETIC_INSTRUCTION;
-        (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "sub ");
+        #ifndef BEA_LIGHT_DISASSEMBLY
+           (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "sub ");
+        #endif
         FillFlags(pMyDisasm, 103);
     }
 
@@ -163,13 +191,17 @@ void __bea_callspec__ G1_EvIv(PDISASM pMyDisasm)
             (*pMyDisasm).Prefix.LockPrefix = InUsePrefix;
         }
         (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+LOGICAL_INSTRUCTION;
-        (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "xor ");
+        #ifndef BEA_LIGHT_DISASSEMBLY
+           (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "xor ");
+        #endif
         FillFlags(pMyDisasm, 113);
     }
 
     else if (GV.REGOPCODE == 7) {
         (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+ARITHMETIC_INSTRUCTION;
-        (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "cmp ");
+        #ifndef BEA_LIGHT_DISASSEMBLY
+           (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "cmp ");
+        #endif
         FillFlags(pMyDisasm, 20);
         (*pMyDisasm).Argument1.AccessMode = READ;
     }
@@ -187,7 +219,9 @@ void __bea_callspec__ G1_EvIb(PDISASM pMyDisasm)
             (*pMyDisasm).Prefix.LockPrefix = InUsePrefix;
         }
         (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+ARITHMETIC_INSTRUCTION;
-        (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "add ");
+        #ifndef BEA_LIGHT_DISASSEMBLY
+           (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "add ");
+        #endif
         FillFlags(pMyDisasm, 5);
     }
     else if (GV.REGOPCODE == 1) {
@@ -195,7 +229,9 @@ void __bea_callspec__ G1_EvIb(PDISASM pMyDisasm)
             (*pMyDisasm).Prefix.LockPrefix = InUsePrefix;
         }
         (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+LOGICAL_INSTRUCTION;
-        (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "or ");
+        #ifndef BEA_LIGHT_DISASSEMBLY
+           (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "or ");
+        #endif
         FillFlags(pMyDisasm, 74);
     }
     else if (GV.REGOPCODE == 2) {
@@ -203,7 +239,9 @@ void __bea_callspec__ G1_EvIb(PDISASM pMyDisasm)
             (*pMyDisasm).Prefix.LockPrefix = InUsePrefix;
         }
         (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+ARITHMETIC_INSTRUCTION;
-        (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "adc ");
+        #ifndef BEA_LIGHT_DISASSEMBLY
+           (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "adc ");
+        #endif
         FillFlags(pMyDisasm, 4);
     }
     else if (GV.REGOPCODE == 3) {
@@ -211,7 +249,9 @@ void __bea_callspec__ G1_EvIb(PDISASM pMyDisasm)
             (*pMyDisasm).Prefix.LockPrefix = InUsePrefix;
         }
         (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+ARITHMETIC_INSTRUCTION;
-        (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "sbb ");
+        #ifndef BEA_LIGHT_DISASSEMBLY
+           (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "sbb ");
+        #endif
         FillFlags(pMyDisasm, 93);
     }
     else if (GV.REGOPCODE == 4) {
@@ -219,7 +259,9 @@ void __bea_callspec__ G1_EvIb(PDISASM pMyDisasm)
             (*pMyDisasm).Prefix.LockPrefix = InUsePrefix;
         }
         (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+LOGICAL_INSTRUCTION;
-        (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "and ");
+        #ifndef BEA_LIGHT_DISASSEMBLY
+           (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "and ");
+        #endif
         FillFlags(pMyDisasm, 6);
     }
     else if (GV.REGOPCODE == 5) {
@@ -227,7 +269,9 @@ void __bea_callspec__ G1_EvIb(PDISASM pMyDisasm)
             (*pMyDisasm).Prefix.LockPrefix = InUsePrefix;
         }
         (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+ARITHMETIC_INSTRUCTION;
-        (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "sub ");
+        #ifndef BEA_LIGHT_DISASSEMBLY
+           (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "sub ");
+        #endif
         FillFlags(pMyDisasm, 103);
     }
 
@@ -236,13 +280,17 @@ void __bea_callspec__ G1_EvIb(PDISASM pMyDisasm)
             (*pMyDisasm).Prefix.LockPrefix = InUsePrefix;
         }
         (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+LOGICAL_INSTRUCTION;
-        (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "xor ");
+        #ifndef BEA_LIGHT_DISASSEMBLY
+           (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "xor ");
+        #endif
         FillFlags(pMyDisasm, 113);
     }
 
     else if (GV.REGOPCODE == 7) {
         (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+ARITHMETIC_INSTRUCTION;
-        (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "cmp ");
+        #ifndef BEA_LIGHT_DISASSEMBLY
+           (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "cmp ");
+        #endif
         FillFlags(pMyDisasm, 20);
         (*pMyDisasm).Argument1.AccessMode = READ;
     }
