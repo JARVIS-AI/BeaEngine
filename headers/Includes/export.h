@@ -82,7 +82,7 @@
 #ifndef __bea_callspec__
 #if defined(BEA_USE_STDCALL)
     #if defined(__WIN32__) || defined(WIN32) || defined(_WIN32) || defined(_WIN64)
-        #if defined(__BORLANDC__) || defined(__WATCOMC__) || defined(_MSC_VER) || defined(__MINGW32__) || defined(__LCC__) || defined(__POCC__)
+        #if defined(__BORLANDC__) || defined(__WATCOMC__) || defined(_MSC_VER) || defined(__MINGW32__) || defined(__POCC__)
             #define __bea_callspec__	 __stdcall
         #else
             #define __bea_callspec__
@@ -155,6 +155,19 @@
 #ifndef BEA_HAS_INLINE
 #define __inline__
 #endif
+
+/* fix a bug with gcc under windows */
+
+#if defined(__WIN32__) || defined(WIN32) || defined(_WIN32) || defined(_WIN64)
+	#if defined(__MINGW32__)
+		#define const__	 
+	#else
+		#define const__ const
+	#endif
+#else
+		#define const__ const
+#endif
+
 
 
 #endif
