@@ -23,22 +23,27 @@ int __bea_callspec__ Disasm (PDISASM pMyDisasm) {
 
     if (InitVariables(pMyDisasm)) {
         (void) AnalyzeOpcode(pMyDisasm);
-        FixArgSizeForMemoryOperand(pMyDisasm);
-        FixREXPrefixes(pMyDisasm);
-        FillSegmentsRegisters(pMyDisasm);
-		#ifndef BEA_LIGHT_DISASSEMBLY
-			if (GV.SYNTAX_ == ATSyntax) {
-				BuildCompleteInstructionATSyntax(pMyDisasm);
-			}
-			else {
-				BuildCompleteInstruction(pMyDisasm);
-			}
-		#endif
-        if (GV.ERROR_OPCODE) {
-            return -1;
+        if (!GV.OutOfBlock) {
+            FixArgSizeForMemoryOperand(pMyDisasm);
+            FixREXPrefixes(pMyDisasm);
+            FillSegmentsRegisters(pMyDisasm);
+            #ifndef BEA_LIGHT_DISASSEMBLY
+                if (GV.SYNTAX_ == ATSyntax) {
+                    BuildCompleteInstructionATSyntax(pMyDisasm);
+                }
+                else {
+                    BuildCompleteInstruction(pMyDisasm);
+                }
+            #endif
+            if (GV.ERROR_OPCODE) {
+                return -1;
+            }
+            else {
+                return (int) (GV.EIP_-(*pMyDisasm).EIP);
+            }
         }
         else {
-            return (int) (GV.EIP_-(*pMyDisasm).EIP);
+            return 0;
         }
     }
     else {
@@ -81,6 +86,7 @@ int __bea_callspec__ InitVariables (PDISASM pMyDisasm) {
     GV.SYNTAX_ = (UInt32)(*pMyDisasm).Options & 0xff00;
     GV.FORMATNUMBER = (UInt32)(*pMyDisasm).Options & 0xff0000;
     GV.SEGMENTREGS = (UInt32)(*pMyDisasm).Options & 0xff000000;
+    GV.OutOfBlock = 0;
     return 1;
 }
 /* ====================================================================
@@ -522,6 +528,7 @@ void __bea_callspec__ eAX_Iv(PDISASM pMyDisasm)
 int __bea_callspec__ Security(int len, PDISASM pMyDisasm)
 {
     if ((GV.EndOfBlock != 0) && (GV.EIP_+(UInt64)len > GV.EndOfBlock)) {
+        GV.OutOfBlock = 1;
         return 0;
     }
     return 1;

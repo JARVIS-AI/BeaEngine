@@ -138,6 +138,7 @@ typedef struct {
    Int32 TAB_;
    Int32 ERROR_OPCODE;
    REX_Struct REX;
+   Int32 OutOfBlock;
 } InternalDatas;
 #pragma pack()
 
