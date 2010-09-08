@@ -2164,7 +2164,7 @@ void __bea_callspec__ stosw_(PDISASM pMyDisasm)
  * ======================================= */
 void __bea_callspec__ syscall_(PDISASM pMyDisasm)
 {
-    if (GV.OperandSize == 64) {
+    if (GV.Architecture == 64) {
         (*pMyDisasm).Instruction.Category = SYSTEM_INSTRUCTION;
         #ifndef BEA_LIGHT_DISASSEMBLY
            (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "syscall ");
@@ -2183,7 +2183,7 @@ void __bea_callspec__ syscall_(PDISASM pMyDisasm)
  * ======================================= */
 void __bea_callspec__ sysret_(PDISASM pMyDisasm)
 {
-    if (GV.OperandSize == 64) {
+    if (GV.Architecture == 64) {
         (*pMyDisasm).Instruction.Category = SYSTEM_INSTRUCTION;
         #ifndef BEA_LIGHT_DISASSEMBLY
            (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "sysret ");
