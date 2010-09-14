@@ -2422,6 +2422,7 @@ void __bea_callspec__ pextrd_(PDISASM pMyDisasm)
                (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "pextrq ");
             #endif
             GV.MemDecoration = Arg1qword;
+            GV.OperandSize = 64;
         }
         else {
             #ifndef BEA_LIGHT_DISASSEMBLY
@@ -2767,7 +2768,7 @@ void __bea_callspec__ pinsrb_(PDISASM pMyDisasm)
     if ((*pMyDisasm).Prefix.OperandSize == InUsePrefix) {
         GV.OperandSize = GV.OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
-        GV.MemDecoration = Arg2dqword;
+        GV.MemDecoration = Arg2byte;
         (*pMyDisasm).Instruction.Category = SSE41_INSTRUCTION+INSERTION_EXTRACTION;
         #ifndef BEA_LIGHT_DISASSEMBLY
            (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "pinsrb ");
@@ -4204,10 +4205,10 @@ void __bea_callspec__ roundss_(PDISASM pMyDisasm)
     if ((*pMyDisasm).Prefix.OperandSize == InUsePrefix) {
         GV.OperandSize = GV.OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
-        GV.MemDecoration = Arg2dqword;
+        GV.MemDecoration = Arg2dword;
         (*pMyDisasm).Instruction.Category = SSE41_INSTRUCTION+ROUND_INSTRUCTION;
         #ifndef BEA_LIGHT_DISASSEMBLY
-           (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "roundpd ");
+           (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "roundss ");
         #endif
         GV.SSE_ = 1;
         GxEx(pMyDisasm);

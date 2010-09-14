@@ -84,7 +84,7 @@ Structure _Disasm
   SecurityBlock.l
   CompleteInstr.b[64]
   Archi.l
-  Options.l
+  Options.q
   Instruction.INSTRTYPE
   Argument1.ARGTYPE
   Argument2.ARGTYPE

@@ -84,7 +84,7 @@ class DISASM(Structure):
                ("SecurityBlock", c_long),
                ("CompleteInstr", c_char * 64),
                ("Archi", c_long),
-               ("Options", c_long),
+               ("Options", c_longlong),
                ("Instruction", INSTRTYPE),
                ("Argument1", ARGTYPE),
                ("Argument2", ARGTYPE),

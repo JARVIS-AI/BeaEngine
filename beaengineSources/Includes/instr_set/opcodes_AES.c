@@ -143,7 +143,7 @@ void __bea_callspec__ aeskeygen(PDISASM pMyDisasm)
         GV.MemDecoration = Arg2dqword;
         (*pMyDisasm).Instruction.Category = AES_INSTRUCTION;
         #ifndef BEA_LIGHT_DISASSEMBLY
-           (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "aeskeygen-assist ");
+           (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "aeskeygenassist ");
         #endif
         GV.SSE_ = 1;
         GxEx(pMyDisasm);

@@ -347,9 +347,13 @@ end;
 function _sprintf(Buffer, Format: PAnsiChar):longint; varargs;  cdecl; external 'User32.DLL' name 'wsprintfA';
 
 {$IFDEF USEDLL}
-function Disasm(var aDisAsm:TDISASM):longint;stdcall;external 'BeaEngine.DLL' index 1;
+function Disasm(var aDisAsm:TDISASM):longint;stdcall;external 'BeaEngine.DLL' index 3;
+function BeaEngineVersion:longint;stdcall;external 'BeaEngine.DLL' index 2;
+function BeaEngineRevision:longint;stdcall;external 'BeaEngine.DLL' index 1;
 {$ELSE}
 function Disasm(var aDisAsm:TDISASM):longint;stdcall;external;
+function BeaEngineVersion:longint;stdcall;external;
+function BeaEngineRevision:longint;stdcall;external;
 {$ENDIF}
 
 end.

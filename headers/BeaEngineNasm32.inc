@@ -89,7 +89,7 @@ STRUC _Disasm
     SecurityBlock:   resd   1
     CompleteInstr:   resb   64
     Archi:           resd   1
-    Options:         resd   1
+    Options:         resq   1
     Instruction:     resb   INSTRTYPE_size
     Argument1:       resb   ARGTYPE_size
     Argument2:       resb   ARGTYPE_size

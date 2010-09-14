@@ -90,7 +90,7 @@ struct _Disasm
     SecurityBlock   dd   0
     CompleteInstr   db   64 dup(0)
     Archi           dd   0
-    Options         dd   0
+    Options         dq   0
     Instruction     INSTRTYPE
     Argument1       ARGTYPE
     Argument2       ARGTYPE

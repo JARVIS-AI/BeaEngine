@@ -84,7 +84,7 @@ _Disasm STRUCT
     SecurityBlock   dd   0
     CompleteInstr   db   64 dup 0
     Archi           dd   0
-    Options         dd   0
+    Options         dq   0
     Instruction     INSTRTYPE <0>
     Argument1       ARGTYPE <>
     Argument2       ARGTYPE <>
