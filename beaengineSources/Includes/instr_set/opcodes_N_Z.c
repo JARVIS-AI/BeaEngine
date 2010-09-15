@@ -2577,6 +2577,7 @@ void __bea_callspec__ shld_EvGvIb(PDISASM pMyDisasm)
     #ifndef BEA_LIGHT_DISASSEMBLY
        (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "shld ");
     #endif
+    GV.ImmediatSize = 8;
     EvGv(pMyDisasm);
     GV.EIP_+= 1;
     if (!Security(0, pMyDisasm)) return;
@@ -2587,7 +2588,7 @@ void __bea_callspec__ shld_EvGvIb(PDISASM pMyDisasm)
     #endif
     (*pMyDisasm).Argument3.ArgType = CONSTANT_TYPE+ABSOLUTE_;
     (*pMyDisasm).Argument3.ArgSize = 8;
-    GV.ImmediatSize = 8;
+
     FillFlags(pMyDisasm, 97);
 }
 
@@ -2620,6 +2621,7 @@ void __bea_callspec__ shrd_EvGvIb(PDISASM pMyDisasm)
     #ifndef BEA_LIGHT_DISASSEMBLY
        (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "shrd ");
     #endif
+    GV.ImmediatSize = 8;
     EvGv(pMyDisasm);
     GV.EIP_+= 1;
     if (!Security(0, pMyDisasm)) return;
@@ -2630,7 +2632,7 @@ void __bea_callspec__ shrd_EvGvIb(PDISASM pMyDisasm)
     #endif
     (*pMyDisasm).Argument3.ArgType = CONSTANT_TYPE+ABSOLUTE_;
     (*pMyDisasm).Argument3.ArgSize = 8;
-    GV.ImmediatSize = 8;
+
     FillFlags(pMyDisasm, 97);
 }
 

@@ -145,6 +145,7 @@ void __bea_callspec__ aeskeygen(PDISASM pMyDisasm)
         #ifndef BEA_LIGHT_DISASSEMBLY
            (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "aeskeygenassist ");
         #endif
+        GV.ImmediatSize = 8;
         GV.SSE_ = 1;
         GxEx(pMyDisasm);
         GV.SSE_ = 0;
@@ -157,7 +158,7 @@ void __bea_callspec__ aeskeygen(PDISASM pMyDisasm)
         #endif
         (*pMyDisasm).Argument3.ArgType = CONSTANT_TYPE+ABSOLUTE_;
         (*pMyDisasm).Argument3.ArgSize = 8;
-        GV.ImmediatSize = 8;
+
 
     }
     else {
