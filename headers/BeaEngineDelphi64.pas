@@ -351,9 +351,21 @@ function Disasm(var aDisAsm:TDISASM):longint;stdcall;external 'BeaEngine.DLL' in
 function BeaEngineVersion:longint;stdcall;external 'BeaEngine.DLL' index 2;
 function BeaEngineRevision:longint;stdcall;external 'BeaEngine.DLL' index 1;
 {$ELSE}
-function Disasm(var aDisAsm:TDISASM):longint;stdcall;external;
-function BeaEngineVersion:longint;stdcall;external;
-function BeaEngineRevision:longint;stdcall;external;
+function _Disasm(var aDisAsm:TDISASM):longint;stdcall;external;
+function _BeaEngineVersion:longint;stdcall;external;
+function _BeaEngineRevision:longint;stdcall;external;
+function Disasm(var aDisAsm:TDISASM):longint;stdcall;
+begin
+result := _Disasm(aDisAsm);
+end;
+function BeaEngineVersion:longint;stdcall;
+begin
+result := _BeaEngineVersion;
+end;
+function BeaEngineRevision:longint;stdcall;
+begin
+result := _BeaEngineRevision;
+end;
 {$ENDIF}
 
 end.
