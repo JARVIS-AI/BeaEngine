@@ -3009,15 +3009,16 @@ size_t __bea_callspec__ SIB_0(ARGTYPE* pMyArgument, size_t i, PDISASM pMyDisasm)
 {
 
     /* ========================= Interpret Base */
-
+    size_t j;
     if ((GV.BASE_  == 5) && (GV.MOD_ == 0)) {
         GV.DECALAGE_EIP += 4;
         if (!Security(7, pMyDisasm)) return i;
+        j = i;
         #ifndef BEA_LIGHT_DISASSEMBLY
-           (void) sprintf((char*) (*pMyArgument).ArgMnemonic+i, "%.8X",*((UInt32*)(UIntPtr) (GV.EIP_+3)));
+           i+= CopyFormattedNumber(pMyDisasm, (char*) (*pMyArgument).ArgMnemonic+j,"%.8X",(Int64) *((UInt32*)(UIntPtr) (GV.EIP_+3)));
         #endif
         (*pMyArgument).Memory.Displacement = *((UInt32*)(UIntPtr) (GV.EIP_+3));
-        i += 4;
+
     }
     else {
 

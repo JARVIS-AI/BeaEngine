@@ -204,6 +204,7 @@
 	typedef unsigned int           UInt32;
     typedef unsigned __int64       Int64;
     typedef signed __int64         UInt64;
+	typedef signed long            IntPtr;
 	typedef unsigned long          UIntPtr;
     #define BEA_HAVE_INT64 1
 #elif defined(__WATCOMC__)
