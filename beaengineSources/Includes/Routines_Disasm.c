@@ -628,29 +628,31 @@ void __bea_callspec__ FillSegmentsRegisters(PDISASM pMyDisasm)
             if (((*pMyDisasm).Argument1.Memory.BaseRegister == REG4) || ((*pMyDisasm).Argument1.Memory.BaseRegister == REG5)) {
                 (*pMyDisasm).Argument1.SegmentReg = SSReg;
                 /* ========== override is invalid here */
-                if ((*pMyDisasm).Prefix.FSPrefix == InUsePrefix) {
-                    (*pMyDisasm).Argument1.SegmentReg = FSReg;
-                    (*pMyDisasm).Prefix.FSPrefix = InvalidPrefix;
-                }
-                else if ((*pMyDisasm).Prefix.GSPrefix == InUsePrefix) {
-                    (*pMyDisasm).Argument1.SegmentReg = GSReg;
-                    (*pMyDisasm).Prefix.GSPrefix = InvalidPrefix;
-                }
-                else if ((*pMyDisasm).Prefix.CSPrefix == InUsePrefix) {
-                    (*pMyDisasm).Argument1.SegmentReg = CSReg;
-                    (*pMyDisasm).Prefix.CSPrefix = InvalidPrefix;
-                }
-                else if ((*pMyDisasm).Prefix.DSPrefix == InUsePrefix) {
-                    (*pMyDisasm).Argument1.SegmentReg = DSReg;
-                    (*pMyDisasm).Prefix.DSPrefix = InvalidPrefix;
-                }
-                else if ((*pMyDisasm).Prefix.ESPrefix == InUsePrefix) {
-                    (*pMyDisasm).Argument1.SegmentReg = ESReg;
-                    (*pMyDisasm).Prefix.ESPrefix = InvalidPrefix;
-                }
-                else if ((*pMyDisasm).Prefix.SSPrefix == InUsePrefix) {
-                    (*pMyDisasm).Argument1.SegmentReg = SSReg;
-                    (*pMyDisasm).Prefix.SSPrefix = InvalidPrefix;
+                if ((*pMyDisasm).Argument2.ArgType != MEMORY_TYPE) {
+                    if ((*pMyDisasm).Prefix.FSPrefix == InUsePrefix) {
+                        (*pMyDisasm).Argument1.SegmentReg = FSReg;
+                        (*pMyDisasm).Prefix.FSPrefix = InvalidPrefix;
+                    }
+                    else if ((*pMyDisasm).Prefix.GSPrefix == InUsePrefix) {
+                        (*pMyDisasm).Argument1.SegmentReg = GSReg;
+                        (*pMyDisasm).Prefix.GSPrefix = InvalidPrefix;
+                    }
+                    else if ((*pMyDisasm).Prefix.CSPrefix == InUsePrefix) {
+                        (*pMyDisasm).Argument1.SegmentReg = CSReg;
+                        (*pMyDisasm).Prefix.CSPrefix = InvalidPrefix;
+                    }
+                    else if ((*pMyDisasm).Prefix.DSPrefix == InUsePrefix) {
+                        (*pMyDisasm).Argument1.SegmentReg = DSReg;
+                        (*pMyDisasm).Prefix.DSPrefix = InvalidPrefix;
+                    }
+                    else if ((*pMyDisasm).Prefix.ESPrefix == InUsePrefix) {
+                        (*pMyDisasm).Argument1.SegmentReg = ESReg;
+                        (*pMyDisasm).Prefix.ESPrefix = InvalidPrefix;
+                    }
+                    else if ((*pMyDisasm).Prefix.SSPrefix == InUsePrefix) {
+                        (*pMyDisasm).Argument1.SegmentReg = SSReg;
+                        (*pMyDisasm).Prefix.SSPrefix = InvalidPrefix;
+                    }
                 }
             }
             else {
