@@ -185,7 +185,10 @@ namespace Bea
             SuffixedNumeral = 0x00000000,
 
             /* === mask = 0xff000000 */
-            ShowSegmentRegs = 0x01000000
+            ShowSegmentRegs = 0x01000000,
+			
+			LowPosition = 0,
+			HighPosition = 1
         }
     }
 }

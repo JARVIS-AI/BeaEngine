@@ -73,6 +73,7 @@ class ARGTYPE(Structure):
    _fields_= [("ArgMnemonic", c_char * 32),
               ("ArgType", c_long),
               ("ArgSize", c_long),
+			  ("ArgPosition", c_long),
               ("AccessMode", c_long),
               ("Memory", MEMORYTYPE),
               ("SegmentReg", c_long)]
@@ -112,6 +113,9 @@ NasmSyntax = 0x200
 PrefixedNumeral = 0x10000
 SuffixedNumeral = 0x20000
 ShowSegmentRegs = 0x01000000
+
+LowPosition = 0
+HighPosition = 1
 
 # ======================= EFLAGS states
 

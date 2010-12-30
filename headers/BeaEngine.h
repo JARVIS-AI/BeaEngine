@@ -94,6 +94,7 @@ typedef struct  {
    char ArgMnemonic[32];
    Int32 ArgType;
    Int32 ArgSize;
+   Int32 ArgPosition;   
    UInt32 AccessMode;
    MEMORYTYPE Memory;
    UInt32 SegmentReg;
@@ -131,6 +132,9 @@ typedef struct _Disasm {
 #define NotUsedPrefix 0
 #define MandatoryPrefix 8
 #define InUsePrefix 1
+
+#define LowPosition 0
+#define HighPosition 1
 
 enum INSTRUCTION_TYPE
 {

@@ -72,6 +72,7 @@ ARGTYPE STRUCT
     ArgMnemonic     db   32 dup 0
     ArgType         dd   0
     ArgSize         dd   0
+	ArgPosition		dd   0
     AccessMode      dd   0
     Memory          MEMORYTYPE <0>
     SegmentReg      dd   0
@@ -95,6 +96,10 @@ _Disasm ENDS
 
 
 .const
+
+	LowPosition		equ		0
+	HighPosition	equ		1
+
 
     ESReg   equ 1
     DSReg   equ 2

@@ -71,6 +71,7 @@ ARGTYPE STRUCT
     ArgMnemonic     BYTE    32 dup(0)
     ArgType         DWORD   0
     ArgSize         DWORD   0
+	ArgPosition		DWORD	0
     AccessMode      DWORD   0
     Memory          MEMORYTYPE <0>
     SegmentReg      DWORD   0
@@ -95,6 +96,9 @@ _Disasm ENDS
 Disasm  PROTO :DWORD
 
 .const
+
+	LowPosition		equ		0
+	HighPosition	equ		1
 
     ESReg   equ 1
     DSReg   equ 2

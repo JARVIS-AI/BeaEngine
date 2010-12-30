@@ -81,6 +81,7 @@ namespace Bea
         public string ArgMnemonic;
         public Int32 ArgType;
         public Int32 ArgSize;
+		public Int32 ArgPosition;
         public UInt32 AccessMode;
         public MemoryType Memory;
         public UInt32 SegmentReg;

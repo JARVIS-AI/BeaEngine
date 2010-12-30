@@ -117,6 +117,7 @@ uses Windows,SysUtils;
           ArgMnemonic : array[0..31] of AnsiChar;
           ArgType : longint;
           ArgSize : longint;
+		  ArgPosition : longint;
           AccessMode : longint;
           Memory : TMEMORYTYPE;
           SegmentReg : longint;
@@ -318,6 +319,8 @@ uses Windows,SysUtils;
        SuffixedNumeral = $00000000;
   { === mask = 0xff000000 }
        ShowSegmentRegs = $01000000;
+	   LowPosition = 0;
+	   HighPosition = 1;
 
 
   function Disasm(var aDisAsm:TDISASM):longint;stdcall;

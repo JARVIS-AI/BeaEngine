@@ -76,6 +76,7 @@ STRUC ARGTYPE
     ArgMnemonic:     resb   32
     ArgType:         resd   1
     ArgSize:         resd   1
+	ArgPosition:	 resd	1
     AccessMode:      resd   1
     Memory:          resb   MEMORYTYPE_size
     SegmentReg:      resd   1
@@ -98,7 +99,8 @@ STRUC _Disasm
     Reserved_        resd   40
 ENDSTRUC
 
-
+	LowPosition		equ		0
+	HighPosition	equ		1
     ESReg   equ 1
     DSReg   equ 2
     FSReg   equ 3

@@ -72,6 +72,7 @@ Structure ARGTYPE
   ArgMnemonic.b[32]
   ArgType.l
   ArgSize.l
+  ArgPosition.l
   AccessMode.l
   Memory.MEMORYTYPE
   SegmentReg.l
@@ -93,6 +94,9 @@ Structure _Disasm
   Reserved_.l[40]
 EndStructure
 Global MyDisasm._Disasm
+
+#LowPosition = 0
+#HighPosition = 1
 
 #ESReg = 1
 #DSReg = 2
