@@ -254,7 +254,12 @@ void __bea_callspec__ EvIv(PDISASM pMyDisasm)
         GV.EIP_ += GV.DECALAGE_EIP+6;
         if (!Security(0, pMyDisasm)) return;
         #ifndef BEA_LIGHT_DISASSEMBLY
-           (void) CopyFormattedNumber(pMyDisasm, (char*) &(*pMyDisasm).Argument2.ArgMnemonic,"%.8X",(Int64) *((UInt32*)(UIntPtr) (GV.EIP_-4)));
+            if (GV.OperandSize == 64) {
+                (void) CopyFormattedNumber(pMyDisasm, (char*) &(*pMyDisasm).Argument2.ArgMnemonic,"%.16llX",(Int64) *((UInt32*)(UIntPtr) (GV.EIP_-4)));
+            }
+            else {
+                (void) CopyFormattedNumber(pMyDisasm, (char*) &(*pMyDisasm).Argument2.ArgMnemonic,"%.8X",(Int64) *((UInt32*)(UIntPtr) (GV.EIP_-4)));
+            }
         #endif
 
         (*pMyDisasm).Argument2.ArgType = CONSTANT_TYPE+ABSOLUTE_;
@@ -313,7 +318,7 @@ void __bea_callspec__ EvIb(PDISASM pMyDisasm)
                 (void) CopyFormattedNumber(pMyDisasm, (char*) &(*pMyDisasm).Argument2.ArgMnemonic,"%.2X",(Int64)*((Int8*)(UIntPtr) (GV.EIP_-1)));
 			}
 			else {
-                (void) CopyFormattedNumber(pMyDisasm, (char*) &(*pMyDisasm).Argument2.ArgMnemonic,"%.16lX",(Int64)*((Int8*)(IntPtr) (GV.EIP_-1)));
+                (void) CopyFormattedNumber(pMyDisasm, (char*) &(*pMyDisasm).Argument2.ArgMnemonic,"%.16llX",(Int64)*((Int8*)(IntPtr) (GV.EIP_-1)));
 			}
             #endif
 		}
@@ -490,7 +495,7 @@ void __bea_callspec__ eAX_Iv(PDISASM pMyDisasm)
         (*pMyDisasm).Argument2.ArgSize = 32;
         MyNumber = *((UInt32*)(UIntPtr) (GV.EIP_+1));
         #ifndef BEA_LIGHT_DISASSEMBLY
-           (void) CopyFormattedNumber(pMyDisasm, (char*) &(*pMyDisasm).Argument2.ArgMnemonic,"%.8X",(Int64) MyNumber);
+           (void) CopyFormattedNumber(pMyDisasm, (char*) &(*pMyDisasm).Argument2.ArgMnemonic,"%.16llX",(Int64) MyNumber);
         #endif
         (*pMyDisasm).Instruction.Immediat = MyNumber;
          if (GV.REX.B_ == 1) {
@@ -834,8 +839,8 @@ void __bea_callspec__ BuildCompleteInstruction(PDISASM pMyDisasm)
 
     /* =============== if Arg2.Exists and Arg1.Exists , add"," */
     if (((UInt8)*((UInt8*) &(*pMyDisasm).Argument1.ArgMnemonic) != 0) && ((UInt8)*((UInt8*) &(*pMyDisasm).Argument2.ArgMnemonic) != 0)) {
-        (void) strcpy ((char*) &(*pMyDisasm).CompleteInstr+i, " , ");
-        i += 3;
+        (void) strcpy ((char*) &(*pMyDisasm).CompleteInstr+i, ", ");
+        i += 2;
     }
 
     /* =============== if Arg2.IsMemoryType, add decoration-example == "dword ptr ds:[" */
@@ -900,8 +905,8 @@ void __bea_callspec__ BuildCompleteInstruction(PDISASM pMyDisasm)
 
     /* =============== if Arg3.Exists */
     if (GV.third_arg != 0) {
-        (void) strcpy ((char*) &(*pMyDisasm).CompleteInstr+i, " , ");
-        i += 3;
+        (void) strcpy ((char*) &(*pMyDisasm).CompleteInstr+i, ", ");
+        i += 2;
         (void) strcpy ((char*) &(*pMyDisasm).CompleteInstr+i, (char*) &(*pMyDisasm).Argument3.ArgMnemonic);
     }
 
@@ -979,8 +984,8 @@ void __bea_callspec__ BuildCompleteInstructionATSyntax(PDISASM pMyDisasm)
 
     /* =============== if Arg3.Exists and Arg2.Exists , display " , " */
     if ((GV.third_arg != 0) && (*((UInt8*) &(*pMyDisasm).Argument2.ArgMnemonic) != 0)) {
-        (void) strcpy ((char*) &(*pMyDisasm).CompleteInstr+i, " , ");
-        i += 3;
+        (void) strcpy ((char*) &(*pMyDisasm).CompleteInstr+i, ", ");
+        i += 2;
     }
 
     /* =============== if Arg2 exists, display it */
@@ -1022,8 +1027,8 @@ void __bea_callspec__ BuildCompleteInstructionATSyntax(PDISASM pMyDisasm)
 
     /* =============== if Arg2.Exists and Arg1.Exists , display " , " */
     if (((UInt8)*((UInt8*) &(*pMyDisasm).Argument1.ArgMnemonic) != 0) && ((UInt8)*((UInt8*) &(*pMyDisasm).Argument2.ArgMnemonic) != 0)) {
-        (void) strcpy ((char*) &(*pMyDisasm).CompleteInstr+i, " , ");
-        i += 3;
+        (void) strcpy ((char*) &(*pMyDisasm).CompleteInstr+i, ", ");
+        i += 2;
     }
 
     /* =============== if Arg1 exists, display it */
