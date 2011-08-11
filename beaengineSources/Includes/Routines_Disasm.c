@@ -93,6 +93,9 @@ int __bea_callspec__ InitVariables (PDISASM pMyDisasm) {
 	(*pMyDisasm).Argument1.ArgPosition = LowPosition;
 	(*pMyDisasm).Argument2.ArgPosition = LowPosition;
 	(*pMyDisasm).Argument3.ArgPosition = LowPosition;
+	(*pMyDisasm).Argument1.ArgType = NO_ARGUMENT;
+	(*pMyDisasm).Argument2.ArgType = NO_ARGUMENT;
+	(*pMyDisasm).Argument3.ArgType = NO_ARGUMENT;
     (*pMyDisasm).Argument2.AccessMode = READ;
     (*pMyDisasm).Argument3.AccessMode = READ;
     (void) memset (&(*pMyDisasm).Instruction, 0, sizeof (INSTRTYPE));

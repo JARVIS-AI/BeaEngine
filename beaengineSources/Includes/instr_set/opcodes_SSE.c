@@ -515,7 +515,7 @@ void __bea_callspec__ cvtps2pd_(PDISASM pMyDisasm)
         GV.SSE_ = 0;
     }
     else {
-        GV.MemDecoration = Arg2dqword;
+        GV.MemDecoration = Arg2qword;
         (*pMyDisasm).Instruction.Category = SSE2_INSTRUCTION+CONVERSION_INSTRUCTION;
         #ifndef BEA_LIGHT_DISASSEMBLY
            (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "cvtps2pd ");
@@ -841,7 +841,7 @@ void __bea_callspec__ cvtpd2dq_(PDISASM pMyDisasm)
     /* ========== 0xf3 */
     else if (GV.PrefRepe == 1) {
         (*pMyDisasm).Prefix.RepPrefix = MandatoryPrefix;
-        GV.MemDecoration = Arg2dqword;
+        GV.MemDecoration = Arg2qword;
         (*pMyDisasm).Instruction.Category = SSE2_INSTRUCTION+CONVERSION_INSTRUCTION;
         #ifndef BEA_LIGHT_DISASSEMBLY
            (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "cvtdq2pd ");
