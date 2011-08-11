@@ -258,7 +258,7 @@ void __bea_callspec__ EvIv(PDISASM pMyDisasm)
         if (!Security(0, pMyDisasm)) return;
         #ifndef BEA_LIGHT_DISASSEMBLY
             if (GV.OperandSize == 64) {
-                (void) CopyFormattedNumber(pMyDisasm, (char*) &(*pMyDisasm).Argument2.ArgMnemonic,"%.16llX",(Int64) *((UInt32*)(UIntPtr) (GV.EIP_-4)));
+                (void) CopyFormattedNumber(pMyDisasm, (char*) &(*pMyDisasm).Argument2.ArgMnemonic,"%.16llX",(Int64) *((Int32*)(UIntPtr) (GV.EIP_-4)));
             }
             else {
                 (void) CopyFormattedNumber(pMyDisasm, (char*) &(*pMyDisasm).Argument2.ArgMnemonic,"%.8X",(Int64) *((UInt32*)(UIntPtr) (GV.EIP_-4)));
