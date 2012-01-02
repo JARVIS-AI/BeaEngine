@@ -470,7 +470,7 @@ void __bea_callspec__ ALIb(PDISASM pMyDisasm)
     GV.ImmediatSize = 8;
     MyNumber = *((Int8*)(IntPtr) (GV.EIP_+1));
     #ifndef BEA_LIGHT_DISASSEMBLY
-       (void) CopyFormattedNumber(pMyDisasm, (char*) &(*pMyDisasm).Argument2.ArgMnemonic,"%.8X",(Int64) MyNumber);
+       (void) CopyFormattedNumber(pMyDisasm, (char*) &(*pMyDisasm).Argument2.ArgMnemonic,"%.2X",(Int64) MyNumber);
     #endif
     (*pMyDisasm).Instruction.Immediat = MyNumber;
     #ifndef BEA_LIGHT_DISASSEMBLY
@@ -600,6 +600,9 @@ void __bea_callspec__ CalculateRelativeAddress(UInt64 * pMyAddress, Int64 MyNumb
 size_t __bea_callspec__ CopyFormattedNumber(PDISASM pMyDisasm, char* pBuffer, const char* pFormat, Int64 MyNumber)
 {
     size_t i = 0;
+    if (!strcmp(pFormat,"%.2X")) MyNumber = MyNumber & 0xFF;
+    if (!strcmp(pFormat,"%.4X")) MyNumber = MyNumber & 0xFFFF;
+    if (!strcmp(pFormat,"%.8X")) MyNumber = MyNumber & 0xFFFFFFFF;
     if (GV.FORMATNUMBER == PrefixedNumeral) {
         (void) strcpy(pBuffer, "0x");
         (void) sprintf (pBuffer+2, pFormat, MyNumber);
@@ -620,14 +623,14 @@ size_t __bea_callspec__ CopyFormattedNumber(PDISASM pMyDisasm, char* pBuffer, co
  * ==================================================================== */
 void __bea_callspec__ FillSegmentsRegisters(PDISASM pMyDisasm)
 {
-    if (((*pMyDisasm).Prefix.LockPrefix == InUsePrefix) && ((*pMyDisasm).Argument1.ArgType != MEMORY_TYPE)) {
+    if (((*pMyDisasm).Prefix.LockPrefix == InUsePrefix) && !((*pMyDisasm).Argument1.ArgType & MEMORY_TYPE)) {
         (*pMyDisasm).Prefix.LockPrefix = InvalidPrefix;
     }
     if ((*pMyDisasm).Instruction.Category == GENERAL_PURPOSE_INSTRUCTION+STRING_INSTRUCTION) {
         (*pMyDisasm).Argument1.SegmentReg = ESReg;
         (*pMyDisasm).Argument2.SegmentReg = DSReg;
         /* =============== override affects Arg2 */
-        if ((*pMyDisasm).Argument2.ArgType == MEMORY_TYPE) {
+        if ((*pMyDisasm).Argument2.ArgType & MEMORY_TYPE) {
             if ((*pMyDisasm).Prefix.FSPrefix == InUsePrefix) {
                 (*pMyDisasm).Argument2.SegmentReg = FSReg;
             }
@@ -649,7 +652,7 @@ void __bea_callspec__ FillSegmentsRegisters(PDISASM pMyDisasm)
         }
     }
     else {
-        if ((*pMyDisasm).Argument1.ArgType == MEMORY_TYPE) {
+        if ((*pMyDisasm).Argument1.ArgType & MEMORY_TYPE) {
             if (((*pMyDisasm).Argument1.Memory.BaseRegister == REG4) || ((*pMyDisasm).Argument1.Memory.BaseRegister == REG5)) {
                 (*pMyDisasm).Argument1.SegmentReg = SSReg;
                 /* ========== override is invalid here */
@@ -701,7 +704,7 @@ void __bea_callspec__ FillSegmentsRegisters(PDISASM pMyDisasm)
             }
         }
 
-        if ((*pMyDisasm).Argument2.ArgType == MEMORY_TYPE) {
+        if ((*pMyDisasm).Argument2.ArgType & MEMORY_TYPE) {
             if (((*pMyDisasm).Argument2.Memory.BaseRegister == REG4) || ((*pMyDisasm).Argument2.Memory.BaseRegister == REG5)) {
                 (*pMyDisasm).Argument2.SegmentReg = SSReg;
                 /* ========== override is invalid here */
@@ -779,7 +782,7 @@ void __bea_callspec__ BuildCompleteInstruction(PDISASM pMyDisasm)
 
     /* =============== if TAB = 1, add tabulation */
     if (GV.TAB_ == 1) {
-       (void) strcpy ((char*) &(*pMyDisasm).CompleteInstr+i, space_tab[10-i]);
+       (void) strcpy ((char*) &(*pMyDisasm).CompleteInstr+i, space_tab[i>10 ? 0 : 10-i]);
         i = strlen((char*) &(*pMyDisasm).CompleteInstr);
     }
     /* =============== if Arg1.IsMemoryType, add decoration-example == "dword ptr ds:[" */
@@ -967,7 +970,7 @@ void __bea_callspec__ BuildCompleteInstructionATSyntax(PDISASM pMyDisasm)
     }
     /* =============== if TAB = 1, add tabulation */
     if (GV.TAB_ == 1) {
-       (void) strcpy ((char*) &(*pMyDisasm).CompleteInstr+i, space_tab[10-i]);
+       (void) strcpy ((char*) &(*pMyDisasm).CompleteInstr+i, space_tab[i>10 ? 0 : 10-i]);
         i = strlen((char*) &(*pMyDisasm).CompleteInstr);
     }
 

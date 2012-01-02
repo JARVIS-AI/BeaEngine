@@ -428,6 +428,7 @@ void __bea_callspec__ Addr_disp32(ARGTYPE* pMyArgument, PDISASM pMyDisasm)
             #ifndef BEA_LIGHT_DISASSEMBLY
                i+= CopyFormattedNumber(pMyDisasm, (char*) (*pMyArgument).ArgMnemonic+i,"%.16llX", (Int64)MyAddress);
             #endif
+            (*pMyArgument).ArgType |= RELATIVE_;
         }
         else {
             #ifndef BEA_LIGHT_DISASSEMBLY

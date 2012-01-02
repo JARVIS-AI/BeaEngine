@@ -79,6 +79,7 @@ void __bea_callspec__ nop_Ev(PDISASM pMyDisasm)
     }
     MOD_RM(&(*pMyDisasm).Argument2, pMyDisasm);
     GV.EIP_ += GV.DECALAGE_EIP+2;
+    (*pMyDisasm).Argument2.AccessMode = 0;
 }
 
 /* =======================================
@@ -1782,6 +1783,9 @@ void __bea_callspec__ retn_(PDISASM pMyDisasm)
  * ======================================= */
 void __bea_callspec__ ret_(PDISASM pMyDisasm)
 {
+    if ((*pMyDisasm).Prefix.RepPrefix == SuperfluousPrefix) {
+        (*pMyDisasm).Prefix.RepPrefix = InUsePrefix;
+    }
     (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+CONTROL_TRANSFER;
     (*pMyDisasm).Instruction.BranchType = RetType;
     #ifndef BEA_LIGHT_DISASSEMBLY
@@ -1833,10 +1837,6 @@ void __bea_callspec__ retf_Iw(PDISASM pMyDisasm)
         #ifndef BEA_LIGHT_DISASSEMBLY
            (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "lret ");
         #endif
-        #ifndef BEA_LIGHT_DISASSEMBLY
-           (void) strcpy ((*pMyDisasm).Argument1.ArgMnemonic,"\x24");
-        #endif
-        i++;
     }
     else {
         #ifndef BEA_LIGHT_DISASSEMBLY

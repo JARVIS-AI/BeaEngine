@@ -107,7 +107,7 @@ void __bea_callspec__ G5_Ev(PDISASM pMyDisasm)
     }
     else if (GV.REGOPCODE == 5) {
         (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+CONTROL_TRANSFER;
-        (*pMyDisasm).Instruction.BranchType = CallType;
+        (*pMyDisasm).Instruction.BranchType = JmpType;
         if (GV.SYNTAX_ == ATSyntax) {
             #ifndef BEA_LIGHT_DISASSEMBLY
                (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "ljmp ");
