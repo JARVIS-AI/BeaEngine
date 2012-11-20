@@ -72,7 +72,7 @@ class INSTRTYPE(Structure):
 
 class ARGTYPE(Structure):
    _pack_= 1
-   _fields_= [("ArgMnemonic", c_char * 32),
+   _fields_= [("ArgMnemonic", c_char * 64),
               ("ArgType", c_int32),
               ("ArgSize", c_int32),
               ("ArgPosition", c_int32),
@@ -198,7 +198,7 @@ JS = 5
 JP = 6
 JL = 7
 JG = 8
-JB = 9
+JB = 2
 JECXZ = 10
 JmpType = 11
 CallType = 12
@@ -211,7 +211,7 @@ JNS = -5
 JNP = -6
 JNL = -7
 JNG = -8
-JNB = -9
+JNB = -2
 
 NO_ARGUMENT = 0x10000000
 REGISTER_TYPE = 0x20000000

@@ -69,7 +69,7 @@ INSTRTYPE STRUCT
 INSTRTYPE ENDS
 
 ARGTYPE STRUCT
-    ArgMnemonic     db   32 dup 0
+    ArgMnemonic     db   64 dup 0
     ArgType         dd   0
     ArgSize         dd   0
 	ArgPosition		dd   0
@@ -230,8 +230,8 @@ _Disasm ENDS
     Jnl_                        equ -7
     Jg_                         equ 8
     Jng_                        equ -8
-    Jb_                         equ 9
-    Jnb_                        equ -9
+    Jb_                         equ 2
+    Jnb_                        equ -2
     Jecxz_                      equ 10
     JmpType                     equ 11
     CallType                    equ 12

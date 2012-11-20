@@ -94,7 +94,7 @@ typedef struct  {
 
 #pragma pack(1)
 typedef struct  {
-   char ArgMnemonic[32];
+   char ArgMnemonic[64];
    Int32 ArgType;
    Int32 ArgSize;
    Int32 ArgPosition;
@@ -259,18 +259,18 @@ enum EFLAGS_STATES
 enum BRANCH_TYPE
 {
   JO = 1,
-  JC,
-  JE,
-  JA,
-  JS,
-  JP,
-  JL,
-  JG,
-  JB,
-  JECXZ,
-  JmpType,
-  CallType,
-  RetType,
+  JC = 2,
+  JE = 3,
+  JA = 4,
+  JS = 5,
+  JP = 6,
+  JL = 7,
+  JG = 8,
+  JB = 2,       // JC == JB
+  JECXZ = 10,
+  JmpType = 11,
+  CallType = 12,
+  RetType = 13,
   JNO = -1,
   JNC = -2,
   JNE = -3,
@@ -279,7 +279,7 @@ enum BRANCH_TYPE
   JNP = -6,
   JNL = -7,
   JNG = -8,
-  JNB = -9
+  JNB = -2      // JNC == JNB
 };
 
 enum ARGUMENTS_TYPE

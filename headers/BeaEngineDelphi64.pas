@@ -114,7 +114,7 @@ uses Windows,SysUtils;
   type
 
      TARGTYPE = packed record
-          ArgMnemonic : array[0..31] of AnsiChar;
+          ArgMnemonic : array[0..63] of AnsiChar;
           ArgType : longint;
           ArgSize : longint;
 		  ArgPosition : longint;
@@ -244,7 +244,7 @@ uses Windows,SysUtils;
        JP = 6;
        JL = 7;
        JG = 8;
-       JB = 9;
+       JB = 2;
        JECXZ = 10;
        JmpType = 11;
        CallType = 12;
@@ -257,7 +257,7 @@ uses Windows,SysUtils;
        JNP = -(6);
        JNL = -(7);
        JNG = -(8);
-       JNB = -(9);
+       JNB = -(2);
 
 
   type

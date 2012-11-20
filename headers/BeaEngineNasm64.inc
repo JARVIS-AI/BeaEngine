@@ -73,7 +73,7 @@ STRUC INSTRTYPE
 ENDSTRUC
 
 STRUC ARGTYPE
-    ArgMnemonic:     resb   32
+    ArgMnemonic:     resb   64
     ArgType:         resd   1
     ArgSize:         resd   1
 	ArgPosition:	 resd	1
@@ -230,8 +230,8 @@ ENDSTRUC
     Jnl_                        equ -7
     Jg_                         equ 8
     Jng_                        equ -8
-    Jb_                         equ 9
-    Jnb_                        equ -9
+    Jb_                         equ 2
+    Jnb_                        equ -2
     Jecxz_                      equ 10
     JmpType                     equ 11
     CallType                    equ 12

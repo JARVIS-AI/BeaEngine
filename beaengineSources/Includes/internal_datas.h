@@ -167,8 +167,17 @@ EFLStruct EFLAGS_TABLE[] = {
     {0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  , 0, 0},  /* 112-XLAT */
     {RE_, MO_, MO_, UN_, MO_, RE_, 0  , 0  , 0  , 0  , 0, 0},  /* 113-XOR */
 
-    {RE_, RE_, MO_, RE_, RE_, RE_, 0  , 0  , 0  , 0  , 0, 0}  /* 114-POPCNT */
+    {RE_, RE_, MO_, RE_, RE_, RE_, 0  , 0  , 0  , 0  , 0, 0},  /* 114-POPCNT */
 
+    {TE_, TE_, TE_, 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0, 0}, /*115 -jg jnle jng jle http://ref.x86asm.net/coder.html */
+    {TE_, 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0, 0}, /*116 -jo jno http://ref.x86asm.net/coder.html */
+    {0 , 0 , 0 , 0 , 0 , TE_, 0 , 0 , 0 , 0 , 0, 0}, /*117 -jc jnc jb jnb jnae jae http://ref.x86asm.net/coder.html */
+    {0 , 0 , TE_, 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0, 0}, /*118 -jz jnz je jne http://ref.x86asm.net/coder.html */
+    {0 , 0 , TE_, 0 , 0 , TE_, 0 , 0 , 0 , 0 , 0, 0}, /*119 -jbe jnbe jna ja http://ref.x86asm.net/coder.html */
+
+    {0 , TE_, 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0, 0}, /* 120 - js jns http://ref.x86asm.net/coder.html */
+    {0 , 0 , 0 , 0 , TE_, 0 , 0 , 0 , 0 , 0 , 0, 0}, /* 121 - jp jpe jnp jpo http://ref.x86asm.net/coder.html */
+    {TE_, TE_, 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0, 0} /* 122 - jl jnge jnl jge http://ref.x86asm.net/coder.html */
 
     };
 /* =====================================================
@@ -235,7 +244,7 @@ char MasmPrefixes[8][16] = {
 char NasmPrefixes[8][8] = {
     "byte ",      /* GV.MemDecoration == 1 */
     "word ",      /* GV.MemDecoration == 2 */
-    "dword ",     /* GV.MemDecoration == 3 */
+    " ",     /* GV.MemDecoration == 3 */
     "qword ",     /* GV.MemDecoration == 4 */
     " ",          /* GV.MemDecoration == 5 (multibytes) */
     "tword ",     /* GV.MemDecoration == 6 */

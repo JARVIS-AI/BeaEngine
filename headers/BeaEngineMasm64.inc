@@ -68,7 +68,7 @@ INSTRTYPE STRUCT
 INSTRTYPE ENDS
 
 ARGTYPE STRUCT
-    ArgMnemonic     BYTE    32 dup(0)
+    ArgMnemonic     BYTE    64 dup(0)
     ArgType         DWORD   0
     ArgSize         DWORD   0
 	ArgPosition		DWORD	0
@@ -228,8 +228,8 @@ Disasm  PROTO :DWORD
     Jnl_                        equ -7
     Jg_                         equ 8
     Jng_                        equ -8
-    Jb_                         equ 9
-    Jnb_                        equ -9
+    Jb_                         equ 2
+    Jnb_                        equ -2
     Jecxz_                      equ 10
     JmpType                     equ 11
     CallType                    equ 12

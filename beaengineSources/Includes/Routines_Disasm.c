@@ -355,7 +355,7 @@ void __bea_callspec__ EbIb(PDISASM pMyDisasm)
     GV.EIP_ += GV.DECALAGE_EIP+3;
     if (!Security(0, pMyDisasm)) return;
     #ifndef BEA_LIGHT_DISASSEMBLY
-       (void) CopyFormattedNumber(pMyDisasm, (char*) &(*pMyDisasm).Argument2.ArgMnemonic,"%.8X",(Int64)*((Int8*)(UIntPtr) (GV.EIP_-1)));
+       (void) CopyFormattedNumber(pMyDisasm, (char*) &(*pMyDisasm).Argument2.ArgMnemonic,"%.2X",(Int64)*((Int8*)(UIntPtr) (GV.EIP_-1)));
     #endif
     (*pMyDisasm).Instruction.Immediat = *((UInt8*)(UIntPtr) (GV.EIP_-1));
 }
@@ -565,7 +565,7 @@ void __bea_callspec__ eAX_Iv(PDISASM pMyDisasm)
  * ==================================================================== */
 int __bea_callspec__ Security(int len, PDISASM pMyDisasm)
 {
-    if ((GV.EndOfBlock != 0) && (GV.EIP_+(UInt64)len > GV.EndOfBlock)) {
+    if ((GV.EndOfBlock != 0) && (GV.EIP_+(UInt64)len >= GV.EndOfBlock)) {
         GV.OutOfBlock = 1;
         return 0;
     }

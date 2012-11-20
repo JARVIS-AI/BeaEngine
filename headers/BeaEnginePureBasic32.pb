@@ -69,7 +69,7 @@ EndStructure
 Global Instrtype.INSTRTYPE
 
 Structure ARGTYPE
-  ArgMnemonic.b[32]
+  ArgMnemonic.b[64]
   ArgType.l
   ArgSize.l
   ArgPosition.l
@@ -222,8 +222,8 @@ CLMUL_INSTRUCTION            = $80000000
 #Jnl_                        = -7
 #Jg_                         = 8
 #Jng_                        = -8
-#Jb_                         = 9
-#Jnb_                        = -9
+#Jb_                         = 2
+#Jnb_                        = -2
 #Jecxz_                      = 10
 #JmpType                     = 11
 #CallType                    = 12
