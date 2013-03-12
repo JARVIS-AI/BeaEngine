@@ -32,6 +32,8 @@ PREFIXINFO STRUCT
   BranchTaken     db    0
   BranchNotTaken  db    0
   REX             REX_Struct    <>
+				  db    0 ; alignment
+				  db    0 ; alignment
 PREFIXINFO ENDS
 
 

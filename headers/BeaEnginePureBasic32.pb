@@ -29,6 +29,8 @@ Structure PREFIXINFO
   BranchTaken.b
   BranchNotTaken.b
   REX.REX_Struct
+  AL1_.b                      ;alignment
+  AL2_.b                      ;alignment
 EndStructure
 Global Prefixinfo.PREFIXINFO
 

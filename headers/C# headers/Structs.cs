@@ -32,6 +32,8 @@ namespace Bea
         public byte BranchTaken;
         public byte BranchNotTaken;
         public REX_Struct REX;
+		[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 16)]
+		public string alignment;
     }
 
     [StructLayout(LayoutKind.Sequential, Pack = 1)]

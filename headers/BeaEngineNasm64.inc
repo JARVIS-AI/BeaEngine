@@ -33,6 +33,8 @@ STRUC PREFIXINFO
   BranchTaken:     resb    1
   BranchNotTaken   resb    1
   REX:             resb    REX_Struct_size
+				   resb    1 ; alignment
+				   resb    1 ; alignment
 ENDSTRUC
 
 

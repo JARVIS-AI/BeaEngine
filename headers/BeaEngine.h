@@ -46,6 +46,7 @@ typedef struct {
    UInt8 BranchTaken;
    UInt8 BranchNotTaken;
    REX_Struct REX;
+   char alignment[2];
 } PREFIXINFO  ;
 #pragma pack()
 
@@ -222,7 +223,7 @@ enum BRANCH_TYPE
   JP = 6,
   JL = 7,
   JG = 8,
-  JB = 2,       // JC == JB
+  JB = 2,       /* JC == JB */
   JECXZ = 10,
   JmpType = 11,
   CallType = 12,
@@ -235,7 +236,7 @@ enum BRANCH_TYPE
   JNP = -6,
   JNL = -7,
   JNG = -8,
-  JNB = -2      // JNC == JNB
+  JNB = -2      /* JNC == JNB */
 };
 
 enum ARGUMENTS_TYPE

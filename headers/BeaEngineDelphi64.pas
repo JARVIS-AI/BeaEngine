@@ -70,6 +70,7 @@ uses Windows,SysUtils;
           BranchTaken : BYTE;     //v3.1.0 added 2009-11-05
           BranchNotTaken : BYTE;  //v3.1.0 added 2009-11-05
           REX : TREX_Struct;
+		  alignment : array[0..1] of AnsiChar;
        end;
 
   type

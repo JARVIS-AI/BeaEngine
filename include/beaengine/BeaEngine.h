@@ -49,6 +49,7 @@ typedef struct {
    UInt8 BranchTaken;
    UInt8 BranchNotTaken;
    REX_Struct REX;
+   char alignment[2];
 } PREFIXINFO  ;
 #pragma pack()
 

@@ -31,6 +31,8 @@ PREFIXINFO STRUCT
   BranchTaken     BYTE    0
   BranchNotTaken  BYTE    0
   REX             REX_Struct    <>
+				  BYTE    0 ; alignment
+				  BYTE    0 ; alignment
 PREFIXINFO ENDS
 
 

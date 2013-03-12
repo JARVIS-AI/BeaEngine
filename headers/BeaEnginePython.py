@@ -34,7 +34,9 @@ class PREFIXINFO(Structure):
               ("DSPrefix",c_uint8),
               ("BranchTaken",c_uint8),
               ("BranchNotTaken",c_uint8),
-              ("REX",REX_Struct)]
+              ("REX",REX_Struct),
+			  ("alignment1",c_uint8),
+			  ("alignment2",c_uint8)]
 
 class EFLStruct(Structure):
    _pack_= 1
