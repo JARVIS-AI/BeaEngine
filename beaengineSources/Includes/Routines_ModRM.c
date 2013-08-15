@@ -186,6 +186,8 @@ void __bea_callspec__ Addr_EAX(ARGTYPE* pMyArgument, PDISASM pMyDisasm)
             #ifndef BEA_LIGHT_DISASSEMBLY
                (void) strcpy ((char*) (*pMyArgument).ArgMnemonic+i, BXSI_);
             #endif
+            (*pMyArgument).Memory.BaseRegister = REGS[3];
+            (*pMyArgument).Memory.IndexRegister = REGS[6];
     }
     #ifndef BEA_LIGHT_DISASSEMBLY
        i = strlen ((char*) &(*pMyArgument).ArgMnemonic);
@@ -244,6 +246,8 @@ void __bea_callspec__ Addr_ECX(ARGTYPE* pMyArgument, PDISASM pMyDisasm)
             #ifndef BEA_LIGHT_DISASSEMBLY
                (void) strcpy ((char*) (*pMyArgument).ArgMnemonic+i, BXDI_);
             #endif
+            (*pMyArgument).Memory.BaseRegister = REGS[3];
+            (*pMyArgument).Memory.IndexRegister = REGS[7];
     }
 	#ifndef BEA_LIGHT_DISASSEMBLY
 		i = strlen ((char*) &(*pMyArgument).ArgMnemonic);
@@ -301,6 +305,8 @@ void __bea_callspec__ Addr_EDX(ARGTYPE* pMyArgument, PDISASM pMyDisasm)
             #ifndef BEA_LIGHT_DISASSEMBLY
                (void) strcpy ((char*) (*pMyArgument).ArgMnemonic+i, BPSI_);
             #endif
+            (*pMyArgument).Memory.BaseRegister = REGS[5];
+            (*pMyArgument).Memory.IndexRegister = REGS[6];
     }
 	#ifndef BEA_LIGHT_DISASSEMBLY
 		i = strlen ((char*) &(*pMyArgument).ArgMnemonic);
@@ -358,6 +364,8 @@ void __bea_callspec__ Addr_EBX(ARGTYPE* pMyArgument, PDISASM pMyDisasm)
             #ifndef BEA_LIGHT_DISASSEMBLY
                (void) strcpy ((char*) (*pMyArgument).ArgMnemonic+i, BPDI_);
             #endif
+            (*pMyArgument).Memory.BaseRegister = REGS[5];
+            (*pMyArgument).Memory.IndexRegister = REGS[7];
     }
     #ifndef BEA_LIGHT_DISASSEMBLY
     i = strlen ((char*) &(*pMyArgument).ArgMnemonic);
@@ -628,6 +636,8 @@ void __bea_callspec__ Addr_EAX_disp8(ARGTYPE* pMyArgument, PDISASM pMyDisasm)
             #ifndef BEA_LIGHT_DISASSEMBLY
                (void) strcpy ((char*) (*pMyArgument).ArgMnemonic+i, BXSI_);
             #endif
+            (*pMyArgument).Memory.BaseRegister = REGS[3];
+            (*pMyArgument).Memory.IndexRegister = REGS[6];
     }
     #ifndef BEA_LIGHT_DISASSEMBLY
     i = strlen ((char*) &(*pMyArgument).ArgMnemonic);
@@ -726,6 +736,8 @@ void __bea_callspec__ Addr_ECX_disp8(ARGTYPE* pMyArgument, PDISASM pMyDisasm)
             #ifndef BEA_LIGHT_DISASSEMBLY
                (void) strcpy ((char*) (*pMyArgument).ArgMnemonic+i, BXDI_);
             #endif
+            (*pMyArgument).Memory.BaseRegister = REGS[3];
+            (*pMyArgument).Memory.IndexRegister = REGS[7];
     }
     #ifndef BEA_LIGHT_DISASSEMBLY
     i = strlen ((char*) &(*pMyArgument).ArgMnemonic);
@@ -823,6 +835,8 @@ void __bea_callspec__ Addr_EDX_disp8(ARGTYPE* pMyArgument, PDISASM pMyDisasm)
             #ifndef BEA_LIGHT_DISASSEMBLY
                (void) strcpy ((char*) (*pMyArgument).ArgMnemonic+i, BPSI_);
             #endif
+            (*pMyArgument).Memory.BaseRegister = REGS[5];
+            (*pMyArgument).Memory.IndexRegister = REGS[6];
     }
     #ifndef BEA_LIGHT_DISASSEMBLY
     i = strlen ((char*) &(*pMyArgument).ArgMnemonic);
@@ -920,6 +934,8 @@ void __bea_callspec__ Addr_EBX_disp8(ARGTYPE* pMyArgument, PDISASM pMyDisasm)
             #ifndef BEA_LIGHT_DISASSEMBLY
                (void) strcpy ((char*) (*pMyArgument).ArgMnemonic+i, BPDI_);
             #endif
+            (*pMyArgument).Memory.BaseRegister = REGS[5];
+            (*pMyArgument).Memory.IndexRegister = REGS[7];
     }
     #ifndef BEA_LIGHT_DISASSEMBLY
     i = strlen ((char*) &(*pMyArgument).ArgMnemonic);
@@ -1003,6 +1019,8 @@ void __bea_callspec__ Addr_SIB_disp8(ARGTYPE* pMyArgument, PDISASM pMyDisasm)
            (void) strcpy ((char*) (*pMyArgument).ArgMnemonic, Registers16Bits[6]);
         #endif
         i += strlen (Registers16Bits[6]);
+        (*pMyArgument).Memory.BaseRegister = REGS[6];
+
     }
 
     if (GV.SYNTAX_ == ATSyntax) {
@@ -1397,6 +1415,8 @@ void __bea_callspec__ Addr_EAX_disp32(ARGTYPE* pMyArgument, PDISASM pMyDisasm)
             #ifndef BEA_LIGHT_DISASSEMBLY
                (void) strcpy ((char*) (*pMyArgument).ArgMnemonic+i, BXSI_);
             #endif
+            (*pMyArgument).Memory.BaseRegister = REGS[3];
+            (*pMyArgument).Memory.IndexRegister = REGS[6];
     }
     #ifndef BEA_LIGHT_DISASSEMBLY
     i = strlen ((char*) &(*pMyArgument).ArgMnemonic);
@@ -1500,6 +1520,8 @@ void __bea_callspec__ Addr_ECX_disp32(ARGTYPE* pMyArgument, PDISASM pMyDisasm)
             #ifndef BEA_LIGHT_DISASSEMBLY
                (void) strcpy ((char*) (*pMyArgument).ArgMnemonic+i, BXDI_);
             #endif
+            (*pMyArgument).Memory.BaseRegister = REGS[3];
+            (*pMyArgument).Memory.IndexRegister = REGS[7];
     }
     #ifndef BEA_LIGHT_DISASSEMBLY
     i = strlen ((char*) &(*pMyArgument).ArgMnemonic);
@@ -1602,6 +1624,8 @@ void __bea_callspec__ Addr_EDX_disp32(ARGTYPE* pMyArgument, PDISASM pMyDisasm)
             #ifndef BEA_LIGHT_DISASSEMBLY
                (void) strcpy ((char*) (*pMyArgument).ArgMnemonic+i, BPSI_);
             #endif
+            (*pMyArgument).Memory.BaseRegister = REGS[5];
+            (*pMyArgument).Memory.IndexRegister = REGS[6];
     }
     #ifndef BEA_LIGHT_DISASSEMBLY
     i = strlen ((char*) &(*pMyArgument).ArgMnemonic);
@@ -1704,6 +1728,8 @@ void __bea_callspec__ Addr_EBX_disp32(ARGTYPE* pMyArgument, PDISASM pMyDisasm)
             #ifndef BEA_LIGHT_DISASSEMBLY
                (void) strcpy ((char*) (*pMyArgument).ArgMnemonic+i, BPDI_);
             #endif
+            (*pMyArgument).Memory.BaseRegister = REGS[5];
+            (*pMyArgument).Memory.IndexRegister = REGS[7];
     }
     #ifndef BEA_LIGHT_DISASSEMBLY
     i = strlen ((char*) &(*pMyArgument).ArgMnemonic);
